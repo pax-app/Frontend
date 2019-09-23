@@ -4,7 +4,7 @@ import 'package:pax_front_end/screens/home_screen/tabs/home_tab.dart';
 
 class HomeScreen extends StatelessWidget {
   final _pageController = PageController();
-  
+
   @override
   Widget build(BuildContext context) {
     return PageView(
@@ -15,11 +15,15 @@ class HomeScreen extends StatelessWidget {
           body: HomeTab(),
           drawer: CustomDrawer(_pageController),
         ),
-        Container(color: Colors.red,),
-        Container(color: Colors.green,),
-        Container(color: Colors.purple,),
-        Container(color: Colors.orange,),
-        Container(color: Colors.blue,),
+        //Exemplo de como deve chamar a tela no drawer
+        Scaffold(
+          appBar: AppBar(
+            title: Text("Exemplo"),
+            centerTitle: true,
+          ),
+          drawer: CustomDrawer(_pageController),
+          body: Container(color: Colors.green),
+        ),
       ],
     );
   }

@@ -11,7 +11,7 @@ class HomeTab extends StatelessWidget {
             SliverAppBar(
               floating: true,
               snap: true,
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.red,
               elevation: 0.0,
               flexibleSpace:  FlexibleSpaceBar(
                 title: const Text("Home"),
