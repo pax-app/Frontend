@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pax_front_end/screens/home_screen.dart';
 
 void main() => runApp(PaxApp());
 
@@ -11,7 +12,7 @@ class PaxApp extends StatelessWidget {
         primaryColor: Colors.green,
       ),
       showSemanticsDebugger: false,
-      home: Container(),
+      home: HomeScreen(),
     );
   }
 }
