@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pax_front_end/components/drawer/drawer_tile.dart';
 
 
 class CustomDrawer extends StatelessWidget {
@@ -13,7 +14,7 @@ class CustomDrawer extends StatelessWidget {
           ListView(
             padding: EdgeInsets.only(top: 16.0, left: 32.0),
               children: <Widget>[
-                
+                DrawerTile(Icons.people, "Meu Perfil")
               ],
           ),
         ],
