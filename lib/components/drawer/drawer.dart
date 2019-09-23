@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pax_front_end/components/drawer/drawer_tile.dart';
+import 'package:Pax/components/drawer/drawer_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
   final PageController _pageController;
@@ -17,8 +17,10 @@ class CustomDrawer extends StatelessWidget {
               DrawerTile(Icons.people, "Meu Perfil", _pageController, 0),
               DrawerTile(Icons.people, "Minha Carteira", _pageController, 1),
               DrawerTile(Icons.people, "Meus Chats", _pageController, 2),
-              DrawerTile(Icons.people, "Historico de Serviços", _pageController,3),
-              DrawerTile(Icons.people, "Virar Prestador de serviço", _pageController, 4),
+              DrawerTile(
+                  Icons.people, "Historico de Serviços", _pageController, 3),
+              DrawerTile(Icons.people, "Virar Prestador de serviço",
+                  _pageController, 4),
               DrawerTile(Icons.people, "Configurações", _pageController, 5),
             ],
           ),

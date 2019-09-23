@@ -1,4 +1,4 @@
-package com.example.pax_front_end
+package com.example.Pax
 
 import android.os.Bundle
 
