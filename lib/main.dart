@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pax_front_end/screens/home_screen.dart';
+import 'package:pax_front_end/screens/home_screen/home_screen.dart';
 
 void main() => runApp(PaxApp());
 
