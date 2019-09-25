@@ -11,9 +11,17 @@ class DrawerHead extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          height: 56,
-          color: Theme.of(context).primaryColor,
-        ),
+            height: 56,
+            color: Theme.of(context).primaryColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  'assets/paxSidebar.png',
+                  height: 40,
+                ),
+              ],
+            )),
         DrawerHeader(
           child: Row(
             children: <Widget>[
