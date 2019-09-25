@@ -1,4 +1,4 @@
-import 'package:Pax/theme/colors.dart' as prefix0;
+import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
@@ -18,5 +18,7 @@ ThemeData _buildPaxTheme() {
     cardColor: backgroundColor,
     textSelectionColor: secondaryColor,
     errorColor: errorColor,
+    primaryColorDark: primaryColorDark,
+    primaryColorLight: primaryColorLight,
   );
 }

@@ -11,7 +11,7 @@ class PaxApp extends StatelessWidget {
     return MaterialApp(
       title: 'Pax',
       theme: paxTheme,
-      showSemanticsDebugger: false,
+      debugShowCheckedModeBanner: false,
       home: HomeScreen(),
     );
   }

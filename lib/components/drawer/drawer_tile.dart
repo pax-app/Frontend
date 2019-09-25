@@ -18,29 +18,41 @@ class DrawerTile extends StatelessWidget {
           controller.jumpToPage(page);
         },
         child: Container(
-          height: 60.0,
-          child: Row(
-            children: <Widget>[
-              Icon(
-                icon,
-                size: 32.0,
-                color: controller.page.round() == page
-                    ? Theme.of(context).primaryColor
-                    : Colors.white,
-              ),
-              SizedBox(width: 32.0),
-              Text(
-                text,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: controller.page.round() == page
-                      ? Theme.of(context).primaryColor
-                      : Colors.white,
+            height: 60.0,
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(top: 16.0, left: 16.0),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                        icon,
+                        size: 32.0,
+                        color: controller.page.round() == page
+                            ? Theme.of(context).accentColor
+                            : Colors.white,
+                      ),
+                      SizedBox(width: 24.0),
+                      Text(
+                        text,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: controller.page.round() == page
+                              ? Theme.of(context).accentColor
+                              : Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
+                SizedBox(height: 8.0),
+                Divider(
+                  color: Color.fromRGBO(45, 45, 45, 20),
+
+                  height: 8,
+                )
+              ],
+            )),
       ),
     );
   }
