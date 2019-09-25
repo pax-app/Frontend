@@ -1,3 +1,4 @@
+import 'package:Pax/components/drawer/drawer_head.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_tile.dart';
 
@@ -13,16 +14,15 @@ class CustomDrawer extends StatelessWidget {
           Container(color: Theme.of(context).primaryColorLight),
           ListView(
             children: <Widget>[
-              DrawerHeader(
-                padding: EdgeInsets.only(top: 16.0, left: 16.0),
-                child: Text('Drawer Header'),
-              ),
+              DrawerHead("", "Youssef Muhamad", 2.5),
               Column(
                 children: <Widget>[
-                  DrawerTile(Icons.person_outline, "Meu Perfil", _pageController, 0),
+                  DrawerTile(
+                      Icons.person_outline, "Meu Perfil", _pageController, 0),
                   DrawerTile(
                       Icons.credit_card, "Meus Cartões", _pageController, 1),
-                  DrawerTile(Icons.chat, "Minhas Conversas", _pageController, 2),
+                  DrawerTile(
+                      Icons.chat, "Minhas Conversas", _pageController, 2),
                   DrawerTile(Icons.library_books, "Historico de Serviços",
                       _pageController, 3),
                   DrawerTile(Icons.attach_money, "Virar Prestador de serviço",
