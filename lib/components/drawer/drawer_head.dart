@@ -8,39 +8,46 @@ class DrawerHead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DrawerHeader(
-      child: Row(
-        children: <Widget>[
-          Container(
-            
-            height: 85,
-            width: 85,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                //image: DecorationImage(),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                border: Border.all(
-                  color: Theme.of(context).accentColor,
-                  width: 3.0,
-                )),
-          ),
-          SizedBox(width: 16.0),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      children: <Widget>[
+        Container(
+          height: 56,
+          color: Theme.of(context).primaryColor,
+        ),
+        DrawerHeader(
+          child: Row(
             children: <Widget>[
-              Text(
-                name,
-                style: TextStyle(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    fontSize: 18),
+              Container(
+                height: 85,
+                width: 85,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    //image: DecorationImage(),
+                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                    border: Border.all(
+                      color: Theme.of(context).accentColor,
+                      width: 3.0,
+                    )),
               ),
-              SizedBox(height: 6),
-              getUserStars(qntStars, context)
+              SizedBox(width: 16.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    name,
+                    style: TextStyle(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        fontSize: 18),
+                  ),
+                  SizedBox(height: 6),
+                  getUserStars(qntStars, context)
+                ],
+              )
             ],
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 
