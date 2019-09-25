@@ -26,8 +26,8 @@ class DrawerHead extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Container(
-                height: 85,
-                width: 85,
+                height: 70,
+                width: 70,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     //image: DecorationImage(),
