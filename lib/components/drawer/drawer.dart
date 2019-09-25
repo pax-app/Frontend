@@ -19,15 +19,15 @@ class CustomDrawer extends StatelessWidget {
               ),
               Column(
                 children: <Widget>[
-                  DrawerTile(Icons.people, "Meu Perfil", _pageController, 0),
+                  DrawerTile(Icons.person_outline, "Meu Perfil", _pageController, 0),
                   DrawerTile(
-                      Icons.people, "Minha Carteira", _pageController, 1),
-                  DrawerTile(Icons.people, "Meus Chats", _pageController, 2),
-                  DrawerTile(Icons.people, "Historico de Serviços",
+                      Icons.credit_card, "Meus Cartões", _pageController, 1),
+                  DrawerTile(Icons.chat, "Minhas Conversas", _pageController, 2),
+                  DrawerTile(Icons.library_books, "Historico de Serviços",
                       _pageController, 3),
-                  DrawerTile(Icons.people, "Virar Prestador de serviço",
+                  DrawerTile(Icons.attach_money, "Virar Prestador de serviço",
                       _pageController, 4),
-                  DrawerTile(Icons.people, "Configurações", _pageController, 5),
+                  DrawerTile(Icons.build, "Configurações", _pageController, 5),
                 ],
               ),
             ],
