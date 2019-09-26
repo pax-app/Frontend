@@ -8,6 +8,12 @@ class DrawerTile extends StatelessWidget {
 
   DrawerTile(this.icon, this.text, this.controller, this.page);
 
+  Color colorOfSidebarItem(BuildContext context) {
+    return controller.page.round() == page
+        ? Theme.of(context).accentColor
+        : Colors.white;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -28,9 +34,7 @@ class DrawerTile extends StatelessWidget {
                     Icon(
                       icon,
                       size: 32.0,
-                      color: controller.page.round() == page
-                          ? Theme.of(context).accentColor
-                          : Colors.white,
+                      color: colorOfSidebarItem(context),
                     ),
                     SizedBox(width: 24.0),
                     Text(
@@ -39,9 +43,7 @@ class DrawerTile extends StatelessWidget {
                         fontSize: Theme.of(context).textTheme.title.fontSize,
                         fontFamily:
                             Theme.of(context).textTheme.title.fontFamily,
-                        color: controller.page.round() == page
-                            ? Theme.of(context).accentColor
-                            : Colors.white,
+                        color: colorOfSidebarItem(context),
                       ),
                     ),
                   ],
