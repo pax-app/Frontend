@@ -22,35 +22,39 @@ class DrawerHead extends StatelessWidget {
                 ),
               ],
             )),
-        DrawerHeader(
-          child: Row(
-            children: <Widget>[
-              Container(
-                height: 70,
-                width: 70,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    //image: DecorationImage(),
-                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                    border: Border.all(
-                      color: Theme.of(context).accentColor,
-                      width: 3.0,
-                    )),
-              ),
-              SizedBox(width: 16.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    name,
-                    style: Theme.of(context).textTheme.headline,
-                  ),
-                  SizedBox(height: 6),
-                  getUserStars(qntStars, context)
-                ],
-              )
-            ],
+        SizedBox(
+          height: 130,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  height: 70,
+                  width: 70,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      //image: DecorationImage(),
+                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                      border: Border.all(
+                        color: Theme.of(context).accentColor,
+                        width: 3.0,
+                      )),
+                ),
+                SizedBox(width: 16.0),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      name,
+                      style: Theme.of(context).textTheme.headline,
+                    ),
+                    SizedBox(height: 6),
+                    getUserStars(qntStars, context)
+                  ],
+                )
+              ],
+            ),
           ),
         )
       ],
