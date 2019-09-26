@@ -44,9 +44,7 @@ class DrawerHead extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     name,
-                    style: TextStyle(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        fontSize: 18),
+                    style: Theme.of(context).textTheme.headline,
                   ),
                   SizedBox(height: 6),
                   getUserStars(qntStars, context)
