@@ -17,8 +17,8 @@ class DrawerHead extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image.asset(
-                  'assets/paxSidebar.png',
-                  height: 40,
+                  'assets/logo/sidebar_logo.png',
+                  height: 30,
                 ),
               ],
             )),
