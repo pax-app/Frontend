@@ -14,20 +14,20 @@ class CustomDrawer extends StatelessWidget {
           Container(color: Theme.of(context).primaryColorLight),
           ListView(
             children: <Widget>[
-              DrawerHead("", "Youssef Muhamad", 2.5),
+              DrawerHead("", "Youssef Muhamad", 2.5, _pageController),
               Column(
                 children: <Widget>[
                   DrawerTile(
-                      Icons.person_outline, "Meu Perfil", _pageController, 0),
+                      Icons.person_outline, "Meu Perfil", _pageController, 1),
                   DrawerTile(
-                      Icons.credit_card, "Meus Cartões", _pageController, 1),
+                      Icons.credit_card, "Meus Cartões", _pageController, 2),
                   DrawerTile(
-                      Icons.chat, "Minhas Conversas", _pageController, 2),
+                      Icons.chat, "Minhas Conversas", _pageController, 3),
                   DrawerTile(Icons.library_books, "Historico de Serviços",
-                      _pageController, 3),
-                  DrawerTile(Icons.attach_money, "Virar Prestador de serviço",
                       _pageController, 4),
-                  DrawerTile(Icons.build, "Configurações", _pageController, 5),
+                  DrawerTile(Icons.attach_money, "Virar Prestador de serviço",
+                      _pageController, 5),
+                  DrawerTile(Icons.build, "Configurações", _pageController, 6),
                 ],
               ),
             ],

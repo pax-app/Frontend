@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class DrawerHead extends StatelessWidget {
   String img, name;
   double qntStars;
+  PageController controller;
 
-  DrawerHead(this.img, this.name, this.qntStars);
+  DrawerHead(this.img, this.name, this.qntStars, this.controller);
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +17,16 @@ class DrawerHead extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset(
-                  'assets/logo/sidebar_logo.png',
-                  height: 30,
-                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    controller.jumpToPage(0);
+                  },
+                  child: Image.asset(
+                    'assets/logo/sidebar_logo.png',
+                    height: 30,
+                  ),
+                )
               ],
             )),
         SizedBox(
