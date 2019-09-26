@@ -18,45 +18,33 @@ class DrawerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          Navigator.of(context).pop();
-          controller.jumpToPage(page);
-        },
-        child: Container(
-          height: 60.0,
-          child: ListView(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(top: 16.0, left: 16.0),
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      icon,
-                      size: 32.0,
+      child: Column(
+        children: <Widget>[
+          Divider(color: const Color.fromRGBO(45, 45, 45, 20), height: 8),
+          InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+              controller.jumpToPage(page);
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+              child: Row(
+                children: <Widget>[
+                  Icon(icon, size: 32.0, color: colorOfSidebarItem(context)),
+                  SizedBox(width: 24.0),
+                  Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.title.fontSize,
+                      fontFamily: Theme.of(context).textTheme.title.fontFamily,
                       color: colorOfSidebarItem(context),
                     ),
-                    SizedBox(width: 24.0),
-                    Text(
-                      text,
-                      style: TextStyle(
-                        fontSize: Theme.of(context).textTheme.title.fontSize,
-                        fontFamily:
-                            Theme.of(context).textTheme.title.fontFamily,
-                        color: colorOfSidebarItem(context),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(height: 8.0),
-              Divider(
-                color: Color.fromRGBO(45, 45, 45, 20),
-                height: 8,
-              )
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
