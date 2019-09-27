@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../components/auth/auth_input.dart';
 
-class LoginScreen extends StatelessWidget {
+class RecoverPassordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +12,7 @@ class LoginScreen extends StatelessWidget {
           Container(),
           SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.only(top: 35, right: 35, left: 35),
+              padding: EdgeInsets.only(top: 30, right: 35, left: 35),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
@@ -25,36 +25,15 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 70),
                   AuthInput(
                     labelText: "E-mail",
-                    inputType: TextInputType.emailAddress,
                   ),
                   SizedBox(height: 25),
-                  AuthInput(
-                    labelText: "Senha",
-                    obscure: true,
-                  ),
+                  AuthInput(labelText: "Confirmar e-mail"),
                   SizedBox(
                     height: 40,
                   ),
                   AuthButton(
-                    text: "Entrar",
+                    text: "Recuperar",
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 80),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          "RECUPERAR A SENHA",
-                          style: TextStyle(color: Colors.white, fontSize: 12),
-                        ),
-                        Text(
-                          "CRIE UMA CONTA",
-                          style:
-                              TextStyle(color: Color(0xff78aa43), fontSize: 12),
-                        )
-                      ],
-                    ),
-                  )
                 ],
               ),
             ),
