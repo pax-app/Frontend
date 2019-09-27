@@ -1,3 +1,4 @@
+import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/simple_tile/simple_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer.dart';
@@ -18,18 +19,21 @@ class HomeScreen extends StatelessWidget {
         ),
         //Exemplo de como deve chamar a tela no drawer
         Scaffold(
-          appBar: AppBar(
-            title: Text("Exemplo"),
-            centerTitle: true,
-          ),
-          drawer: CustomDrawer(_pageController),
-          body: ListView(
-            children: <Widget>[
-              SimpleTile('services list'),
-            ],
-          ),
-        ),
+            appBar: AppBar(
+              title: Text("Exemplo"),
+              centerTitle: true,
+            ),
+            drawer: CustomDrawer(_pageController),
+            body: BaseScreen('Hellouuu!!', exemplo(), appBarTitle: 'Titulo')),
       ],
     );
   }
+}
+
+Widget exemplo() {
+  return ListView(
+    children: <Widget>[
+      SimpleTile('services list'),
+    ],
+  );
 }
