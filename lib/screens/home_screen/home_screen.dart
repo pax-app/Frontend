@@ -1,3 +1,4 @@
+import 'package:Pax/components/simple_tile/simple_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer.dart';
 import 'package:Pax/screens/home_screen/tabs/home_tab.dart';
@@ -22,7 +23,11 @@ class HomeScreen extends StatelessWidget {
             centerTitle: true,
           ),
           drawer: CustomDrawer(_pageController),
-          body: Container(color: Colors.green),
+          body: ListView(
+            children: <Widget>[
+              SimpleTile('services list'),
+            ],
+          ),
         ),
       ],
     );
