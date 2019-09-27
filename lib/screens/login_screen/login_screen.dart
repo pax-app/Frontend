@@ -6,49 +6,95 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xff454545),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(30),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 50),
-                  child: Image.asset(
-                    'assets/logo.png',
-                    width: 180,
+        body: Stack(alignment: Alignment.center, children: <Widget>[
+          Container(),
+          SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.only(top: 35, right: 35, left: 35),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(right: 80, left: 80),
+                    child: Image.asset(
+                      'assets/logo.png',
+                    ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 60, bottom: 40),
-                  child: TextField(
+                  SizedBox(height: 70),
+                  TextField(
+                    style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'E-mail'),
+                        labelStyle: TextStyle(color: Colors.white),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.white,
+                                style: BorderStyle.solid,
+                                width: 1.0)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xff78aa43),
+                                style: BorderStyle.solid,
+                                width: 1.0)),
+                        labelText: 'E-mail'),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(bottom: 40),
-                  child: TextField(
+                  SizedBox(height: 30),
+                  TextField(
+                    style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'Senha'),
+                        labelStyle: TextStyle(color: Colors.white),
+                        fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.white,
+                                style: BorderStyle.solid,
+                                width: 1.0)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xff78aa43),
+                                style: BorderStyle.solid,
+                                width: 1.0)),
+                        labelText: 'Senha'),
                   ),
-                ),
-
-                // alignment: CrossAxisAlignment.stretch,
-
-                RaisedButton(
-                  onPressed: () {},
-                  child: Text("Entrar"),
-                ),
-
-                Row(
-                  children: <Widget>[
-                    Text("Recuperar a senha"),
-                    Text("Crie uma conta")
-                  ],
-                )
-              ],
+                  SizedBox(
+                    height: 40,
+                  ),
+                  SizedBox(
+                    height: 50,
+                    child: RaisedButton(
+                      disabledColor: Color(0xff929292),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.5)),
+                      onPressed: null,
+                      child: Text(
+                        "ENTRAR",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 80),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "RECUPERAR A SENHA",
+                          style: TextStyle(color: Colors.white, fontSize: 12),
+                        ),
+                        Text(
+                          "CRIE UMA CONTA",
+                          style:
+                              TextStyle(color: Color(0xff78aa43), fontSize: 12),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ));
+          )
+        ]));
   }
 }
