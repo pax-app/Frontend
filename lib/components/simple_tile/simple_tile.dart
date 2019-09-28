@@ -11,6 +11,7 @@ class SimpleTile extends StatelessWidget {
         debugPrint('Foiiii!!');
       },
       child: Card(
+        color: Colors.white,
         child: ListTile(
           title: Text(
             description,

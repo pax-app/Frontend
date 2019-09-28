@@ -3,22 +3,21 @@ import 'package:flutter/material.dart';
 class BaseScreen extends StatelessWidget {
   final String title;
   final Widget body;
-  final String appBarTitle;
-  BaseScreen(this.title, this.body, {this.appBarTitle});
+  BaseScreen(this.title, this.body);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(appBarTitle == Null ? '' : appBarTitle),
-      ),
-      body: SingleChildScrollView(
+    return Padding(
+      padding: EdgeInsets.all(20.0),
+      child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(vertical: 20),
               child: Text(
                 title,
+                textAlign: TextAlign.right,
                 style: TextStyle(
                   fontFamily: Theme.of(context).textTheme.title.fontFamily,
                   fontSize: Theme.of(context).textTheme.title.fontSize,

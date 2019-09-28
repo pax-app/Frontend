@@ -20,20 +20,27 @@ class HomeScreen extends StatelessWidget {
         //Exemplo de como deve chamar a tela no drawer
         Scaffold(
             appBar: AppBar(
-              title: Text("Exemplo"),
+              title: Text(
+                "Exemplo",
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
+              backgroundColor: Colors.white,
               centerTitle: true,
+              iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
             ),
             drawer: CustomDrawer(_pageController),
-            body: BaseScreen('Hellouuu!!', exemplo(), appBarTitle: 'Titulo')),
+            body: BaseScreen('Hellouuu!!', exemplo())),
       ],
     );
   }
 }
 
 Widget exemplo() {
-  return ListView(
-    children: <Widget>[
-      SimpleTile('services list'),
-    ],
+  return Container(
+    child: Column(
+      children: <Widget>[
+        SimpleTile('services list'),
+      ],
+    ),
   );
 }
