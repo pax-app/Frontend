@@ -20,17 +20,32 @@ class HomeScreen extends StatelessWidget {
         ),
         //Exemplo de como deve chamar a tela no drawer
         Scaffold(
-            appBar: AppBar(
-              title: Text(
-                "Exemplo",
-                style: TextStyle(color: Theme.of(context).primaryColor),
-              ),
-              backgroundColor: Colors.white,
-              centerTitle: true,
-              iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+          appBar: AppBar(
+            title: Text(
+              "Exemplo",
+              style: TextStyle(color: Theme.of(context).primaryColor),
             ),
-            drawer: CustomDrawer(_pageController),
-            body: BaseScreen('Hellouuu!!', exemplo())),
+            backgroundColor: Colors.white,
+            centerTitle: true,
+            iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+          ),
+          drawer: CustomDrawer(_pageController),
+          body: BaseScreen('Hellouuu!!', exemplo()),
+        ),
+        //Tela de Selecionar categorias
+        Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Categorias",
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
+            backgroundColor: Colors.white,
+            centerTitle: true,
+            iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+          ),
+          drawer: CustomDrawer(_pageController),
+          body: BaseScreen('Quais categorias você se encaixa?', exemplo()),
+        ),
       ],
     );
   }
@@ -42,12 +57,13 @@ Widget exemplo() {
       children: <Widget>[
         SimpleTile('services list'),
         SimpleTile('services list'),
-        Button("default", (){}, "default", false),
-        Button("Default small", (){}, "default", true),
-        Button("Danger", (){},  "danger", false),
-        Button("Danger small", (){},  "danger", true),
-        Button("outline", (){}, "outline", false),
-        Button("outline small", (){}, "outline", true),
+        Button("default", () {}, "default", false),
+        Button("Default small", () {}, "default", true),
+        Button("Danger", () {}, "danger", false),
+        Button("Danger small", () {}, "danger", true),
+        Button("outline", () {}, "outline", false),
+        Button("outline small", () {}, "outline", true),
+        Button("outline small", () {}, "outline", true),
       ],
     ),
   );

@@ -8,7 +8,7 @@ class SimpleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2.0,
-      margin: EdgeInsets.only(bottom: 15.0),
+      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
       color: Colors.white,
       child: InkWell(
         onTap: () {

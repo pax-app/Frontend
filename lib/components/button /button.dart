@@ -41,11 +41,12 @@ class Button extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
+          highlightColor: Theme.of(context).errorColor,
+          highlightedBorderColor: Colors.white,
         );
         break;
       default:
         return RaisedButton(
-          padding: EdgeInsets.all(15.0),
           onPressed: function,
           child: Text(text.toUpperCase()),
         );
