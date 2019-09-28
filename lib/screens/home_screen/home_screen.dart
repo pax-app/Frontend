@@ -42,7 +42,12 @@ Widget exemplo() {
       children: <Widget>[
         SimpleTile('services list'),
         SimpleTile('services list'),
-        Button()
+        Button("default", (){}, "default", false),
+        Button("Default small", (){}, "default", true),
+        Button("Danger", (){},  "danger", false),
+        Button("Danger small", (){},  "danger", true),
+        Button("outline", (){}, "outline", false),
+        Button("outline small", (){}, "outline", true),
       ],
     ),
   );
