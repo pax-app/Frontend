@@ -6,12 +6,14 @@ class SimpleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        debugPrint('Foiiii!!');
-      },
-      child: Card(
-        color: Colors.white,
+    return Card(
+      elevation: 2.0,
+      margin: EdgeInsets.only(bottom: 15.0),
+      color: Colors.white,
+      child: InkWell(
+        onTap: () {
+          debugPrint('Foiiii!!');
+        },
         child: ListTile(
           title: Text(
             description,

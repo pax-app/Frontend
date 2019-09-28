@@ -14,7 +14,7 @@ class BaseScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
+              padding: EdgeInsets.only(bottom: 20, top: 10),
               child: Text(
                 title,
                 textAlign: TextAlign.right,
