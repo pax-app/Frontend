@@ -26,6 +26,7 @@ dependencies:
   bloc_pattern: ^1.5.2
   shimmer: ^1.0.0
   rxdart: ^0.22.2
+  flutter_range_slider: "^1.4.0"
 
 dev_dependencies:
   flutter_test:
@@ -45,7 +46,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -80,6 +80,5 @@ flutter:
           weight: 500
         - asset: assets/fonts/Montserrat-Medium.ttf
           weight: 700
-  
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
