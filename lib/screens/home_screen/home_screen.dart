@@ -1,4 +1,5 @@
 import 'package:Pax/components/base_screen/base_screen.dart';
+import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/simple_tile/simple_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer.dart';
@@ -41,6 +42,7 @@ Widget exemplo() {
       children: <Widget>[
         SimpleTile('services list'),
         SimpleTile('services list'),
+        Button()
       ],
     ),
   );
