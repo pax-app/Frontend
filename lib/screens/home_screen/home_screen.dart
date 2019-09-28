@@ -1,6 +1,7 @@
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/simple_tile/simple_tile.dart';
+import 'package:Pax/screens/category_screen/category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer.dart';
 import 'package:Pax/screens/home_screen/tabs/home_tab.dart';
@@ -44,7 +45,7 @@ class HomeScreen extends StatelessWidget {
             iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
           ),
           drawer: CustomDrawer(_pageController),
-          body: BaseScreen('Quais categorias você se encaixa?', exemplo()),
+          body: BaseScreen('Quais categorias você se encaixa?', CategoryScreen()),
         ),
       ],
     );
