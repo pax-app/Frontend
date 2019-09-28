@@ -6,9 +6,8 @@ class Button extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: RaisedButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         padding: EdgeInsets.all(15.0),
-        onPressed: () {},
+        onPressed: null,
         child: const Text('Enabled Button', style: TextStyle(fontSize: 20)),
       ),
     );
