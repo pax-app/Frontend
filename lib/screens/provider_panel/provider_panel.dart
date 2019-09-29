@@ -19,61 +19,66 @@ class ProviderPanel extends StatelessWidget {
     return Scaffold(
       drawer: DrawerUser(this._pageController),
       appBar: WhiteAppBar('Painel do Prestador', context),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20, bottom: 20),
-              child: Text(
-                'Meus Serviços',
-                style: Theme.of(context).textTheme.title,
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 115,
-                width: MediaQuery.of(context).size.width,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    ProviderPanelCard(
-                      removeMargin: false,
-                      cardName: 'Pendentes',
-                      img: imagesPaths['Pendentes'],
-                    ),
-                    ProviderPanelCard(
-                      removeMargin: true,
-                      cardName: 'Cancelados',
-                      img: imagesPaths['Cancelados'],
-                    ),
-                    ProviderPanelCard(
-                      removeMargin: false,
-                      cardName: 'Finalizados',
-                      img: imagesPaths['Finalizados'],
-                    ),
-                  ],
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, bottom: 20),
+                  child: Text(
+                    'Meus Serviços',
+                    style: Theme.of(context).textTheme.title,
+                  ),
                 ),
-              ),
+                Center(
+                  child: Container(
+                    height: 115,
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        ProviderPanelCard(
+                          removeMargin: false,
+                          cardName: 'Pendentes',
+                          img: imagesPaths['Pendentes'],
+                        ),
+                        ProviderPanelCard(
+                          removeMargin: true,
+                          cardName: 'Cancelados',
+                          img: imagesPaths['Cancelados'],
+                        ),
+                        ProviderPanelCard(
+                          removeMargin: false,
+                          cardName: 'Finalizados',
+                          img: imagesPaths['Finalizados'],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(height: 60, color: Color.fromRGBO(0, 0, 0, .2)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, bottom: 20),
+                  child: Text(
+                    'Minhas Mensagens Recentes',
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                ),
+                ChatTile(
+                  username: 'Roger',
+                  message: 'Fala mané!',
+                ),
+                ChatTile(
+                  username: 'Dutra',
+                  message: 'Mexam na Planilha do ZenHub!',
+                ),
+              ],
             ),
-            Divider(height: 60, color: Color.fromRGBO(0, 0, 0, .2)),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, bottom: 20),
-              child: Text(
-                'Minhas Mensagens Recentes',
-                style: Theme.of(context).textTheme.title,
-              ),
-            ),
-            ChatTile(
-              username: 'Roger',
-              message: 'Fala mané!',
-            ),
-            ChatTile(
-              username: 'Dutra',
-              message: 'Mexam na Planilha do ZenHub!',
-            ),
-          ],
+          ),
         ),
       ),
     );

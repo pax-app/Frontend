@@ -11,7 +11,7 @@ class ChatTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Card(
-        margin: EdgeInsets.symmetric(vertical: 10),
+        margin: EdgeInsets.symmetric(vertical: 14),
         elevation: Theme.of(context).cardTheme.elevation,
         color: Theme.of(context).cardTheme.color,
         child: InkWell(
