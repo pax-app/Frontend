@@ -10,7 +10,7 @@ import 'package:Pax/screens/home_screen/tabs/home_tab.dart';
 
 class HomeScreen extends StatelessWidget {
   final _pageController = PageController();
-  bool isProvider = true;
+  bool isProvider = false;
 
   Widget getDrawer() {
     return this.isProvider

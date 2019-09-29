@@ -44,6 +44,7 @@ ThemeData _buildPaxTheme() {
       body1: TextStyle(
         fontFamily: 'Roboto',
         fontSize: 14,
+        color: primaryColorDark,
       ),
     ),
     appBarTheme: AppBarTheme(
