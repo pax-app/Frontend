@@ -12,11 +12,25 @@ class CategoryScreen extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    TextEditingController searchController = TextEditingController();
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: 30, right: 20, left: 20),
+            child: TextFormField(
+              controller: searchController,
+              autofocus: true,
+              style: TextStyle(color: Theme.of(context).primaryColor),
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(labelText: "Buscar categoria"),
+            ),
+        
+          ),
           ExpansionCategory(g[0]),
-          ExpansionCategory(g[0])
+          ExpansionCategory(g[0]),
+          ExpansionCategory(g[0]),
+          ExpansionCategory(g[0]),
         ],
       ),
     );
