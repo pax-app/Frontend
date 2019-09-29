@@ -28,39 +28,9 @@ class HomeScreen extends StatelessWidget {
           body: HomeTab(),
           drawer: getDrawer(),
         ),
-        //Exemplo de como deve chamar a tela no drawer
         BaseScreen("Exemplo", "Hellou", exemplo(), getDrawer()),
-        // Scaffold(
-        //   appBar: AppBar(
-        //     title: Text(
-        //       "Exemplo",
-        //       style: TextStyle(color: Theme.of(context).primaryColor),
-        //     ),
-        //     backgroundColor: Colors.white,
-        //     centerTitle: true,
-        //     iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-        //   ),
-        //   drawer: getDrawer(),
-        //   body: BaseScreen('Hellouuu!!', exemplo()),
-        // ),
-        //Tela de Selecionar categorias
         BaseScreen("Categorias", "Quais categorias você se encaixa?",
             CategoryScreen(), getDrawer()),
-        // Scaffold(
-        //   appBar: AppBar(
-        //     title: Text(
-        //       "Categorias",
-        //       style: TextStyle(color: Theme.of(context).primaryColor),
-        //     ),
-        //     backgroundColor: Colors.white,
-        //     centerTitle: true,
-        //     iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-        //   ),
-        //   drawer: getDrawer(),
-        //   body:
-        //       BaseScreen('Quais categorias você se encaixa?', CategoryScreen()),
-        // ),
-
         BaseScreen("Painel do Prestador", "Meus Serviços", ProviderPanel(),
             getDrawer())
       ],
