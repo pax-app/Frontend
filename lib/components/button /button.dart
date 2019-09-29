@@ -19,6 +19,7 @@ class Button extends StatelessWidget {
     switch (type) {
       case 'outline':
         return OutlineButton(
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
           child: Text(
             text.toUpperCase(),
             style: TextStyle(color: Theme.of(context).accentColor),
@@ -32,6 +33,7 @@ class Button extends StatelessWidget {
         break;
       case 'danger':
         return OutlineButton(
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
           child: Text(
             text.toUpperCase(),
             style: TextStyle(color: Theme.of(context).errorColor),
@@ -47,6 +49,7 @@ class Button extends StatelessWidget {
         break;
       default:
         return RaisedButton(
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
           onPressed: function,
           child: Text(text.toUpperCase()),
         );

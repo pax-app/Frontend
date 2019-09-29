@@ -1,3 +1,4 @@
+import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/models/GeneralCategory.dart';
 import 'package:Pax/models/category.dart';
 import 'package:Pax/screens/category_screen/expansion_category_tab.dart';
@@ -38,6 +39,7 @@ class CategoryScreen extends StatelessWidget {
           ExpansionCategory(g[0]),
           ExpansionCategory(g[0]),
           ExpansionCategory(g[0]),
+          Button("próximo", (){}, "Default", false)
         ],
       ),
     );
@@ -58,7 +60,6 @@ class CategoryScreen extends StatelessWidget {
     for (var i = 0; i < n; i++) {
       l.add(GeneralCategory(id: i, name: "GeneralCategory", categories: w));
     }
-
     return l;
   }
 }
