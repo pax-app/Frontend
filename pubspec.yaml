@@ -25,7 +25,6 @@ dependencies:
   cupertino_icons: ^0.1.2
   bloc_pattern: ^1.5.2
   shimmer: ^1.0.0
-  grouped_buttons: ^1.0.4
 
 dev_dependencies:
   flutter_test:
