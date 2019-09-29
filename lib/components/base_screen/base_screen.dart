@@ -21,7 +21,7 @@ class BaseScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.title,
               ),
             ),
-            Container(
+            Material(
               child: body,
             )
           ],

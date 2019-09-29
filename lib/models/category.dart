@@ -9,7 +9,6 @@ class Category {
     return Category(
       id: json['id'],
       name: json['name'],
-      //generalCategory: json['general_category_id'],
     );
   }
 }
