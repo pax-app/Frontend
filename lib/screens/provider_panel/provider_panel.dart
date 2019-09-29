@@ -1,5 +1,6 @@
 import 'package:Pax/components/app_bar/white_appbar.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
+import 'package:Pax/components/provider_panel_card/provider_panel_card.dart';
 import 'package:flutter/material.dart';
 
 class ProviderPanel extends StatelessWidget {
@@ -19,24 +20,14 @@ class ProviderPanel extends StatelessWidget {
             style: Theme.of(context).textTheme.title,
           ),
           Container(
-            // margin: EdgeInsets.only(top: 30),
-            height: 150,
+            height: 130,
             width: MediaQuery.of(context).size.width,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Text('AAOSDIJOIAJSDOIAJOSIDJAIPAJSODIJ')),
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Text('AAOSDIJOIAJSDOIAJOSIDJAIPAJSODIJ')),
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Text('AAOSDIJOIAJSDOIAJOSIDJAIPAJSODIJ')),
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Text('AAOSDIJOIAJSDOIAJOSIDJAIPAJSODIJ')),
+                ProviderPanelCard(removeMargin: false),
+                ProviderPanelCard(removeMargin: true),
+                ProviderPanelCard(removeMargin: false),
               ],
             ),
           ),
