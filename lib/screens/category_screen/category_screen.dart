@@ -60,6 +60,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
           _search.isEmpty
               ? ListView(
+                  physics: NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   children: getExpansionCategory(),
