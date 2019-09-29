@@ -18,12 +18,7 @@ class BaseScreen extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.right,
-                style: TextStyle(
-                  fontFamily: Theme.of(context).textTheme.title.fontFamily,
-                  fontSize: Theme.of(context).textTheme.title.fontSize,
-                  fontWeight: Theme.of(context).textTheme.title.fontWeight,
-                  color: Theme.of(context).textTheme.title.color,
-                ),
+                style: Theme.of(context).textTheme.title,
               ),
             ),
             Container(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class HomeTab extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -13,7 +12,7 @@ class HomeTab extends StatelessWidget {
               snap: true,
               backgroundColor: Colors.red,
               elevation: 0.0,
-              flexibleSpace:  FlexibleSpaceBar(
+              flexibleSpace: FlexibleSpaceBar(
                 title: const Text("Home"),
                 centerTitle: true,
               ),

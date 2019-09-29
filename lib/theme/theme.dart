@@ -40,5 +40,11 @@ ThemeData _buildPaxTheme() {
         fontSize: 14,
       ),
     ),
+    appBarTheme: AppBarTheme(
+      textTheme: ThemeData.light().textTheme.copyWith(
+            title: TextStyle(
+                fontFamily: 'Montserrat', fontSize: 15, color: Colors.black),
+          ),
+    ),
   );
 }
