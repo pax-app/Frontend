@@ -19,7 +19,7 @@ ThemeData _buildPaxTheme() {
     scaffoldBackgroundColor: backgroundColor,
     cardTheme: CardTheme(
       color: backgroundColor,
-      elevation: 3.3,
+      elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7),
       ),
