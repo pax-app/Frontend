@@ -39,12 +39,12 @@ ThemeData _buildPaxTheme() {
         fontFamily: 'Montserrat',
         fontSize: 15,
         fontWeight: FontWeight.bold,
-        color: primaryColorDark,
+        color: primaryColor,
       ),
       body1: TextStyle(
         fontFamily: 'Roboto',
         fontSize: 14,
-        color: primaryColorDark,
+        color: primaryColor
       ),
     ),
     appBarTheme: AppBarTheme(

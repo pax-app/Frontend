@@ -4,36 +4,36 @@ import 'package:Pax/screens/category_screen/expansion_category_tab.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatelessWidget {
-
+  List<GeneralCategory> g;
+  List<Category> c;
+  CategoryScreen() {
+    c = populaLista(10);
+    g = p(5, c);
+  }
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        child: ExpansionCategory(p(2)),
+        child: ExpansionCategory(g),
       ),
     );
   }
 
-  
-
   List<Category> populaLista(int n) {
-    List<Category> lista;
-    for (var i = 0; i < n; i++) {
-      Category c = new Category(id: i, name: "nome");
+    List<Category> lista = [];
+    for (var i = 1; i < n; i++) {
+      Category c = new Category(id: i, name: "Category");
       lista.add(c);
     }
-    debugPrint(lista.toString());
+    //debugPrint(lista.toString());
     return lista;
   }
 
-
-  List<GeneralCategory> p(int n) {
-    List<GeneralCategory> l;
+  List<GeneralCategory> p(int n, List<Category> w) {
+    List<GeneralCategory> l = [];
     for (var i = 0; i < n; i++) {
-      l.add(GeneralCategory(
-          id: i, name: "nome", categories: populaLista(5), expanded: false));
+      l.add(GeneralCategory(id: i, name: "GeneralCategory", categories: w));
     }
-    debugPrint(l.toString());
 
     return l;
   }
