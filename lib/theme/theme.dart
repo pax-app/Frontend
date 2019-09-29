@@ -17,7 +17,13 @@ ThemeData _buildPaxTheme() {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
     ),
     scaffoldBackgroundColor: backgroundColor,
-    cardColor: backgroundColor,
+    cardTheme: CardTheme(
+      color: backgroundColor,
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(7),
+      ),
+    ),
     textSelectionColor: secondaryColor,
     errorColor: errorColor,
     primaryColorDark: primaryColorDark,
@@ -43,7 +49,10 @@ ThemeData _buildPaxTheme() {
     appBarTheme: AppBarTheme(
       textTheme: ThemeData.light().textTheme.copyWith(
             title: TextStyle(
-                fontFamily: 'Montserrat', fontSize: 15, color: Colors.black),
+              fontFamily: 'Montserrat',
+              fontSize: 15,
+              color: primaryColorDark,
+            ),
           ),
     ),
   );

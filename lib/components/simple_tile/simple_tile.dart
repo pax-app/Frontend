@@ -7,9 +7,9 @@ class SimpleTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2.0,
+      elevation: CardTheme.of(context).elevation,
+      color: CardTheme.of(context).color,
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
-      color: Colors.white,
       child: InkWell(
         onTap: () {
           debugPrint('Foiiii!!');
