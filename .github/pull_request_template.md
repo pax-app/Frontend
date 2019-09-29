@@ -14,14 +14,5 @@ resolve #
 
 # Responsáveis pela revisão
 
-@esiofreitas (PO)
-@lucasdutraf (PO)
+@esiofreitas (PO) | @lucasdutraf (PO)
 @(Membro do time de desenvolvimento que não esteja envolvido do PR)
-
-# Checklist de document review
-
-- [ ] Conferir se o documento é referenciado corretamente na sidebar 
-- [ ] Conferir se o documento é referenciado corretamente no README da pasta em que se encontra
-- [ ] Conferir se o documento cumpre com os critérios de aceitação da issue
-- [ ] Conferir se o documento não possui erros de português
-- [ ] Conferir se o documento possui as devidas referências
