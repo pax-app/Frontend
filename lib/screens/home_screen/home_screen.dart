@@ -1,25 +1,33 @@
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/components/drawer/drawer_provider.dart';
 import 'package:Pax/components/simple_tile/simple_tile.dart';
 import 'package:Pax/screens/category_screen/category_screen.dart';
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
 import 'package:flutter/material.dart';
-import 'package:Pax/components/drawer/drawer.dart';
+import 'package:Pax/components/drawer/drawer_user.dart';
 import 'package:Pax/screens/home_screen/tabs/home_tab.dart';
 
 class HomeScreen extends StatelessWidget {
   final _pageController = PageController();
+  bool isProvider = true;
+
+  Widget getDrawer() {
+    return this.isProvider
+        ? DrawerProvider(this._pageController)
+        : DrawerUser(this._pageController);
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(getDrawer());
     return PageView(
-      controller: _pageController,
+      controller: this._pageController,
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        ProviderPanel(_pageController),
         Scaffold(
           body: HomeTab(),
-          drawer: CustomDrawer(_pageController),
+          drawer: getDrawer(),
         ),
         //Exemplo de como deve chamar a tela no drawer
         Scaffold(
@@ -32,7 +40,7 @@ class HomeScreen extends StatelessWidget {
             centerTitle: true,
             iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
           ),
-          drawer: CustomDrawer(_pageController),
+          drawer: getDrawer(),
           body: BaseScreen('Hellouuu!!', exemplo()),
         ),
         //Tela de Selecionar categorias
@@ -46,10 +54,12 @@ class HomeScreen extends StatelessWidget {
             centerTitle: true,
             iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
           ),
-          drawer: CustomDrawer(_pageController),
+          drawer: getDrawer(),
           body:
               BaseScreen('Quais categorias você se encaixa?', CategoryScreen()),
         ),
+
+        ProviderPanel(_pageController),
       ],
     );
   }

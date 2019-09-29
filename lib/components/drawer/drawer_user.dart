@@ -46,7 +46,7 @@ class DrawerUser extends StatelessWidget {
                   DrawerTile(
                     this.isProvider ? Icons.swap_horiz : Icons.attach_money,
                     this.isProvider
-                        ? "Voltar para Prestador"
+                        ? "Ir para Prestador"
                         : "Virar Prestador de Serviço",
                     _pageController,
                     5,

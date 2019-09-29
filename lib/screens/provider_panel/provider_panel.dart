@@ -11,6 +11,13 @@ class ProviderPanel extends StatelessWidget {
     return Scaffold(
       drawer: CustomDrawer(this._pageController),
       appBar: WhiteAppBar('Painel do Prestador'),
+      body: Padding(
+        padding: EdgeInsets.all(30),
+        child: Text(
+          'Meus Serviços',
+          style: Theme.of(context).textTheme.title,
+        ),
+      ),
     );
   }
 }
