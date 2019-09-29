@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   bloc_pattern: ^1.5.2
   shimmer: ^1.0.0
+  rxdart: ^0.22.2
 
 dev_dependencies:
   flutter_test:

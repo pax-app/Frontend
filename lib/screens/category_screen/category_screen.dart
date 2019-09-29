@@ -1,26 +1,46 @@
+import 'package:Pax/blocs/category_bloc.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/models/GeneralCategory.dart';
 import 'package:Pax/models/category.dart';
 import 'package:Pax/screens/category_screen/expansion_category_tab.dart';
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 
-class CategoryScreen extends StatelessWidget {
-  List<GeneralCategory> g;
+class CategoryScreen extends StatefulWidget {
+  CategoryScreen({Key key}) : super(key: key);
+
+  _CategoryScreenState createState() => _CategoryScreenState();
+}
+
+class _CategoryScreenState extends State<CategoryScreen> {
   List<Category> c;
-  CategoryScreen() {
-    c = populaLista(10);
-    g = p(5, c);
+  List<int> selectedList = List();
+  String _search = "";
+  
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController searchController = TextEditingController();
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(bottom: 30, right: 20, left: 20, top: 20),
-            child: TextFormField(
+            child: TextField(
               controller: searchController,
+              onChanged: (String search) {
+                //BlocProvider.of<CategoryBloc>(context).inSearch.add(search);
+                debugPrint(search);
+                setState(() {
+                  this._search = search;
+                });
+              },
               style: TextStyle(color: Theme.of(context).primaryColor),
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
@@ -35,17 +55,74 @@ class CategoryScreen extends StatelessWidget {
               ),
             ),
           ),
-          ExpansionCategory(g[0]),
-          ExpansionCategory(g[0]),
-          ExpansionCategory(g[0]),
-          ExpansionCategory(g[0]),
-          SizedBox(height: 30),
-          Button("próximo", (){}, "Default", false),
-          SizedBox(height: 20),
-
+          _search.isEmpty
+              ? ListView(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  children: getExpansionCategory(),
+                )
+              : Container(
+                  child: StreamBuilder(
+                    initialData: List<Category>(),
+                    stream:
+                        BlocProvider.of<CategoryBloc>(context).outCategories,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          itemCount: snapshot.data.length,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          //itemCount: snapshot.data.lenght,
+                          itemBuilder: (context, idx) {
+                            var category = snapshot.data[idx];
+                            return Center(
+                              child: CheckboxListTile(
+                                key: Key(category.id.toString()),
+                                title: Text(
+                                  category.name,
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                                activeColor: Theme.of(context).accentColor,
+                                value: selectedList.contains(category.id),
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    if (!selectedList.contains(category.id)) {
+                                      selectedList.add(category.id);
+                                    } else {
+                                      selectedList.remove(category.id);
+                                    }
+                                  });
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      } else
+                        return Container(
+                          child: Text(
+                            "Não tem! Tchau!",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        );
+                    },
+                  ),
+                )
         ],
       ),
     );
+  }
+
+  List<Widget> getExpansionCategory() {
+    List<GeneralCategory> generalCategories = p(2, populaLista(5));
+    List<Widget> list = List<Widget>();
+    for (var geralCategory in generalCategories) {
+      list.add(ExpansionCategory(geralCategory));
+    }
+    list.add(SizedBox(height: 20));
+    list.add(Button("próximo", () {}, "Default", false));
+    list.add(SizedBox(height: 20));
+    return list.toList();
   }
 
   List<Category> populaLista(int n) {

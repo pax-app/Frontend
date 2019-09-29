@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:Pax/models/category.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:rxdart/subjects.dart';
+import 'package:flutter/material.dart';
 
 class CategoryBloc implements BlocBase {
   List<Category> categories = List<Category>();
@@ -9,7 +11,7 @@ class CategoryBloc implements BlocBase {
   final _searchController = StreamController<String>();
   Sink get inSearch => _searchController.sink;
 
-  final _categoryController = StreamController<List<Category>>();
+  final _categoryController = BehaviorSubject<List<Category>>();
   Stream get outCategories => _categoryController.stream;
 
   CategoryBloc() {
@@ -26,6 +28,7 @@ class CategoryBloc implements BlocBase {
     } else {
       categories = List<Category>();
     }
+    debugPrint(categories.toString());
     _categoryController.sink.add(categories);
   }
 
