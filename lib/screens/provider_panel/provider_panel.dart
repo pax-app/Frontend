@@ -14,50 +14,52 @@ class ProviderPanel extends StatelessWidget {
       'Cancelados': 'assets/illustrations/smudge-purple.png',
       'Finalizados': 'assets/illustrations/smudge-blue.png',
     };
+
     return Scaffold(
       drawer: DrawerUser(this._pageController),
       appBar: WhiteAppBar('Painel do Prestador'),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'Meus Serviços',
-            style: Theme.of(context).textTheme.title,
-          ),
-          Container(
-            height: 115,
-            width: MediaQuery.of(context).size.width,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                ProviderPanelCard(
-                  removeMargin: false,
-                  cardName: 'Pendentes',
-                  img: imagesPaths['Pendentes'],
-                ),
-                ProviderPanelCard(
-                  removeMargin: true,
-                  cardName: 'Cancelados',
-                  img: imagesPaths['Cancelados'],
-                ),
-                ProviderPanelCard(
-                  removeMargin: false,
-                  cardName: 'Finalizados',
-                  img: imagesPaths['Finalizados'],
-                ),
-              ],
+      body: Padding(
+        padding: const EdgeInsets.only(top: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 20, bottom: 20),
+              child: Text(
+                'Meus Serviços',
+                style: Theme.of(context).textTheme.title,
+              ),
             ),
-          ),
-          Divider(height: 70, color: Color.fromRGBO(0, 0, 0, .5)),
-        ],
+            Center(
+              child: Container(
+                height: 115,
+                width: MediaQuery.of(context).size.width,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    ProviderPanelCard(
+                      removeMargin: false,
+                      cardName: 'Pendentes',
+                      img: imagesPaths['Pendentes'],
+                    ),
+                    ProviderPanelCard(
+                      removeMargin: true,
+                      cardName: 'Cancelados',
+                      img: imagesPaths['Cancelados'],
+                    ),
+                    ProviderPanelCard(
+                      removeMargin: false,
+                      cardName: 'Finalizados',
+                      img: imagesPaths['Finalizados'],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Divider(height: 70, color: Color.fromRGBO(0, 0, 0, .2)),
+          ],
+        ),
       ),
     );
   }
 }
-
-// Padding(
-//         padding: const EdgeInsets.all(30),
-//         child: Text(
-//           'Meus Serviços',
-//
-//         ),

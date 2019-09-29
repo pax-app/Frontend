@@ -1,3 +1,4 @@
+import 'package:Pax/components/notification_icon/notification_icon.dart';
 import 'package:flutter/material.dart';
 
 class ProviderPanelCard extends StatelessWidget {
@@ -10,7 +11,7 @@ class ProviderPanelCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: 155,
-        margin: EdgeInsets.symmetric(horizontal: removeMargin ? 0 : 36),
+        margin: EdgeInsets.symmetric(horizontal: removeMargin ? 0 : 25),
         child: Card(
           elevation: CardTheme.of(context).elevation,
           color: CardTheme.of(context).color,
@@ -21,15 +22,15 @@ class ProviderPanelCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             child: Stack(
               alignment: Alignment.center,
+              overflow: Overflow.visible,
               children: <Widget>[
-                Image.asset(
-                  img,
-                  width: 100,
-                ),
-                Text(
-                  this.cardName,
-                  style: Theme.of(context).textTheme.title,
-                ),
+                Image.asset(img, width: 100),
+                Text(this.cardName, style: Theme.of(context).textTheme.title),
+                Positioned(
+                  top: -4,
+                  left: -6,
+                  child: NotificationIcon(3),
+                )
               ],
             ),
           ),
