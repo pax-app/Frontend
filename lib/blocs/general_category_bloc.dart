@@ -8,9 +8,6 @@ class GeneralCategoryBloc implements BlocBase {
   List<GeneralCategory> generalCategories = List<GeneralCategory>();
   List<GeneralCategory> apiGeneralCategories = List<GeneralCategory>();
 
-  final _inGeneralCategoryController = StreamController<String>();
-  Sink get inGeneralCategories => _inGeneralCategoryController.sink;
-
   final _outGeneralCategoryController = BehaviorSubject<List<GeneralCategory>>();
   Stream get outGeneralCategories => _outGeneralCategoryController.stream;
 
@@ -31,9 +28,13 @@ class GeneralCategoryBloc implements BlocBase {
         GeneralCategory(id: 4, name: "Design e Tecnologia", categories: c));
   }
 
+  void getGeneralCategory(){
+    generalCategories = apiGeneralCategories;
+    _outGeneralCategoryController.sink.add(generalCategories);
+  }
+
   @override
   void dispose() {
     _outGeneralCategoryController.close();
-    _inGeneralCategoryController.close();
   }
 }
