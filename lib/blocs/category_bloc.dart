@@ -3,8 +3,8 @@ import 'package:Pax/models/category.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 
 class CategoryBloc implements BlocBase {
-  List<Category> categories;
-  List<Category> apiCategories;
+  List<Category> categories = List<Category>();
+  List<Category> apiCategories = List<Category>();
 
   final _searchController = StreamController<String>();
   Sink get inSearch => _searchController.sink;
