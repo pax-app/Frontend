@@ -9,6 +9,11 @@ class ProviderPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const Map<String, String> imagesPaths = {
+      'Pendentes': 'assets/illustrations/smudge-green.png',
+      'Cancelados': 'assets/illustrations/smudge-purple.png',
+      'Finalizados': 'assets/illustrations/smudge-blue.png',
+    };
     return Scaffold(
       drawer: DrawerUser(this._pageController),
       appBar: WhiteAppBar('Painel do Prestador'),
@@ -20,14 +25,26 @@ class ProviderPanel extends StatelessWidget {
             style: Theme.of(context).textTheme.title,
           ),
           Container(
-            height: 130,
+            height: 115,
             width: MediaQuery.of(context).size.width,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                ProviderPanelCard(removeMargin: false),
-                ProviderPanelCard(removeMargin: true),
-                ProviderPanelCard(removeMargin: false),
+                ProviderPanelCard(
+                  removeMargin: false,
+                  cardName: 'Pendentes',
+                  img: imagesPaths['Pendentes'],
+                ),
+                ProviderPanelCard(
+                  removeMargin: true,
+                  cardName: 'Cancelados',
+                  img: imagesPaths['Cancelados'],
+                ),
+                ProviderPanelCard(
+                  removeMargin: false,
+                  cardName: 'Finalizados',
+                  img: imagesPaths['Finalizados'],
+                ),
               ],
             ),
           ),
