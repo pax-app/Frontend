@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       controller: _pageController,
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        ProviderPanel(),
+        ProviderPanel(_pageController),
         Scaffold(
           body: HomeTab(),
           drawer: CustomDrawer(_pageController),
