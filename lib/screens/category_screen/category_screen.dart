@@ -16,7 +16,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   List<Category> c;
   List<int> selectedList = List();
   String _search = "";
-  
+
   TextEditingController searchController = TextEditingController();
 
   @override
@@ -34,11 +34,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
             padding: EdgeInsets.only(bottom: 30, right: 20, left: 20, top: 20),
             child: TextField(
               controller: searchController,
-              onChanged: (String search) {
+              onChanged: (String search) async {
                 //BlocProvider.of<CategoryBloc>(context).inSearch.add(search);
                 debugPrint(search);
                 setState(() {
                   this._search = search;
+                  BlocProvider.of<CategoryBloc>(context)
+                      .inSearch
+                      .add(this._search);
                 });
               },
               style: TextStyle(color: Theme.of(context).primaryColor),
@@ -68,6 +71,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         BlocProvider.of<CategoryBloc>(context).outCategories,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        debugPrint(snapshot.data.toString());
                         return ListView.builder(
                           itemCount: snapshot.data.length,
                           scrollDirection: Axis.vertical,

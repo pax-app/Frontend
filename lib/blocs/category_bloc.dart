@@ -23,10 +23,12 @@ class CategoryBloc implements BlocBase {
 
   void _search(String search) async {
     if (search != null) {
-      categories =
-          apiCategories.where((category) => category.name.startsWith(search));
+      categories = apiCategories
+          .where((category) => category.name.startsWith(search))
+          .toList();
     } else {
       categories = List<Category>();
+      categories.add(Category(id: 85, name: "Foi"));
     }
     debugPrint(categories.toString());
     _categoryController.sink.add(categories);
