@@ -61,8 +61,8 @@ class HomeScreen extends StatelessWidget {
         //       BaseScreen('Quais categorias você se encaixa?', CategoryScreen()),
         // ),
 
-        BaseScreen("Painel do Prestador", "Meus Serviços", ProviderPanel(), getDrawer())
-
+        BaseScreen("Painel do Prestador", "Meus Serviços", ProviderPanel(),
+            getDrawer())
       ],
     );
   }
