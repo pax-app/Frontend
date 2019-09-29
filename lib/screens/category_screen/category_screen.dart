@@ -79,25 +79,27 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           //itemCount: snapshot.data.lenght,
                           itemBuilder: (context, idx) {
                             var category = snapshot.data[idx];
-                            return Center(
-                              child: CheckboxListTile(
-                                key: Key(category.id.toString()),
-                                title: Text(
-                                  category.name,
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
+                            return Card(
+                              child: Center(
+                                child: CheckboxListTile(
+                                  key: Key(category.id.toString()),
+                                  title: Text(
+                                    category.name,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                  activeColor: Theme.of(context).accentColor,
+                                  value: selectedList.contains(category.id),
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      if (!selectedList.contains(category.id)) {
+                                        selectedList.add(category.id);
+                                      } else {
+                                        selectedList.remove(category.id);
+                                      }
+                                    });
+                                  },
                                 ),
-                                activeColor: Theme.of(context).accentColor,
-                                value: selectedList.contains(category.id),
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    if (!selectedList.contains(category.id)) {
-                                      selectedList.add(category.id);
-                                    } else {
-                                      selectedList.remove(category.id);
-                                    }
-                                  });
-                                },
                               ),
                             );
                           },

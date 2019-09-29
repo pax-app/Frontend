@@ -24,7 +24,8 @@ class CategoryBloc implements BlocBase {
   void _search(String search) async {
     if (search != null) {
       categories = apiCategories
-          .where((category) => category.name.startsWith(search))
+          .where((category) =>
+              category.name.toUpperCase().startsWith(search.toUpperCase()))
           .toList();
     } else {
       categories = List<Category>();
