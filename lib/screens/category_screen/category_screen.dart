@@ -39,7 +39,10 @@ class CategoryScreen extends StatelessWidget {
           ExpansionCategory(g[0]),
           ExpansionCategory(g[0]),
           ExpansionCategory(g[0]),
-          Button("próximo", (){}, "Default", false)
+          SizedBox(height: 30),
+          Button("próximo", (){}, "Default", false),
+          SizedBox(height: 20),
+
         ],
       ),
     );
