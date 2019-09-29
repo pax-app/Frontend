@@ -28,11 +28,19 @@ class HomeScreen extends StatelessWidget {
           body: HomeTab(),
           drawer: getDrawer(),
         ),
-        BaseScreen("Exemplo", "Hellou", exemplo(), getDrawer()),
-        BaseScreen("Categorias", "Quais categorias você se encaixa?",
-            CategoryScreen(), getDrawer()),
-        BaseScreen("Painel do Prestador", "Meus Serviços", ProviderPanel(),
-            getDrawer())
+        BaseScreen(
+          "Exemplo",
+          "Hellou",
+          exemplo(),
+          getDrawer(),
+        ),
+        BaseScreen(
+          "Categorias",
+          "Quais categorias você se encaixa?",
+          CategoryScreen(),
+          getDrawer(),
+        ),
+        ProviderPanel(this._pageController),
       ],
     );
   }
