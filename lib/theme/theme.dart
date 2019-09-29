@@ -18,7 +18,7 @@ ThemeData _buildPaxTheme() {
     ),
     scaffoldBackgroundColor: backgroundColor,
     cardTheme: CardTheme(
-      color: backgroundColor,
+      color: colorWhite,
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7),
@@ -41,11 +41,7 @@ ThemeData _buildPaxTheme() {
         fontWeight: FontWeight.bold,
         color: primaryColor,
       ),
-      body1: TextStyle(
-        fontFamily: 'Roboto',
-        fontSize: 14,
-        color: primaryColor
-      ),
+      body1: TextStyle(fontFamily: 'Roboto', fontSize: 14, color: primaryColor),
     ),
     appBarTheme: AppBarTheme(
       textTheme: ThemeData.light().textTheme.copyWith(
