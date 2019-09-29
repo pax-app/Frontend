@@ -31,7 +31,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(bottom: 30, right: 20, left: 20, top: 20),
+            padding: EdgeInsets.only(bottom: 30, right: 10, left: 10, top: 20),
             child: TextField(
               controller: searchController,
               onChanged: (String search) async {
