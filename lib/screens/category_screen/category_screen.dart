@@ -17,15 +17,22 @@ class CategoryScreen extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(bottom: 30, right: 20, left: 20),
+            padding: EdgeInsets.only(bottom: 30, right: 20, left: 20, top: 20),
             child: TextFormField(
               controller: searchController,
-              autofocus: true,
               style: TextStyle(color: Theme.of(context).primaryColor),
               keyboardType: TextInputType.text,
-              decoration: InputDecoration(labelText: "Buscar categoria"),
+              decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).accentColor, width: 2),
+                ),
+                labelText: "Buscar categoria",
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 5.0),
+                ),
+              ),
             ),
-        
           ),
           ExpansionCategory(g[0]),
           ExpansionCategory(g[0]),
