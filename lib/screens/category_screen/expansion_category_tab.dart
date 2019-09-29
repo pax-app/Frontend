@@ -1,16 +1,17 @@
 import 'package:Pax/models/GeneralCategory.dart';
+import 'package:Pax/models/category.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/material.dart';
 
 class ExpansionCategory extends StatefulWidget {
-  final List<GeneralCategory> generalCategory;
+  final GeneralCategory generalCategory;
   ExpansionCategory(this.generalCategory);
   _ExpansionCategoryState createState() =>
       _ExpansionCategoryState(generalCategory);
 }
 
 class _ExpansionCategoryState extends State<ExpansionCategory> {
-  final List<GeneralCategory> generalCategory;
+  final GeneralCategory generalCategory;
   _ExpansionCategoryState(this.generalCategory);
   bool isExpanded = false;
   @override
@@ -21,7 +22,7 @@ class _ExpansionCategoryState extends State<ExpansionCategory> {
         onExpansionChanged: (bool expanding) =>
             setState(() => this.isExpanded = expanding),
         title: Text(
-          generalCategory[0].name,
+          generalCategory.name,
           textAlign: TextAlign.start,
           style: TextStyle(
               fontWeight: FontWeight.w500,
@@ -29,8 +30,16 @@ class _ExpansionCategoryState extends State<ExpansionCategory> {
                   ? Theme.of(context).accentColor
                   : Theme.of(context).textTheme.body1.color),
         ),
-        children: <Widget>[
-          Center(
+        children: gerateCategoryChekbox(generalCategory.categories),
+      ),
+    );
+  }
+
+  List<Center> gerateCategoryChekbox(List<Category> categories){
+    List<Center> list = [];
+    for (var cateory in categories) {
+      list.add(
+        Center(
             child: CheckboxListTile(
               title: const Text('Animate Slowly'),
               value: timeDilation != 1.0,
@@ -39,12 +48,11 @@ class _ExpansionCategoryState extends State<ExpansionCategory> {
                   timeDilation = value ? 2.0 : 1.0;
                 });
               },
-              secondary: const Icon(Icons.hourglass_empty),
             ),
           )
-        ],
-      ),
-    );
+      );
+    }
+    return list.toList();
   }
 }
 

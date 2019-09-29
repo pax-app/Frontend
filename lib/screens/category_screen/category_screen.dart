@@ -13,8 +13,11 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        child: ExpansionCategory(g),
+      child: Column(
+        children: <Widget>[
+          ExpansionCategory(g[0]),
+          ExpansionCategory(g[0])
+        ],
       ),
     );
   }
