@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class WhiteAppBar extends AppBar {
-  WhiteAppBar(String title)
+  WhiteAppBar(String title, context)
       : super(
           centerTitle: true,
           backgroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
           title: Text(
             title,
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Theme.of(context).primaryColor),
           ),
         );
 }
