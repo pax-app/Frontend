@@ -1,4 +1,5 @@
 import 'package:Pax/components/app_bar/white_appbar.dart';
+import 'package:Pax/components/chat_tile/chat_tile.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
 import 'package:Pax/components/provider_panel_card/provider_panel_card.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,17 @@ class ProviderPanel extends StatelessWidget {
                 ),
               ),
             ),
-            Divider(height: 70, color: Color.fromRGBO(0, 0, 0, .2)),
+            Divider(height: 60, color: Color.fromRGBO(0, 0, 0, .2)),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, bottom: 20),
+              child: Text(
+                'Minhas Mensagens Recentes',
+                style: Theme.of(context).textTheme.title,
+              ),
+            ),
+            ChatTile(username: 'Roger', message: 'Fala mané!'),
+            ChatTile(
+                username: 'Dutra', message: 'Mexam na Planilha do ZenHub!'),
           ],
         ),
       ),
