@@ -1,4 +1,5 @@
 import 'package:Pax/theme/colors.dart';
+import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
@@ -10,6 +11,7 @@ ThemeData _buildPaxTheme() {
   return base.copyWith(
     accentColor: secondaryColor,
     primaryColor: primaryColor,
+    secondaryHeaderColor: secondaryColorLight,
     buttonTheme: base.buttonTheme.copyWith(
       buttonColor: secondaryColor,
       textTheme: ButtonTextTheme.primary,

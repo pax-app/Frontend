@@ -21,8 +21,9 @@ class Button extends StatelessWidget {
       case 'outline':
         return OutlineButton(
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-          // highlightedBorderColor: Theme.of(context).secondaryHeaderColor,
-          // splashColor: Theme.of(context).secondaryHeaderColor,
+          borderSide: BorderSide(color: Theme.of(context).accentColor),
+          highlightedBorderColor: Theme.of(context).secondaryHeaderColor,
+          splashColor: Theme.of(context).secondaryHeaderColor,
           child: Text(
             text.toUpperCase(),
             style: Theme.of(context).textTheme.title.copyWith(
@@ -30,7 +31,6 @@ class Button extends StatelessWidget {
                 ),
           ),
           onPressed: function,
-          borderSide: BorderSide(color: Theme.of(context).accentColor),
         );
         break;
       case 'danger':
