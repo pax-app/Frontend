@@ -50,7 +50,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      color: Theme.of(context).accentColor, width: 2),
+                    color: Theme.of(context).accentColor,
+                    width: 2,
+                  ),
                 ),
                 labelText: "Buscar categoria",
                 border: OutlineInputBorder(
@@ -114,8 +116,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       title: Text(
                                         category.name,
                                         style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor),
+                                          color: Theme.of(context).primaryColor,
+                                        ),
                                       ),
                                       activeColor:
                                           Theme.of(context).accentColor,

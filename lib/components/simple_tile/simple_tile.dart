@@ -11,6 +11,7 @@ class SimpleTile extends StatelessWidget {
       color: CardTheme.of(context).color,
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
       child: InkWell(
+        borderRadius: BorderRadius.circular(7.6),
         onTap: () {
           debugPrint('Foiiii!!');
         },
