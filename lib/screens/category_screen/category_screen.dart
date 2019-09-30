@@ -84,12 +84,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             },
                           );
                         } else {
-                          return Button("próximo", () {}, "Default", false);
+                          return Button(
+                              buttonText: 'Próximo',
+                              tapHandler: () {},
+                              type: 'default',
+                              isSmall: false);
                         }
                       },
                     ),
                     SizedBox(height: 20),
-                    Button("próximo", () {}, "Default", false),
+                    Button(
+                        buttonText: 'Próximo',
+                        tapHandler: () {},
+                        type: 'default',
+                        isSmall: false),
                     SizedBox(height: 20),
                   ],
                 )
@@ -147,7 +155,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         },
                       ),
                       SizedBox(height: 20),
-                      Button("próximo", () {}, "Default", false),
+                      Button(
+                          buttonText: 'Próximo',
+                          tapHandler: () {},
+                          type: 'default',
+                          isSmall: false)
                     ],
                   ),
                 )

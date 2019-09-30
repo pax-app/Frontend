@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         BaseScreen(
-          "Opões de Serviço",
+          "Opções de Serviço",
           "",
           exemplo(),
           getDrawer(),
@@ -44,17 +44,48 @@ class HomeScreen extends StatelessWidget {
 
 Widget exemplo() {
   return Container(
+    height: 560,
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         SimpleTile('services list'),
         SimpleTile('services list'),
-        Button("default", () {}, "default", false),
-        Button("Default small", () {}, "default", true),
-        Button("Danger", () {}, "danger", false),
-        Button("Danger small", () {}, "danger", true),
-        Button("outline", () {}, "outline", false),
-        Button("outline small", () {}, "outline", true),
-        Button("outline small", () {}, "outline", true),
+        Button(
+          buttonText: 'Entrar',
+          tapHandler: () {},
+          type: 'default',
+          isSmall: false,
+        ),
+        Button(
+          buttonText: 'Ficou Boa',
+          tapHandler: () {},
+          type: 'default',
+          isSmall: true,
+        ),
+        Button(
+          buttonText: 'Reportar',
+          tapHandler: () {},
+          type: 'danger',
+          isSmall: false,
+        ),
+        Button(
+          buttonText: 'Small',
+          tapHandler: () {},
+          type: 'danger',
+          isSmall: true,
+        ),
+        Button(
+          buttonText: 'Justificativa',
+          tapHandler: () {},
+          type: 'outline',
+          isSmall: false,
+        ),
+        Button(
+          buttonText: 'a',
+          tapHandler: () {},
+          type: 'outline',
+          isSmall: true,
+        ),
       ],
     ),
   );

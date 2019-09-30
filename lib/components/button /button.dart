@@ -2,22 +2,23 @@ import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  final Function function;
-  final String text;
+  final Function tapHandler;
+  final String buttonText;
   final String type;
-  final bool small;
+  final bool isSmall;
 
-  Button(this.text, this.function, this.type, this.small);
+  Button({this.buttonText, this.tapHandler, this.type, this.isSmall});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: small ? 140 : double.infinity,
-      child: gettypeButton(type, text, function, context),
+      width: isSmall ? 140 : double.infinity,
+      child: gettypeButton(type, buttonText, tapHandler, context),
     );
   }
 
-  Widget gettypeButton(String type, String text, Function function, context) {
+  Widget gettypeButton(
+      String type, String buttonText, Function tapHandler, context) {
     switch (type) {
       case 'outline':
         return OutlineButton(
@@ -25,23 +26,23 @@ class Button extends StatelessWidget {
           highlightedBorderColor: secondaryColorLight,
           splashColor: secondaryColorLight,
           child: Text(
-            text.toUpperCase(),
+            buttonText.toUpperCase(),
             style: Theme.of(context).textTheme.title.copyWith(
                   color: Theme.of(context).accentColor,
                 ),
           ),
-          onPressed: function,
+          onPressed: tapHandler,
         );
         break;
       case 'danger':
         return OutlineButton(
           child: Text(
-            text.toUpperCase(),
+            buttonText.toUpperCase(),
             style: Theme.of(context).textTheme.title.copyWith(
                   color: Theme.of(context).errorColor,
                 ),
           ),
-          onPressed: function,
+          onPressed: tapHandler,
           borderSide: BorderSide(color: Theme.of(context).errorColor),
           highlightedBorderColor: errorColorLight,
           splashColor: errorColorLight,
@@ -49,8 +50,8 @@ class Button extends StatelessWidget {
         break;
       default:
         return RaisedButton(
-          onPressed: function,
-          child: Text(text.toUpperCase()),
+          onPressed: tapHandler,
+          child: Text(buttonText.toUpperCase()),
         );
     }
   }
