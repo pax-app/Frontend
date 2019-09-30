@@ -11,45 +11,42 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: small ? null : double.infinity,
-        child: gettypeButton(type, text, function, context));
+      width: small ? null : double.infinity,
+      child: gettypeButton(type, text, function, context),
+    );
   }
 
   Widget gettypeButton(String type, String text, Function function, context) {
     switch (type) {
       case 'outline':
         return OutlineButton(
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+          // highlightedBorderColor: Theme.of(context).secondaryHeaderColor,
+          // splashColor: Theme.of(context).secondaryHeaderColor,
           child: Text(
             text.toUpperCase(),
-            style: TextStyle(color: Theme.of(context).accentColor),
+            style: Theme.of(context).textTheme.title.copyWith(
+                  color: Theme.of(context).accentColor,
+                ),
           ),
           onPressed: function,
           borderSide: BorderSide(color: Theme.of(context).accentColor),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
         );
         break;
       case 'danger':
         return OutlineButton(
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
           child: Text(
             text.toUpperCase(),
             style: TextStyle(color: Theme.of(context).errorColor),
           ),
           onPressed: function,
           borderSide: BorderSide(color: Theme.of(context).errorColor),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
           highlightColor: Theme.of(context).errorColor,
           highlightedBorderColor: Colors.white,
         );
         break;
       default:
         return RaisedButton(
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
           onPressed: function,
           child: Text(text.toUpperCase()),
         );

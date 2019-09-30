@@ -13,8 +13,9 @@ ThemeData _buildPaxTheme() {
     buttonTheme: base.buttonTheme.copyWith(
       buttonColor: secondaryColor,
       textTheme: ButtonTextTheme.primary,
-      disabledColor: Colors.red,
+      disabledColor: Colors.grey,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
     ),
     scaffoldBackgroundColor: backgroundColor,
     cardTheme: CardTheme(
