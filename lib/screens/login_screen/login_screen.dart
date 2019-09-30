@@ -1,9 +1,26 @@
+import 'package:Pax/blocs/login_bloc.dart';
 import 'package:Pax/components/auth/auth_button.dart';
+import 'package:Pax/screens/recover_password/recover_password.dart';
+import 'package:Pax/screens/signup_screen/signup_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../components/auth/auth_input.dart';
 
 class LoginScreen extends StatelessWidget {
+  final _loginBloc = LoginBloc();
+
+  void recoverPassword(BuildContext ctx) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return RecoverPassordScreen();
+    }));
+  }
+
+  void signUp(BuildContext ctx) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return SignUpScreen();
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,31 +43,51 @@ class LoginScreen extends StatelessWidget {
                   AuthInput(
                     labelText: "E-mail",
                     inputType: TextInputType.emailAddress,
+                    onChanged: _loginBloc.emailSink,
                   ),
                   SizedBox(height: 25),
                   AuthInput(
                     labelText: "Senha",
                     obscure: true,
+                    onChanged: _loginBloc.passwordSink,
                   ),
                   SizedBox(
                     height: 40,
                   ),
-                  AuthButton(
-                    text: "Entrar",
-                  ),
+                  StreamBuilder<Object>(
+                      stream: _loginBloc.validInputsStream,
+                      builder: (context, snapshot) {
+                        return AuthButton(
+                            text: "Entrar",
+                            onPressed:
+                                snapshot.hasData ? _loginBloc.logIn : null);
+                      }),
                   Container(
-                    margin: EdgeInsets.only(top: 80),
+                    margin: EdgeInsets.only(top: 60),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          "RECUPERAR A SENHA",
-                          style: TextStyle(color: Colors.white, fontSize: 12),
+                        InkWell(
+                          onTap: () => this.recoverPassword(context),
+                          child: Container(
+                            padding: EdgeInsets.only(top: 20, bottom: 20),
+                            child: Text(
+                              "RECUPERAR A SENHA",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 12),
+                            ),
+                          ),
                         ),
-                        Text(
-                          "CRIE UMA CONTA",
-                          style:
-                              TextStyle(color: Color(0xff78aa43), fontSize: 12),
+                        InkWell(
+                          onTap: () => this.signUp(context),
+                          child: Container(
+                            padding: EdgeInsets.only(top: 20, bottom: 20),
+                            child: Text(
+                              "CRIE UMA CONTA",
+                              style: TextStyle(
+                                  color: Color(0xff78aa43), fontSize: 12),
+                            ),
+                          ),
                         )
                       ],
                     ),
