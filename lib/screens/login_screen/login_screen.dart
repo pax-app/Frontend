@@ -2,13 +2,14 @@ import 'package:Pax/blocs/login_bloc.dart';
 import 'package:Pax/components/auth/auth_button.dart';
 import 'package:Pax/screens/recover_password/recover_password.dart';
 import 'package:Pax/screens/signup_screen/signup_screen.dart';
+import 'package:Pax/screens/home_screen/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../components/auth/auth_input.dart';
 
-class LoginScreen extends StatelessWidget {
-  final _loginBloc = LoginBloc();
+final _loginBloc = LoginBloc();
 
+class LoginScreen extends StatelessWidget {
   void recoverPassword(BuildContext ctx) {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return RecoverPassordScreen();
@@ -21,8 +22,19 @@ class LoginScreen extends StatelessWidget {
     }));
   }
 
+  void doLogin(BuildContext ctx, bool login) async {
+    var logged;
+    if (login) logged = await _loginBloc.logIn();
+    logged = login ? logged : await _loginBloc.checkIfUserIsLogged();
+    if (logged)
+      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+        return HomeScreen();
+      }));
+  }
+
   @override
   Widget build(BuildContext context) {
+    doLogin(context, false);
     return Scaffold(
         backgroundColor: Color(0xff454545),
         body: Stack(alignment: Alignment.center, children: <Widget>[
@@ -59,8 +71,9 @@ class LoginScreen extends StatelessWidget {
                       builder: (context, snapshot) {
                         return AuthButton(
                             text: "Entrar",
-                            onPressed:
-                                snapshot.hasData ? _loginBloc.logIn : null);
+                            onPressed: snapshot.hasData
+                                ? () => this.doLogin(context, true)
+                                : null);
                       }),
                   Container(
                     margin: EdgeInsets.only(top: 60),

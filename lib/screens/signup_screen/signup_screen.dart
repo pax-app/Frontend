@@ -2,12 +2,21 @@ import 'package:Pax/blocs/signup_bloc.dart';
 import 'package:Pax/components/auth/auth_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:Pax/screens/home_screen/home_screen.dart';
 import '../../components/auth/auth_input.dart';
 
 class SignUpScreen extends StatelessWidget {
   handler(bool param) {}
 
   final _signupBloc = SignUpBloc();
+
+  void doSignUp(BuildContext ctx) async {
+    var logged = await _signupBloc.signUp();
+    if (logged)
+      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+        return HomeScreen();
+      }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,15 +109,15 @@ class SignUpScreen extends StatelessWidget {
                     height: 15,
                   ),
                   StreamBuilder<bool>(
-                      // stream: _signupBloc.validInputsStream,
+                      stream: _signupBloc.validInputsStream,
                       builder: (context, snapshot) {
-                    return AuthButton(
-                      text: "Criar",
-                      // onPressed:
-                      //     snapshot.hasData ? _signupBloc.signUp : null,
-                      onPressed: _signupBloc.signUp,
-                    );
-                  }),
+                        return AuthButton(
+                          text: "Criar",
+                          // onPressed:
+                          //     snapshot.hasData ? _signupBloc.signUp : null,
+                          onPressed: () => doSignUp(context),
+                        );
+                      }),
                 ],
               ),
             ),
