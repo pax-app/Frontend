@@ -20,7 +20,7 @@ class GeneralCategoryBloc implements BlocBase {
     c.add(Category(id: 78, name: "Lavar casa"));
     c.add(Category(id: 99, name: "Deu bom"));
     apiGeneralCategories.add(
-      GeneralCategory(id: 1, name: "Assistência Técinica", categories: c),
+      GeneralCategory(id: 1, name: "Assistência Técnica", categories: c),
     );
     apiGeneralCategories.add(
       GeneralCategory(id: 2, name: "Reformas", categories: c),

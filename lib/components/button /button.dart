@@ -18,7 +18,11 @@ class Button extends StatelessWidget {
   }
 
   Widget gettypeButton(
-      String type, String buttonText, Function tapHandler, context) {
+    String type,
+    String buttonText,
+    Function tapHandler,
+    context,
+  ) {
     switch (type) {
       case 'outline':
         return OutlineButton(
@@ -49,9 +53,36 @@ class Button extends StatelessWidget {
         );
         break;
       default:
-        return RaisedButton(
-          onPressed: tapHandler,
-          child: Text(buttonText.toUpperCase()),
+        return Material(
+          color: Theme.of(context).accentColor,
+          borderRadius: BorderRadius.circular(30),
+          child: InkWell(
+            splashColor: Colors.lightGreenAccent,
+            borderRadius: BorderRadius.circular(30),
+            onTap: tapHandler,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 17),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: primaryButtonShadow,
+                    blurRadius: 4,
+                    spreadRadius: 1.0,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Text(
+                buttonText.toUpperCase(),
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .title
+                    .copyWith(color: colorWhite),
+              ),
+            ),
+          ),
         );
     }
   }
