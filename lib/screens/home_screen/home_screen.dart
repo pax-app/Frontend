@@ -24,9 +24,18 @@ class HomeScreen extends StatelessWidget {
       controller: this._pageController,
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        BaseScreen("Opões de Serviço", "", exemplo(), getDrawer()),
-        BaseScreen("Categorias", "Quais categorias você se encaixa?",
-            CategoryScreen(), getDrawer()),
+        BaseScreen(
+          "Opões de Serviço",
+          "",
+          exemplo(),
+          getDrawer(),
+        ),
+        BaseScreen(
+          "Categorias",
+          "Quais categorias você se encaixa?",
+          CategoryScreen(),
+          getDrawer(),
+        ),
         ProviderPanel(this._pageController),
       ],
     );

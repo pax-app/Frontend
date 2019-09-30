@@ -8,7 +8,8 @@ class GeneralCategoryBloc implements BlocBase {
   List<GeneralCategory> generalCategories = List<GeneralCategory>();
   List<GeneralCategory> apiGeneralCategories = List<GeneralCategory>();
 
-  final _outGeneralCategoryController = BehaviorSubject<List<GeneralCategory>>();
+  final _outGeneralCategoryController =
+      BehaviorSubject<List<GeneralCategory>>();
   Stream get outGeneralCategories => _outGeneralCategoryController.stream;
 
   GeneralCategoryBloc() {
@@ -19,16 +20,19 @@ class GeneralCategoryBloc implements BlocBase {
     c.add(Category(id: 78, name: "Lavar casa"));
     c.add(Category(id: 99, name: "Deu bom"));
     apiGeneralCategories.add(
-        GeneralCategory(id: 1, name: "Assistência Técinica", categories: c));
-    apiGeneralCategories
-        .add(GeneralCategory(id: 2, name: "Reformas", categories: c));
+      GeneralCategory(id: 1, name: "Assistência Técinica", categories: c),
+    );
     apiGeneralCategories.add(
-        GeneralCategory(id: 3, name: "Serviços Domésticos", categories: c));
+      GeneralCategory(id: 2, name: "Reformas", categories: c),
+    );
     apiGeneralCategories.add(
-        GeneralCategory(id: 4, name: "Design e Tecnologia", categories: c));
+      GeneralCategory(id: 3, name: "Serviços Domésticos", categories: c),
+    );
+    apiGeneralCategories.add(
+      GeneralCategory(id: 4, name: "Design e Tecnologia", categories: c),
+    );
 
     _outGeneralCategoryController.sink.add(apiGeneralCategories);
- 
   }
 
   @override

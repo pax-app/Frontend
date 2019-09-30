@@ -33,7 +33,6 @@ class HomeTab extends StatelessWidget {
             ),
           ],
         ),
-      
       ],
     );
   }
