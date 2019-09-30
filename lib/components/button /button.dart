@@ -1,3 +1,4 @@
+import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
@@ -11,7 +12,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: small ? null : double.infinity,
+      width: small ? 140 : double.infinity,
       child: gettypeButton(type, text, function, context),
     );
   }
@@ -20,10 +21,9 @@ class Button extends StatelessWidget {
     switch (type) {
       case 'outline':
         return OutlineButton(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
           borderSide: BorderSide(color: Theme.of(context).accentColor),
-          highlightedBorderColor: Theme.of(context).secondaryHeaderColor,
-          splashColor: Theme.of(context).secondaryHeaderColor,
+          highlightedBorderColor: secondaryColorLight,
+          splashColor: secondaryColorLight,
           child: Text(
             text.toUpperCase(),
             style: Theme.of(context).textTheme.title.copyWith(
@@ -37,12 +37,14 @@ class Button extends StatelessWidget {
         return OutlineButton(
           child: Text(
             text.toUpperCase(),
-            style: TextStyle(color: Theme.of(context).errorColor),
+            style: Theme.of(context).textTheme.title.copyWith(
+                  color: Theme.of(context).errorColor,
+                ),
           ),
           onPressed: function,
           borderSide: BorderSide(color: Theme.of(context).errorColor),
-          highlightColor: Theme.of(context).errorColor,
-          highlightedBorderColor: Colors.white,
+          highlightedBorderColor: errorColorLight,
+          splashColor: errorColorLight,
         );
         break;
       default:

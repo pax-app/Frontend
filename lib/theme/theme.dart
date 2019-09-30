@@ -11,13 +11,12 @@ ThemeData _buildPaxTheme() {
   return base.copyWith(
     accentColor: secondaryColor,
     primaryColor: primaryColor,
-    secondaryHeaderColor: secondaryColorLight,
     buttonTheme: base.buttonTheme.copyWith(
       buttonColor: secondaryColor,
       textTheme: ButtonTextTheme.primary,
       disabledColor: Colors.grey,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 17),
     ),
     scaffoldBackgroundColor: backgroundColor,
     cardTheme: CardTheme(
