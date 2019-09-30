@@ -55,6 +55,7 @@ flutter:
   assets:
     - assets/logo/sidebar_logo.png
     - assets/illustrations/
+    - assets/categories-img/
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
