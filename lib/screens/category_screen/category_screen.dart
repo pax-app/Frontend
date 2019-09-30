@@ -92,51 +92,61 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ],
                 )
               : Container(
-                  child: StreamBuilder(
-                    initialData: List<Category>(),
-                    stream:
-                        BlocProvider.of<CategoryBloc>(context).outCategories,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                          itemCount: snapshot.data.length,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemBuilder: (context, idx) {
-                            var category = snapshot.data[idx];
-                            return Card(
-                              child: Center(
-                                child: CheckboxListTile(
-                                  key: Key(category.id.toString()),
-                                  title: Text(
-                                    category.name,
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor),
+                  child: Column(
+                    children: <Widget>[
+                      StreamBuilder(
+                        initialData: List<Category>(),
+                        stream: BlocProvider.of<CategoryBloc>(context)
+                            .outCategories,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data.length,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemBuilder: (context, idx) {
+                                var category = snapshot.data[idx];
+                                return Card(
+                                  child: Center(
+                                    child: CheckboxListTile(
+                                      key: Key(category.id.toString()),
+                                      title: Text(
+                                        category.name,
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                      activeColor:
+                                          Theme.of(context).accentColor,
+                                      value: selectedList.contains(category.id),
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          if (!selectedList
+                                              .contains(category.id)) {
+                                            selectedList.add(category.id);
+                                          } else {
+                                            selectedList.remove(category.id);
+                                          }
+                                        });
+                                      },
+                                    ),
                                   ),
-                                  activeColor: Theme.of(context).accentColor,
-                                  value: selectedList.contains(category.id),
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (!selectedList.contains(category.id)) {
-                                        selectedList.add(category.id);
-                                      } else {
-                                        selectedList.remove(category.id);
-                                      }
-                                    });
-                                  },
-                                ),
+                                );
+                              },
+                            );
+                          } else
+                            return Container(
+                              child: Text(
+                                "Não tem! Tchau!",
+                                style: TextStyle(color: Colors.black),
                               ),
                             );
-                          },
-                        );
-                      } else
-                        return Container(
-                          child: Text(
-                            "Não tem! Tchau!",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        );
-                    },
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      Button("próximo", () {}, "Default", false),
+                    ],
                   ),
                 )
         ],
