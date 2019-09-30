@@ -14,10 +14,10 @@ class GeneralCategoryBloc implements BlocBase {
   GeneralCategoryBloc() {
     List<Category> c = List<Category>();
     c.add(Category(id: 7, name: "Arrumar algo"));
-    c.add(Category(id: 7, name: "Algo"));
-    c.add(Category(id: 7, name: "Trabalho"));
-    c.add(Category(id: 7, name: "Lavar casa"));
-    c.add(Category(id: 7, name: "Deu bom"));
+    c.add(Category(id: 8, name: "Algo"));
+    c.add(Category(id: 10, name: "Trabalho"));
+    c.add(Category(id: 78, name: "Lavar casa"));
+    c.add(Category(id: 99, name: "Deu bom"));
     apiGeneralCategories.add(
         GeneralCategory(id: 1, name: "Assistência Técinica", categories: c));
     apiGeneralCategories
@@ -26,11 +26,9 @@ class GeneralCategoryBloc implements BlocBase {
         GeneralCategory(id: 3, name: "Serviços Domésticos", categories: c));
     apiGeneralCategories.add(
         GeneralCategory(id: 4, name: "Design e Tecnologia", categories: c));
-  }
 
-  void getGeneralCategory(){
-    generalCategories = apiGeneralCategories;
-    _outGeneralCategoryController.sink.add(generalCategories);
+    _outGeneralCategoryController.sink.add(apiGeneralCategories);
+ 
   }
 
   @override

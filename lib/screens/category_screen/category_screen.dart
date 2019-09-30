@@ -5,6 +5,7 @@ import 'package:Pax/models/category.dart';
 import 'package:Pax/screens/category_screen/expansion_category_tab.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:Pax/blocs/general_category_bloc.dart';
 
 class CategoryScreen extends StatefulWidget {
   CategoryScreen({Key key}) : super(key: key);
@@ -63,7 +64,32 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   physics: NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  children: getExpansionCategory(),
+                  children: <Widget>[
+                    StreamBuilder(
+                      initialData: List<GeneralCategory>(),
+                      stream: BlocProvider.of<GeneralCategoryBloc>(context)
+                          .outGeneralCategories,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data.length,
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemBuilder: (context, idx) {
+                              var geralCategory = snapshot.data[idx];
+                              return ExpansionCategory(geralCategory);
+                            },
+                          );
+                        } else {
+                          return Button("próximo", () {}, "Default", false);
+                        }
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    Button("próximo", () {}, "Default", false),
+                    SizedBox(height: 20),
+                  ],
                 )
               : Container(
                   child: StreamBuilder(
@@ -72,12 +98,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         BlocProvider.of<CategoryBloc>(context).outCategories,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        debugPrint(snapshot.data.toString());
                         return ListView.builder(
                           itemCount: snapshot.data.length,
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          //itemCount: snapshot.data.lenght,
                           itemBuilder: (context, idx) {
                             var category = snapshot.data[idx];
                             return Card(
@@ -126,9 +150,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     for (var geralCategory in generalCategories) {
       list.add(ExpansionCategory(geralCategory));
     }
-    list.add(SizedBox(height: 20));
-    list.add(Button("próximo", () {}, "Default", false));
-    list.add(SizedBox(height: 20));
+
     return list.toList();
   }
 
