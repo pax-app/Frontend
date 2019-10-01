@@ -11,18 +11,31 @@ class InfoTab extends StatelessWidget {
           style: Theme.of(context).textTheme.body1,
         ),
         SizedBox(
-          height: 30.0,
+          height: 50.0,
         ),
-        taskItem(1, 'Envie-nos alguns documentos', context),
-        taskItem(2, 'Selecione suas áreas de atuação', context),
-        taskItem(3, 'Capriche ao preencher seu perfil', context),
-        taskItem(4, 'Nossa equipe lhe retornará', context),
+        Padding(
+          padding: EdgeInsets.only(left: 20.0),
+          child: Column(
+            children: <Widget>[
+              taskItem(1, 'Envie-nos alguns documentos', context),
+              taskItem(2, 'Selecione suas áreas de atuação', context),
+              taskItem(3, 'Capriche ao preencher seu perfil', context),
+              taskItem(4, 'Nossa equipe lhe retornará', context),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 70.0,
+        ),
         Button(
           buttonText: 'Vamos lá',
           type: 'default',
           tapHandler: () {},
           isSmall: false,
-        )
+        ),
+        SizedBox(
+          height: 20.0,
+        ),
       ],
     );
   }
@@ -37,8 +50,8 @@ class InfoTab extends StatelessWidget {
               style: TextStyle(color: Theme.of(context).accentColor),
             ),
           ),
-          height: 25,
-          width: 25,
+          height: 30,
+          width: 30,
           decoration: BoxDecoration(
             color: Colors.transparent,
             borderRadius: BorderRadius.all(Radius.circular(50.0)),
