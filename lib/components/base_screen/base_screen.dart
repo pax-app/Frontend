@@ -34,7 +34,7 @@ class BaseScreen extends StatelessWidget {
                     ),
                   ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Container(
                 child: body,
               ),
