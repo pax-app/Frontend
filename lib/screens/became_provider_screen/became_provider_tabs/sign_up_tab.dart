@@ -23,12 +23,12 @@ class _SignUpTabState extends State<SignUpTab> {
         }, TextInputType.number, 1),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
-          child: InkWell(
-            onTap: () {},
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              InkWell(
+                onTap: () {},
+                child: Container(
                   padding:
                       EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   decoration: BoxDecoration(
@@ -45,8 +45,8 @@ class _SignUpTabState extends State<SignUpTab> {
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         SizedBox(
