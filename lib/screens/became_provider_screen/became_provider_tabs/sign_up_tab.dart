@@ -12,6 +12,7 @@ class _SignUpTabState extends State<SignUpTab> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        SizedBox(height: 20),
         TextInput('Nome', 'Nome Completo', true, (String value) {
           return value.contains('@') ? 'Do not use the @ char.' : null;
         }, TextInputType.text, 1),
@@ -50,7 +51,7 @@ class _SignUpTabState extends State<SignUpTab> {
           ),
         ),
         SizedBox(
-          height: 50.0,
+          height: 70.0,
         ),
         Button(
           buttonText: 'Próximo',
