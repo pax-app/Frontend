@@ -3,6 +3,7 @@ import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/drawer/drawer_provider.dart';
 import 'package:Pax/components/simple_tile/simple_tile.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/info_tab.dart';
+import 'package:Pax/screens/became_provider_screen/became_provider_tabs/profile_image_tab.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/sign_up_tab.dart';
 import 'package:Pax/screens/category_screen/category_screen.dart';
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
@@ -49,6 +50,12 @@ class HomeScreen extends StatelessWidget {
           " ",
           "Preencha seus dados abaixo ",
           SignUpTab(),
+          getDrawer(),
+        ),
+        BaseScreen(
+          " ",
+          "Termine criando seu perfil ",
+          ProfileImageTab(),
           getDrawer(),
         ),
       ],

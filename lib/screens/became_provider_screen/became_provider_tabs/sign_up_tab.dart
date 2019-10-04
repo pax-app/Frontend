@@ -14,13 +14,13 @@ class _SignUpTabState extends State<SignUpTab> {
       children: <Widget>[
         TextInput('Nome', 'Nome Completo', true, (String value) {
           return value.contains('@') ? 'Do not use the @ char.' : null;
-        }, TextInputType.text),
+        }, TextInputType.text, 1),
         TextInput('CPF', '000.000.000-00', true, (String value) {
           return value.contains('@') ? 'Do not use the @ char.' : null;
-        }, TextInputType.number),
+        }, TextInputType.number, 1),
         TextInput('RG', 'RG', true, (String value) {
           return value.contains('@') ? 'Do not use the @ char.' : null;
-        }, TextInputType.number),
+        }, TextInputType.number, 1),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
           child: InkWell(
