@@ -2,12 +2,12 @@ import 'package:Pax/components/button%20/button.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 
-class ProfileImageTab extends StatefulWidget {
+class BecameProviderScreen extends StatefulWidget {
   @override
-  _ProfileImageTabState createState() => _ProfileImageTabState();
+  _BecameProviderScreenState createState() => _BecameProviderScreenState();
 }
 
-class _ProfileImageTabState extends State<ProfileImageTab> {
+class _BecameProviderScreenState extends State<BecameProviderScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(
