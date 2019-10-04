@@ -6,9 +6,10 @@ class TextInput extends StatelessWidget {
   final Function validator;
   final TextInputType inputType;
   final int lines;
+  final bool focus; 
 
   TextInput(this.textLabel, this.placeholder, this.small, this.validator,
-      this.inputType, this.lines);
+      this.inputType, this.lines, {this.focus = false });
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,7 @@ class TextInput extends StatelessWidget {
           ),
         ),
         validator: validator,
+        cursorColor: Theme.of(context).accentColor,
         keyboardType: inputType,
         maxLines: lines,
         style: TextStyle(color: Theme.of(context).primaryColor),

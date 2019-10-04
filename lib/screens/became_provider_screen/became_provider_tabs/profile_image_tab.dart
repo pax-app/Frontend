@@ -79,14 +79,45 @@ class _ProfileImageTabState extends State<ProfileImageTab> {
           ],
         ),
         SizedBox(
-          height: 40.0,
+          height: 10.0,
         ),
         TextInput('Bio', 'Insira uma descrição sobre você', true,
             (String value) {
           return value.contains('@') ? 'Do not use the @ char.' : null;
-        }, TextInputType.text, 5),
+        }, TextInputType.text, 3, focus: true),
+        TextInput('RG', 'RG', true, (String value) {
+          return value.contains('@') ? 'Do not use the @ char.' : null;
+        }, TextInputType.number, 1),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Theme.of(context).primaryColor),
+                      borderRadius: BorderRadius.circular(3.0)),
+                  child: Row(
+                    children: <Widget>[
+                      new Icon(
+                        Icons.cloud_upload,
+                        color: Theme.of(context).primaryColorLight,
+                      ),
+                      SizedBox(width: 8.0),
+                      new Text('SELFIE COM O RG'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         SizedBox(
-          height: 80.0,
+          height: 20.0,
         ),
         Button(
           buttonText: 'Finalizar',
@@ -95,7 +126,7 @@ class _ProfileImageTabState extends State<ProfileImageTab> {
           isSmall: false,
         ),
         SizedBox(
-          height: 50.0,
+          height: 10.0,
         ),
       ],
     );

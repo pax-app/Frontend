@@ -19,37 +19,7 @@ class _SignUpTabState extends State<SignUpTab> {
         TextInput('CPF', '000.000.000-00', true, (String value) {
           return value.contains('@') ? 'Do not use the @ char.' : null;
         }, TextInputType.number, 1),
-        TextInput('RG', 'RG', true, (String value) {
-          return value.contains('@') ? 'Do not use the @ char.' : null;
-        }, TextInputType.number, 1),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).primaryColor),
-                      borderRadius: BorderRadius.circular(3.0)),
-                  child: Row(
-                    children: <Widget>[
-                      new Icon(
-                        Icons.cloud_upload,
-                        color: Theme.of(context).primaryColorLight,
-                      ),
-                      SizedBox(width: 8.0),
-                      new Text('SELFIE COM O RG'),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        
         SizedBox(
           height: 70.0,
         ),
