@@ -5,9 +5,10 @@ class TextInput extends StatelessWidget {
   final bool small;
   final Function validator;
   final TextInputType inputType;
+  final int lines;
 
   TextInput(this.textLabel, this.placeholder, this.small, this.validator,
-      this.inputType);
+      this.inputType, this.lines);
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,7 @@ class TextInput extends StatelessWidget {
         ),
         validator: validator,
         keyboardType: inputType,
+        maxLines: lines,
         style: TextStyle(color: Theme.of(context).primaryColor),
       ),
     );
