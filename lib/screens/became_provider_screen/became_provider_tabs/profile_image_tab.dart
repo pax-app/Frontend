@@ -58,11 +58,17 @@ class _ProfileImageTabState extends State<ProfileImageTab> {
                           horizontal: 10.0, vertical: 10.0),
                       decoration: BoxDecoration(
                           border:
-                              Border.all(color: Theme.of(context).primaryColor),
+                              //Border.all(color: Theme.of(context).primaryColor),
+                              Border.all(color: Theme.of(context).accentColor),
                           borderRadius: BorderRadius.circular(3.0)),
                       child: Row(
                         children: <Widget>[
-                          new Text('FAIXA DE PREÇO'),
+                          // new Text('FAIXA DE PREÇO'),
+                          new Text(
+                            "  R\$ 20 - R\$ 120",
+                            style:
+                                TextStyle(color: Theme.of(context).accentColor),
+                          ),
                         ],
                       ),
                     ),
