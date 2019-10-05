@@ -11,7 +11,7 @@ class InfoTab extends StatelessWidget {
           style: Theme.of(context).textTheme.body1,
         ),
         SizedBox(
-          height: 50.0,
+          height: 60.0,
         ),
         Padding(
           padding: EdgeInsets.only(left: 20.0),
@@ -25,7 +25,7 @@ class InfoTab extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 100.0,
+          height: 90.0,
         ),
         Button(
           buttonText: 'Vamos lá',

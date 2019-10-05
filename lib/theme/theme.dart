@@ -1,5 +1,4 @@
 import 'package:Pax/theme/colors.dart';
-import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
@@ -19,6 +18,7 @@ ThemeData _buildPaxTheme() {
       padding: const EdgeInsets.symmetric(vertical: 17),
     ),
     scaffoldBackgroundColor: backgroundColor,
+    canvasColor: Colors.transparent,
     cardTheme: CardTheme(
       color: colorWhite,
       elevation: 2,
