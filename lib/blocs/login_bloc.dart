@@ -21,17 +21,13 @@ class LoginBloc extends BlocBase {
 
   void saveCurrentLogin(Map responseJson) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    var loginModel = (responseJson != null && responseJson.isNotEmpty)
+        ? LoginModel.fromJson(responseJson)
+        : null;
 
-    var user = (responseJson != null && responseJson.isNotEmpty)
-        ? LoginModel.fromJson(responseJson).userName
-        : "";
-
-    var token = (responseJson != null && responseJson.isNotEmpty)
-        ? LoginModel.fromJson(responseJson).token
-        : "";
-    var email = (responseJson != null && responseJson.isNotEmpty)
-        ? LoginModel.fromJson(responseJson).email
-        : "";
+    var user = loginModel != null ? loginModel.userName : "";
+    var token = loginModel != null ? loginModel.token : "";
+    var email = loginModel != null ? loginModel.email : "";
 
     await preferences.setString(
         'LastUser', (user != null && user.length > 0) ? user : "");
@@ -57,11 +53,7 @@ class LoginBloc extends BlocBase {
     final url = "http://172.18.0.1:5001/auth/login";
     final email = _emailController.value;
     final password = _passwordController.value;
-    Map<String, String> body = {
-      'email': email,
-      'password': password,
-      'forceLogin': true.toString()
-    };
+    Map<String, String> body = {'email': email, 'password': password};
     Map<String, String> header = {'content-type': 'application/json'};
 
     var jsonBody = json.encode(body);
