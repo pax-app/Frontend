@@ -10,6 +10,24 @@ import '../../components/auth/auth_input.dart';
 final _loginBloc = LoginBloc();
 
 class LoginScreen extends StatelessWidget {
+  Future<void> _showDialog(BuildContext context, String text) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(text),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 /* logout snippet for use in future
   void doLogout(BuildContext ctx) async {
     var loggedOut = await _loginBloc.logOut();
@@ -32,13 +50,21 @@ class LoginScreen extends StatelessWidget {
   }
 
   void doLogin(BuildContext ctx, bool login) async {
-    var logged;
-    if (login) logged = await _loginBloc.logIn();
+    bool logged;
+    int loginResponse;
+    if (login) logged = (loginResponse = await _loginBloc.logIn()) == 200;
     logged = login ? logged : await _loginBloc.checkIfUserIsLogged();
     if (logged)
       Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
         return HomeScreen();
       }));
+    else if (loginResponse == 404) {
+      _showDialog(ctx, "Usuario não encontrado.");
+    } else if (loginResponse == 500) {
+      _showDialog(ctx, "Tente novamente mais tarde.");
+    } else if (loginResponse == 401) {
+      _showDialog(ctx, "Senha Incorreta.");
+    }
   }
 
   @override

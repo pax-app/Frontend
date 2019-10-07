@@ -49,7 +49,7 @@ class LoginBloc extends BlocBase {
     return (token != null && token != "") ? true : false;
   }
 
-  Future<bool> logIn() async {
+  Future<int> logIn() async {
     final url = "http://172.18.0.1:5001/auth/login";
     final email = _emailController.value;
     final password = _passwordController.value;
@@ -66,15 +66,8 @@ class LoginBloc extends BlocBase {
       final responseJson = json.decode(response.body);
 
       saveCurrentLogin(responseJson);
-      return true;
-    } else if (response.statusCode == 404) {
-      /* User does not exists */
-    } else if (response.statusCode == 401) {
-      /* Wrong Credential */
-    } else if (response.statusCode == 500) {
-      /* db connection error */
     }
-    return false;
+    return response.statusCode;
   }
 
   Future<bool> logOut() async {

@@ -5,17 +5,40 @@ import 'package:flutter/material.dart';
 import 'package:Pax/screens/home_screen/home_screen.dart';
 import '../../components/auth/auth_input.dart';
 
-class SignUpScreen extends StatelessWidget {
-  handler(bool param) {}
+final _signupBloc = SignUpBloc();
 
-  final _signupBloc = SignUpBloc();
+class SignUpScreen extends StatelessWidget {
+  Future<void> _showDialog(BuildContext context, String text) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(text),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   void doSignUp(BuildContext ctx) async {
     var logged = await _signupBloc.signUp();
-    if (logged)
+    if (logged == 201)
       Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
         return HomeScreen();
       }));
+    else if (logged == 500 || logged == 503) //Erro ao conectar ao DB
+      _showDialog(ctx, "Tente novamente mais tarde.");
+    else if (logged == 400) // Email ja cadastrado
+      _showDialog(ctx, "Email já cadastrado.");
+    else
+      _showDialog(ctx, "Erro cod. $logged.");
   }
 
   @override
@@ -38,20 +61,23 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   AuthInput(
+                    stream: _signupBloc.name,
                     labelText: "Nome",
-                    onChanged: _signupBloc.nameSink,
+                    onChanged: _signupBloc.changeName,
                   ),
                   SizedBox(height: 20),
                   AuthInput(
+                    stream: _signupBloc.cpf,
                     labelText: "CPF",
                     inputType: TextInputType.number,
-                    onChanged: _signupBloc.cpfSink,
+                    onChanged: _signupBloc.changeCPF,
                   ),
                   SizedBox(height: 20),
                   AuthInput(
+                    stream: _signupBloc.email,
                     labelText: "E-mail",
                     inputType: TextInputType.emailAddress,
-                    onChanged: _signupBloc.emailSink,
+                    onChanged: _signupBloc.changeEmail,
                   ),
                   SizedBox(height: 20),
                   Row(
@@ -59,17 +85,19 @@ class SignUpScreen extends StatelessWidget {
                     children: <Widget>[
                       Flexible(
                         child: AuthInput(
+                          stream: _signupBloc.password,
                           labelText: "Senha",
                           obscure: true,
-                          onChanged: _signupBloc.passwordSink,
+                          onChanged: _signupBloc.changePassword,
                         ),
                       ),
                       SizedBox(width: 20),
                       Flexible(
                         child: AuthInput(
                           labelText: "Confirmar",
+                          stream: _signupBloc.confirmPassword,
                           obscure: true,
-                          onChanged: _signupBloc.passwordConfirmationSink,
+                          onChanged: _signupBloc.changePasswordConfirmation,
                         ),
                       )
                     ],
@@ -95,7 +123,7 @@ class SignUpScreen extends StatelessWidget {
                               stream: _signupBloc.useTerms,
                               builder: (context, snapshot) {
                                 return Checkbox(
-                                  onChanged: _signupBloc.useTermsSink,
+                                  onChanged: _signupBloc.changeUseTerms,
                                   value:
                                       snapshot.hasData ? snapshot.data : false,
                                   materialTapTargetSize:
@@ -113,9 +141,9 @@ class SignUpScreen extends StatelessWidget {
                       builder: (context, snapshot) {
                         return AuthButton(
                           text: "Criar",
-                          // onPressed:
-                          //     snapshot.hasData ? _signupBloc.signUp : null,
-                          onPressed: () => doSignUp(context),
+                          onPressed: snapshot.hasData
+                              ? () => this.doSignUp(context)
+                              : null,
                         );
                       }),
                 ],

@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:Pax/models/login_model.dart';
+import 'package:Pax/blocs/singup_validators.dart';
 
 class SignUpBloc extends BlocBase {
   final _nameController = BehaviorSubject<String>();
@@ -15,39 +17,45 @@ class SignUpBloc extends BlocBase {
   final _passwordConfirmationController = BehaviorSubject<String>();
   final _useTermsController = BehaviorSubject<bool>();
 
-  Stream<bool> get useTerms => _useTermsController.stream;
+  // Add data to stream
+  Stream<String> get email =>
+      _emailController.stream.transform(SignUpValidators.validateEmail);
+  Stream<String> get password =>
+      _passwordController.stream.transform(SignUpValidators.validatePassword);
+  Stream<String> get cpf =>
+      _cpfController.stream.transform(SignUpValidators.validateCPF);
+  Stream<bool> get useTerms =>
+      _useTermsController.stream.transform(SignUpValidators.validateUseTerms);
+  Stream<String> get name =>
+      _nameController.stream.transform(SignUpValidators.validateName);
+  Stream<String> get confirmPassword => _passwordConfirmationController.stream
+          .transform(SignUpValidators.validatePassword)
+          .doOnData((String c) {
+        // If the password is accepted (after validation of the rules)
+        // we need to ensure both password and retyped password match
+        if (0 != _passwordController.value.compareTo(c)) {
+          // If they do not match, add an error
+          _passwordConfirmationController.addError("As senhas não conferem.");
+        }
+      });
 
-  final validateEmail =
-      StreamTransformer<String, String>.fromHandlers(handleData: (email, sink) {
-    if (email.contains("@"))
-      sink.add(email);
-    else
-      sink.addError("Digite um e-mail válido");
-  });
-
-  final validatePassword = StreamTransformer<String, String>.fromHandlers(
-      handleData: (password, sink) {
-    if (password.length >= 6)
-      sink.add(password);
-    else
-      sink.addError("A senha deve conter no mínimo 6 caracteres");
-  });
   Stream<bool> get validInputsStream => Observable.combineLatest6(
-      _nameController.stream,
-      _cpfController.stream,
-      _emailController.stream,
-      _passwordController.stream,
-      _passwordConfirmationController,
-      _useTermsController,
-      (name, cpf, email, password, passwordConfirmation, useTerms) => true);
+      name,
+      cpf,
+      email,
+      password,
+      confirmPassword,
+      useTerms,
+      (name, cpf, email, password, passwordConfirmation, useTerms) =>
+          0 == password.compareTo(passwordConfirmation));
 
-  Function(String) get nameSink => _nameController.sink.add;
-  Function(String) get cpfSink => _cpfController.sink.add;
-  Function(String) get emailSink => _emailController.sink.add;
-  Function(String) get passwordSink => _passwordController.sink.add;
-  Function(String) get passwordConfirmationSink =>
+  Function(String) get changeName => _nameController.sink.add;
+  Function(String) get changeCPF => _cpfController.sink.add;
+  Function(String) get changeEmail => _emailController.sink.add;
+  Function(String) get changePassword => _passwordController.sink.add;
+  Function(String) get changePasswordConfirmation =>
       _passwordConfirmationController.sink.add;
-  Function(bool) get useTermsSink => _useTermsController.sink.add;
+  Function(bool) get changeUseTerms => _useTermsController.sink.add;
 
   void saveCurrentLogin(Map responseJson) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -71,7 +79,7 @@ class SignUpBloc extends BlocBase {
         'LastEmail', (email != null && email.length > 0) ? email : "");
   }
 
-  Future<bool> signUp() async {
+  Future<int> signUp() async {
     final url = "http://172.18.0.1:5001/auth/registration";
     final email = _emailController.value;
     final password = _passwordController.value;
@@ -92,19 +100,12 @@ class SignUpBloc extends BlocBase {
       headers: header,
       body: jsonBody,
     );
-    if (response.statusCode == 200) {
+    debugPrint(response.statusCode.toString());
+    if (response.statusCode == 201) {
       final responseJson = json.decode(response.body);
-
       saveCurrentLogin(responseJson);
-      return true;
-    } else if (response.statusCode == 404) {
-      /* User does not exists */
-    } else if (response.statusCode == 401) {
-      /* Wrong Credential */
-    } else if (response.statusCode == 500) {
-      /* db connection error */
     }
-    return false;
+    return response.statusCode;
   }
 
   @override
