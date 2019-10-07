@@ -10,6 +10,15 @@ import '../../components/auth/auth_input.dart';
 final _loginBloc = LoginBloc();
 
 class LoginScreen extends StatelessWidget {
+/* logout snippet for use in future
+  void doLogout(BuildContext ctx) async {
+    var loggedOut = await _loginBloc.logOut();
+    if (loggedOut)
+      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+        return LoginScreen();
+      }))};
+ */
+
   void recoverPassword(BuildContext ctx) {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return RecoverPassordScreen();
