@@ -1,4 +1,5 @@
 import 'package:Pax/blocs/category_bloc.dart';
+import 'package:Pax/blocs/provider_bloc.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/models/GeneralCategory.dart';
@@ -134,12 +135,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       value: selectedList.contains(category.id),
                                       onChanged: (bool value) {
                                         setState(() {
-                                          if (!selectedList
-                                              .contains(category.id)) {
-                                            selectedList.add(category.id);
-                                          } else {
-                                            selectedList.remove(category.id);
-                                          }
+                                          BlocProvider.of<ProviderBloc>(context)
+                                              .addCategory(category);
+                                          debugPrint(category.toString());
                                         });
                                       },
                                     ),

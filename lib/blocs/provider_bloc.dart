@@ -1,14 +1,21 @@
 import 'dart:async';
 import 'package:Pax/models/Provider.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter/rendering.dart';
 import 'package:rxdart/subjects.dart';
+import 'package:Pax/models/category.dart';
 
 class ProviderBloc implements BlocBase {
   Provider provider;
+  Set<Category> categories = Set<Category>();
 
   final StreamController _getProvideDataControlle = StreamController();
-
   Stream<Provider> get outProviderData => _getProvideDataControlle.stream;
+
+  final StreamController<Set<Category>> _categoriesControlle =
+      BehaviorSubject<Set<Category>>();
+  Stream<Set<Category>> get addCategoryToProvider =>
+      _getProvideDataControlle.stream;
 
   final _createProvider = StreamController<Provider>();
   Sink get createProvider => _createProvider.sink;
@@ -18,6 +25,16 @@ class ProviderBloc implements BlocBase {
 
   ProviderBloc() {
     _createProvider.stream.listen(newProvider);
+  }
+
+  void addCategory(Category category) {
+    if (categories.contains(category)) {
+      categories.remove(category);
+    } else {
+      categories.add(category);
+    }
+    _categoriesControlle.sink.add(categories);
+    debugPrint(categories.toString());
   }
 
   void newProvider(Provider p) async {
@@ -40,5 +57,6 @@ class ProviderBloc implements BlocBase {
     _getProvideDataControlle.close();
     _createProvider.close();
     _confirmProviderCreate.close();
+    _categoriesControlle.close();
   }
 }
