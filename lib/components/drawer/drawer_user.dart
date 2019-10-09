@@ -4,7 +4,7 @@ import 'package:Pax/components/drawer/drawer_tile.dart';
 
 class DrawerUser extends StatelessWidget {
   final PageController _pageController;
-  bool isProvider = true;
+  bool isProvider = false;
   DrawerUser(this._pageController);
 
   @override

@@ -1,7 +1,9 @@
 import 'package:Pax/blocs/category_bloc.dart';
+import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/models/GeneralCategory.dart';
 import 'package:Pax/models/category.dart';
+import 'package:Pax/screens/became_provider_screen/became_provider_screen.dart';
 import 'package:Pax/screens/category_screen/expansion_category_tab.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +97,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     SizedBox(height: 20),
                     Button(
                         buttonText: 'Próximo',
-                        tapHandler: () {},
+                        tapHandler: nextPage,
                         type: 'default',
                         isSmall: false),
                     SizedBox(height: 20),
@@ -157,13 +159,26 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       SizedBox(height: 20),
                       Button(
                           buttonText: 'Próximo',
-                          tapHandler: () {},
+                          tapHandler: nextPage,
                           type: 'default',
                           isSmall: false)
                     ],
                   ),
                 )
         ],
+      ),
+    );
+  }
+
+  void nextPage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => BaseScreen(
+          " ",
+          "Preencha seus dados abaixo ",
+          BecameProviderScreen(),
+          null,
+        ),
       ),
     );
   }

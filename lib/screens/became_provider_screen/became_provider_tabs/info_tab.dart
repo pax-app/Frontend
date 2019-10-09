@@ -1,4 +1,6 @@
+import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/screens/category_screen/category_screen.dart';
 import 'package:flutter/material.dart';
 
 class InfoTab extends StatelessWidget {
@@ -30,7 +32,18 @@ class InfoTab extends StatelessWidget {
         Button(
           buttonText: 'Vamos lá',
           type: 'default',
-          tapHandler: () {},
+          tapHandler: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BaseScreen(
+                  "Categorias",
+                  "Quais categorias você se encaixa?",
+                  CategoryScreen(),
+                  null,
+                ),
+              ),
+            );
+          },
           isSmall: false,
         ),
         SizedBox(

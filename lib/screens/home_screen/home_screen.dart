@@ -50,6 +50,12 @@ class HomeScreen extends StatelessWidget {
           BecameProviderScreen(),
           getDrawer(),
         ),
+        BaseScreen(
+          " ",
+          "Torne-se um prestador ",
+          InfoTab(),
+          getDrawer(),
+        )
       ],
     );
   }
