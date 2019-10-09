@@ -9,6 +9,8 @@ import 'package:Pax/screens/my_conversations/my_conversations.dart';
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
+import 'package:Pax/screens/home_screen/tabs/home_tab.dart';
+import 'package:Pax/screens/service_categories_screen/services_categories.dart';
 
 class HomeScreen extends StatelessWidget {
   final _pageController = PageController();
@@ -27,9 +29,9 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         BaseScreen(
-          "Home",
-          "Home",
-          Text("home"),
+          "Opções de Serviço",
+          "",
+          ServiceCategory(),
           getDrawer(),
         ),
         BaseScreen(
