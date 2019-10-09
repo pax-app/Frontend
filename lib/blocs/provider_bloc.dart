@@ -9,13 +9,16 @@ class ProviderBloc implements BlocBase {
   Provider provider;
   Set<Category> categories = Set<Category>();
 
-  final StreamController _getProvideDataControlle = StreamController();
+  final StreamController _getProvideDataControlle = BehaviorSubject();
   Stream<Provider> get outProviderData => _getProvideDataControlle.stream;
+
+  final StreamController<bool> _thereCategoryProvider = BehaviorSubject<bool>();
+  Stream<bool> get thereCategoryProvider => _thereCategoryProvider.stream;
 
   final StreamController<Set<Category>> _categoriesControlle =
       BehaviorSubject<Set<Category>>();
   Stream<Set<Category>> get addCategoryToProvider =>
-      _getProvideDataControlle.stream;
+      _categoriesControlle.stream;
 
   final _createProvider = StreamController<Provider>();
   Sink get createProvider => _createProvider.sink;
@@ -25,6 +28,12 @@ class ProviderBloc implements BlocBase {
 
   ProviderBloc() {
     _createProvider.stream.listen(newProvider);
+  }
+
+  bool thereCategory(Category category){
+    bool there = categories.contains(category);
+    _thereCategoryProvider.add(there);
+    return there;
   }
 
   void addCategory(Category category) {
@@ -58,5 +67,6 @@ class ProviderBloc implements BlocBase {
     _createProvider.close();
     _confirmProviderCreate.close();
     _categoriesControlle.close();
+    _thereCategoryProvider.close();
   }
 }

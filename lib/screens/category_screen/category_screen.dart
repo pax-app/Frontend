@@ -132,7 +132,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       ),
                                       activeColor:
                                           Theme.of(context).accentColor,
-                                      value: selectedList.contains(category.id),
+                                      value: BlocProvider.of<ProviderBloc>(context).thereCategory(category),
                                       onChanged: (bool value) {
                                         setState(() {
                                           BlocProvider.of<ProviderBloc>(context)

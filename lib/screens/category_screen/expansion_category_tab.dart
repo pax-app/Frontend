@@ -1,5 +1,7 @@
 import 'package:Pax/models/GeneralCategory.dart';
 import 'package:flutter/material.dart';
+import 'package:Pax/blocs/provider_bloc.dart';
+import 'package:bloc_pattern/bloc_pattern.dart';
 
 class ExpansionCategory extends StatefulWidget {
   final GeneralCategory generalCategory;
@@ -49,14 +51,13 @@ class _ExpansionCategoryState extends State<ExpansionCategory> {
                     style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
                   activeColor: Theme.of(context).accentColor,
-                  value: selectedList.contains(category.id),
+                  value: BlocProvider.of<ProviderBloc>(context)
+                      .thereCategory(category),
                   onChanged: (bool value) {
                     setState(() {
-                      if (!selectedList.contains(category.id)) {
-                        selectedList.add(category.id);
-                      } else {
-                        selectedList.remove(category.id);
-                      }
+                      BlocProvider.of<ProviderBloc>(context)
+                          .addCategory(category);
+                      debugPrint(category.toString());
                     });
                   },
                 ),
