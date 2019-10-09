@@ -27,6 +27,7 @@ dependencies:
   shimmer: ^1.0.0
   rxdart: ^0.22.2
   flutter_range_slider: "^1.4.0"
+  image_picker: ^0.6.0+3
 
 dev_dependencies:
   flutter_test:

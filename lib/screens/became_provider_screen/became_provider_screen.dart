@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:Pax/components/button%20/button.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart' as frs;
+import 'package:image_picker/image_picker.dart';
 
 class BecameProviderScreen extends StatefulWidget {
   @override
@@ -13,6 +16,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
   double _upperValue = 80.0;
   @override
   Widget build(BuildContext context) {
+    bool isVoid = _lowerValue == 20 && _upperValue == 80;
     return Column(
       children: <Widget>[
         Row(
@@ -60,23 +64,22 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                         _showModalBottomSheet(context);
                       },
                       child: Container(
-                        width: 130,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10.0),
+                        padding: EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
-                            border:
-                                //Border.all(color: Theme.of(context).primaryColor),
-                                Border.all(
-                                    color: Theme.of(context).accentColor),
+                            border: Border.all(
+                                color: isVoid
+                                    ? Theme.of(context).primaryColor
+                                    : Theme.of(context).accentColor),
                             borderRadius: BorderRadius.circular(3.0)),
                         child: Row(
                           children: <Widget>[
-                            // new Text('FAIXA DE PREÇO'),
-                            new Text(
-                              "  R\$ 20 - R\$ 120",
-                              style: TextStyle(
-                                  color: Theme.of(context).accentColor),
-                            ),
+                            isVoid
+                                ? Text('FAIXA DE PREÇO')
+                                : Text(
+                                    "R\$${_lowerValue.toStringAsFixed(2)} - R\$${_upperValue.toStringAsFixed(2)}",
+                                    style: TextStyle(
+                                        color: Theme.of(context).accentColor),
+                                  ),
                           ],
                         ),
                       ),
@@ -103,7 +106,11 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  File _image;
+                  var image =
+                      await ImagePicker.pickImage(source: ImageSource.camera);
+                },
                 child: Container(
                   padding:
                       EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -146,7 +153,6 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            
             height: 300,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
@@ -168,28 +174,27 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                 Container(
                   padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                   child: Column(
-                    children: <Widget>[]
-                      ..add(Row(
+                    children: <Widget>[
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            'R\$${_lowerValue.toStringAsFixed(2)}',
-                             style: Theme.of(context).textTheme.title,
+                            'Min: R\$10.00',
+                            style: Theme.of(context).textTheme.title,
                           ),
                           Text(
-                            'R\$${_upperValue.toStringAsFixed(2)}',
-                             style: Theme.of(context).textTheme.title,
+                            'Max: R\$200.00',
+                            style: Theme.of(context).textTheme.title,
                           ),
                         ],
-                      ))
-                      ..add(
+                      ),
+                    ]..add(
                         frs.RangeSlider(
-                          min: 0.0,
-                          max: 100.0,
+                          min: 20.0,
+                          max: 200.0,
                           lowerValue: _lowerValue,
                           upperValue: _upperValue,
-                          divisions: 20,
-
+                          divisions: 10,
                           showValueIndicator: true,
                           valueIndicatorFormatter: (int index, double value) {
                             String twoDecimals = value.toStringAsFixed(2);
@@ -200,14 +205,15 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                             setState(() {
                               _lowerValue = newLowerValue;
                               _upperValue = newUpperValue;
-                              debugPrint(newLowerValue.toString());
                             });
                           },
                         ),
                       ),
-                    ),
+                  ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 Button(
                   buttonText: 'PRONTO',
                   type: 'default',
