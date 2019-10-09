@@ -14,9 +14,12 @@ class BecameProviderScreen extends StatefulWidget {
 class _BecameProviderScreenState extends State<BecameProviderScreen> {
   double _lowerValue = 20.0;
   double _upperValue = 80.0;
+  TextEditingController _bio = TextEditingController();
+  TextEditingController _rg = TextEditingController();
+  bool isTouch = false;
   @override
   Widget build(BuildContext context) {
-    bool isVoid = _lowerValue == 20 && _upperValue == 80;
+    bool isVoid = _lowerValue == 20 && _upperValue == 80 && !isTouch;
     return Column(
       children: <Widget>[
         Row(
@@ -93,13 +96,29 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
         SizedBox(
           height: 10.0,
         ),
-        TextInput('Bio', 'Insira uma descrição sobre você', true,
-            (String value) {
-          return value.contains('@') ? 'Do not use the @ char.' : null;
-        }, TextInputType.text, 3, focus: true),
-        TextInput('RG', 'RG', true, (String value) {
-          return value.contains('@') ? 'Do not use the @ char.' : null;
-        }, TextInputType.number, 1),
+        TextInput(
+          'Bio',
+          'Insira uma descrição sobre você',
+          true,
+          (String value) {
+            return value.contains('@') ? 'Do not use the @ char.' : null;
+          },
+          TextInputType.text,
+          3,
+          focus: true,
+          controller: _bio,
+        ),
+        TextInput(
+          'RG',
+          'RG',
+          true,
+          (String value) {
+            return value.contains('@') ? 'Do not use the @ char.' : null;
+          },
+          TextInputType.number,
+          1,
+          controller: _rg,
+        ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
           child: Row(
@@ -138,7 +157,11 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
         Button(
           buttonText: 'Finalizar',
           type: 'default',
-          tapHandler: () {},
+          tapHandler: activeteButton()
+              ? () {
+                  debugPrint(activeteButton().toString());
+                }
+              : null,
           isSmall: false,
         ),
         SizedBox(
@@ -146,6 +169,10 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
         ),
       ],
     );
+  }
+
+  bool activeteButton() {
+    return _bio.text.isNotEmpty && _rg.text.isNotEmpty && isTouch;
   }
 
   _showModalBottomSheet(context) {
@@ -202,6 +229,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                           },
                           onChanged:
                               (double newLowerValue, double newUpperValue) {
+                            isTouch = true;
                             setState(() {
                               _lowerValue = newLowerValue;
                               _upperValue = newUpperValue;

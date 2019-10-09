@@ -7,15 +7,17 @@ class TextInput extends StatelessWidget {
   final TextInputType inputType;
   final int lines;
   final bool focus; 
+  final TextEditingController controller;
 
   TextInput(this.textLabel, this.placeholder, this.small, this.validator,
-      this.inputType, this.lines, {this.focus = false });
+      this.inputType, this.lines, {this.focus = false, this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 5.0),
       child: TextFormField(
+        controller: controller,
         decoration: InputDecoration(
           hintText: placeholder,
           labelText: textLabel,
