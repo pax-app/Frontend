@@ -1,14 +1,9 @@
-import 'package:Pax/components/avaliation_card/avaliation_card.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/drawer/drawer_provider.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/info_tab.dart';
 import 'package:Pax/screens/config_screen/config_screen.dart';
 import 'package:Pax/screens/perfil_screen/perfil_screen.dart';
-import 'package:Pax/screens/chat_screen/chat_screen.dart';
 import 'package:Pax/screens/my_conversations/my_conversations.dart';
-import 'package:Pax/components/simple_tile/simple_tile.dart';
-import 'package:Pax/screens/category_screen/category_screen.dart';
-import 'package:Pax/screens/provider_categories_screen/provider_category_screen.dart';
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
@@ -31,7 +26,7 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         BaseScreen(
-          "Opções de Serviço",
+          "Opções de Serviço", //serviço Category deve estar rodando
           "",
           ServiceGeneralCategory(),
           getDrawer(),
@@ -49,12 +44,6 @@ class HomeScreen extends StatelessWidget {
           getDrawer(),
           padding: false,
         ),
-        ProviderPanel(this._pageController),
-      ],
-    );
-  }
-}
-
         BaseScreen(
           "Meus cartoes",
           "Meus cartoes",
@@ -62,7 +51,7 @@ class HomeScreen extends StatelessWidget {
           getDrawer(),
         ),
         BaseScreen(
-          "",
+          "Minhas Conversas",
           "Minhas Conversas",
           MyConversations(),
           getDrawer(),
@@ -86,6 +75,7 @@ class HomeScreen extends StatelessWidget {
           ConfigScreen(),
           getDrawer(),
         ),
+        ProviderPanel(this._pageController),
       ],
     );
   }
