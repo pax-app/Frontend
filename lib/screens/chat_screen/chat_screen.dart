@@ -18,6 +18,14 @@ class ChatScreen extends StatelessWidget {
           provider_qualification: "Assistência Técnica: Notebook",
         ),
       ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/illustrations/circle-pattern.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
     );
   }
 }
