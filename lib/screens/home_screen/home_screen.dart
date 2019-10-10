@@ -8,6 +8,7 @@ import 'package:Pax/screens/chat_screen/chat_screen.dart';
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
+import 'package:web_socket_channel/io.dart';
 
 class HomeScreen extends StatelessWidget {
   final _pageController = PageController();
