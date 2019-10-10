@@ -1,9 +1,6 @@
-import 'package:Pax/screens/category_screen/category_screen.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/screens/provider_categories_screen/provider_category_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:Pax/components/drawer/drawer_user.dart';
-import 'package:Pax/components/drawer/drawer_provider.dart';
 import 'package:Pax/components/general_categories_panel/general_category_panel_img.dart';
 
 class GeneralCategoriesPanelCard extends StatelessWidget {
