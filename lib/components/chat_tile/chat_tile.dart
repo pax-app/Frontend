@@ -4,7 +4,7 @@ class ChatTile extends StatelessWidget {
   final String username;
   final String message;
 
-  ChatTile({this.username, this.message});
+  ChatTile({@required this.username, @required this.message});
 
   @override
   Widget build(BuildContext context) {

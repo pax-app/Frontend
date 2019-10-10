@@ -4,7 +4,7 @@ class Message extends StatelessWidget {
   final String message;
   final String hour;
 
-  Message({this.message, this.hour});
+  Message({@required this.message, @required this.hour});
 
   @override
   Widget build(BuildContext context) {

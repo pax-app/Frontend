@@ -4,8 +4,10 @@ class ChatAppBar extends StatelessWidget {
   final String provider_name;
   final String provider_qualification;
 
-  ChatAppBar(
-      {@required this.provider_name, @required this.provider_qualification});
+  ChatAppBar({
+    @required this.provider_name,
+    @required this.provider_qualification,
+  });
 
   @override
   Widget build(BuildContext context) {
