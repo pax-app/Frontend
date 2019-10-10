@@ -26,10 +26,11 @@ dependencies:
   bloc_pattern: ^1.5.2
   shimmer: ^1.0.0
   rxdart: ^0.22.2
-  flutter_range_slider: "^1.4.0"
-  image_picker: ^0.6.0+3
   http: ^0.12.0+2
   socket_io_client: ^0.9.4
+  flutter_range_slider: ^1.4.0
+  image_picker: ^0.6.0+3
+  web_socket_channel: ^1.0.15
 
 dev_dependencies:
   flutter_test:
