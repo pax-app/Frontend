@@ -58,7 +58,7 @@ class GeneralCategoriesPanelCard extends StatelessWidget {
                             ),
                             Container(
                                 padding: const EdgeInsets.all(16.0),
-                                width: 190,
+                                width: 172,
                                 child: Column(
                                   children: <Widget>[
                                     Text(
@@ -75,11 +75,11 @@ class GeneralCategoriesPanelCard extends StatelessWidget {
                                             .fontSize,
                                         fontWeight: Theme.of(context)
                                             .textTheme
-                                            .body2
+                                            .body1
                                             .fontWeight,
                                         color: Theme.of(context)
                                             .textTheme
-                                            .title
+                                            .body1
                                             .color,
                                       ),
                                     ),
