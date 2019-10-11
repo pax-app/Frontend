@@ -6,6 +6,9 @@ import 'package:Pax/screens/config_screen/config_screen.dart';
 import 'package:Pax/screens/perfil_screen/perfil_screen.dart';
 import 'package:Pax/screens/chat_screen/chat_screen.dart';
 import 'package:Pax/screens/my_conversations/my_conversations.dart';
+import 'package:Pax/components/simple_tile/simple_tile.dart';
+import 'package:Pax/screens/category_screen/category_screen.dart';
+import 'package:Pax/screens/provider_categories_screen/provider_category_screen.dart';
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
@@ -48,6 +51,17 @@ class HomeScreen extends StatelessWidget {
           getDrawer(),
           padding: false,
         ),
+        BaseScreen(
+          "",
+          "Serviços de Assistência Técnica",
+          ProviderCategoryScreen(),
+          getDrawer(),
+        ),
+        ProviderPanel(this._pageController),
+      ],
+    );
+  }
+}
 
         BaseScreen(
           "Meus cartoes",
