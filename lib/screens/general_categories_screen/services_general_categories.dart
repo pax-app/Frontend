@@ -27,21 +27,28 @@ class _ServiceGeneralCategoryState extends State<ServiceGeneralCategory> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding:
-                EdgeInsets.only(bottom: 30, right: 10, left: 10, top: 20),
+            padding: EdgeInsets.only(bottom: 30, right: 10, left: 10, top: 20),
             child: ListView(
               physics: NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               children: <Widget>[
                 GeneralCategoriesPanelCard(
-                    'funciona', 'please', imagesPaths['Assistencia']),
+                    'Asistência Técnica',
+                    'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
+                    imagesPaths['Assistencia']),
                 GeneralCategoriesPanelCard(
-                    'funciona', 'please', imagesPaths['Reformas']),
+                    'Reformas',
+                    'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
+                    imagesPaths['Reformas']),
                 GeneralCategoriesPanelCard(
-                    'funciona', 'please', imagesPaths['Domesticos']),
+                    'Serviços Domésticos',
+                    'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
+                    imagesPaths['Domesticos']),
                 GeneralCategoriesPanelCard(
-                    'funciona', 'please', imagesPaths['Tecnologia']),
+                    'Design e Tecnologia',
+                    'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
+                    imagesPaths['Tecnologia']),
               ],
             ),
           )

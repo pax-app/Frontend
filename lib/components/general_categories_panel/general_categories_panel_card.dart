@@ -21,14 +21,73 @@ class GeneralCategoriesPanelCard extends StatelessWidget {
               shrinkWrap: true,
               children: <Widget>[
                 Card(
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      children: <Widget>[
-                        Text(this.title),
-                        GeneralCategoriesPanelImg(this.img),
-                        GeneralCategoriesPanelDescription(this.description),
-                      ],
+                  child: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.all(15),
+                      child: Column(
+                        children: <Widget>[
+                          Row(children: <Widget>[
+                            Text(
+                              this.title,
+                              style: TextStyle(
+                                fontFamily: Theme.of(context)
+                                    .textTheme
+                                    .title
+                                    .fontFamily,
+                                fontSize:
+                                    Theme.of(context).textTheme.title.fontSize,
+                                fontWeight: Theme.of(context)
+                                    .textTheme
+                                    .title
+                                    .fontWeight,
+                                color: Theme.of(context).textTheme.title.color,
+                              ),
+                            )
+                          ]),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(children: <Widget>[
+                            SizedBox(
+                              width: 10,
+                            ),
+                            GeneralCategoriesPanelImg(this.img),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Container(
+                                padding: const EdgeInsets.all(16.0),
+                                width: 190,
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      this.description,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontFamily: Theme.of(context)
+                                            .textTheme
+                                            .body1
+                                            .fontFamily,
+                                        fontSize: Theme.of(context)
+                                            .textTheme
+                                            .body1
+                                            .fontSize,
+                                        fontWeight: Theme.of(context)
+                                            .textTheme
+                                            .body2
+                                            .fontWeight,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .title
+                                            .color,
+                                      ),
+                                    ),
+                                  ],
+                                ))
+                          ]),
+                        ],
+                      ),
                     ),
                   ),
                 ),
