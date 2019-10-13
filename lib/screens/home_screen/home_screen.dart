@@ -26,18 +26,37 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         BaseScreen(
-          "Opções de Serviço",
-          "",
-          exemplo(),
+          "Home",
+          "Home",
+          Text("home"),
           getDrawer(),
         ),
         BaseScreen(
-          "Categorias",
-          "Quais categorias você se encaixa?",
-          CategoryScreen(),
+          "Meu Perfil",
+          "Meu Perfil",
+          Text("Meu Perfil"),
           getDrawer(),
         ),
-        ProviderPanel(this._pageController),
+
+        BaseScreen(
+          "Meus cartoes",
+          "Meus cartoes",
+          Text("Meus cartoes"),
+          getDrawer(),
+        ),
+        BaseScreen(
+          "Minhas Conversas",
+          "Minhas Conversas",
+          Text("Minhas Conversas"),
+          getDrawer(),
+        ),
+        //roviderPanel(this._pageController),
+        BaseScreen(
+          "Histórico de Servico",
+          "Histórico de Servico",
+          Text("Histórico de Servico"),
+          getDrawer(),
+        ),
         BaseScreen(
           " ",
           "Torne-se um prestador ",
@@ -45,67 +64,12 @@ class HomeScreen extends StatelessWidget {
           getDrawer(),
         ),
         BaseScreen(
-          " ",
-          "Preencha seus dados abaixo ",
-          BecameProviderScreen(),
+          "Configurações",
+          "Configurações",
+          Text("Configurações"),
           getDrawer(),
         ),
-        BaseScreen(
-          " ",
-          "Torne-se um prestador ",
-          InfoTab(),
-          getDrawer(),
-        )
       ],
     );
   }
-}
-
-Widget exemplo() {
-  return Container(
-    height: 560,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        SimpleTile('services list'),
-        SimpleTile('services list'),
-        Button(
-          buttonText: 'Entrar',
-          tapHandler: () {},
-          type: 'default',
-          isSmall: false,
-        ),
-        Button(
-          buttonText: 'Ficou Boa',
-          tapHandler: () {},
-          type: 'default',
-          isSmall: true,
-        ),
-        Button(
-          buttonText: 'Reportar',
-          tapHandler: () {},
-          type: 'danger',
-          isSmall: false,
-        ),
-        Button(
-          buttonText: 'Small',
-          tapHandler: () {},
-          type: 'danger',
-          isSmall: true,
-        ),
-        Button(
-          buttonText: 'Justificativa',
-          tapHandler: () {},
-          type: 'outline',
-          isSmall: false,
-        ),
-        Button(
-          buttonText: 'a',
-          tapHandler: () {},
-          type: 'outline',
-          isSmall: true,
-        ),
-      ],
-    ),
-  );
 }
