@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/screens/became_provider_screen/became_provider_tabs/finish_provider_tab.dart';
+import 'package:Pax/screens/category_screen/category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart' as frs;
@@ -157,11 +160,20 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
         Button(
           buttonText: 'Finalizar',
           type: 'default',
-          tapHandler: activeteButton()
-              ? () {
-                  debugPrint(activeteButton().toString());
-                }
-              : null,
+          tapHandler: //activeteButton()/?
+              () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BaseScreen(
+                  "",
+                  "Agora é só aguardar",
+                  FinishProviderTab(),
+                  null,
+                ),
+              ),
+            );
+          },
+          //: null,
           isSmall: false,
         ),
         SizedBox(
