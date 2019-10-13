@@ -70,14 +70,12 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                     });
                   },
                   child: Container(
-                    height: 30,
-                    width: 120,
+                    height: 35,
+                    width: 35,
                     decoration: BoxDecoration(
                       color: Theme.of(context).accentColor,
                       //image: DecorationImage(),
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(15.0),
-                          bottomRight: Radius.circular(15.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
                       border: Border.all(
                         color: Theme.of(context).accentColor,
                         width: 3.0,
@@ -212,8 +210,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
           tapHandler: activeteButton()
               ? () {
                   setState(() {
-                    
-                    Provider p = Provider(  
+                    Provider p = Provider(
                       bio: _bio.text,
                       maxPrice: _upperValue,
                       minPrice: _lowerValue,
