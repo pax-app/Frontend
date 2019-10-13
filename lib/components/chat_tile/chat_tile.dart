@@ -10,6 +10,7 @@ class ChatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 100,
+      margin: EdgeInsets.symmetric(vertical: 6),
       width: MediaQuery.of(context).size.width,
       child: Card(
         elevation: Theme.of(context).cardTheme.elevation,
@@ -23,9 +24,12 @@ class ChatTile extends StatelessWidget {
                 Icons.account_circle,
                 size: 50,
               ),
-              title: Text(
-                this.username,
-                style: Theme.of(context).textTheme.title,
+              title: Container(
+                margin: EdgeInsets.only(bottom: 8),
+                child: Text(
+                  this.username,
+                  style: Theme.of(context).textTheme.title,
+                ),
               ),
               subtitle: Text(
                 this.message.length >= 31
