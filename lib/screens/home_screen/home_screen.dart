@@ -5,6 +5,7 @@ import 'package:Pax/components/simple_tile/simple_tile.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_screen.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/info_tab.dart';
 import 'package:Pax/screens/category_screen/category_screen.dart';
+import 'package:Pax/screens/config_screen/config_screen.dart';
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
@@ -65,8 +66,8 @@ class HomeScreen extends StatelessWidget {
         ),
         BaseScreen(
           "Configurações",
-          "Configurações",
-          Text("Configurações"),
+          "Edite suas informações",
+          ConfigScreen(),
           getDrawer(),
         ),
       ],
