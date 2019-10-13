@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:Pax/blocs/provider_bloc.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/components/photo_profile/photo_profile.dart';
 import 'package:Pax/models/Provider.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/finish_provider_tab.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
@@ -21,7 +22,6 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
   TextEditingController _bio = TextEditingController();
   TextEditingController _rg = TextEditingController();
   bool isTouch = false;
-  File _photo;
   @override
   Widget build(BuildContext context) {
     bool isVoid = _lowerValue == 20 && _upperValue == 80 && !isTouch;
@@ -29,39 +29,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                
-                InkWell(
-                  onTap: () async {
-                    debugPrint(_photo.toString());
-                    var image = await ImagePicker.pickImage(
-                        source: ImageSource.gallery);
-                    setState(() {
-                      _photo = image;
-                    });
-                  },
-                  child: Container(
-                    height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).accentColor,
-                      //image: DecorationImage(),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                      border: Border.all(
-                        color: Theme.of(context).accentColor,
-                        width: 3.0,
-                      ),
-                    ),
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
+            PhotoProfile(),
             SizedBox(
               width: 30.0,
             ),

@@ -1,69 +1,30 @@
 import 'dart:async';
-import 'package:Pax/models/Provider.dart';
+import 'dart:io';
 import 'package:Pax/services/api.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:flutter/rendering.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:Pax/models/category.dart';
 
 class UserBloc implements BlocBase {
-  Provider provider;
-  List<Category> categories = List<Category>();
   Api api;
+  File _photo;
 
-  final StreamController _getProvideDataControlle = BehaviorSubject();
-  Stream<Provider> get outProviderData => _getProvideDataControlle.stream;
+  final _photoController = BehaviorSubject<File>();
+  Sink get setPhoto => _photoController.sink;
+  Stream get getPhoto => _photoController.stream;
 
-  final StreamController<bool> _thereCategoryProvider = BehaviorSubject<bool>();
-  Stream<bool> get thereCategoryProvider => _thereCategoryProvider.stream;
-
-  final StreamController<List<Category>> _categoriesControlle =
-      BehaviorSubject<List<Category>>();
-  Stream<List<Category>> get addCategoryToProvider =>
-      _categoriesControlle.stream;
-
-  final _createProvider = StreamController<Provider>();
-  Sink get createProvider => _createProvider.sink;
-
-  final _confirmProviderCreate = BehaviorSubject<bool>();
-  Stream get confirmProviderCreate => _confirmProviderCreate.stream;
-
-  ProviderBloc() {
+  UserBloc() {
     api = Api();
-    _createProvider.stream.listen(newProvider);
+    _photoController.stream.listen(_setUserPhoto);
+    //_createProvider.stream.listen(newProvider);
   }
 
-  bool thereCategory(Category category) {
-    bool there = categories.contains(category);
-    _thereCategoryProvider.add(there);
-    return there;
-  }
-
-  void addCategory(Category category) {
-    if (categories.contains(category)) {
-      categories.remove(category);
-    } else {
-      categories.add(category);
-    }
-    _categoriesControlle.sink.add(categories);
-    debugPrint(categories.toString());
-  }
-
-  void newProvider(Provider p) async {
-    p.categories = categories;
-    await api.registerProvider(p);
-  }
-
-  void getProvider() {
-    _getProvideDataControlle.sink.add(provider);
+  void _setUserPhoto(File file) {
+    _photo = file;
+    _photoController.sink.add(_photo);
   }
 
   @override
   void dispose() {
-    _getProvideDataControlle.close();
-    _createProvider.close();
-    _confirmProviderCreate.close();
-    _categoriesControlle.close();
-    _thereCategoryProvider.close();
+    _photoController.close();
   }
 }
