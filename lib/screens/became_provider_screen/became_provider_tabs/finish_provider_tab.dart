@@ -1,4 +1,5 @@
 import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class FinishProviderTab extends StatelessWidget {
@@ -27,7 +28,9 @@ class FinishProviderTab extends StatelessWidget {
           Button(
             buttonText: 'Perfeito',
             type: 'default',
-            tapHandler: () {},
+            tapHandler: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            ),
             isSmall: false,
           ),
           SizedBox(
