@@ -8,17 +8,16 @@ class ChatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+    return Container(
+      height: 100,
+      width: MediaQuery.of(context).size.width,
       child: Card(
-        margin: EdgeInsets.symmetric(vertical: 14),
         elevation: Theme.of(context).cardTheme.elevation,
         color: Theme.of(context).cardTheme.color,
         child: InkWell(
           onTap: () {},
           borderRadius: BorderRadius.circular(8),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
+          child: Center(
             child: ListTile(
               leading: Icon(
                 Icons.account_circle,
@@ -28,7 +27,12 @@ class ChatTile extends StatelessWidget {
                 this.username,
                 style: Theme.of(context).textTheme.title,
               ),
-              subtitle: Text(this.message),
+              subtitle: Text(
+                this.message.length >= 31
+                    ? '${this.message.substring(0, 31)}...'
+                    : this.message,
+                maxLines: 1,
+              ),
             ),
           ),
         ),
