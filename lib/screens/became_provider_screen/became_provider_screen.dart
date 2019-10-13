@@ -20,6 +20,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
   TextEditingController _bio = TextEditingController();
   TextEditingController _rg = TextEditingController();
   bool isTouch = false;
+  File _photo;
   @override
   Widget build(BuildContext context) {
     bool isVoid = _lowerValue == 20 && _upperValue == 80 && !isTouch;
@@ -27,20 +28,67 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Container(
-              width: 120.0,
-              height: 120.0,
-              decoration: BoxDecoration(
-                border: Border.all(
-                    color: Theme.of(context).accentColor, width: 2.0),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      'https://studiosol-a.akamaihd.net/letras/500x500/fotos/2/5/7/4/2574f9070ce48b988fe2693a60c40427.jpg'),
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                Container(
+                  child: _photo == null
+                      ? Container()
+                      : Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Theme.of(context).accentColor,
+                                width: 2.0),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.0)),
+                            color: Colors.transparent,
+                            image: DecorationImage(
+                              image: FileImage(
+                                _photo,
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                  width: 120.0,
+                  height: 120.0,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Theme.of(context).accentColor, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    color: Theme.of(context).accentColor,
+                  ),
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                color: Theme.of(context).accentColor,
-              ),
+                InkWell(
+                  onTap: () async {
+                    debugPrint(_photo.toString());
+                    var image = await ImagePicker.pickImage(
+                        source: ImageSource.gallery);
+                    setState(() {
+                      _photo = image;
+                    });
+                  },
+                  child: Container(
+                    height: 30,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor,
+                      //image: DecorationImage(),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(15.0),
+                          bottomRight: Radius.circular(15.0)),
+                      border: Border.all(
+                        color: Theme.of(context).accentColor,
+                        width: 3.0,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
             ),
             SizedBox(
               width: 30.0,
