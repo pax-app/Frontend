@@ -2,9 +2,9 @@ import 'package:Pax/models/category.dart';
 import 'package:Pax/models/user.dart';
 
 class Provider extends User{
-  String bio;
-  double minPrice, maxPrice;
-  List<Category> categories;
+  String bio = "";
+  double minPrice = 0, maxPrice = 0;
+  List<Category> categories =  List<Category>();
 
   Provider({this.bio, this.minPrice, this.maxPrice, this.categories});
 

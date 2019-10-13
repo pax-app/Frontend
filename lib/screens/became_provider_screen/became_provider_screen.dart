@@ -1,9 +1,10 @@
 import 'dart:io';
-
+import 'package:Pax/blocs/provider_bloc.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/models/Provider.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/finish_provider_tab.dart';
-import 'package:Pax/screens/category_screen/category_screen.dart';
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart' as frs;
@@ -210,6 +211,18 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
           type: 'default',
           tapHandler: activeteButton()
               ? () {
+                  setState(() {
+                    
+                    Provider p = Provider(  
+                      bio: _bio.text,
+                      maxPrice: _upperValue,
+                      minPrice: _lowerValue,
+                    );
+                    p.name = "true";
+                    BlocProvider.of<ProviderBloc>(context)
+                        .createProvider
+                        .add(p);
+                  });
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => BaseScreen(

@@ -3,7 +3,8 @@ import 'package:Pax/services/provider-api.dart';
 import 'package:Pax/services/user-api.dart';
 
 class MainApi {
-  final ProviderApi providerApi = ProviderApi("");
-  final UserApi userApi = UserApi("");
-  final CategoryApi categoryApi = CategoryApi("");
+  static String url = "";
+  final ProviderApi providerApi = ProviderApi(url);
+  final UserApi userApi = UserApi(url);
+  final CategoryApi categoryApi = CategoryApi(url);
 }

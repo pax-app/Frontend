@@ -1,13 +1,13 @@
 class User {
-  String name, email, cpf, photo;
+  String name, email, rg, photo;
 
-  User({this.name, this.email, this.cpf, this.photo});
+  User({this.name, this.email, this.rg, this.photo});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       name: json['name'],
       email: json['email'],
-      cpf: json['cpf'],
+      rg: json['rg'],
       photo: json['photo'],
     );
   }

@@ -7,7 +7,7 @@ import 'package:Pax/models/category.dart';
 
 class ProviderBloc implements BlocBase {
   Provider provider;
-  Set<Category> categories = Set<Category>();
+  List<Category> categories = List<Category>();
 
   final StreamController _getProvideDataControlle = BehaviorSubject();
   Stream<Provider> get outProviderData => _getProvideDataControlle.stream;
@@ -15,9 +15,9 @@ class ProviderBloc implements BlocBase {
   final StreamController<bool> _thereCategoryProvider = BehaviorSubject<bool>();
   Stream<bool> get thereCategoryProvider => _thereCategoryProvider.stream;
 
-  final StreamController<Set<Category>> _categoriesControlle =
-      BehaviorSubject<Set<Category>>();
-  Stream<Set<Category>> get addCategoryToProvider =>
+  final StreamController<List<Category>> _categoriesControlle =
+      BehaviorSubject<List<Category>>();
+  Stream<List<Category>> get addCategoryToProvider =>
       _categoriesControlle.stream;
 
   final _createProvider = StreamController<Provider>();
@@ -48,12 +48,15 @@ class ProviderBloc implements BlocBase {
 
   void newProvider(Provider p) async {
     bool out;
-    if (p.name == 'true') {
+    if (p.rg.isNotEmpty) {
       provider = p;
+      provider.categories = categories;
       out = true;
     } else {
       out = false;
     }
+    debugPrint(provider.bio);
+    debugPrint(p.bio);
     _confirmProviderCreate.sink.add(out);
   }
 
