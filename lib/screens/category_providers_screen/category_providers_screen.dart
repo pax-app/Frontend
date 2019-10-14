@@ -16,6 +16,7 @@ class _CategoryProvidersScreenState extends State<CategoryProvidersScreen> {
         "72870-010",
         "Categoria teste",
         ProviderCard(
+          providerId: 2,
           name: "Ralph Green",
           rating: 4,
           description: "Lorem ipsum dolor sit amet asdfasd asfsdf",
