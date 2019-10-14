@@ -12,7 +12,7 @@ class GeneralCategory {
     return GeneralCategory(
       id: json['id'],
       name: json['name'],
-      categories: json['categories'].map((c)=>Category.fromJson(c)).toList(),
+      categories: json['categories'].map((c) => Category.fromJson(c)).toList(),
     );
   }
 }

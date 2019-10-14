@@ -5,6 +5,8 @@ import 'package:Pax/blocs/general_category_bloc.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:Pax/components/provider_panel_card/provider_panel_card.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
+import 'Webservice.dart';
 
 class ServiceGeneralCategory extends StatefulWidget {
   ServiceGeneralCategory({Key key}) : super(key: key);
@@ -12,8 +14,19 @@ class ServiceGeneralCategory extends StatefulWidget {
 }
 
 class _ServiceGeneralCategoryState extends State<ServiceGeneralCategory> {
-  final List<GeneralCategory> serviceGeneralCategory;
-  _ServiceGeneralCategoryState({this.serviceGeneralCategory});
+  List<GeneralCategory> _generalCategories = <GeneralCategory>[];
+
+  @override
+  void initState() {
+    super.initState();
+    listenForGeneralCategories();
+  }
+
+  void listenForGeneralCategories() async {
+    final Stream<GeneralCategory> stream = await getGeneralCategories();
+    stream.listen((GeneralCategory generalCategory) =>
+        setState(() => _generalCategories.add(generalCategory)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,22 +46,14 @@ class _ServiceGeneralCategoryState extends State<ServiceGeneralCategory> {
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               children: <Widget>[
-                GeneralCategoriesPanelCard(
-                    'Asistência Técnica',
-                    'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
-                    imagesPaths['Assistencia']),
-                GeneralCategoriesPanelCard(
-                    'Reformas',
-                    'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
-                    imagesPaths['Reformas']),
-                GeneralCategoriesPanelCard(
-                    'Serviços Domésticos',
-                    'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
-                    imagesPaths['Domesticos']),
-                GeneralCategoriesPanelCard(
-                    'Design e Tecnologia',
-                    'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
-                    imagesPaths['Tecnologia']),
+                Text('Hello fabi'),
+                ListView.builder(
+                  itemCount: _generalCategories.length,
+                  itemBuilder: (context, index) => GeneralCategoriesPanelCard(
+                      _generalCategories[index].name,
+                      'bla',
+                      imagesPaths['Domesticos']),
+                ),
               ],
             ),
           )
