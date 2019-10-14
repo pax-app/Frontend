@@ -25,12 +25,10 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.black,
-          onPressed: () {},
+        iconTheme: IconThemeData(
+          color: Theme.of(context).primaryColor,
         ),
+        backgroundColor: Colors.white,
         title: ChatAppBar(
           provider_name: "Rogério Júnior",
           provider_qualification: "Assistência Técnica: Notebook",

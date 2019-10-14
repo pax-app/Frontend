@@ -1,10 +1,15 @@
+import 'package:Pax/screens/chat_screen/chat_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChatTile extends StatelessWidget {
   final String username;
   final String message;
 
-  ChatTile({@required this.username, @required this.message});
+  ChatTile({
+    @required this.username,
+    @required this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,14 @@ class ChatTile extends StatelessWidget {
         elevation: Theme.of(context).cardTheme.elevation,
         color: Theme.of(context).cardTheme.color,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (_) => ChatScreen(),
+              ),
+            );
+          },
           borderRadius: BorderRadius.circular(8),
           child: Center(
             child: ListTile(
