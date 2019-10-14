@@ -40,7 +40,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
               controller: searchController,
               onChanged: (String search) async {
                 //BlocProvider.of<CategoryBloc>(context).inSearch.add(search);
-                debugPrint(search);
                 setState(() {
                   this._search = search;
                   BlocProvider.of<CategoryBloc>(context)
@@ -139,7 +138,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         setState(() {
                                           BlocProvider.of<ProviderBloc>(context)
                                               .addCategory(category);
-                                          debugPrint(category.toString());
                                         });
                                       },
                                     ),
@@ -199,7 +197,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
       Category c = new Category(id: i, name: "Category");
       lista.add(c);
     }
-    //debugPrint(lista.toString());
     return lista;
   }
 

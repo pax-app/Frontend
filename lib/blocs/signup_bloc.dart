@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:Pax/services/api.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'package:Pax/models/login_model.dart';
 import 'package:Pax/blocs/singup_validators.dart';
 
@@ -16,6 +15,7 @@ class SignUpBloc extends BlocBase {
   final _passwordController = BehaviorSubject<String>();
   final _passwordConfirmationController = BehaviorSubject<String>();
   final _useTermsController = BehaviorSubject<bool>();
+  final Api _api = Api();
 
   // Add data to stream
   Stream<String> get email =>
@@ -31,10 +31,7 @@ class SignUpBloc extends BlocBase {
   Stream<String> get confirmPassword => _passwordConfirmationController.stream
           .transform(SignUpValidators.validatePassword)
           .doOnData((String c) {
-        // If the password is accepted (after validation of the rules)
-        // we need to ensure both password and retyped password match
         if (0 != _passwordController.value.compareTo(c)) {
-          // If they do not match, add an error
           _passwordConfirmationController.addError("As senhas não conferem.");
         }
       });
@@ -80,7 +77,6 @@ class SignUpBloc extends BlocBase {
   }
 
   Future<int> signUp() async {
-    final url = "http://172.18.0.1:5001/auth/registration";
     final email = _emailController.value;
     final password = _passwordController.value;
     final name = _nameController.value;
@@ -95,12 +91,11 @@ class SignUpBloc extends BlocBase {
     Map<String, String> header = {'content-type': 'application/json'};
 
     var jsonBody = json.encode(body);
-    final response = await http.post(
-      url,
+    final response = await _api.post(
+      Routes.REGISTER_ROUTE,
       headers: header,
       body: jsonBody,
     );
-    debugPrint(response.statusCode.toString());
     if (response.statusCode == 201) {
       final responseJson = json.decode(response.body);
       saveCurrentLogin(responseJson);

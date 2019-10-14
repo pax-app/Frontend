@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart' as frs;
 import 'package:image_picker/image_picker.dart';
+import "package:Pax/blocs/became_provider_bloc.dart";
+
+final _becameProviderBloc = BecameProviderBloc();
 
 class BecameProviderScreen extends StatefulWidget {
   @override
@@ -38,18 +41,23 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    Text(
-                      "Naruto Uzumaki",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontFamily:
-                            Theme.of(context).textTheme.title.fontFamily,
-                        fontSize: Theme.of(context).textTheme.title.fontSize,
-                        fontWeight:
-                            Theme.of(context).textTheme.title.fontWeight,
-                        color: Theme.of(context).textTheme.title.color,
-                      ),
-                    ),
+                    StreamBuilder<Object>(
+                        stream: _becameProviderBloc.name,
+                        builder: (context, snapshot) {
+                          return Text(
+                            snapshot.hasData ? snapshot.data : "",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontFamily:
+                                  Theme.of(context).textTheme.title.fontFamily,
+                              fontSize:
+                                  Theme.of(context).textTheme.title.fontSize,
+                              fontWeight:
+                                  Theme.of(context).textTheme.title.fontWeight,
+                              color: Theme.of(context).textTheme.title.color,
+                            ),
+                          );
+                        }),
                     SizedBox(
                       height: 30.0,
                     ),

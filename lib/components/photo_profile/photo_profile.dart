@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/blocs/user_bloc.dart';
@@ -11,7 +9,6 @@ class PhotoProfile extends StatefulWidget {
 }
 
 class _PhotoProfileState extends State<PhotoProfile> {
-  File _photo;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -51,7 +48,6 @@ class _PhotoProfileState extends State<PhotoProfile> {
         ),
         InkWell(
           onTap: () async {
-            debugPrint(_photo.toString());
             var image =
                 await ImagePicker.pickImage(source: ImageSource.gallery);
             setState(() {

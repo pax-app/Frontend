@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:Pax/models/category.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:flutter/material.dart';
 
 class CategoryBloc implements BlocBase {
   List<Category> categories = List<Category>();
@@ -31,7 +30,6 @@ class CategoryBloc implements BlocBase {
       categories = List<Category>();
       categories.add(Category(id: 85, name: "Foi"));
     }
-    debugPrint(categories.toString());
     _categoryController.sink.add(categories);
   }
 

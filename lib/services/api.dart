@@ -1,10 +1,37 @@
-import 'package:Pax/models/Provider.dart';
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+
+class Routes {
+  static const String LOGIN_ROUTE = "/auth/login";
+  static const String LOGOUT_ROUTE = "/auth/logout";
+  static const String REGISTER_ROUTE = "/auth/register";
+  static const String PROVIDER_REGISTRATION = "/provider_registration";
+}
 
 class Api {
-  static String url = "";
+  Api._privateConstructor();
 
-  registerProvider(Provider p) async {
-    debugPrint("criei um provider pela api");
+  static final Api _instance = Api._privateConstructor();
+
+  factory Api() {
+    return _instance;
+  }
+
+  final String url = "http://172.18.0.1:5001";
+
+  Future<dynamic> get(String route, {Map headers}) {
+    return http
+        .get(url + route, headers: headers)
+        .then((http.Response response) {
+      return response;
+    });
+  }
+
+  Future<dynamic> post(String path, {Map headers, body, encoding}) {
+    return http
+        .post(url + path, body: body, headers: headers, encoding: encoding)
+        .then((http.Response response) {
+      return response;
+    });
   }
 }

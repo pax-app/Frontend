@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:Pax/services/api.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'package:Pax/models/login_model.dart';
 
 class LoginBloc extends BlocBase {
   final _emailController = BehaviorSubject<String>();
   final _passwordController = BehaviorSubject<String>();
+  final Api _api = Api();
 
   Stream<bool> get validInputsStream => Observable.combineLatest2(
       _emailController.stream,
@@ -50,15 +51,14 @@ class LoginBloc extends BlocBase {
   }
 
   Future<int> logIn() async {
-    final url = "http://172.18.0.1:5001/auth/login";
     final email = _emailController.value;
     final password = _passwordController.value;
     Map<String, String> body = {'email': email, 'password': password};
     Map<String, String> header = {'content-type': 'application/json'};
 
     var jsonBody = json.encode(body);
-    final response = await http.post(
-      url,
+    final response = await _api.post(
+      Routes.LOGIN_ROUTE,
       headers: header,
       body: jsonBody,
     );
@@ -71,17 +71,13 @@ class LoginBloc extends BlocBase {
   }
 
   Future<bool> logOut() async {
-    final url = "http://172.18.0.1:5001/auth/logout";
     final token = await getToken();
     Map<String, String> header = {
       'content-type': 'application/json',
       'Authorization': 'Token $token'
     };
 
-    final response = await http.get(
-      url,
-      headers: header,
-    );
+    final response = await _api.get(Routes.LOGOUT_ROUTE, headers: header);
     if (response.statusCode == 200 ||
         response.statusCode == 401 ||
         response.statusCode == 404) {

@@ -1,15 +1,12 @@
 import 'dart:async';
 import 'package:Pax/models/Provider.dart';
-import 'package:Pax/services/api.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:flutter/rendering.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:Pax/models/category.dart';
 
 class ProviderBloc implements BlocBase {
   Provider provider;
   List<Category> categories = List<Category>();
-  Api api;
 
   final StreamController _getProvideDataControlle = BehaviorSubject();
   Stream<Provider> get outProviderData => _getProvideDataControlle.stream;
@@ -29,7 +26,6 @@ class ProviderBloc implements BlocBase {
   Stream get confirmProviderCreate => _confirmProviderCreate.stream;
 
   ProviderBloc() {
-    api = Api();
     _createProvider.stream.listen(newProvider);
   }
 
@@ -46,12 +42,10 @@ class ProviderBloc implements BlocBase {
       categories.add(category);
     }
     _categoriesControlle.sink.add(categories);
-    debugPrint(categories.toString());
   }
 
   void newProvider(Provider p) async {
     p.categories = categories;
-    await api.registerProvider(p);
   }
 
   void getProvider() {
