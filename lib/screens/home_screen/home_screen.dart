@@ -5,10 +5,10 @@ import 'package:Pax/screens/became_provider_screen/became_provider_tabs/info_tab
 import 'package:Pax/screens/config_screen/config_screen.dart';
 import 'package:Pax/screens/perfil_screen/perfil_screen.dart';
 import 'package:Pax/screens/chat_screen/chat_screen.dart';
+import 'package:Pax/screens/my_conversations/my_conversations.dart';
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
-import 'package:web_socket_channel/io.dart';
 
 class HomeScreen extends StatelessWidget {
   final _pageController = PageController();
@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
         BaseScreen(
           "Minhas Conversas",
           "Minhas Conversas",
-          Text("Minhas Conversas"),
+          MyConversations(),
           getDrawer(),
         ),
         //roviderPanel(this._pageController),
@@ -70,47 +70,6 @@ class HomeScreen extends StatelessWidget {
           "Torne-se um prestador ",
           InfoTab(),
           getDrawer(),
-<<<<<<< HEAD
-=======
-        ),
-        ChatScreen()
-      ],
-    );
-  }
-}
-
-Widget exemplo() {
-  return Container(
-    height: 560,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        SimpleTile('services list'),
-        SimpleTile('services list'),
-        Button(
-          buttonText: 'Entrar',
-          tapHandler: () {},
-          type: 'default',
-          isSmall: false,
-        ),
-        Button(
-          buttonText: 'Ficou Boa',
-          tapHandler: () {},
-          type: 'default',
-          isSmall: true,
-        ),
-        Button(
-          buttonText: 'Reportar',
-          tapHandler: () {},
-          type: 'danger',
-          isSmall: false,
-        ),
-        Button(
-          buttonText: 'Small',
-          tapHandler: () {},
-          type: 'danger',
-          isSmall: true,
->>>>>>> pax-app/Wiki#160 Add initial chat screen with the provider data app bar
         ),
         BaseScreen(
           "Configurações",
