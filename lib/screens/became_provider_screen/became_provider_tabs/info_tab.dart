@@ -1,6 +1,7 @@
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/screens/category_screen/category_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InfoTab extends StatelessWidget {
@@ -34,7 +35,7 @@ class InfoTab extends StatelessWidget {
           type: 'default',
           tapHandler: () {
             Navigator.of(context).push(
-              MaterialPageRoute(
+              CupertinoPageRoute(
                 builder: (context) => BaseScreen(
                   "Categorias",
                   "Quais categorias você se encaixa?",

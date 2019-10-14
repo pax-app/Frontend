@@ -1,5 +1,6 @@
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/screens/home_screen/home_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FinishProviderTab extends StatelessWidget {
@@ -29,7 +30,7 @@ class FinishProviderTab extends StatelessWidget {
             buttonText: 'Perfeito',
             type: 'default',
             tapHandler: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => HomeScreen()),
+              CupertinoPageRoute(builder: (context) => HomeScreen()),
             ),
             isSmall: false,
           ),

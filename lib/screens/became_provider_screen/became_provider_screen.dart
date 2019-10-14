@@ -6,6 +6,7 @@ import 'package:Pax/components/photo_profile/photo_profile.dart';
 import 'package:Pax/models/Provider.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/finish_provider_tab.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart' as frs;
@@ -221,7 +222,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                         .add(p);
                   });
                   Navigator.of(context).push(
-                    MaterialPageRoute(
+                    CupertinoPageRoute(
                       builder: (context) => BaseScreen(
                         "",
                         "Agora é só aguardar",

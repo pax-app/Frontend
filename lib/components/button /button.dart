@@ -65,6 +65,9 @@ class Button extends StatelessWidget {
             onPressed: tapHandler,
             child: Text(
               buttonText.toUpperCase(),
+              style: Theme.of(context).textTheme.title.copyWith(
+                    color: colorWhite,
+                  ),
             ),
           ),
         );
