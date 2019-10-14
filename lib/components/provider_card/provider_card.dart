@@ -1,8 +1,10 @@
+import 'package:Pax/screens/provider_profile_screen/provider_profile_screen.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class ProviderCard extends StatelessWidget {
+  final int providerId;
   final String name;
   final double rating;
   final String description;
@@ -11,7 +13,8 @@ class ProviderCard extends StatelessWidget {
   final String avatarUrl;
 
   ProviderCard(
-      {@required this.name,
+      {@required this.providerId,
+      @required this.name,
       @required this.rating,
       @required this.description,
       @required this.minPrice,
@@ -23,12 +26,18 @@ class ProviderCard extends StatelessWidget {
     return source;
   }
 
+  loadProvider(context) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ProviderProfileScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         Expanded(
           child: InkWell(
+            onTap: loadProvider(context),
             child: Container(
               height: 180,
               margin: EdgeInsets.all(8),
