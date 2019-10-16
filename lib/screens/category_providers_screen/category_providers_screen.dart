@@ -1,5 +1,6 @@
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/provider_card/provider_card.dart';
+import 'package:Pax/screens/provider_profile_screen/provider_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryProvidersScreen extends StatefulWidget {
@@ -7,6 +8,11 @@ class CategoryProvidersScreen extends StatefulWidget {
 
   _CategoryProvidersScreenState createState() =>
       _CategoryProvidersScreenState();
+}
+
+loadProvider(int id, ctx) {
+  Navigator.push(
+      ctx, MaterialPageRoute(builder: (ctx) => ProviderProfileScreen()));
 }
 
 class _CategoryProvidersScreenState extends State<CategoryProvidersScreen> {
@@ -22,8 +28,8 @@ class _CategoryProvidersScreenState extends State<CategoryProvidersScreen> {
           description: "Lorem ipsum dolor sit amet asdfasd asfsdf",
           minPrice: 50,
           maxPrice: 200,
-          avatarUrl:
-              'https://upload.wikimedia.org/wikipedia/commons/a/a0/Pierre-Person.jpg',
+          avatarUrl: null,
+          onTap: () => (loadProvider(2, context)),
         ),
         null);
   }
