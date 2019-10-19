@@ -40,6 +40,7 @@ class HomeScreen extends StatelessWidget {
           // ),
           PerfilScreen(),
           getDrawer(),
+          padding: false,
         ),
 
         BaseScreen(

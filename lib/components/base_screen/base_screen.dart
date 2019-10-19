@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class BaseScreen extends StatelessWidget {
   final String pageTitle, appBarTitle;
   final Widget body, drawer;
-  BaseScreen(this.appBarTitle, this.pageTitle, this.body, this.drawer);
+  final bool padding;
+  BaseScreen(this.appBarTitle, this.pageTitle, this.body, this.drawer,
+      {this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,9 @@ class BaseScreen extends StatelessWidget {
                     ),
                   ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: padding
+                  ? EdgeInsets.symmetric(horizontal: 20)
+                  : EdgeInsets.all(0),
               child: Container(
                 child: body,
               ),
