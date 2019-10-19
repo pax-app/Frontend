@@ -2,6 +2,7 @@ import 'package:Pax/components/stars_avaliation/stars_avaliation.dart';
 import 'package:flutter/material.dart';
 
 class PerfilScreen extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return ListView(

@@ -1,16 +1,13 @@
 import 'dart:io';
 
 import 'package:Pax/components/stars_avaliation/stars_avaliation.dart';
+import 'package:Pax/models/avaliation.dart';
 import 'package:flutter/material.dart';
 
 class AvaliationCard extends StatelessWidget {
-  final String name;
-  final String date;
-  final String description;
-  final double score;
-  //final File photo;
+  final Avaliation avaliation;
 
-  AvaliationCard({this.name, this.date, this.description, this.score});
+  AvaliationCard(this.avaliation);
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +42,13 @@ class AvaliationCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          name,
+                          avaliation.user.name,
                           style: Theme.of(context).textTheme.title.copyWith(
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
                         Text(
-                          date,
+                          avaliation.date,
                           style: Theme.of(context).textTheme.title.copyWith(
                               fontWeight: FontWeight.normal, fontSize: 10),
                         ),
@@ -60,7 +57,7 @@ class AvaliationCard extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        description,
+                        avaliation.description,
                         style: Theme.of(context)
                             .textTheme
                             .body1
@@ -70,7 +67,7 @@ class AvaliationCard extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Text("Carisma:"),
-                        StarsAvaliation(score, context)
+                        StarsAvaliation(avaliation.score, context)
                       ],
                     ),
                   ],
