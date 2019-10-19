@@ -1,25 +1,8 @@
 import 'package:Pax/components/chat_app_bar/chat_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
-class ChatScreen extends StatefulWidget {
-  final WebSocketChannel channel =
-      IOWebSocketChannel.connect('ws://echo.websocket.org');
-
-  @override
-  _ChatScreenState createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
+class ChatScreen extends StatelessWidget {
   final TextEditingController _messageController = TextEditingController();
-
-  void _sendMessage() {
-    if (_messageController.text.isNotEmpty) {
-      widget.channel.sink.add(_messageController.text);
-      print(_messageController.text);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +19,7 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.send),
-        onPressed: _sendMessage,
+        onPressed: () {},
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -56,21 +39,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 decoration: InputDecoration(labelText: "Send a message"),
               ),
             ),
-            StreamBuilder(
-              stream: widget.channel.stream,
-              builder: (ctx, snapshot) {
-                return Text(snapshot.hasData ? "${snapshot.data}" : " ");
-              },
-            )
           ],
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    widget.channel.sink.close();
-    super.dispose();
   }
 }
