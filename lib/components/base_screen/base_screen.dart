@@ -6,7 +6,7 @@ class BaseScreen extends StatelessWidget {
   final Widget body, drawer;
   final bool padding;
   BaseScreen(this.appBarTitle, this.pageTitle, this.body, this.drawer,
-      {this.padding});
+      {this.padding = true});
 
   @override
   Widget build(BuildContext context) {
