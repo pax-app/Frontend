@@ -1,11 +1,13 @@
 import 'package:Pax/components/chat/chat_app_bar.dart';
 import 'package:Pax/components/chat/chat_input.dart';
+import 'package:Pax/components/message/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreen extends StatelessWidget {
   final Firestore _firestore = Firestore.instance;
+  final formatHour = RegExp(r'\d{2}\:\d{2}');
   final String chat_id = '3';
 
   void _sendMessage(String text) {
@@ -59,8 +61,12 @@ class ChatScreen extends StatelessWidget {
                       reverse: true,
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index) {
-                        return Text(
-                          snapshot.data.documents[index]['text_message'],
+                        return Message(
+                          message: snapshot.data.documents[index]
+                              ['text_message'],
+                          hour: formatHour.stringMatch(
+                            snapshot.data.documents[index]['date_time_sent'],
+                          ),
                         );
                       },
                     );
