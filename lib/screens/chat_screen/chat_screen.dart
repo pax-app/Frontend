@@ -23,26 +23,21 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PreferredSizeWidget appBar = AppBar(
-      iconTheme: IconThemeData(
-        color: Theme.of(context).primaryColor,
-      ),
-      backgroundColor: Colors.white,
-      title: ChatAppBar(
-        provider_name: "Rogério Júnior",
-        provider_qualification: "Assistência Técnica: Notebook",
-      ),
+    final chatAppBar = ChatAppBar(
+      provider_name: "Rogério Júnior",
+      provider_qualification: "Assistência Técnica: Notebook",
     );
 
     final mediaQuery = MediaQuery.of(context);
+    final safeBackgroundHeight = mediaQuery.size.height -
+        chatAppBar.preferredSize.height -
+        mediaQuery.padding.top;
 
     return Scaffold(
-      appBar: appBar,
+      appBar: chatAppBar,
       body: SingleChildScrollView(
         child: Container(
-          height: mediaQuery.size.height -
-              appBar.preferredSize.height -
-              mediaQuery.padding.top,
+          height: safeBackgroundHeight,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/illustrations/circle-pattern.png"),
