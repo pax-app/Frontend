@@ -19,6 +19,7 @@ class BecameProviderScreen extends StatefulWidget {
 class _BecameProviderScreenState extends State<BecameProviderScreen> {
   double _lowerValue = 20.0;
   double _upperValue = 80.0;
+  File _photo;
   TextEditingController _bio = TextEditingController();
   TextEditingController _rg = TextEditingController();
   bool isTouch = false;
@@ -29,7 +30,65 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            PhotoProfile(),
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                _photo == null
+                    ? Container(
+                        height: 140,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).accentColor, width: 2.0),
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          color: Theme.of(context).accentColor,
+                        ),
+                      )
+                    : Container(
+                        height: 140,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).accentColor, width: 2.0),
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                            image: FileImage(
+                              _photo,
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                InkWell(
+                  onTap: () async {
+                    debugPrint(_photo.toString());
+                    var image = await ImagePicker.pickImage(
+                        source: ImageSource.gallery);
+                    setState(() {
+                      _photo = image;
+                    });
+                  },
+                  child: Container(
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor,
+                      //image: DecorationImage(),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      border: Border.all(
+                        color: Theme.of(context).accentColor,
+                        width: 3.0,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
             SizedBox(
               width: 30.0,
             ),
