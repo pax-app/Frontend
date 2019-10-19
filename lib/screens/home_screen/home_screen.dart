@@ -31,7 +31,12 @@ class HomeScreen extends StatelessWidget {
         BaseScreen(
           "Meu Perfil",
           "Meu Perfil",
-          AvaliationCard(),
+          AvaliationCard(
+            date: "24/07/2018",
+            description: "Umas descricao",
+            name: "Esio",
+            score: 5,
+          ),
           getDrawer(),
         ),
 

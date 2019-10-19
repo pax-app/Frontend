@@ -1,7 +1,17 @@
+import 'dart:io';
+
 import 'package:Pax/components/stars_avaliation/stars_avaliation.dart';
 import 'package:flutter/material.dart';
 
 class AvaliationCard extends StatelessWidget {
+  final String name;
+  final String date;
+  final String description;
+  final double score;
+  //final File photo;
+
+  AvaliationCard({this.name, this.date, this.description, this.score});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,13 +45,13 @@ class AvaliationCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          "Jack Sanchez",
+                          name,
                           style: Theme.of(context).textTheme.title.copyWith(
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
                         Text(
-                          "02/10/2019",
+                          date,
                           style: Theme.of(context).textTheme.title.copyWith(
                               fontWeight: FontWeight.normal, fontSize: 10),
                         ),
@@ -50,7 +60,7 @@ class AvaliationCard extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        'Some lengthy texzxczxczxct for testing Some lengthy text for testing Some lengthy text for testing Some lengthy text for testingSome lengthy text for testing',
+                        description,
                         style: Theme.of(context)
                             .textTheme
                             .body1
@@ -60,7 +70,7 @@ class AvaliationCard extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Text("Carisma:"),
-                        StarsAvaliation(1.5, context)
+                        StarsAvaliation(score, context)
                       ],
                     ),
                   ],
