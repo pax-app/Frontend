@@ -8,7 +8,9 @@ import 'package:intl/intl.dart';
 class ChatScreen extends StatelessWidget {
   final Firestore _firestore = Firestore.instance;
   final formatHour = RegExp(r'\d{2}\:\d{2}');
+
   final String chat_id = '3';
+  final bool isProvider = true;
 
   void _sendMessage(String text) {
     String date_time_sent =
@@ -16,8 +18,7 @@ class ChatScreen extends StatelessWidget {
 
     _firestore.collection(chat_id).document(date_time_sent).setData({
       'text_message': text,
-      'sender': 'provider',
-      // 'sender': isProvider ? 'P' : 'U',
+      'sender': isProvider ? 'P' : 'U',
       'date_time_sent': date_time_sent
     });
   }
@@ -61,7 +62,14 @@ class ChatScreen extends StatelessWidget {
                       reverse: true,
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index) {
+                        String messageSender =
+                            snapshot.data.documents[index]['sender'];
+
                         return Message(
+                          messageAligment: isProvider && messageSender == 'P' ||
+                                  !isProvider && messageSender == 'U'
+                              ? MainAxisAlignment.end
+                              : MainAxisAlignment.start,
                           message: snapshot.data.documents[index]
                               ['text_message'],
                           hour: formatHour.stringMatch(
