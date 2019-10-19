@@ -47,7 +47,7 @@ class ChatScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                height: mediaQuery.size.height * .75,
+                height: safeBackgroundHeight * .83,
                 child: StreamBuilder(
                   stream: _firestore
                       .collection(chat_id)
@@ -65,6 +65,48 @@ class ChatScreen extends StatelessWidget {
                       },
                     );
                   },
+                ),
+              ),
+              Container(
+                height: safeBackgroundHeight * .13,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  elevation: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15,
+                      top: 6,
+                      bottom: 6,
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            maxLines: null,
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            controller: _messageController,
+                            cursorColor: Theme.of(context).accentColor,
+                            decoration: InputDecoration.collapsed(
+                              hintText: "Digite aqui",
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.attach_file),
+                          color: Theme.of(context).accentColor,
+                        ),
+                        IconButton(
+                          onPressed: _sendMessage,
+                          icon: Icon(Icons.send),
+                          color: Theme.of(context).accentColor,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],
