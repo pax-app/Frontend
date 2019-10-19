@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "301977433829",
+    "firebase_url": "https://pax-messenger.firebaseio.com",
+    "project_id": "pax-messenger",
+    "storage_bucket": "pax-messenger.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301977433829:android:ff913b7ae911b8a6f3c60c",
+        "android_client_info": {
+          "package_name": "com.example.Pax"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301977433829-pc5u9d295mg00as2ob4eia1s6oslteln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4qpOMcevTqjAUtdbhZLAjCh2582p_j08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301977433829-pc5u9d295mg00as2ob4eia1s6oslteln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
