@@ -23,63 +23,57 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Theme.of(context).primaryColor,
-        ),
-        backgroundColor: Colors.white,
-        title: ChatAppBar(
-          provider_name: "Rogério Júnior",
-          provider_qualification: "Assistência Técnica: Notebook",
-        ),
+    final PreferredSizeWidget appBar = AppBar(
+      iconTheme: IconThemeData(
+        color: Theme.of(context).primaryColor,
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.send),
-        onPressed: _sendMessage,
+      backgroundColor: Colors.white,
+      title: ChatAppBar(
+        provider_name: "Rogério Júnior",
+        provider_qualification: "Assistência Técnica: Notebook",
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/illustrations/circle-pattern.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          children: <Widget>[
-            Form(
-              child: TextFormField(
-                controller: _messageController,
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-                decoration: InputDecoration(labelText: "Send a message"),
-              ),
-            ),
-            StreamBuilder(
-              stream: _firestore
-                  .collection(chat_id)
-                  .orderBy('date_time_sent')
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Text('Loading...');
-                }
+    );
 
-                return Container(
-                  height: 250,
-                  child: ListView.builder(
-                    itemCount: snapshot.data.documents.length,
-                    itemBuilder: (context, index) {
-                      return Text(
-                        snapshot.data.documents[index]['text_message'],
-                      );
-                    },
-                  ),
-                );
-              },
+    final mediaQuery = MediaQuery.of(context);
+
+    return Scaffold(
+      appBar: appBar,
+      body: SingleChildScrollView(
+        child: Container(
+          height: mediaQuery.size.height -
+              appBar.preferredSize.height -
+              mediaQuery.padding.top,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/illustrations/circle-pattern.png"),
+              fit: BoxFit.cover,
             ),
-          ],
+          ),
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: mediaQuery.size.height * .75,
+                child: StreamBuilder(
+                  stream: _firestore
+                      .collection(chat_id)
+                      .orderBy('date_time_sent')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return CircularProgressIndicator();
+
+                    return ListView.builder(
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) {
+                        return Text(
+                          snapshot.data.documents[index]['text_message'],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
