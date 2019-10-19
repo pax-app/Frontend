@@ -1,24 +1,23 @@
-import 'package:Pax/components/chat_app_bar/chat_app_bar.dart';
+import 'package:Pax/components/chat/chat_app_bar.dart';
+import 'package:Pax/components/chat/chat_input.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreen extends StatelessWidget {
-  final TextEditingController _messageController = TextEditingController();
   final Firestore _firestore = Firestore.instance;
   final String chat_id = '3';
 
-  void _sendMessage() {
+  void _sendMessage(String text) {
     String date_time_sent =
         DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
 
-    _firestore.collection(chat_id).add({
-      'text_message': _messageController.text,
+    _firestore.collection(chat_id).document(date_time_sent).setData({
+      'text_message': text,
       'sender': 'provider',
       // 'sender': isProvider ? 'P' : 'U',
       'date_time_sent': date_time_sent
     });
-    _messageController.clear();
   }
 
   @override
@@ -51,12 +50,13 @@ class ChatScreen extends StatelessWidget {
                 child: StreamBuilder(
                   stream: _firestore
                       .collection(chat_id)
-                      .orderBy('date_time_sent')
+                      .orderBy('date_time_sent', descending: true)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return CircularProgressIndicator();
 
                     return ListView.builder(
+                      reverse: true,
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index) {
                         return Text(
@@ -67,47 +67,9 @@ class ChatScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Container(
-                height: safeBackgroundHeight * .13,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  elevation: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 15,
-                      top: 6,
-                      bottom: 6,
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: TextField(
-                            maxLines: null,
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                            controller: _messageController,
-                            cursorColor: Theme.of(context).accentColor,
-                            decoration: InputDecoration.collapsed(
-                              hintText: "Digite aqui",
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.attach_file),
-                          color: Theme.of(context).accentColor,
-                        ),
-                        IconButton(
-                          onPressed: _sendMessage,
-                          icon: Icon(Icons.send),
-                          color: Theme.of(context).accentColor,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              ChatInput(
+                sendAction: _sendMessage,
+                componentHeight: safeBackgroundHeight * .13,
               ),
             ],
           ),
