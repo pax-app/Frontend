@@ -1,8 +1,20 @@
 import 'package:Pax/components/chat_app_bar/chat_app_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatelessWidget {
   final TextEditingController _messageController = TextEditingController();
+  final Firestore _firestore = Firestore.instance;
+  final int chat_id = 3;
+
+  void _sendMessage() {
+    _firestore.collection(chat_id.toString()).add({
+      'text': _messageController.text,
+      'sender': 'provider',
+      // 'sender': isProvider ? 'P' : 'U',
+    });
+    _messageController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +31,7 @@ class ChatScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.send),
-        onPressed: () {},
+        onPressed: _sendMessage,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -38,6 +50,27 @@ class ChatScreen extends StatelessWidget {
                 ),
                 decoration: InputDecoration(labelText: "Send a message"),
               ),
+            ),
+            StreamBuilder(
+              stream: _firestore.collection(chat_id.toString()).snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Text('Loading...');
+                }
+
+                return Container(
+                  height: 250,
+                  child: ListView.builder(
+                    reverse: true,
+                    itemCount: snapshot.data.documents.length,
+                    itemBuilder: (context, index) {
+                      return Text(
+                        snapshot.data.documents[index]['text'],
+                      );
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),
