@@ -46,20 +46,27 @@ class ChatScreen extends StatelessWidget {
             ),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Container(
-                height: safeBackgroundHeight * .85,
+              Expanded(
                 child: StreamBuilder(
                   stream: _firestore
                       .collection(chat_id)
                       .orderBy('date_time_sent', descending: true)
                       .snapshots(),
                   builder: (context, snapshot) {
-                    // Strategy Pattern
-                    if (!snapshot.hasData) return CircularProgressIndicator();
+                    // Strategy
+                    if (!snapshot.hasData)
+                      return Center(child: CircularProgressIndicator());
 
-                    if (snapshot.data.documents.length <= 0)
-                      return Text('Inicie a conversa :)');
+                    if (snapshot.data.documents.length <= 0) {
+                      return Center(
+                        child: Text(
+                          'Inicie a conversa :)',
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                      );
+                    }
 
                     return ChatList(
                       snapshot: snapshot.data.documents,
@@ -68,9 +75,7 @@ class ChatScreen extends StatelessWidget {
                   },
                 ),
               ),
-              ChatInput(
-                sendAction: _sendMessage,
-              ),
+              ChatInput(sendAction: _sendMessage),
             ],
           ),
         ),
