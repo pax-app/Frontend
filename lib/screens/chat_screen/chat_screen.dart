@@ -59,6 +59,8 @@ class ChatScreen extends StatelessWidget {
 
                     if (snapshot.data.documents.length <= 0)
                       return Text('Inicie a conversa :)');
+                    
+                    // print();
 
                     return ChatList(
                       snapshot: snapshot.data.documents,

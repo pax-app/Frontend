@@ -1,9 +1,11 @@
 import 'package:Pax/components/message/message.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ChatList extends StatelessWidget {
-  final formatDate = RegExp(r'\d{4}-\d{2}-\d{2}');
-  final formatHour = RegExp(r'\d{2}\:\d{2}');
+  final formatDate = DateFormat("dd MMMM yyyy", "pt-BR");
+  final formatHour = DateFormat("HH:mm", "pt-BR");
+
   final snapshot;
   final bool isProvider;
 
@@ -14,9 +16,9 @@ class ChatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String prevDate = formatDate.stringMatch(
-      snapshot[0]['date_time_sent'],
-    );
+    String prevDate =
+        formatDate.format(DateTime.parse(snapshot[0]['date_time_sent']));
+
     bool dateHasChanged = false;
 
     return ListView.builder(
@@ -24,9 +26,8 @@ class ChatList extends StatelessWidget {
       itemCount: snapshot.length,
       itemBuilder: (context, index) {
         String messageSender = snapshot[index]['sender'];
-        String currentDate = formatDate.stringMatch(
-          snapshot[index]['date_time_sent'],
-        );
+        String currentDate = formatDate
+            .format(DateTime.parse(snapshot[index]['date_time_sent']));
 
         if (currentDate != prevDate) dateHasChanged = true;
 
@@ -37,9 +38,8 @@ class ChatList extends StatelessWidget {
               isMe: isProvider && messageSender == 'P' ||
                   !isProvider && messageSender == 'U',
               message: snapshot[index]['text_message'],
-              hour: formatHour.stringMatch(
-                snapshot[index]['date_time_sent'],
-              ),
+              hour: formatHour
+                  .format(DateTime.parse(snapshot[index]['date_time_sent'])),
             ),
             if (dateHasChanged) Text(prevDate),
           ],
