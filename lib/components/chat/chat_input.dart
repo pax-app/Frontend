@@ -39,7 +39,7 @@ class ChatInput extends StatelessWidget {
                   controller: _messageController,
                   cursorColor: Theme.of(context).accentColor,
                   decoration: InputDecoration.collapsed(
-                    hintText: "Digite aqui",
+                    hintText: "Digite aqui...",
                   ),
                 ),
               ),
