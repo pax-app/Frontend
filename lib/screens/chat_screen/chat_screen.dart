@@ -7,8 +7,8 @@ import 'package:intl/intl.dart';
 
 class ChatScreen extends StatelessWidget {
   final Firestore _firestore = Firestore.instance;
-  final formatHour = RegExp(r'\d{2}\:\d{2}');
   final formatDate = RegExp(r'\d{4}-\d{2}-\d{2}');
+  final formatHour = RegExp(r'\d{2}\:\d{2}');
 
   final String chat_id = '4';
   final bool isProvider = true;
@@ -16,6 +16,7 @@ class ChatScreen extends StatelessWidget {
   void _sendMessage(String text) {
     String date_time_sent =
         DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
+    // _firestore.collection(chat_id).document('20/11').collection('2019/02').add({
 
     _firestore.collection(chat_id).document(date_time_sent).setData({
       'text_message': text,
@@ -38,8 +39,7 @@ class ChatScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: chatAppBar,
-      body: SingleChildScrollView(
-        child: Container(
+      body: Container(
           height: safeBackgroundHeight,
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -59,10 +59,9 @@ class ChatScreen extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return CircularProgressIndicator();
 
-                    String dateMessages = formatDate.stringMatch(
-                        snapshot.data.documents[0]['date_time_sent']);
-                    Text txtDate;
-
+                    String prevDate = formatDate.stringMatch(
+                      snapshot.data.documents[0]['date_time_sent'],
+                    );
                     bool dateHasChanged = false;
 
                     return ListView.builder(
@@ -73,21 +72,15 @@ class ChatScreen extends StatelessWidget {
                             snapshot.data.documents[index]['sender'];
 
                         String currentDate = formatDate.stringMatch(
-                            snapshot.data.documents[index]['date_time_sent']);
+                          snapshot.data.documents[index]['date_time_sent'],
+                        );
 
-                        if (dateMessages != currentDate) {
-                          txtDate = Text(dateMessages);
-                          dateMessages = currentDate;
-                          dateHasChanged = true;
-                        }
+                        if (currentDate != prevDate) dateHasChanged = true;
 
                         Widget chatList = Column(
                           children: <Widget>[
-                            index + 1 == snapshot.data.documents.length
-                                ? Text(currentDate)
-                                : SizedBox(
-                                    height:
-                                        1), // If is the last one, will be printed
+                            if (index + 1 == snapshot.data.documents.length)
+                              Text(currentDate),
                             Message(
                               messageAligment:
                                   isProvider && messageSender == 'P' ||
@@ -99,15 +92,11 @@ class ChatScreen extends StatelessWidget {
                               hour: snapshot.data.documents[index]
                                   ['date_time_sent'],
                             ),
-                            dateHasChanged ||
-                                    index == snapshot.data.documents.length
-                                ? txtDate
-                                : SizedBox(
-                                    height: 1,
-                                  ), //If the date has changed, print the date
+                            if (dateHasChanged) Text(prevDate),
                           ],
                         );
 
+                        prevDate = currentDate;
                         dateHasChanged = false;
                         return chatList;
                       },
