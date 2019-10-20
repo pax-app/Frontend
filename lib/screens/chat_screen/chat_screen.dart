@@ -55,12 +55,11 @@ class ChatScreen extends StatelessWidget {
                       .orderBy('date_time_sent', descending: true)
                       .snapshots(),
                   builder: (context, snapshot) {
+                    // Strategy Pattern
                     if (!snapshot.hasData) return CircularProgressIndicator();
 
                     if (snapshot.data.documents.length <= 0)
                       return Text('Inicie a conversa :)');
-                    
-                    // print();
 
                     return ChatList(
                       snapshot: snapshot.data.documents,

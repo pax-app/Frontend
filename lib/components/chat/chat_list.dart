@@ -1,3 +1,4 @@
+import 'package:Pax/components/chat/date_bubble.dart';
 import 'package:Pax/components/message/message.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -33,7 +34,7 @@ class ChatList extends StatelessWidget {
 
         Widget chatList = Column(
           children: <Widget>[
-            if (index + 1 == snapshot.length) Text(currentDate),
+            if (index + 1 == snapshot.length) DateBubble(date: currentDate),
             Message(
               isMe: isProvider && messageSender == 'P' ||
                   !isProvider && messageSender == 'U',
@@ -41,11 +42,13 @@ class ChatList extends StatelessWidget {
               hour: formatHour
                   .format(DateTime.parse(snapshot[index]['date_time_sent'])),
             ),
-            if (dateHasChanged) Text(prevDate),
+            if (dateHasChanged) DateBubble(date: prevDate),
           ],
         );
+
         prevDate = currentDate;
         dateHasChanged = false;
+
         return chatList;
       },
     );
