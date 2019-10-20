@@ -39,7 +39,8 @@ class ChatScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: chatAppBar,
-      body: Container(
+      body: SingleChildScrollView(
+        child: Container(
           height: safeBackgroundHeight,
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -47,68 +48,69 @@ class ChatScreen extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: safeBackgroundHeight * .83,
-                child: StreamBuilder(
-                  stream: _firestore
-                      .collection(chat_id)
-                      .orderBy('date_time_sent', descending: true)
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) return CircularProgressIndicator();
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: safeBackgroundHeight * .85,
+                  child: StreamBuilder(
+                    stream: _firestore
+                        .collection(chat_id)
+                        .orderBy('date_time_sent', descending: true)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) return CircularProgressIndicator();
 
-                    String prevDate = formatDate.stringMatch(
-                      snapshot.data.documents[0]['date_time_sent'],
-                    );
-                    bool dateHasChanged = false;
+                      String prevDate = formatDate.stringMatch(
+                        snapshot.data.documents[0]['date_time_sent'],
+                      );
+                      bool dateHasChanged = false;
 
-                    return ListView.builder(
-                      reverse: true,
-                      itemCount: snapshot.data.documents.length,
-                      itemBuilder: (context, index) {
-                        String messageSender =
-                            snapshot.data.documents[index]['sender'];
+                      return ListView.builder(
+                        reverse: true,
+                        itemCount: snapshot.data.documents.length,
+                        itemBuilder: (context, index) {
+                          String messageSender =
+                              snapshot.data.documents[index]['sender'];
 
-                        String currentDate = formatDate.stringMatch(
-                          snapshot.data.documents[index]['date_time_sent'],
-                        );
+                          String currentDate = formatDate.stringMatch(
+                            snapshot.data.documents[index]['date_time_sent'],
+                          );
 
-                        if (currentDate != prevDate) dateHasChanged = true;
+                          if (currentDate != prevDate) dateHasChanged = true;
 
-                        Widget chatList = Column(
-                          children: <Widget>[
-                            if (index + 1 == snapshot.data.documents.length)
-                              Text(currentDate),
-                            Message(
-                              messageAligment:
-                                  isProvider && messageSender == 'P' ||
-                                          !isProvider && messageSender == 'U'
-                                      ? MainAxisAlignment.end
-                                      : MainAxisAlignment.start,
-                              message: snapshot.data.documents[index]
-                                  ['text_message'],
-                              hour: snapshot.data.documents[index]
-                                  ['date_time_sent'],
-                            ),
-                            if (dateHasChanged) Text(prevDate),
-                          ],
-                        );
+                          Widget chatList = Column(
+                            children: <Widget>[
+                              if (index + 1 == snapshot.data.documents.length)
+                                Text(currentDate),
+                              Message(
+                                isMe: isProvider && messageSender == 'P' ||
+                                    !isProvider && messageSender == 'U',
+                                message: snapshot.data.documents[index]
+                                    ['text_message'],
+                                hour: formatHour.stringMatch(
+                                  snapshot.data.documents[index]
+                                      ['date_time_sent'],
+                                ),
+                              ),
+                              if (dateHasChanged) Text(prevDate),
+                            ],
+                          );
 
-                        prevDate = currentDate;
-                        dateHasChanged = false;
-                        return chatList;
-                      },
-                    );
-                  },
+                          prevDate = currentDate;
+                          dateHasChanged = false;
+                          return chatList;
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ),
-              ChatInput(
-                sendAction: _sendMessage,
-                componentHeight: safeBackgroundHeight * .13,
-              ),
-            ],
+                ChatInput(
+                  sendAction: _sendMessage,
+                ),
+              ],
+            ),
           ),
         ),
       ),

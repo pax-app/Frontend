@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 
 class ChatInput extends StatelessWidget {
   final Function sendAction;
-  final double componentHeight;
   final TextEditingController _messageController = TextEditingController();
 
   ChatInput({
-    @required this.componentHeight,
     @required this.sendAction,
   });
 
@@ -18,8 +16,8 @@ class ChatInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: componentHeight,
       child: Card(
+        margin: const EdgeInsets.symmetric(vertical: 6),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
         ),
@@ -27,8 +25,9 @@ class ChatInput extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(
             left: 15,
-            top: 6,
-            bottom: 6,
+            top: 4,
+            bottom: 4,
+            right: 8,
           ),
           child: Row(
             children: <Widget>[
