@@ -1,3 +1,4 @@
+import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class ChatInput extends StatelessWidget {
@@ -17,45 +18,44 @@ class ChatInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
-      child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 15),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
+      decoration: BoxDecoration(
+        color: colorWhite,
+        border: Border(top: BorderSide(color: Theme.of(context).accentColor)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: 15,
+          top: 3.5,
+          bottom: 3.5,
+          right: 8,
         ),
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 15,
-            top: 4,
-            bottom: 4,
-            right: 8,
-          ),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: TextField(
-                  maxLines: null,
-                  style: TextStyle(color: Theme.of(context).primaryColor),
-                  controller: _messageController,
-                  cursorColor: Theme.of(context).accentColor,
-                  decoration: InputDecoration.collapsed(
-                    hintText: "Digite aqui...",
-                  ),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: TextField(
+                maxLines: null,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 18,
+                ),
+                controller: _messageController,
+                cursorColor: Theme.of(context).accentColor,
+                decoration: InputDecoration.collapsed(
+                  hintText: "Digite aqui...",
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.attach_file),
-                color: Theme.of(context).accentColor,
-              ),
-              IconButton(
-                onPressed: _sendMessageHandler,
-                icon: Icon(Icons.send),
-                color: Theme.of(context).accentColor,
-              ),
-            ],
-          ),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.attach_file),
+              color: Theme.of(context).accentColor,
+            ),
+            IconButton(
+              onPressed: _sendMessageHandler,
+              icon: Icon(Icons.send),
+              color: Theme.of(context).accentColor,
+            ),
+          ],
         ),
       ),
     );
