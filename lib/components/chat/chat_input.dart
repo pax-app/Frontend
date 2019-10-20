@@ -21,7 +21,7 @@ class ChatInput extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
         ),
-        elevation: 4,
+        elevation: 2,
         child: Padding(
           padding: const EdgeInsets.only(
             left: 15,
