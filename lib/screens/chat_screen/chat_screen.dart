@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:Pax/components/chat/chat_app_bar.dart';
 import 'package:Pax/components/chat/chat_input.dart';
 import 'package:Pax/components/chat/chat_list.dart';
@@ -16,7 +14,6 @@ class ChatScreen extends StatelessWidget {
   void _sendMessage(String text) {
     String date_time_sent =
         DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
-    // _firestore.collection(chat_id).document('20/11').collection('2019/02').add({
 
     _firestore.collection(chat_id).document(date_time_sent).setData({
       'text_message': text,
@@ -48,32 +45,32 @@ class ChatScreen extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: safeBackgroundHeight * .85,
-                  child: StreamBuilder(
-                    stream: _firestore
-                        .collection(chat_id)
-                        .orderBy('date_time_sent', descending: true)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) return CircularProgressIndicator();
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: safeBackgroundHeight * .85,
+                child: StreamBuilder(
+                  stream: _firestore
+                      .collection(chat_id)
+                      .orderBy('date_time_sent', descending: true)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return CircularProgressIndicator();
 
-                      if (snapshot.data.documents.length <= 0)
-                        return Text('Inicie a conversa :)');
+                    if (snapshot.data.documents.length <= 0)
+                      return Text('Inicie a conversa :)');
 
-                      return ChatList(snapshot: snapshot.data.documents);
-                    },
-                  ),
+                    return ChatList(
+                      snapshot: snapshot.data.documents,
+                      isProvider: isProvider,
+                    );
+                  },
                 ),
-                ChatInput(
-                  sendAction: _sendMessage,
-                ),
-              ],
-            ),
+              ),
+              ChatInput(
+                sendAction: _sendMessage,
+              ),
+            ],
           ),
         ),
       ),

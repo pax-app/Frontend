@@ -5,9 +5,12 @@ class ChatList extends StatelessWidget {
   final formatDate = RegExp(r'\d{4}-\d{2}-\d{2}');
   final formatHour = RegExp(r'\d{2}\:\d{2}');
   final snapshot;
-  final bool isProvider = false;
+  final bool isProvider;
 
-  ChatList({@required this.snapshot});
+  ChatList({
+    @required this.snapshot,
+    @required this.isProvider,
+  });
 
   @override
   Widget build(BuildContext context) {

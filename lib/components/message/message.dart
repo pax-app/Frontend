@@ -13,64 +13,45 @@ class Message extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: <Widget>[
-        Flexible(
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: isMe
-                  ? BorderRadius.only(
-                      topRight: Radius.circular(15),
-                      topLeft: Radius.circular(15),
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(0),
-                    )
-                  : BorderRadius.only(
-                      topRight: Radius.circular(15),
-                      topLeft: Radius.circular(15),
-                      bottomLeft: Radius.circular(0),
-                      bottomRight: Radius.circular(15),
-                    ),
-            ),
-            elevation: 1,
-            margin: EdgeInsets.symmetric(vertical: 3),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 18,
-                right: 18,
-                top: 14,
-                bottom: 5,
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+        mainAxisAlignment:
+            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: <Widget>[
+          Flexible(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(15),
+                  topLeft: Radius.circular(15),
+                  bottomLeft: Radius.circular(isMe ? 15 : 0),
+                  bottomRight: Radius.circular(isMe ? 0 : 15),
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Text(message),
-                  Text(
-                    hour,
-                    style: TextStyle(
-                      color: Theme.of(context).accentColor,
-                      fontSize: 11,
+              elevation: 1.3,
+              margin: EdgeInsets.symmetric(vertical: 3),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 15, bottom: 7, left: 18, right: 18),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Text(message),
+                    Text(
+                      hour,
+                      style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontSize: 11,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        )
-
-        // Flexible(
-        //   fit: FlexFit.loose,
-        //   child: Card(
-        //     child: Column(
-        //       children: <Widget>[
-        //         Text(message),
-        //         Text(hour),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-      ],
+          )
+        ],
+      ),
     );
   }
 }

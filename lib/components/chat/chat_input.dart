@@ -17,8 +17,9 @@ class ChatInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 80,
       child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 6),
+        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 15),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
         ),
