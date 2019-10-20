@@ -32,8 +32,8 @@ class Button extends StatelessWidget {
       case 'outline':
         return OutlineButton(
           borderSide: BorderSide(color: Theme.of(context).accentColor),
-          highlightedBorderColor: secondaryColorLight,
-          splashColor: secondaryColorLight,
+          highlightedBorderColor: secondaryColorDimmed,
+          splashColor: secondaryColorDimmed,
           child: Text(
             buttonText.toUpperCase(),
             style: Theme.of(context).textTheme.title.copyWith(
