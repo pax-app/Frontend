@@ -2,19 +2,16 @@ import 'dart:async';
 
 import 'package:Pax/components/chat/chat_app_bar.dart';
 import 'package:Pax/components/chat/chat_input.dart';
-import 'package:Pax/components/message/message.dart';
+import 'package:Pax/components/chat/chat_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreen extends StatelessWidget {
   final Firestore _firestore = Firestore.instance;
-  final formatDate = RegExp(r'\d{4}-\d{2}-\d{2}');
-  final formatHour = RegExp(r'\d{2}\:\d{2}');
 
   final String chat_id = '4';
   final bool isProvider = true;
-  final ScrollController _scrollController = new ScrollController();
 
   void _sendMessage(String text) {
     String date_time_sent =
@@ -26,7 +23,6 @@ class ChatScreen extends StatelessWidget {
       'sender': isProvider ? 'P' : 'U',
       'date_time_sent': date_time_sent
     });
-    _scrollController.jumpTo(0);
   }
 
   @override
@@ -65,50 +61,11 @@ class ChatScreen extends StatelessWidget {
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) return CircularProgressIndicator();
+
                       if (snapshot.data.documents.length <= 0)
                         return Text('Inicie a conversa :)');
-                      String prevDate = formatDate.stringMatch(
-                        snapshot.data.documents[0]['date_time_sent'],
-                      );
-                      bool dateHasChanged = false;
 
-                      return ListView.builder(
-                        controller: _scrollController,
-                        reverse: true,
-                        itemCount: snapshot.data.documents.length,
-                        itemBuilder: (context, index) {
-                          String messageSender =
-                              snapshot.data.documents[index]['sender'];
-
-                          String currentDate = formatDate.stringMatch(
-                            snapshot.data.documents[index]['date_time_sent'],
-                          );
-
-                          if (currentDate != prevDate) dateHasChanged = true;
-
-                          Widget chatList = Column(
-                            children: <Widget>[
-                              if (index + 1 == snapshot.data.documents.length)
-                                Text(currentDate),
-                              Message(
-                                isMe: isProvider && messageSender == 'P' ||
-                                    !isProvider && messageSender == 'U',
-                                message: snapshot.data.documents[index]
-                                    ['text_message'],
-                                hour: formatHour.stringMatch(
-                                  snapshot.data.documents[index]
-                                      ['date_time_sent'],
-                                ),
-                              ),
-                              if (dateHasChanged) Text(prevDate),
-                            ],
-                          );
-
-                          prevDate = currentDate;
-                          dateHasChanged = false;
-                          return chatList;
-                        },
-                      );
+                      return ChatList(snapshot: snapshot.data.documents);
                     },
                   ),
                 ),
