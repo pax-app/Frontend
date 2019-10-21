@@ -11,7 +11,7 @@ class ChatScreen extends StatelessWidget {
   final String chat_id;
   final String person_name;
 
-  final bool isProvider = true;
+  final bool isProvider = false;
 
   ChatScreen({
     @required this.chat_id,

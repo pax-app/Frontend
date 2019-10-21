@@ -29,7 +29,7 @@ class _MyConversationsState extends State<MyConversations> {
   Widget build(BuildContext context) {
     _getUserChats();
     return Container(
-      height: 500,
+      height: MediaQuery.of(context).size.height - 150,
       child: ListView.builder(
         itemCount: chats.length,
         itemBuilder: (context, index) {
