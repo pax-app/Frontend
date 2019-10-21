@@ -5,6 +5,7 @@ import 'package:Pax/screens/signup_screen/signup_screen.dart';
 import 'package:Pax/screens/home_screen/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import '../../components/auth/auth_input.dart';
 
 final _loginBloc = LoginBloc();
@@ -43,19 +44,22 @@ class LoginScreen extends StatelessWidget {
 
   void doLogin(BuildContext ctx, bool login) async {
     bool logged;
-    int loginResponse;
-    if (login) logged = (loginResponse = await _loginBloc.logIn()) == 200;
+    Response loginResponse = await _loginBloc.logIn();
+    if (login) logged = loginResponse.statusCode == 200;
     logged = login ? logged : await _loginBloc.checkIfUserIsLogged();
     if (logged)
       Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
         return HomeScreen();
       }));
-    else if (loginResponse == 404) {
+    else if (loginResponse.statusCode == 404) {
       _showDialog(ctx, "Usuario não encontrado.");
-    } else if (loginResponse == 500) {
+      debugPrint(loginResponse.body);
+    } else if (loginResponse.statusCode == 500) {
+      debugPrint(loginResponse.body);
       _showDialog(ctx, "Tente novamente mais tarde.");
-    } else if (loginResponse == 401) {
+    } else if (loginResponse.statusCode == 401) {
       _showDialog(ctx, "Senha Incorreta.");
+      debugPrint(loginResponse.body);
     }
   }
 

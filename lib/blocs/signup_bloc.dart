@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:Pax/services/api.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Pax/models/login_model.dart';
 import 'package:Pax/blocs/singup_validators.dart';
 
@@ -54,26 +54,23 @@ class SignUpBloc extends BlocBase {
       _passwordConfirmationController.sink.add;
   Function(bool) get changeUseTerms => _useTermsController.sink.add;
 
-  void saveCurrentLogin(Map responseJson) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    var user = (responseJson != null && responseJson.isNotEmpty)
-        ? LoginModel.fromJson(responseJson).userName
-        : "";
-
-    var token = (responseJson != null && responseJson.isNotEmpty)
-        ? LoginModel.fromJson(responseJson).token
-        : "";
-    var email = (responseJson != null && responseJson.isNotEmpty)
-        ? LoginModel.fromJson(responseJson).email
-        : "";
-
-    await preferences.setString(
-        'LastUser', (user != null && user.length > 0) ? user : "");
-    await preferences.setString(
-        'LastToken', (token != null && token.length > 0) ? token : "");
-    await preferences.setString(
-        'LastEmail', (email != null && email.length > 0) ? email : "");
+  static void saveCurrentLogin(Map responseJson) async {
+    var user = "";
+    var token = "";
+    var email = "";
+    var userId = "";
+    var loggedUser = LoggedUser();
+    if (responseJson != null && responseJson.isNotEmpty) {
+      var userModel = LoginModel.fromJson(responseJson);
+      user = userModel.userName;
+      token = userModel.token;
+      email = userModel.email;
+      userId = userModel.id.toString();
+    }
+    loggedUser.setName(user);
+    loggedUser.setEmail(email);
+    loggedUser.setUserId(userId);
+    loggedUser.setToken(token);
   }
 
   Future<int> signUp() async {

@@ -22,8 +22,6 @@ class BecameProviderScreen extends StatefulWidget {
 class _BecameProviderScreenState extends State<BecameProviderScreen> {
   double _lowerValue = 20.0;
   double _upperValue = 80.0;
-  TextEditingController _bio = TextEditingController();
-  TextEditingController _rg = TextEditingController();
   bool isTouch = false;
   @override
   Widget build(BuildContext context) {
@@ -99,24 +97,20 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
           'Bio',
           'Insira uma descrição sobre você',
           true,
-          (String value) {
-            return value.contains('@') ? 'Do not use the @ char.' : null;
-          },
           TextInputType.text,
           3,
           focus: true,
-          controller: _bio,
+          stream: _becameProviderBloc.bio,
+          onChanged: _becameProviderBloc.changeBio,
         ),
         TextInput(
           'RG',
           'RG',
           true,
-          (String value) {
-            return value.contains('@') ? 'Do not use the @ char.' : null;
-          },
-          TextInputType.number,
+          TextInputType.text,
           1,
-          controller: _rg,
+          stream: _becameProviderBloc.rg,
+          onChanged: _becameProviderBloc.changeRg,
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
@@ -158,17 +152,8 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
           type: 'default',
           tapHandler: activeteButton()
               ? () {
-                  setState(() {
-                    Provider p = Provider(
-                      bio: _bio.text,
-                      maxPrice: _upperValue,
-                      minPrice: _lowerValue,
-                    );
-                    p.name = "true";
-                    BlocProvider.of<ProviderBloc>(context)
-                        .createProvider
-                        .add(p);
-                  });
+                  _becameProviderBloc.turnIntoProvider(
+                      _lowerValue, _upperValue);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => BaseScreen(
@@ -191,7 +176,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
   }
 
   bool activeteButton() {
-    return _bio.text.isNotEmpty && _rg.text.isNotEmpty && isTouch;
+    return isTouch;
   }
 
   _showModalBottomSheet(context) {
