@@ -10,6 +10,7 @@ class MyConversations extends StatefulWidget {
 
 class _MyConversationsState extends State<MyConversations> {
   var chats = [];
+  bool isLoading = true;
 
   _getUserChats() async {
     var params = {"user_id": "1"};
@@ -22,6 +23,7 @@ class _MyConversationsState extends State<MyConversations> {
 
     setState(() {
       chats = jsonData;
+      isLoading = false;
     });
   }
 
@@ -30,16 +32,18 @@ class _MyConversationsState extends State<MyConversations> {
     _getUserChats();
     return Container(
       height: MediaQuery.of(context).size.height - 150,
-      child: ListView.builder(
-        itemCount: chats.length,
-        itemBuilder: (context, index) {
-          return ChatTile(
-            chat_id: chats[index]["chat_id"].toString(),
-            message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
-            username: 'Rorgérin Júrnio',
-          );
-        },
-      ),
+      child: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: chats.length,
+              itemBuilder: (context, index) {
+                return ChatTile(
+                  chat_id: chats[index]["chat_id"].toString(),
+                  message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
+                  username: 'Rorgérin Júrnio',
+                );
+              },
+            ),
     );
   }
 }
