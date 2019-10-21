@@ -8,8 +8,15 @@ import 'package:intl/intl.dart';
 class ChatScreen extends StatelessWidget {
   final Firestore _firestore = Firestore.instance;
 
-  final String chat_id = '4';
+  final String chat_id;
+  final String person_name;
+
   final bool isProvider = true;
+
+  ChatScreen({
+    @required this.chat_id,
+    @required this.person_name,
+  });
 
   void _sendMessage(String text) {
     String date_time_sent =

@@ -3,7 +3,14 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-class MyConversations extends StatelessWidget {
+class MyConversations extends StatefulWidget {
+  @override
+  _MyConversationsState createState() => _MyConversationsState();
+}
+
+class _MyConversationsState extends State<MyConversations> {
+  var chats = [];
+
   _getUserChats() async {
     var params = {"user_id": "1"};
 
@@ -11,32 +18,28 @@ class MyConversations extends StatelessWidget {
     final newURI = uri.replace(queryParameters: params);
 
     var response = await http.get(newURI);
-
-    print('---- status code: ${response.statusCode}');
     var jsonData = json.decode(response.body);
 
-    print('---- slot: ${jsonData}');
+    setState(() {
+      chats = jsonData;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     _getUserChats();
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        ChatTile(
-          message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
-          username: 'Rorgérin Júrnio',
-        ),
-        ChatTile(
-          message: 'Tenho horário livre só terça que vem',
-          username: 'Ersin Fritas',
-        ),
-        ChatTile(
-          message: 'Faço isso em dois tempo',
-          username: 'Rucas Drutra',
-        )
-      ],
+    return Container(
+      height: 500,
+      child: ListView.builder(
+        itemCount: chats.length,
+        itemBuilder: (context, index) {
+          return ChatTile(
+            chat_id: chats[index]["chat_id"].toString(),
+            message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
+            username: 'Rorgérin Júrnio',
+          );
+        },
+      ),
     );
   }
 }
