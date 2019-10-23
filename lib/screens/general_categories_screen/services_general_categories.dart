@@ -48,6 +48,14 @@ class ServiceGeneralCategory extends StatelessWidget {
       'Assistência Técnica': 'assets/categories-img/gear.png',
       'Reformas': 'assets/categories-img/paint.png',
     };
+    const Map<String, String> descriptionPaths = {
+      'Serviços Domésticos': 'Encontre a pessoa certa para cuidar do seu lar',
+      'Design e Tecnologia':
+          'Encontre um especialista para seu projetos de design e tecnologia',
+      'Assistência Técnica':
+          'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
+      'Reformas': 'Encontre a pessoa certa para realizar suas reformas',
+    };
     return FutureBuilder<List<Category>>(
       future: fetchPost(),
       builder: (context, snapshot) {
@@ -57,8 +65,11 @@ class ServiceGeneralCategory extends StatelessWidget {
             children: categories
                 .map(
                   (item) => Container(
-                    child: GeneralCategoriesPanelCard(item.name, item.name,
-                        imagesPaths['${item.name}'], item.id),
+                    child: GeneralCategoriesPanelCard(
+                        item.name,
+                        descriptionPaths['${item.name}'],
+                        imagesPaths['${item.name}'],
+                        item.id),
                   ),
                 )
                 .toList(),
