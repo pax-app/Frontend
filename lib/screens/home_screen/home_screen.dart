@@ -12,8 +12,6 @@ import 'package:Pax/screens/provider_categories_screen/provider_category_screen.
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
-import 'package:Pax/screens/home_screen/tabs/home_tab.dart';
-import 'package:Pax/components/general_categories_panel/general_categories_panel_card.dart';
 import 'package:Pax/screens/general_categories_screen/services_general_categories.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -50,12 +48,6 @@ class HomeScreen extends StatelessWidget {
           PerfilScreen(),
           getDrawer(),
           padding: false,
-        ),
-        BaseScreen(
-          "",
-          "Serviços de Assistência Técnica",
-          ProviderCategoryScreen(),
-          getDrawer(),
         ),
         ProviderPanel(this._pageController),
       ],

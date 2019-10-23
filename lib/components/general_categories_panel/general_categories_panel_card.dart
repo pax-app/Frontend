@@ -1,12 +1,20 @@
+import 'package:Pax/screens/category_screen/category_screen.dart';
+import 'package:Pax/components/base_screen/base_screen.dart';
+import 'package:Pax/screens/provider_categories_screen/provider_category_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:Pax/components/drawer/drawer_user.dart';
+import 'package:Pax/components/drawer/drawer_provider.dart';
 import 'package:Pax/components/general_categories_panel/general_category_panel_img.dart';
-import 'package:Pax/components/general_categories_panel/general_category_panel_description.dart';
 
 class GeneralCategoriesPanelCard extends StatelessWidget {
   final String title;
   final String description;
   final String img;
-  GeneralCategoriesPanelCard(this.title, this.description, this.img);
+  final int id;
+
+  bool isProvider = false;
+
+  GeneralCategoriesPanelCard(this.title, this.description, this.img, this.id);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +30,16 @@ class GeneralCategoriesPanelCard extends StatelessWidget {
               children: <Widget>[
                 Card(
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BaseScreen(
+                                  this.title,
+                                  this.title,
+                                  ProviderCategoryScreen(this.id),
+                                  null)));
+                    },
                     child: Container(
                       padding: EdgeInsets.all(15),
                       child: Column(
