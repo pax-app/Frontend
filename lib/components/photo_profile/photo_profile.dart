@@ -11,6 +11,7 @@ class PhotoProfile extends StatefulWidget {
 class _PhotoProfileState extends State<PhotoProfile> {
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
@@ -74,5 +75,8 @@ class _PhotoProfileState extends State<PhotoProfile> {
         )
       ],
     );
+=======
+    return Container();
+>>>>>>> 299605bd7f45d1f41b123e760595c4547a022c17
   }
 }

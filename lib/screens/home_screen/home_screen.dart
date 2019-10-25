@@ -1,3 +1,4 @@
+import 'package:Pax/components/avaliation_card/avaliation_card.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/drawer/drawer_provider.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/info_tab.dart';
@@ -30,8 +31,15 @@ class HomeScreen extends StatelessWidget {
         BaseScreen(
           "Meu Perfil",
           "Meu Perfil",
-          Text("Meu Perfil"),
+          // AvaliationCard(
+          //   date: "24/07/2018",
+          //   description: "Umas descricao",
+          //   name: "Esio",
+          //   score: 5,
+          // ),
+          PerfilScreen(),
           getDrawer(),
+          padding: false,
         ),
 
         BaseScreen(

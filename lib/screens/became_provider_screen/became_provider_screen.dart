@@ -1,11 +1,7 @@
 import 'dart:io';
-import 'package:Pax/blocs/provider_bloc.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
-import 'package:Pax/components/photo_profile/photo_profile.dart';
-import 'package:Pax/models/Provider.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/finish_provider_tab.dart';
-import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart' as frs;
@@ -23,6 +19,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
   double _lowerValue = 20.0;
   double _upperValue = 80.0;
   bool isTouch = false;
+  var _photo;
   @override
   Widget build(BuildContext context) {
     bool isVoid = _lowerValue == 20 && _upperValue == 80 && !isTouch;
@@ -30,7 +27,65 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            PhotoProfile(),
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                _photo == null
+                    ? Container(
+                        height: 140,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).accentColor, width: 2.0),
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          color: Theme.of(context).accentColor,
+                        ),
+                      )
+                    : Container(
+                        height: 140,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).accentColor, width: 2.0),
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                            image: FileImage(
+                              _photo,
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                InkWell(
+                  onTap: () async {
+                    debugPrint(_photo.toString());
+                    var image = await ImagePicker.pickImage(
+                        source: ImageSource.gallery);
+                    setState(() {
+                      _photo = image;
+                    });
+                  },
+                  child: Container(
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor,
+                      //image: DecorationImage(),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      border: Border.all(
+                        color: Theme.of(context).accentColor,
+                        width: 3.0,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
             SizedBox(
               width: 30.0,
             ),
