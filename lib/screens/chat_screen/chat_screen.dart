@@ -61,25 +61,7 @@ class ChatScreen extends StatelessWidget {
                       .collection(chat_id)
                       .orderBy('date_time_sent', descending: true)
                       .snapshots(),
-                  builder: (context, snapshot) {
-                    // Strategy
-                    if (!snapshot.hasData)
-                      return Center(child: CircularProgressIndicator());
-
-                    if (snapshot.data.documents.length <= 0) {
-                      return Center(
-                        child: Text(
-                          'Inicie a conversa :)',
-                          style: Theme.of(context).textTheme.title,
-                        ),
-                      );
-                    }
-
-                    return ChatList(
-                      snapshot: snapshot.data.documents,
-                      isProvider: isProvider,
-                    );
-                  },
+                  builder: _update,
                 ),
               ),
               ChatInput(sendAction: _sendMessage),
@@ -87,6 +69,24 @@ class ChatScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _update(context, snapshot) {
+    if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
+
+    if (snapshot.data.documents.length <= 0) {
+      return Center(
+        child: Text(
+          'Inicie a conversa :)',
+          style: Theme.of(context).textTheme.title,
+        ),
+      );
+    }
+
+    return ChatList(
+      snapshot: snapshot.data.documents,
+      isProvider: isProvider,
     );
   }
 }
