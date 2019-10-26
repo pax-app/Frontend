@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:Pax/blocs/provider_bloc.dart';
+import 'package:Pax/components/base_bottom_sheet/BaseBottomSheet.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/photo_profile/photo_profile.dart';
@@ -250,76 +251,66 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          height: 300,
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: Column(children: <Widget>[
-              Text("Faixa de preço para seus serviços",
-                  style: Theme.of(context).textTheme.title),
-              SizedBox(height: 10),
-              Text(
-                "Esse valor não precisa ser regra, você ainda pode negociar com seu cliente",
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 10),
-              Container(
-                padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Min: R\$10.00',
-                          style: Theme.of(context).textTheme.title,
-                        ),
-                        Text(
-                          'Max: R\$200.00',
-                          style: Theme.of(context).textTheme.title,
-                        ),
-                      ],
-                    ),
-                  ]..add(
-                      frs.RangeSlider(
-                        min: 20.0,
-                        max: 200.0,
-                        lowerValue: _lowerValue,
-                        upperValue: _upperValue,
-                        divisions: 10,
-                        showValueIndicator: true,
-                        valueIndicatorFormatter: (int index, double value) {
-                          String twoDecimals = value.toStringAsFixed(2);
-                          return 'R\$ $twoDecimals';
-                        },
-                        onChanged:
-                            (double newLowerValue, double newUpperValue) {
-                          isTouch = true;
-                          setState(() {
-                            _lowerValue = newLowerValue;
-                            _upperValue = newUpperValue;
-                          });
-                        },
+        return BaseBottomSheet(
+          sheetBody: Column(children: <Widget>[
+            Text("Faixa de preço para seus serviços",
+                style: Theme.of(context).textTheme.title),
+            SizedBox(height: 10),
+            Text(
+              "Esse valor não precisa ser regra, você ainda pode negociar com seu cliente",
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Min: R\$10.00',
+                        style: Theme.of(context).textTheme.title,
                       ),
+                      Text(
+                        'Max: R\$200.00',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                    ],
+                  ),
+                ]..add(
+                    frs.RangeSlider(
+                      min: 20.0,
+                      max: 200.0,
+                      lowerValue: _lowerValue,
+                      upperValue: _upperValue,
+                      divisions: 10,
+                      showValueIndicator: true,
+                      valueIndicatorFormatter: (int index, double value) {
+                        String twoDecimals = value.toStringAsFixed(2);
+                        return 'R\$ $twoDecimals';
+                      },
+                      onChanged: (double newLowerValue, double newUpperValue) {
+                        isTouch = true;
+                        setState(() {
+                          _lowerValue = newLowerValue;
+                          _upperValue = newUpperValue;
+                        });
+                      },
                     ),
-                ),
+                  ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Button(
-                buttonText: 'PRONTO',
-                type: 'default',
-                tapHandler: () => Navigator.pop(context),
-                isSmall: false,
-              )
-            ]),
-          ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Button(
+              buttonText: 'PRONTO',
+              type: 'default',
+              tapHandler: () => Navigator.pop(context),
+              isSmall: false,
+            )
+          ]),
         );
       },
     );
