@@ -1,8 +1,18 @@
-import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class ChatBottomSheet extends StatelessWidget {
+  final Function cameraHandler;
+  final Function galleryHandler;
+  final Function addressHandler;
+
+  const ChatBottomSheet({
+    Key key,
+    this.cameraHandler,
+    this.galleryHandler,
+    this.addressHandler,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,11 +36,11 @@ class ChatBottomSheet extends StatelessWidget {
               RaisedButton(
                 padding: const EdgeInsets.all(20),
                 shape: const CircleBorder(),
-                onPressed: () {},
+                onPressed: addressHandler,
                 child: Icon(
                   Icons.location_on,
                   color: colorWhite,
-                  size: 30,
+                  size: 25,
                 ),
               ),
               SizedBox(height: 10),
@@ -46,21 +56,42 @@ class ChatBottomSheet extends StatelessWidget {
             children: <Widget>[
               RaisedButton(
                 padding: const EdgeInsets.all(20),
-                onPressed: () {},
+                onPressed: cameraHandler,
                 shape: const CircleBorder(),
                 child: Icon(
-                  Icons.camera_alt,
+                  Icons.camera,
                   color: colorWhite,
-                  size: 30,
+                  size: 25,
                 ),
               ),
               SizedBox(height: 10),
               Text(
-                'Imagem',
+                'Câmera',
                 style: Theme.of(context).textTheme.subtitle,
-              )
+              ),
             ],
-          )
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+                padding: const EdgeInsets.all(20),
+                onPressed: galleryHandler,
+                shape: const CircleBorder(),
+                child: Icon(
+                  Icons.photo_library,
+                  color: colorWhite,
+                  size: 25,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Galeria',
+                style: Theme.of(context).textTheme.subtitle,
+              ),
+            ],
+          ),
         ],
       ),
     );
