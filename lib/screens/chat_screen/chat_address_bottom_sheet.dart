@@ -17,19 +17,24 @@ class ChatAddressBottomSheet extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: 18),
-          Column(children: <Widget>[
-            Divider(height: 35, thickness: 1.2),
-            Text(
-              '72871-066 Rua 66 Número 16 Jardim Céu Azul Quadra 88',
-              textAlign: TextAlign.center,
-            ),
-            Divider(height: 35, thickness: 1.2),
-            Text(
-              '72871-066 Rua 66 Número 16 Jardim Céu Azul Quadra 88',
-              textAlign: TextAlign.center,
-            ),
-          ]),
+          SizedBox(height: 38),
+          Column(
+            children: <Widget>[
+              Divider(height: 0, thickness: 1.2),
+              Material(
+                child: InkWell(
+                  onTap: () => {print('foi')},
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    child: Text(
+                      '72871-066 Rua 66 Número 16 Jardim Céu Azul Quadra 88',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
