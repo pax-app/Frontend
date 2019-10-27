@@ -15,7 +15,7 @@ class BaseBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: modalHeight,
-      padding: const EdgeInsets.only(left: 30, right: 30, top: 50),
+      padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
       decoration: BoxDecoration(
         color: colorWhite,
         borderRadius: const BorderRadius.only(
