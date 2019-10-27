@@ -28,8 +28,9 @@ class FinishProviderTab extends StatelessWidget {
           Button(
             buttonText: 'Perfeito',
             type: 'default',
-            tapHandler: () => Navigator.of(context).push(
+            tapHandler: () => Navigator.of(context).pushAndRemoveUntil(
               CupertinoPageRoute(builder: (context) => HomeScreen()),
+              (Route<dynamic> route) => false,
             ),
             isSmall: false,
           ),
