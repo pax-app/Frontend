@@ -1,6 +1,7 @@
 import 'package:Pax/components/chat/chat_app_bar.dart';
 import 'package:Pax/components/chat/chat_input.dart';
 import 'package:Pax/components/chat/chat_list.dart';
+import 'package:Pax/screens/chat_screen/chat_address_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_bottom_sheet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -77,23 +78,31 @@ class ChatScreen extends StatelessWidget {
     );
   }
 
-  void _getCamera() async {
+  void _getCamera(BuildContext context) async {
+    Navigator.of(context).pop();
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
   }
 
-  void _getGallery() async {
+  void _getGallery(BuildContext context) async {
+    Navigator.of(context).pop();
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
   }
 
-  void _getAddress() async {}
+  void _getAddress(BuildContext context) async {
+    Navigator.of(context).pop();
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => ChatAddressBottomSheet(),
+    );
+  }
 
   void _showBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (context) => ChatBottomSheet(
-        cameraHandler: _getCamera,
-        galleryHandler: _getGallery,
-        addressHandler: _getAddress,
+        cameraHandler: () => _getCamera(context),
+        galleryHandler: () => _getGallery(context),
+        addressHandler: () => _getAddress(context),
       ),
     );
   }
