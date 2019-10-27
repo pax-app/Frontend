@@ -1,3 +1,4 @@
+import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +23,10 @@ class ChatBottomSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              CircleAvatar(
-                radius: 35,
-                backgroundColor: Theme.of(context).accentColor,
+              RaisedButton(
+                padding: const EdgeInsets.all(20),
+                shape: const CircleBorder(),
+                onPressed: () {},
                 child: Icon(
                   Icons.location_on,
                   color: colorWhite,
@@ -42,9 +44,10 @@ class ChatBottomSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              CircleAvatar(
-                radius: 35,
-                backgroundColor: Theme.of(context).accentColor,
+              RaisedButton(
+                padding: const EdgeInsets.all(20),
+                onPressed: () {},
+                shape: const CircleBorder(),
                 child: Icon(
                   Icons.camera_alt,
                   color: colorWhite,
