@@ -1,16 +1,14 @@
 import 'dart:io';
 import 'package:Pax/blocs/provider_bloc.dart';
-import 'package:Pax/components/base_bottom_sheet/BaseBottomSheet.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
-import 'package:Pax/components/photo_profile/photo_profile.dart';
 import 'package:Pax/models/Provider.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/finish_provider_tab.dart';
+import 'package:Pax/screens/became_provider_screen/became_provider_tabs/provider_bottom_sheet.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/text_input/text_input.dart';
-import 'package:flutter_range_slider/flutter_range_slider.dart' as frs;
 import 'package:image_picker/image_picker.dart';
 
 class BecameProviderScreen extends StatefulWidget {
@@ -19,15 +17,15 @@ class BecameProviderScreen extends StatefulWidget {
 }
 
 class _BecameProviderScreenState extends State<BecameProviderScreen> {
-  double _lowerValue = 20.0;
-  double _upperValue = 80.0;
+  double _lowerValue = 0;
+  double _upperValue = 200.0;
   File _photo;
   TextEditingController _bio = TextEditingController();
   TextEditingController _rg = TextEditingController();
   bool isTouch = false;
+
   @override
   Widget build(BuildContext context) {
-    bool isVoid = _lowerValue == 20 && _upperValue == 80 && !isTouch;
     return Column(
       children: <Widget>[
         Row(
@@ -37,11 +35,13 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
               children: <Widget>[
                 _photo == null
                     ? Container(
-                        height: 140,
-                        width: 120,
+                        height: 130,
+                        width: 130,
                         decoration: BoxDecoration(
                           border: Border.all(
-                              color: Theme.of(context).accentColor, width: 2.0),
+                            color: Theme.of(context).accentColor,
+                            width: 2.0,
+                          ),
                           borderRadius: BorderRadius.all(Radius.circular(15.0)),
                           color: Theme.of(context).accentColor,
                         ),
@@ -51,7 +51,9 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                         width: 120,
                         decoration: BoxDecoration(
                           border: Border.all(
-                              color: Theme.of(context).accentColor, width: 2.0),
+                            color: Theme.of(context).accentColor,
+                            width: 2.0,
+                          ),
                           borderRadius: BorderRadius.all(Radius.circular(15.0)),
                           color: Colors.transparent,
                           image: DecorationImage(
@@ -64,7 +66,6 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                       ),
                 InkWell(
                   onTap: () async {
-                    debugPrint(_photo.toString());
                     var image = await ImagePicker.pickImage(
                         source: ImageSource.gallery);
                     setState(() {
@@ -76,14 +77,15 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                     width: 35,
                     decoration: BoxDecoration(
                       color: Theme.of(context).accentColor,
-                      //image: DecorationImage(),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(30.0),
+                      ),
                       border: Border.all(
                         color: Theme.of(context).accentColor,
                         width: 3.0,
                       ),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.camera_alt,
                       color: Colors.white,
                     ),
@@ -91,10 +93,8 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                 )
               ],
             ),
-            SizedBox(
-              width: 30.0,
-            ),
-            SizedBox(width: 8.0),
+            const SizedBox(width: 30.0),
+            const SizedBox(width: 8.0),
             Column(
               children: <Widget>[
                 Column(
@@ -111,9 +111,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                         color: Theme.of(context).textTheme.title.color,
                       ),
                     ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
+                    const SizedBox(height: 30.0),
                     InkWell(
                       onTap: () {
                         _showModalBottomSheet(context);
@@ -122,13 +120,13 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                         padding: EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: isVoid
+                                color: !isTouch
                                     ? Theme.of(context).primaryColor
                                     : Theme.of(context).accentColor),
                             borderRadius: BorderRadius.circular(3.0)),
                         child: Row(
                           children: <Widget>[
-                            isVoid
+                            !isTouch
                                 ? Text('FAIXA DE PREÇO')
                                 : Text(
                                     "R\$${_lowerValue.toStringAsFixed(2)} - R\$${_upperValue.toStringAsFixed(2)}",
@@ -145,9 +143,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
             )
           ],
         ),
-        SizedBox(
-          height: 10.0,
-        ),
+        const SizedBox(height: 10.0),
         TextInput(
           'Bio',
           'Insira uma descrição sobre você',
@@ -183,18 +179,21 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                       await ImagePicker.pickImage(source: ImageSource.camera);
                 },
                 child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 10.0,
+                  ),
                   decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).primaryColor),
-                      borderRadius: BorderRadius.circular(3.0)),
+                    border: Border.all(color: Theme.of(context).primaryColor),
+                    borderRadius: BorderRadius.circular(3.0),
+                  ),
                   child: Row(
                     children: <Widget>[
                       new Icon(
                         Icons.cloud_upload,
                         color: Theme.of(context).primaryColorLight,
                       ),
-                      SizedBox(width: 8.0),
+                      const SizedBox(width: 8.0),
                       new Text('SELFIE COM O RG'),
                     ],
                   ),
@@ -203,9 +202,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
             ],
           ),
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        const SizedBox(height: 20.0),
         Button(
           buttonText: 'Finalizar',
           type: 'default',
@@ -236,9 +233,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
               : null,
           isSmall: false,
         ),
-        SizedBox(
-          height: 10.0,
-        ),
+        const SizedBox(height: 10.0),
       ],
     );
   }
@@ -247,70 +242,22 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
     return _bio.text.isNotEmpty && _rg.text.isNotEmpty && isTouch;
   }
 
+  void _updatePriceRange(double newLowerValue, double newUpperValue) {
+    setState(() {
+      _lowerValue = newLowerValue;
+      _upperValue = newUpperValue;
+      isTouch = true;
+    });
+  }
+
   _showModalBottomSheet(context) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return BaseBottomSheet(
-          sheetBody: Column(children: <Widget>[
-            Text("Faixa de preço para seus serviços",
-                style: Theme.of(context).textTheme.title),
-            SizedBox(height: 10),
-            Text(
-              "Esse valor não precisa ser regra, você ainda pode negociar com seu cliente",
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'Min: R\$10.00',
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                      Text(
-                        'Max: R\$200.00',
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                    ],
-                  ),
-                ]..add(
-                    frs.RangeSlider(
-                      min: 20.0,
-                      max: 200.0,
-                      lowerValue: _lowerValue,
-                      upperValue: _upperValue,
-                      divisions: 10,
-                      showValueIndicator: true,
-                      valueIndicatorFormatter: (int index, double value) {
-                        String twoDecimals = value.toStringAsFixed(2);
-                        return 'R\$ $twoDecimals';
-                      },
-                      onChanged: (double newLowerValue, double newUpperValue) {
-                        isTouch = true;
-                        setState(() {
-                          _lowerValue = newLowerValue;
-                          _upperValue = newUpperValue;
-                        });
-                      },
-                    ),
-                  ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Button(
-              buttonText: 'PRONTO',
-              type: 'default',
-              tapHandler: () => Navigator.pop(context),
-              isSmall: false,
-            )
-          ]),
+        return ProviderBottomSheet(
+          lowerValue: _lowerValue,
+          upperValue: _upperValue,
+          updatePriceRange: _updatePriceRange,
         );
       },
     );
