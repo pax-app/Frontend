@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 class ChatInput extends StatelessWidget {
   final Function sendAction;
+  final Function openBottomSheet;
   final TextEditingController _messageController = TextEditingController();
 
   ChatInput({
     @required this.sendAction,
+    @required this.openBottomSheet,
   });
 
   void _sendMessageHandler() {
@@ -46,7 +48,7 @@ class ChatInput extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: openBottomSheet,
               icon: Icon(Icons.attach_file),
               color: Theme.of(context).accentColor,
             ),
