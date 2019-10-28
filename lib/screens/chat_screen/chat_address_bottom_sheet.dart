@@ -34,16 +34,21 @@ class ChatAddressBottomSheet extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Column(
                         children: <Widget>[
-                          Divider(height: 0, thickness: 1.2),
+                          Divider(height: 1, thickness: 1.2),
                           Material(
                             child: InkWell(
                               onTap: () => {print('foi')},
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 15,
+                                  horizontal: 20,
+                                ),
                                 child: Text(
-                                  '${addresses[0]['street']} Nº ${addresses[0]['number']}, ${addresses[0]['neighborhood']} - CEP: ${addresses[0]['cep']}',
+                                  '${addresses[index]['street']} Número ${addresses[index]['number']}, ${addresses[index]['neighborhood']} - CEP: ${addresses[index]['cep']}',
                                   textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    height: 1.5,
+                                  ),
                                 ),
                               ),
                             ),
