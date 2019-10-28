@@ -1,4 +1,3 @@
-import 'package:Pax/components/auth/auth_button.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

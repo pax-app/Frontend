@@ -1,5 +1,5 @@
 import 'package:Pax/blocs/login_bloc.dart';
-import 'package:Pax/components/auth/auth_button.dart';
+import 'package:Pax/components/auth/auth_text_button.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/screens/recover_password/recover_password.dart';
 import 'package:Pax/screens/signup_screen/signup_screen.dart';
@@ -104,29 +104,14 @@ class LoginScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        InkWell(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
-                          onTap: () => this.recoverPassword(context),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Text('RECUPERAR A SENHA',
-                                style: Theme.of(context).textTheme.body2),
-                          ),
+                        AuthTextButton(
+                          text: 'RECUPERAR SENHA',
+                          onTapHandler: () => this.recoverPassword(context),
                         ),
-                        InkWell(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
-                          onTap: () => this.signUp(context),
-                          child: Container(
-                            padding: EdgeInsets.only(top: 20, bottom: 20),
-                            child: Text(
-                              'CRIE UMA CONTA',
-                              style: Theme.of(context).textTheme.body2.copyWith(
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                            ),
-                          ),
+                        AuthTextButton(
+                          text: 'CRIE UMA CONTA',
+                          onTapHandler: () => this.signUp(context),
+                          isPrimary: true,
                         )
                       ],
                     ),
