@@ -57,6 +57,7 @@ ThemeData _buildPaxTheme() {
         fontFamily: 'Roboto',
         fontSize: 12,
         color: colorWhite,
+        letterSpacing: 1.2,
         fontWeight: FontWeight.normal,
       ),
     ),

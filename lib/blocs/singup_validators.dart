@@ -32,7 +32,7 @@ class SignUpValidators {
     if (password.length >= 6)
       sink.add(password);
     else
-      sink.addError("A senha deve conter no mínimo 6 caracteres");
+      sink.addError("Mínimo 6 caracteres");
   });
 
   static final validateCPF =

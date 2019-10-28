@@ -1,5 +1,6 @@
 import 'package:Pax/blocs/signup_bloc.dart';
 import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/screens/home_screen/home_screen.dart';
@@ -44,22 +45,22 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff454545),
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Container(),
-          SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.only(top: 20, right: 50, left: 50),
+      backgroundColor: loginBgColor,
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 30,
+                right: 30,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(right: 80, left: 80),
-                    child: Image.asset(
-                      'assets/logo.png',
-                    ),
+                  Image(
+                    image: AssetImage('assets/logo.png'),
+                    width: 100,
+                    height: 100,
                   ),
                   SizedBox(height: 30),
                   AuthInput(
@@ -112,10 +113,15 @@ class SignUpScreen extends StatelessWidget {
                         text: TextSpan(
                           style: TextStyle(fontSize: 12),
                           children: <TextSpan>[
-                            TextSpan(text: "LI E ACEITO OS "),
                             TextSpan(
-                                text: "TERMOS DE USO",
-                                style: TextStyle(color: Color(0xff78aa43)))
+                                text: "LI E ACEITO OS ",
+                                style: Theme.of(context).textTheme.body2),
+                            TextSpan(
+                              text: "TERMOS DE USO",
+                              style: Theme.of(context).textTheme.body2.copyWith(
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                            )
                           ],
                         ),
                       ),
@@ -151,8 +157,8 @@ class SignUpScreen extends StatelessWidget {
                 ],
               ),
             ),
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

@@ -32,7 +32,7 @@ class SignUpBloc extends BlocBase {
           .transform(SignUpValidators.validatePassword)
           .doOnData((String c) {
         if (0 != _passwordController.value.compareTo(c)) {
-          _passwordConfirmationController.addError("As senhas não conferem.");
+          _passwordConfirmationController.addError("Senhas diferentes");
         }
       });
 
