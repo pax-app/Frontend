@@ -3,9 +3,15 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:Pax/components/provider_card/provider_card.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
-
+import 'package:Pax/screens/provider_profile_screen/provider_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+
+loadProvider(int id, ctx) {
+  Navigator.push(
+      ctx, MaterialPageRoute(builder: (ctx) => ProviderProfileScreen()));
+}
 
 Future<List<Provider>> fetchPost() async {
   final response = await http.get('http://pax-user.herokuapp.com/provider_by_category?id=',
@@ -73,6 +79,7 @@ class CategoryProvidersScreen extends StatelessWidget {
                       minPrice: item.minPrice,
                       maxPrice: item.maxPrice,
                       avatarUrl: null,
+                      onTap: () => (loadProvider(item.id, context)),
                     )                ,
                   )
                   ,
