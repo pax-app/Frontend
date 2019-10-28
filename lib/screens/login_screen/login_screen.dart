@@ -66,7 +66,7 @@ class LoginScreen extends StatelessWidget {
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 50),
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
