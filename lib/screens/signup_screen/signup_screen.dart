@@ -1,5 +1,5 @@
 import 'package:Pax/blocs/signup_bloc.dart';
-import 'package:Pax/components/auth/auth_button.dart';
+import 'package:Pax/components/button%20/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/screens/home_screen/home_screen.dart';
@@ -44,8 +44,10 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xff454545),
-        body: Stack(alignment: Alignment.center, children: <Widget>[
+      backgroundColor: Color(0xff454545),
+      body: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
           Container(),
           SingleChildScrollView(
             child: Container(
@@ -104,52 +106,54 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 15),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        RichText(
-                            text: TextSpan(
-                                style: TextStyle(fontSize: 12),
-                                children: <TextSpan>[
-                              TextSpan(text: "LI E ACEITO OS "),
-                              TextSpan(
-                                  text: "TERMOS DE USO",
-                                  style: TextStyle(color: Color(0xff78aa43)))
-                            ])),
-                        Theme(
-                          data: ThemeData(
-                            unselectedWidgetColor: Colors.white,
-                          ),
-                          child: StreamBuilder<bool>(
-                              stream: _signupBloc.useTerms,
-                              builder: (context, snapshot) {
-                                return Checkbox(
-                                  onChanged: _signupBloc.changeUseTerms,
-                                  value:
-                                      snapshot.hasData ? snapshot.data : false,
-                                  materialTapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                  activeColor: Color(0xff78aa43),
-                                );
-                              }),
-                        )
-                      ]),
-                  SizedBox(
-                    height: 15,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(fontSize: 12),
+                          children: <TextSpan>[
+                            TextSpan(text: "LI E ACEITO OS "),
+                            TextSpan(
+                                text: "TERMOS DE USO",
+                                style: TextStyle(color: Color(0xff78aa43)))
+                          ],
+                        ),
+                      ),
+                      Theme(
+                        data: ThemeData(unselectedWidgetColor: Colors.white),
+                        child: StreamBuilder<bool>(
+                          stream: _signupBloc.useTerms,
+                          builder: (context, snapshot) {
+                            return Checkbox(
+                              onChanged: _signupBloc.changeUseTerms,
+                              value: snapshot.hasData ? snapshot.data : false,
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              activeColor: Color(0xff78aa43),
+                            );
+                          },
+                        ),
+                      )
+                    ],
                   ),
+                  SizedBox(height: 15),
                   StreamBuilder<bool>(
-                      stream: _signupBloc.validInputsStream,
-                      builder: (context, snapshot) {
-                        return AuthButton(
-                          text: "Criar",
-                          onPressed: snapshot.hasData
-                              ? () => this.doSignUp(context)
-                              : null,
-                        );
-                      }),
+                    stream: _signupBloc.validInputsStream,
+                    builder: (context, snapshot) {
+                      return Button(
+                        buttonText: "Criar",
+                        tapHandler: snapshot.hasData
+                            ? () => this.doSignUp(context)
+                            : null,
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
           )
-        ]));
+        ],
+      ),
+    );
   }
 }

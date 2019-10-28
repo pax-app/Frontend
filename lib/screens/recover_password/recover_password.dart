@@ -1,4 +1,5 @@
 import 'package:Pax/components/auth/auth_button.dart';
+import 'package:Pax/components/button%20/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../components/auth/auth_input.dart';
@@ -7,8 +8,10 @@ class RecoverPassordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xff454545),
-        body: Stack(alignment: Alignment.center, children: <Widget>[
+      backgroundColor: Color(0xff454545),
+      body: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
           Container(),
           SingleChildScrollView(
             child: Container(
@@ -31,13 +34,16 @@ class RecoverPassordScreen extends StatelessWidget {
                   SizedBox(
                     height: 40,
                   ),
-                  AuthButton(
-                    text: "Recuperar",
+                  Button(
+                    buttonText: 'Recuperar',
+                    tapHandler: null,
                   ),
                 ],
               ),
             ),
           )
-        ]));
+        ],
+      ),
+    );
   }
 }

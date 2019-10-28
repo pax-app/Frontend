@@ -1,5 +1,6 @@
 import 'package:Pax/blocs/login_bloc.dart';
 import 'package:Pax/components/auth/auth_button.dart';
+import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/screens/recover_password/recover_password.dart';
 import 'package:Pax/screens/signup_screen/signup_screen.dart';
 import 'package:Pax/screens/home_screen/home_screen.dart';
@@ -49,11 +50,11 @@ class LoginScreen extends StatelessWidget {
     if (logged)
       Navigator.of(ctx).push(CupertinoPageRoute(builder: (_) => HomeScreen()));
     else if (login && loginResponse.statusCode == 404)
-      _showDialog(ctx, "Usuario não encontrado.");
+      _showDialog(ctx, 'Usuario não encontrado.');
     else if (login && loginResponse.statusCode == 500)
-      _showDialog(ctx, "Tente novamente mais tarde.");
+      _showDialog(ctx, 'Tente novamente mais tarde.');
     else if (login && loginResponse.statusCode == 401)
-      _showDialog(ctx, "Senha Incorreta.");
+      _showDialog(ctx, 'Senha Incorreta.');
   }
 
   @override
@@ -71,18 +72,18 @@ class LoginScreen extends StatelessWidget {
                 children: <Widget>[
                   Image(
                     image: AssetImage('assets/logo.png'),
-                    width: 150,
-                    height: 150,
+                    width: 140,
+                    height: 140,
                   ),
                   SizedBox(height: 60),
                   AuthInput(
-                    labelText: "E-mail",
+                    labelText: 'E-mail',
                     inputType: TextInputType.emailAddress,
                     onChanged: _loginBloc.emailSink,
                   ),
                   SizedBox(height: 25),
                   AuthInput(
-                    labelText: "Senha",
+                    labelText: 'Senha',
                     obscure: true,
                     onChanged: _loginBloc.passwordSink,
                   ),
@@ -90,9 +91,9 @@ class LoginScreen extends StatelessWidget {
                   StreamBuilder<Object>(
                     stream: _loginBloc.validInputsStream,
                     builder: (context, snapshot) {
-                      return AuthButton(
-                        text: "Entrar",
-                        onPressed: snapshot.hasData
+                      return Button(
+                        buttonText: 'Entrar',
+                        tapHandler: snapshot.hasData
                             ? () => this.doLogin(context, true)
                             : null,
                       );
@@ -109,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                           onTap: () => this.recoverPassword(context),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Text("RECUPERAR A SENHA",
+                            child: Text('RECUPERAR A SENHA',
                                 style: Theme.of(context).textTheme.body2),
                           ),
                         ),
@@ -120,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                           child: Container(
                             padding: EdgeInsets.only(top: 20, bottom: 20),
                             child: Text(
-                              "CRIE UMA CONTA",
+                              'CRIE UMA CONTA',
                               style: Theme.of(context).textTheme.body2.copyWith(
                                     color: Theme.of(context).accentColor,
                                   ),
