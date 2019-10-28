@@ -11,3 +11,4 @@ final backgroundColor = const Color(0xfff3f3f3);
 final errorColor = const Color(0xffFF4B4B);
 final errorColorLight = const Color(0x66FF4B4B);
 final colorWhite = const Color(0xffffffff);
+final loginBgColor = const Color(0xff353535);

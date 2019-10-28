@@ -3,6 +3,7 @@ import 'package:Pax/components/auth/auth_button.dart';
 import 'package:Pax/screens/recover_password/recover_password.dart';
 import 'package:Pax/screens/signup_screen/signup_screen.dart';
 import 'package:Pax/screens/home_screen/home_screen.dart';
+import 'package:Pax/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -31,15 +32,12 @@ class LoginScreen extends StatelessWidget {
   }
 
   void recoverPassword(BuildContext ctx) {
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return RecoverPassordScreen();
-    }));
+    Navigator.of(ctx)
+        .push(CupertinoPageRoute(builder: (_) => RecoverPassordScreen()));
   }
 
   void signUp(BuildContext ctx) {
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return SignUpScreen();
-    }));
+    Navigator.of(ctx).push(CupertinoPageRoute(builder: (_) => SignUpScreen()));
   }
 
   void doLogin(BuildContext ctx, bool login) async {
@@ -47,39 +45,36 @@ class LoginScreen extends StatelessWidget {
     Response loginResponse = await _loginBloc.logIn();
     if (login) logged = loginResponse.statusCode == 200;
     logged = login ? logged : await _loginBloc.checkIfUserIsLogged();
+
     if (logged)
-      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-        return HomeScreen();
-      }));
-    else if (login && loginResponse.statusCode == 404) {
+      Navigator.of(ctx).push(CupertinoPageRoute(builder: (_) => HomeScreen()));
+    else if (login && loginResponse.statusCode == 404)
       _showDialog(ctx, "Usuario não encontrado.");
-    } else if (login && loginResponse.statusCode == 500) {
+    else if (login && loginResponse.statusCode == 500)
       _showDialog(ctx, "Tente novamente mais tarde.");
-    } else if (login && loginResponse.statusCode == 401) {
+    else if (login && loginResponse.statusCode == 401)
       _showDialog(ctx, "Senha Incorreta.");
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     doLogin(context, false);
     return Scaffold(
-        backgroundColor: Color(0xff454545),
-        body: Stack(alignment: Alignment.center, children: <Widget>[
-          Container(),
-          SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.only(top: 35, right: 35, left: 35),
+      backgroundColor: loginBgColor,
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 50),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(right: 80, left: 80),
-                    child: Image.asset(
-                      'assets/logo.png',
-                    ),
+                  Image(
+                    image: AssetImage('assets/logo.png'),
+                    width: 150,
+                    height: 150,
                   ),
-                  SizedBox(height: 70),
+                  SizedBox(height: 60),
                   AuthInput(
                     labelText: "E-mail",
                     inputType: TextInputType.emailAddress,
@@ -91,42 +86,44 @@ class LoginScreen extends StatelessWidget {
                     obscure: true,
                     onChanged: _loginBloc.passwordSink,
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizedBox(height: 40),
                   StreamBuilder<Object>(
-                      stream: _loginBloc.validInputsStream,
-                      builder: (context, snapshot) {
-                        return AuthButton(
-                            text: "Entrar",
-                            onPressed: snapshot.hasData
-                                ? () => this.doLogin(context, true)
-                                : null);
-                      }),
+                    stream: _loginBloc.validInputsStream,
+                    builder: (context, snapshot) {
+                      return AuthButton(
+                        text: "Entrar",
+                        onPressed: snapshot.hasData
+                            ? () => this.doLogin(context, true)
+                            : null,
+                      );
+                    },
+                  ),
                   Container(
-                    margin: EdgeInsets.only(top: 60),
+                    margin: const EdgeInsets.only(top: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
                           onTap: () => this.recoverPassword(context),
-                          child: Container(
-                            padding: EdgeInsets.only(top: 20, bottom: 20),
-                            child: Text(
-                              "RECUPERAR A SENHA",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 12),
-                            ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Text("RECUPERAR A SENHA",
+                                style: Theme.of(context).textTheme.body2),
                           ),
                         ),
                         InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
                           onTap: () => this.signUp(context),
                           child: Container(
                             padding: EdgeInsets.only(top: 20, bottom: 20),
                             child: Text(
                               "CRIE UMA CONTA",
-                              style: TextStyle(
-                                  color: Color(0xff78aa43), fontSize: 12),
+                              style: Theme.of(context).textTheme.body2.copyWith(
+                                    color: Theme.of(context).accentColor,
+                                  ),
                             ),
                           ),
                         )
@@ -136,7 +133,9 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-          )
-        ]));
+          ),
+        ),
+      ),
+    );
   }
 }

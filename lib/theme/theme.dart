@@ -53,6 +53,12 @@ ThemeData _buildPaxTheme() {
         fontSize: 14,
         color: primaryColor,
       ),
+      body2: TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 12,
+        color: colorWhite,
+        fontWeight: FontWeight.normal,
+      ),
     ),
     appBarTheme: AppBarTheme(
       textTheme: ThemeData.light().textTheme.copyWith(
