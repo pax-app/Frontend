@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:Pax/services/api.dart';
 import 'package:Pax/services/loggedUser.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -62,14 +63,13 @@ class BecameProviderBloc implements BlocBase {
       'Authorization': 'Token $_token'
     };
     var jsonBody = json.encode(body);
-    /*final response = await _api.post(
+    final response = await _api.post(
       Routes.PROVIDER_REGISTRATION,
       headers: header,
       body: jsonBody,
     );
+    if (response.statusCode == 200) await loggedUser.setIsProvider(true);
     return response.statusCode;
-    */
-    return 0;
   }
 
   @override

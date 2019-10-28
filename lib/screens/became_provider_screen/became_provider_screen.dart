@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/components/text_input/text_input_bloc.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/finish_provider_tab.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/provider_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Pax/components/text_input/text_input.dart';
 import 'package:image_picker/image_picker.dart';
 import "package:Pax/blocs/became_provider_bloc.dart";
 
@@ -148,7 +148,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
           ],
         ),
         const SizedBox(height: 10.0),
-        TextInput(
+        TextInputConnected(
           'Bio',
           'Insira uma descrição sobre você',
           true,
@@ -158,7 +158,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
           stream: _becameProviderBloc.bio,
           onChanged: _becameProviderBloc.changeBio,
         ),
-        TextInput(
+        TextInputConnected(
           'RG',
           'RG',
           true,

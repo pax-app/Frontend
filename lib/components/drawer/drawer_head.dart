@@ -69,7 +69,6 @@ class DrawerHead extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline,
                     ),
                     SizedBox(height: 6),
-                    getUserStars(qntStars, context),
                     Padding(
                       padding: EdgeInsets.only(left: 140, top: 20),
                       child: InkWell(

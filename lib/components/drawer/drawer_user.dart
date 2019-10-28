@@ -1,22 +1,24 @@
 import 'package:Pax/components/drawer/drawer_head.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_tile.dart';
 
 class DrawerUser extends StatelessWidget {
   final PageController _pageController;
-  bool isProvider = false;
+  LoggedUser loggedUser = LoggedUser();
+  bool isProvider;
   DrawerUser(this._pageController);
 
   @override
   Widget build(BuildContext context) {
-    print(this.isProvider);
+    isProvider = loggedUser.isProvider;
     return Drawer(
       child: Stack(
         children: <Widget>[
           Container(color: Theme.of(context).primaryColorLight),
           ListView(
             children: <Widget>[
-              DrawerHead("", "Youssef Muhamad", 2.5, _pageController),
+              DrawerHead("", loggedUser.name, 2.5, _pageController),
               Column(
                 children: <Widget>[
                   DrawerTile(

@@ -4,15 +4,16 @@ import 'package:Pax/screens/became_provider_screen/became_provider_tabs/info_tab
 import 'package:Pax/screens/config_screen/config_screen.dart';
 import 'package:Pax/screens/perfil_screen/perfil_screen.dart';
 import 'package:Pax/screens/my_conversations/my_conversations.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
 
 class HomeScreen extends StatelessWidget {
   final _pageController = PageController();
-  bool isProvider = false;
+  LoggedUser loggedUser = LoggedUser();
 
   Widget getDrawer() {
-    return this.isProvider
+    return loggedUser.isInProviderDrawer
         ? DrawerProvider(this._pageController)
         : DrawerUser(this._pageController);
   }

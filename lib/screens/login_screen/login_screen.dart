@@ -51,15 +51,12 @@ class LoginScreen extends StatelessWidget {
       Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
         return HomeScreen();
       }));
-    else if (loginResponse.statusCode == 404) {
+    else if (login && loginResponse.statusCode == 404) {
       _showDialog(ctx, "Usuario não encontrado.");
-      debugPrint(loginResponse.body);
-    } else if (loginResponse.statusCode == 500) {
-      debugPrint(loginResponse.body);
+    } else if (login && loginResponse.statusCode == 500) {
       _showDialog(ctx, "Tente novamente mais tarde.");
-    } else if (loginResponse.statusCode == 401) {
+    } else if (login && loginResponse.statusCode == 401) {
       _showDialog(ctx, "Senha Incorreta.");
-      debugPrint(loginResponse.body);
     }
   }
 

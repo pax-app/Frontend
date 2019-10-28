@@ -14,7 +14,7 @@ class _PhotoProfileState extends State<PhotoProfile> {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
-        Containesr(
+        Container(
           height: 120,
           width: 120,
           decoration: BoxDecoration(

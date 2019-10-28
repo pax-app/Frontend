@@ -5,6 +5,7 @@ import 'package:Pax/blocs/signup_bloc.dart';
 import 'package:Pax/services/api.dart';
 import 'package:Pax/services/loggedUser.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LoginBloc extends BlocBase {
@@ -19,16 +20,27 @@ class LoginBloc extends BlocBase {
 
   Function(String) get emailSink => _emailController.sink.add;
   Function(String) get passwordSink => _passwordController.sink.add;
+  var loggedUser = LoggedUser();
 
   getToken() async {
-    var loggedUser = LoggedUser();
     String token = loggedUser.token;
     return token;
   }
 
   Future<bool> checkIfUserIsLogged() async {
     var token = await getToken();
-    return (token != null && token != "") ? true : false;
+    Map<String, String> header = {
+      'content-type': 'application/json',
+      'Authorization': 'Token $token'
+    };
+
+    final response = await _api.get(Routes.AUTH_STATUS, headers: header);
+    if (response.statusCode == 200)
+      return true;
+    else {
+      await loggedUser.clearAuthData();
+      return false;
+    }
   }
 
   Future<dynamic> logIn() async {
@@ -62,7 +74,7 @@ class LoginBloc extends BlocBase {
         response.statusCode == 401 ||
         response.statusCode == 404) {
       var loggedUser = LoggedUser();
-      loggedUser.clearAuthData();
+      await loggedUser.clearAuthData();
     }
     return true;
   }

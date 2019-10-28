@@ -4,8 +4,9 @@ import 'package:http/http.dart' as http;
 class Routes {
   static const String LOGIN_ROUTE = "/auth/login";
   static const String LOGOUT_ROUTE = "/auth/logout";
-  static const String REGISTER_ROUTE = "/auth/register";
+  static const String REGISTER_ROUTE = "/auth/registration";
   static const String PROVIDER_REGISTRATION = "/provider_registration";
+  static const String AUTH_STATUS = "/auth/status";
 }
 
 class Api {

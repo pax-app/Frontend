@@ -1,39 +1,75 @@
 import 'package:Pax/models/user.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:async/async.dart';
 
 class LoggedUser extends User {
   String token, userId;
-  SharedPreferences _preferences;
-  void _loadStateFromPreferences() async {
-    _preferences = await SharedPreferences.getInstance();
-    this.name = _preferences.getString("LastUser");
-    this.token = _preferences.getString("LastToken");
-    this.email = _preferences.getString("LastEmail");
-    this.userId = _preferences.getString("LastUserID");
+  bool didLogout = true, isProvider, isInProviderDrawer = false;
+
+  static SharedPreferences _preferences;
+  final _initPreferences = AsyncMemoizer<SharedPreferences>();
+
+  Future<SharedPreferences> get preferences async {
+    if (_preferences != null) return _preferences;
+    _preferences = await _initPreferences.runOnce(() async {
+      return await SharedPreferences.getInstance();
+    });
+
+    return _preferences;
   }
 
-  void setName(name) {
+  Future _loadStateFromPreferences() async {
+    var preferences = await this.preferences;
+    this.name = preferences.getString("LastUser");
+    this.token = preferences.getString("LastToken");
+    this.email = preferences.getString("LastEmail");
+    this.userId = preferences.getString("LastUserID");
+    this.isProvider = preferences.getBool("LastUserIsProvider");
+  }
+
+  Future setName(name) async {
+    var preferences = await this.preferences;
     this.name = name;
-    _preferences.setString("LastUser", name);
+    preferences.setString("LastUser", name);
   }
 
-  void setToken(token) {
+  Future setToken(token) async {
+    var preferences = await this.preferences;
     this.token = token;
-    _preferences.setString("LastUser", token);
+    preferences.setString("LastToken", token);
   }
 
-  void setEmail(email) {
+  Future setEmail(email) async {
+    var preferences = await this.preferences;
     this.email = email;
-    _preferences.setString("LastEmail", email);
+    preferences.setString("LastEmail", email);
   }
 
-  void setUserId(userId) {
+  Future setUserId(userId) async {
+    var preferences = await this.preferences;
     this.userId = userId;
-    _preferences.setString("LastUserID", userId);
+    preferences.setString("LastUserID", userId);
+  }
+
+  Future setIsProvider(bool isProvider) async {
+    var preferences = await this.preferences;
+    this.isProvider = isProvider;
+    preferences.setBool("LastUserIsProvider", isProvider);
+  }
+
+  bool isEmpty() {
+    return (this.name == "" &&
+        this.token == "" &&
+        this.email == "" &&
+        this.userId == "");
   }
 
   LoggedUser._privateConstructor() {
-    _loadStateFromPreferences();
+    if (this.isEmpty() && this.didLogout) {
+      _loadStateFromPreferences();
+      this.didLogout = false;
+    }
   }
 
   static final LoggedUser _instance = LoggedUser._privateConstructor();
@@ -42,10 +78,18 @@ class LoggedUser extends User {
     return _instance;
   }
 
-  void clearAuthData() {
-    _preferences.setString("LastUser", "");
-    _preferences.setString("LastUser", "");
-    _preferences.setString("LastEmail", "");
-    _preferences.setString("LastUserID", "");
+  Future clearAuthData() async {
+    var preferences = await this.preferences;
+    preferences.setString("LastUser", "");
+    preferences.setString("LastToken", "");
+    preferences.setString("LastEmail", "");
+    preferences.setString("LastUserID", "");
+    preferences.setBool("LastUserIsProvider", null);
+    this.name = preferences.getString("LastUser");
+    this.token = preferences.getString("LastToken");
+    this.email = preferences.getString("LastEmail");
+    this.userId = preferences.getString("LastUserID");
+    this.isProvider = preferences.getBool("LastUserIsProvider");
+    this.didLogout = true;
   }
 }
