@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 
 class SimpleTile extends StatelessWidget {
   final String description;
-  SimpleTile(this.description);
+  final Function onTapHandle;
+  SimpleTile(this.description, this.onTapHandle);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: CardTheme.of(context).elevation,
       color: CardTheme.of(context).color,
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 2),
       child: InkWell(
         borderRadius: BorderRadius.circular(7.6),
-        onTap: () {
-          debugPrint('Foiiii!!');
-        },
+        onTap: onTapHandle,
         child: ListTile(
           title: Text(
             description,

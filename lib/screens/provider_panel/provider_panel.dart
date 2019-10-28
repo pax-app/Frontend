@@ -62,20 +62,28 @@ class ProviderPanel extends StatelessWidget {
                 ),
                 Divider(height: 60, color: Color.fromRGBO(0, 0, 0, .2)),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, bottom: 20),
+                  padding: const EdgeInsets.only(left: 20, bottom: 15),
                   child: Text(
                     'Minhas Mensagens Recentes',
                     style: Theme.of(context).textTheme.title,
                   ),
                 ),
-                ChatTile(
-                  username: 'Roger',
-                  message: 'Fala mané!',
-                ),
-                ChatTile(
-                  username: 'Dutra',
-                  message: 'Mexam na Planilha do ZenHub!',
-                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      ChatTile(
+                        username: 'Roger',
+                        message: 'Fala mané!',
+                      ),
+                      ChatTile(
+                        username: 'Dutra',
+                        message: 'Mexam na Planilha do ZenHub!',
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

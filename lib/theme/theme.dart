@@ -1,5 +1,4 @@
 import 'package:Pax/theme/colors.dart';
-import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
@@ -19,6 +18,7 @@ ThemeData _buildPaxTheme() {
       padding: const EdgeInsets.symmetric(vertical: 17),
     ),
     scaffoldBackgroundColor: backgroundColor,
+    canvasColor: Colors.transparent,
     cardTheme: CardTheme(
       color: colorWhite,
       elevation: 2,
@@ -43,7 +43,16 @@ ThemeData _buildPaxTheme() {
         fontWeight: FontWeight.bold,
         color: primaryColor,
       ),
-      body1: TextStyle(fontFamily: 'Roboto', fontSize: 14, color: primaryColor),
+      subtitle: TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: 15,
+        color: primaryColor,
+      ),
+      body1: TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 14,
+        color: primaryColor,
+      ),
     ),
     appBarTheme: AppBarTheme(
       textTheme: ThemeData.light().textTheme.copyWith(
