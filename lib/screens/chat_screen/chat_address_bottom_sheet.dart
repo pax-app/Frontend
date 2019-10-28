@@ -2,9 +2,14 @@ import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class ChatAddressBottomSheet extends StatelessWidget {
+  var addresses;
+  bool isLoading;
+
+  ChatAddressBottomSheet({this.addresses, this.isLoading});
+
   @override
   Widget build(BuildContext context) {
-    int _addressLength = 2;
+    int _addressLength = isLoading == true ? 1 : addresses.length;
     double _currentSheetHeight = 80 + 100 * _addressLength.toDouble();
 
     return BaseBottomSheet(
@@ -23,28 +28,31 @@ class ChatAddressBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 32),
           Expanded(
-            child: ListView.builder(
-              itemCount: _addressLength,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: <Widget>[
-                    Divider(height: 0, thickness: 1.2),
-                    Material(
-                      child: InkWell(
-                        onTap: () => {print('foi')},
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Text(
-                            '72871-066 Rua 66 Número 16 Jardim Céu Azul Quadra 88',
-                            textAlign: TextAlign.center,
+            child: isLoading == false
+                ? ListView.builder(
+                    itemCount: _addressLength,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: <Widget>[
+                          Divider(height: 0, thickness: 1.2),
+                          Material(
+                            child: InkWell(
+                              onTap: () => {print('foi')},
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: Text(
+                                  '${addresses[0]['street']} Nº ${addresses[0]['number']}, ${addresses[0]['neighborhood']} - CEP: ${addresses[0]['cep']}',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
+                        ],
+                      );
+                    },
+                  )
+                : Center(child: CircularProgressIndicator()),
           ),
         ],
       ),

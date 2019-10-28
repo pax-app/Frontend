@@ -26,8 +26,9 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
-  final bool isProvider = false;
+  bool isProvider = false;
   var addresses;
+  bool isAddressesLoading = true;
 
   @override
   void initState() {
@@ -123,7 +124,10 @@ class _ChatScreenState extends State<ChatScreen> {
     Navigator.of(context).pop();
     showModalBottomSheet(
       context: context,
-      builder: (context) => ChatAddressBottomSheet(),
+      builder: (context) => ChatAddressBottomSheet(
+        isLoading: isAddressesLoading,
+        addresses: addresses,
+      ),
     );
   }
 
@@ -138,9 +142,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
     setState(() {
       addresses = jsonData;
+      isAddressesLoading = false;
     });
-
-    print(addresses);
   }
 
   void _showBottomSheet(BuildContext context) {
