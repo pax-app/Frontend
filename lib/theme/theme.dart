@@ -43,7 +43,16 @@ ThemeData _buildPaxTheme() {
         fontWeight: FontWeight.bold,
         color: primaryColor,
       ),
-      body1: TextStyle(fontFamily: 'Roboto', fontSize: 14, color: primaryColor),
+      subtitle: TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: 15,
+        color: primaryColor,
+      ),
+      body1: TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 14,
+        color: primaryColor,
+      ),
     ),
     appBarTheme: AppBarTheme(
       textTheme: ThemeData.light().textTheme.copyWith(

@@ -7,6 +7,7 @@ import 'package:Pax/models/category.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_screen.dart';
 import 'package:Pax/screens/category_screen/expansion_category_tab.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/blocs/general_category_bloc.dart';
 
@@ -170,7 +171,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   void nextPage() {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (context) => BaseScreen(
           " ",
           "Preencha seus dados abaixo ",

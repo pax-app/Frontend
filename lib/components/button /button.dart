@@ -7,7 +7,12 @@ class Button extends StatelessWidget {
   final String type;
   final bool isSmall;
 
-  Button({this.buttonText, this.tapHandler, this.type, this.isSmall});
+  Button({
+    @required this.buttonText,
+    @required this.tapHandler,
+    @required this.type,
+    @required this.isSmall,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +32,8 @@ class Button extends StatelessWidget {
       case 'outline':
         return OutlineButton(
           borderSide: BorderSide(color: Theme.of(context).accentColor),
-          highlightedBorderColor: secondaryColorLight,
-          splashColor: secondaryColorLight,
+          highlightedBorderColor: secondaryColorDimmed,
+          splashColor: secondaryColorDimmed,
           child: Text(
             buttonText.toUpperCase(),
             style: Theme.of(context).textTheme.title.copyWith(
@@ -56,12 +61,14 @@ class Button extends StatelessWidget {
         return Material(
           borderRadius: BorderRadius.circular(30),
           child: RaisedButton(
-            
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             onPressed: tapHandler,
             child: Text(
               buttonText.toUpperCase(),
-              ),
+              style: Theme.of(context).textTheme.title.copyWith(
+                    color: colorWhite,
+                  ),
+            ),
           ),
         );
     }
