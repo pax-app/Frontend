@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:Pax/components/chat/chat_app_bar.dart';
 import 'package:Pax/components/chat/chat_input.dart';
+import 'package:http/http.dart' as http;
 import 'package:Pax/components/chat/chat_list.dart';
 import 'package:Pax/screens/chat_screen/chat_address_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_bottom_sheet.dart';
@@ -8,28 +11,27 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
-class ChatScreen extends StatelessWidget {
-  final Firestore _firestore = Firestore.instance;
-
+class ChatScreen extends StatefulWidget {
   final String chat_id;
   final String person_name;
-
-  final bool isProvider = false;
 
   ChatScreen({
     @required this.chat_id,
     @required this.person_name,
   });
 
-  void _sendMessage(String text) {
-    String date_time_sent =
-        DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
 
-    _firestore.collection(chat_id).document(date_time_sent).setData({
-      'text_message': text,
-      'sender': isProvider ? 'P' : 'U',
-      'date_time_sent': date_time_sent
-    });
+class _ChatScreenState extends State<ChatScreen> {
+  final Firestore _firestore = Firestore.instance;
+  final bool isProvider = false;
+  var addresses;
+
+  @override
+  void initState() {
+    _getUserAddresses();
   }
 
   @override
@@ -61,7 +63,7 @@ class ChatScreen extends StatelessWidget {
               Expanded(
                 child: StreamBuilder(
                   stream: _firestore
-                      .collection(chat_id)
+                      .collection(widget.chat_id)
                       .orderBy('date_time_sent', descending: true)
                       .snapshots(),
                   builder: _update,
@@ -76,6 +78,35 @@ class ChatScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _update(context, snapshot) {
+    if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
+
+    if (snapshot.data.documents.length <= 0) {
+      return Center(
+        child: Text(
+          'Inicie a conversa :)',
+          style: Theme.of(context).textTheme.title,
+        ),
+      );
+    }
+
+    return ChatList(
+      snapshot: snapshot.data.documents,
+      isProvider: isProvider,
+    );
+  }
+
+  void _sendMessage(String text) {
+    String date_time_sent =
+        DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
+
+    _firestore.collection(widget.chat_id).document(date_time_sent).setData({
+      'text_message': text,
+      'sender': isProvider ? 'P' : 'U',
+      'date_time_sent': date_time_sent
+    });
   }
 
   void _getCamera(BuildContext context) async {
@@ -96,6 +127,22 @@ class ChatScreen extends StatelessWidget {
     );
   }
 
+  void _getUserAddresses() async {
+    var params = {"user_id": "1"};
+
+    Uri uri = Uri.parse("https://pax-user.herokuapp.com/get_addresses");
+    final newURI = uri.replace(queryParameters: params);
+
+    var response = await http.get(newURI);
+    var jsonData = json.decode(response.body);
+
+    setState(() {
+      addresses = jsonData;
+    });
+
+    print(addresses);
+  }
+
   void _showBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -104,24 +151,6 @@ class ChatScreen extends StatelessWidget {
         galleryHandler: () => _getGallery(context),
         addressHandler: () => _getAddress(context),
       ),
-    );
-  }
-
-  Widget _update(context, snapshot) {
-    if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
-
-    if (snapshot.data.documents.length <= 0) {
-      return Center(
-        child: Text(
-          'Inicie a conversa :)',
-          style: Theme.of(context).textTheme.title,
-        ),
-      );
-    }
-
-    return ChatList(
-      snapshot: snapshot.data.documents,
-      isProvider: isProvider,
     );
   }
 }
