@@ -19,7 +19,7 @@ class ChatAddressBottomSheet extends StatefulWidget {
 class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
   bool isLoading = true;
   bool isInCepModal = false;
-  var addresses;
+  List<Address> addresses;
 
   @override
   void initState() {
@@ -30,12 +30,13 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
   @override
   Widget build(BuildContext context) {
     int _addressLength = isLoading == true ? 1 : addresses.length;
-    double _currentSheetHeight = 80 + 100 * _addressLength.toDouble();
+    double _currentSheetHeight =
+        (isLoading ? 120 : 58) + 90 * _addressLength.toDouble();
 
     return BaseBottomSheet(
       modalHeight: isInCepModal
           ? 290 + MediaQuery.of(context).viewInsets.bottom
-          : _currentSheetHeight > 380 ? 380 : _currentSheetHeight,
+          : _currentSheetHeight,
       sheetBody: Column(
         children: <Widget>[
           Padding(
