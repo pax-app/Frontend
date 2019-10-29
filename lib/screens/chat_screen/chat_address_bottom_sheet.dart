@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:Pax/components/chat/chat_address_list.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
@@ -26,7 +27,7 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
   @override
   Widget build(BuildContext context) {
     int _addressLength = isLoading == true ? 1 : addresses.length;
-    double _currentSheetHeight = 80 + 100 * _addressLength.toDouble();
+    double _currentSheetHeight = 80 + 110 * _addressLength.toDouble();
 
     return BaseBottomSheet(
       modalHeight: _currentSheetHeight > 380 ? 380 : _currentSheetHeight,
@@ -45,33 +46,9 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
           SizedBox(height: 32),
           Expanded(
             child: isLoading == false
-                ? ListView.builder(
-                    itemCount: _addressLength,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: <Widget>[
-                          Divider(height: 1, thickness: 1.2),
-                          Material(
-                            child: InkWell(
-                              onTap: () => {print('foi')},
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 15,
-                                  horizontal: 20,
-                                ),
-                                child: Text(
-                                  '${addresses[index]['street']} Número ${addresses[index]['number']}, ${addresses[index]['neighborhood']} - CEP: ${addresses[index]['cep']}',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                ? ChatAddressList(
+                    addressLength: _addressLength,
+                    addresses: addresses,
                   )
                 : Center(child: CircularProgressIndicator()),
           ),
