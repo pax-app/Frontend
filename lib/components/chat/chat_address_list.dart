@@ -39,7 +39,7 @@ class ChatAddressList extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: isLast ? Theme.of(context).accentColor : null,
-                      height: 1.5,
+                      height: isLast ? 2 : 1.5,
                     ),
                   ),
                 ),

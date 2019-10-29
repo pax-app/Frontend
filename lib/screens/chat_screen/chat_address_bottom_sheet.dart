@@ -29,10 +29,12 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
   @override
   Widget build(BuildContext context) {
     int _addressLength = isLoading == true ? 1 : addresses.length;
-    double _currentSheetHeight = 80 + 110 * _addressLength.toDouble();
+    double _currentSheetHeight = 80 + 100 * _addressLength.toDouble();
 
     return BaseBottomSheet(
-      modalHeight: _currentSheetHeight > 380 ? 380 : _currentSheetHeight,
+      modalHeight: isInCepModal
+          ? 290 + MediaQuery.of(context).viewInsets.bottom
+          : _currentSheetHeight > 380 ? 380 : _currentSheetHeight,
       sheetBody: Column(
         children: <Widget>[
           Padding(
@@ -40,12 +42,14 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
               horizontal: MediaQuery.of(context).size.width * .1,
             ),
             child: Text(
-              'Escolha o endereço para o prestador realizar o serviço',
+              isInCepModal
+                  ? 'Vamos buscar seu endereço pelo CEP'
+                  : 'Escolha o endereço para o prestador realizar o serviço',
               style: Theme.of(context).textTheme.title,
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: 32),
+          SizedBox(height: 30),
           Expanded(
             child: isLoading == true
                 ? Center(child: CircularProgressIndicator())
