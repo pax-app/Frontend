@@ -9,11 +9,15 @@ import 'package:http/http.dart' as http;
 
 
 loadProvider(int id, ctx) {
+  //function to go from the provier's card to the profile's profile
+
   Navigator.push(
       ctx, MaterialPageRoute(builder: (ctx) => ProviderProfileScreen()));
 }
 
 Future<List<Provider>> fetchPost() async {
+  //Fetching data from API
+
   final response = await http.get('http://pax-user.herokuapp.com/provider_by_category?id=',
   //If here we receive category name instead of id then just change the name of the query parameter to 'name' 
       headers: {HttpHeaders.contentTypeHeader: 'application/json'});
@@ -89,6 +93,7 @@ class CategoryProvidersScreen extends StatelessWidget {
              null
           );
         } else if (snapshot.hasError) {
+          //Display error if can't get data from API
           return BaseScreen("72870-010","Erro:",Text("${snapshot.error}"),null);
         }
 
