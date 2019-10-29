@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:Pax/components/base_screen/base_screen.dart';
 
 
 Future<Provider> fetchPost() async {
@@ -189,11 +190,11 @@ class ProviderProfileScreen extends StatelessWidget {
     );
        
         } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
+          return BaseScreen("72870-010","Erro:",Text("${snapshot.error}"),null);
         }
 
         // By default, show a loading spinner.
-        return CircularProgressIndicator();
+        return BaseScreen("72870-010","Carregando",CircularProgressIndicator(),null);
       },
     );
   }

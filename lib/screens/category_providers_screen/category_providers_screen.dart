@@ -89,11 +89,12 @@ class CategoryProvidersScreen extends StatelessWidget {
              null
           );
         } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
+          return BaseScreen("72870-010","Erro:",Text("${snapshot.error}"),null);
         }
 
         // By default, show a loading spinner.
-        return CircularProgressIndicator();
+        return BaseScreen("72870-010","Carregando",CircularProgressIndicator(),null);
+
       },
     );
   }
