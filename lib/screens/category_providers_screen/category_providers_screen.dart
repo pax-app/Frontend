@@ -82,7 +82,7 @@ class CategoryProvidersScreen extends StatelessWidget {
                       description: item.description,
                       minPrice: item.minPrice,
                       maxPrice: item.maxPrice,
-                      avatarUrl: null,
+                      avatarUrl: item.urlPhoto,
                       onTap: () => (loadProvider(item.id, context)),
                     )                ,
                   )
