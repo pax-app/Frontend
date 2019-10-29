@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:Pax/components/chat/chat_app_bar.dart';
 import 'package:Pax/components/chat/chat_input.dart';
-import 'package:http/http.dart' as http;
 import 'package:Pax/components/chat/chat_list.dart';
 import 'package:Pax/screens/chat_screen/chat_address_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_bottom_sheet.dart';
@@ -29,11 +26,6 @@ class _ChatScreenState extends State<ChatScreen> {
   bool isProvider = false;
   var addresses;
   bool isAddressesLoading = true;
-
-  @override
-  void initState() {
-    _getUserAddresses();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +102,17 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => ChatBottomSheet(
+        cameraHandler: () => _getCamera(context),
+        galleryHandler: () => _getGallery(context),
+        addressHandler: () => _getAddress(context),
+      ),
+    );
+  }
+
   void _getCamera(BuildContext context) async {
     Navigator.of(context).pop();
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -124,36 +127,7 @@ class _ChatScreenState extends State<ChatScreen> {
     Navigator.of(context).pop();
     showModalBottomSheet(
       context: context,
-      builder: (context) => ChatAddressBottomSheet(
-        isLoading: isAddressesLoading,
-        addresses: addresses,
-      ),
-    );
-  }
-
-  void _getUserAddresses() async {
-    var params = {"user_id": "1"};
-
-    Uri uri = Uri.parse("https://pax-user.herokuapp.com/get_addresses");
-    final newURI = uri.replace(queryParameters: params);
-
-    var response = await http.get(newURI);
-    var jsonData = json.decode(response.body);
-
-    setState(() {
-      addresses = jsonData;
-      isAddressesLoading = false;
-    });
-  }
-
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => ChatBottomSheet(
-        cameraHandler: () => _getCamera(context),
-        galleryHandler: () => _getGallery(context),
-        addressHandler: () => _getAddress(context),
-      ),
+      builder: (context) => ChatAddressBottomSheet(user_id: 1),
     );
   }
 }

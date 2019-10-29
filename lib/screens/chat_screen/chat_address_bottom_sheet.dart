@@ -1,11 +1,27 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
-class ChatAddressBottomSheet extends StatelessWidget {
-  var addresses;
-  bool isLoading;
+class ChatAddressBottomSheet extends StatefulWidget {
+  final user_id;
 
-  ChatAddressBottomSheet({this.addresses, this.isLoading});
+  ChatAddressBottomSheet({@required this.user_id});
+
+  @override
+  _ChatAddressBottomSheetState createState() => _ChatAddressBottomSheetState();
+}
+
+class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
+  bool isLoading = true;
+  var addresses;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserAddresses();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,5 +78,20 @@ class ChatAddressBottomSheet extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _getUserAddresses() async {
+    var params = {'user_id': '${widget.user_id.toString()}'};
+
+    Uri uri = Uri.parse("https://pax-user.herokuapp.com/get_addresses");
+    final newURI = uri.replace(queryParameters: params);
+
+    var response = await http.get(newURI);
+    var jsonData = json.decode(response.body);
+
+    setState(() {
+      addresses = jsonData;
+      isLoading = false;
+    });
   }
 }
