@@ -1,10 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChatAddressList extends StatelessWidget {
   final int addressLength;
   final addresses;
+  final Function navigateToCepModal;
 
-  const ChatAddressList({this.addressLength, this.addresses});
+  const ChatAddressList({
+    this.addressLength,
+    this.addresses,
+    this.navigateToCepModal,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,8 @@ class ChatAddressList extends StatelessWidget {
             Divider(height: 1, thickness: 1.2),
             Material(
               child: InkWell(
-                onTap: () => {print('foi')},
+                onTap:
+                    isLast ? navigateToCepModal : () => _selectAddress(index),
                 child: Container(
                   width: 400,
                   padding: const EdgeInsets.symmetric(
@@ -42,5 +49,9 @@ class ChatAddressList extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _selectAddress(int address_id) {
+    print(address_id);
   }
 }

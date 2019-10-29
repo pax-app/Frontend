@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:Pax/components/chat/chat_address_list.dart';
+import 'package:Pax/screens/chat_screen/chat_cep_bottom_sheet.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
@@ -16,6 +17,7 @@ class ChatAddressBottomSheet extends StatefulWidget {
 
 class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
   bool isLoading = true;
+  bool isInCepModal = false;
   var addresses;
 
   @override
@@ -45,16 +47,25 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
           ),
           SizedBox(height: 32),
           Expanded(
-            child: isLoading == false
-                ? ChatAddressList(
-                    addressLength: _addressLength,
-                    addresses: addresses,
-                  )
-                : Center(child: CircularProgressIndicator()),
+            child: isLoading == true
+                ? Center(child: CircularProgressIndicator())
+                : isInCepModal == true
+                    ? ChatCepBottomSheet()
+                    : ChatAddressList(
+                        addressLength: _addressLength,
+                        addresses: addresses,
+                        navigateToCepModal: _navigateToCepModal,
+                      ),
           ),
         ],
       ),
     );
+  }
+
+  void _navigateToCepModal() {
+    setState(() {
+      isInCepModal = true;
+    });
   }
 
   void _getUserAddresses() async {
