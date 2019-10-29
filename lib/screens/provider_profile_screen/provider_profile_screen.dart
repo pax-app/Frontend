@@ -2,19 +2,67 @@ import 'package:Pax/components/app_bar/white_appbar.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class ProviderProfileScreen extends StatefulWidget {
-  ProviderProfileScreen({Key key}) : super(key: key);
 
-  _ProviderProfileScreenState createState() => _ProviderProfileScreenState();
+Future<Provider> fetchPost() async {
+  final response = await http.get('http://pax-user.herokuapp.com/provider_info_by_category?providerId=&categoryId=',
+  //If here we receive category name instead of id then just change the name of the query parameter to 'name' 
+      headers: {HttpHeaders.contentTypeHeader: 'application/json'});
+  var responseJson = json.decode(response.body);
+
+  final Provider infoProvider = Provider.fromJson(responseJson);
+
+  return infoProvider;
 }
 
-class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
+class Provider {
+  final String name;
+  final String description;
+  final String urlPhoto;
+  final int id;
+  final int minPrice;
+  final int maxPrice;
+  final double charismaRate;
+  final double reviewService;
+  final String number;
+
+  Provider({this.name, this.description, this.urlPhoto, this.number, this.charismaRate, this.reviewService, this.id, this.maxPrice, this.minPrice});
+
+  factory Provider.fromJson(Map<String, dynamic> json) {
+    return Provider(
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      urlPhoto: json['urlPhoto'],
+      charismaRate: json['charisma_rate'].toDouble(),
+      reviewService: json['review_service'].toDouble(),
+      minPrice: json['minPrice'],
+      maxPrice: json['maxPrice'],
+      number: json['number']
+    );
+  }
+}
+
+
+class ProviderProfileScreen extends StatelessWidget {
+  final Future<Provider> category;
+
+  ProviderProfileScreen({Key key, this.category}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return FutureBuilder<Provider>(
+      future: fetchPost(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          Provider categories = snapshot.data;
+              return Scaffold(
       appBar: WhiteAppBar(
-        '234234',
+        categories.number,
         context,
         actions: <Widget>[
           FlatButton(
@@ -51,8 +99,7 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                             decoration: new BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
                                 image: DecorationImage(
-                                    image: NetworkImage(
-                                        'https://upload.wikimedia.org/wikipedia/commons/a/a0/Pierre-Person.jpg'),
+                                    image: NetworkImage(categories.urlPhoto),
                                     fit: BoxFit.cover),
                                 border: Border.all(
                                     color: secondaryColor, width: 3)),
@@ -64,7 +111,7 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Loren Gutierrez",
+                            categories.name,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
@@ -79,7 +126,7 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                               ),
                               SmoothStarRating(
                                   allowHalfRating: false,
-                                  rating: 5,
+                                  rating: categories.reviewService,
                                   size: 20,
                                   color: secondaryColor,
                                   borderColor: secondaryColor),
@@ -96,7 +143,7 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                               ),
                               SmoothStarRating(
                                   allowHalfRating: false,
-                                  rating: 5,
+                                  rating: categories.charismaRate,
                                   size: 20,
                                   color: secondaryColor,
                                   borderColor: secondaryColor),
@@ -112,7 +159,7 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                         child: Container(
                           margin: EdgeInsets.only(top: 20),
                           child: Text(
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique nisl ut justo semper maximus. Donec fermentum, nunc non ullamcorper volutpat, arcu lacus fermentum purus, sed tincidunt elit dolor vitae ante. Cras vel fringilla leo, in consectetur sem. Vivamus convallis laoreet augue. Nulla nec rutrum quam",
+                            categories.description,
                             style: TextStyle(fontSize: 15),
                           ),
                         ),
@@ -124,18 +171,30 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                       Container(
                           margin: EdgeInsets.only(top: 15),
                           child: Text(
-                            "R\$30 a R\$200",
+                            "R\$"+categories.minPrice.toString()+" a "+"R\$"+categories.maxPrice.toString(),
                             style:
                                 TextStyle(color: secondaryColor, fontSize: 16),
                           )),
                     ],
                   )
                 ],
+                
+                
+
               ),
             ),
           ),
         ],
       ),
+    );
+       
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+
+        // By default, show a loading spinner.
+        return CircularProgressIndicator();
+      },
     );
   }
 }
