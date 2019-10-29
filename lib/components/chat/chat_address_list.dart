@@ -35,7 +35,7 @@ class ChatAddressList extends StatelessWidget {
                   child: Text(
                     isLast
                         ? 'ADICIONAR ENDEREÇO'
-                        : '${addresses[index]['street']} Número ${addresses[index]['number']}, ${addresses[index]['neighborhood']} - CEP: ${addresses[index]['cep']}',
+                        : '${addresses[index].street} Número ${addresses[index].number}, ${addresses[index].neighborhood} - CEP: ${addresses[index].cep}',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: isLast ? Theme.of(context).accentColor : null,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:Pax/components/chat/chat_address_list.dart';
+import 'package:Pax/models/Address.dart';
 import 'package:Pax/screens/chat_screen/chat_cep_bottom_sheet.dart';
 import 'package:http/http.dart' as http;
 
@@ -74,15 +75,20 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
 
   void _getUserAddresses() async {
     var params = {'user_id': '${widget.user_id.toString()}'};
-
     Uri uri = Uri.parse("https://pax-user.herokuapp.com/get_addresses");
     final newURI = uri.replace(queryParameters: params);
 
     var response = await http.get(newURI);
     var jsonData = json.decode(response.body);
 
+    final List<Address> addressesFromJSON = [];
+
+    for (var data in jsonData) {
+      addressesFromJSON.add(Address.fromJson(data));
+    }
+
     setState(() {
-      addresses = jsonData;
+      addresses = addressesFromJSON;
       isLoading = false;
     });
   }
