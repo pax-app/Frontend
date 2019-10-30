@@ -35,13 +35,18 @@ class ChatList extends StatelessWidget {
         Widget chatList = Column(
           children: <Widget>[
             if (index + 1 == snapshot.length) DateBubble(date: currentDate),
-            Message(
-              isMe: isProvider && messageSender == 'P' ||
-                  !isProvider && messageSender == 'U',
-              message: snapshot[index]['text_message'],
-              hour: formatHour
-                  .format(DateTime.parse(snapshot[index]['date_time_sent'])),
-            ),
+            snapshot[index]['text_message'] != null
+                ? Message(
+                    isMe: isProvider && messageSender == 'P' ||
+                        !isProvider && messageSender == 'U',
+                    message: snapshot[index]['text_message'],
+                    hour: formatHour.format(
+                        DateTime.parse(snapshot[index]['date_time_sent'])),
+                  )
+                : Image.network(
+                    snapshot[index]['path_image'],
+                    height: 150,
+                  ),
             if (dateHasChanged) DateBubble(date: prevDate),
           ],
         );

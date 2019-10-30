@@ -97,12 +97,12 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _sendMessage(String text) {
+  void _sendMessage(String text, bool isImage) {
     String date_time_sent =
         DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
 
     _firestore.collection(widget.chat_id).document(date_time_sent).setData({
-      'text_message': text,
+      isImage ? 'path_image' : 'text_message': text,
       'sender': isProvider ? 'P' : 'U',
       'date_time_sent': date_time_sent
     });
@@ -136,7 +136,7 @@ class _ChatScreenState extends State<ChatScreen> {
     print('Upou');
 
     storageReference.getDownloadURL().then((fileURL) {
-      print(fileURL);
+      _sendMessage(fileURL, true);
     });
   }
 
