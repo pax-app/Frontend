@@ -33,6 +33,7 @@ dependencies:
   firebase_core: ^0.4.0+9
   firebase_analytics: ^5.0.2
   cloud_firestore: ^0.12.9+4
+  firebase_storage: ^3.0.3
   intl: 0.15.7
   shared_preferences: ^0.5.3
   http: ^0.12.0

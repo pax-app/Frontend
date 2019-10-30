@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:Pax/components/chat/chat_app_bar.dart';
 import 'package:Pax/components/chat/chat_input.dart';
 import 'package:Pax/components/chat/chat_list.dart';
 import 'package:Pax/screens/chat_screen/chat_address_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_bottom_sheet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart' as Path;
 
 class ChatScreen extends StatefulWidget {
   final String chat_id;
@@ -23,9 +27,11 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
+
   bool isProvider = false;
   var addresses;
   bool isAddressesLoading = true;
+  File _image;
 
   @override
   Widget build(BuildContext context) {
@@ -113,9 +119,25 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _getCamera(BuildContext context) async {
+  Future _getCamera(BuildContext context) async {
     Navigator.of(context).pop();
+
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = image;
+    });
+
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('chats/${Path.basename(_image.path)}');
+    StorageUploadTask uploadTask = storageReference.putFile(_image);
+    await uploadTask.onComplete;
+
+    print('Upou');
+
+    storageReference.getDownloadURL().then((fileURL) {
+      print(fileURL);
+    });
   }
 
   void _getGallery(BuildContext context) async {
