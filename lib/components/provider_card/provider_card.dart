@@ -7,8 +7,8 @@ class ProviderCard extends StatelessWidget {
   final String name;
   final double rating;
   final String description;
-  final int minPrice;
-  final int maxPrice;
+  final double minPrice;
+  final double maxPrice;
   final String avatarUrl;
   final Function onTap;
 
@@ -52,6 +52,13 @@ class ProviderCard extends StatelessWidget {
                           child: Container(
                             width: 90,
                             height: 90,
+                            decoration: new BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(this.avatarUrl),
+                                  fit: BoxFit.fill),
+                              shape: BoxShape.circle,
+                              border: Border.all(color: secondaryColor, width: 3)
+                            ),
                           ),
                         )
                       ],

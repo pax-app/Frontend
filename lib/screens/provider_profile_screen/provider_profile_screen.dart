@@ -7,6 +7,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:Pax/components/base_screen/base_screen.dart';
+import 'package:Pax/models/Provider.dart';
 
 
 Future<Provider> fetchPost() async {
@@ -20,39 +21,10 @@ Future<Provider> fetchPost() async {
   return infoProvider;
 }
 
-class Provider {
-  final String name;
-  final String description;
-  final String urlPhoto;
-  final int id;
-  final int minPrice;
-  final int maxPrice;
-  final double charismaRate;
-  final double reviewService;
-  final String number;
-
-  Provider({this.name, this.description, this.urlPhoto, this.number, this.charismaRate, this.reviewService, this.id, this.maxPrice, this.minPrice});
-
-  factory Provider.fromJson(Map<String, dynamic> json) {
-    return Provider(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      urlPhoto: json['urlPhoto'],
-      charismaRate: json['charisma_rate'].toDouble(),
-      reviewService: json['review_service'].toDouble(),
-      minPrice: json['minPrice'],
-      maxPrice: json['maxPrice'],
-      number: json['number']
-    );
-  }
-}
-
 
 class ProviderProfileScreen extends StatelessWidget {
-  final Future<Provider> category;
 
-  ProviderProfileScreen({Key key, this.category}) : super(key: key);
+  ProviderProfileScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +32,10 @@ class ProviderProfileScreen extends StatelessWidget {
       future: fetchPost(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          Provider categories = snapshot.data;
+          Provider providerInfo = snapshot.data;
               return Scaffold(
       appBar: WhiteAppBar(
-        categories.number,
+        "72870-010",
         context,
         actions: <Widget>[
           FlatButton(
@@ -100,7 +72,7 @@ class ProviderProfileScreen extends StatelessWidget {
                             decoration: new BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
                                 image: DecorationImage(
-                                    image: NetworkImage(categories.urlPhoto),
+                                    image: NetworkImage(providerInfo.providerPhoto),
                                     fit: BoxFit.cover),
                                 border: Border.all(
                                     color: secondaryColor, width: 3)),
@@ -112,7 +84,7 @@ class ProviderProfileScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            categories.name,
+                            providerInfo.providerName,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
@@ -127,7 +99,7 @@ class ProviderProfileScreen extends StatelessWidget {
                               ),
                               SmoothStarRating(
                                   allowHalfRating: false,
-                                  rating: categories.reviewService,
+                                  rating: providerInfo.reviewService,
                                   size: 20,
                                   color: secondaryColor,
                                   borderColor: secondaryColor),
@@ -144,7 +116,7 @@ class ProviderProfileScreen extends StatelessWidget {
                               ),
                               SmoothStarRating(
                                   allowHalfRating: false,
-                                  rating: categories.charismaRate,
+                                  rating: providerInfo.charismaRate,
                                   size: 20,
                                   color: secondaryColor,
                                   borderColor: secondaryColor),
@@ -160,7 +132,7 @@ class ProviderProfileScreen extends StatelessWidget {
                         child: Container(
                           margin: EdgeInsets.only(top: 20),
                           child: Text(
-                            categories.description,
+                            providerInfo.bio,
                             style: TextStyle(fontSize: 15),
                           ),
                         ),
@@ -172,7 +144,7 @@ class ProviderProfileScreen extends StatelessWidget {
                       Container(
                           margin: EdgeInsets.only(top: 15),
                           child: Text(
-                            "R\$"+categories.minPrice.toString()+" a "+"R\$"+categories.maxPrice.toString(),
+                            "R\$"+providerInfo.minPrice.toString()+" a "+"R\$"+providerInfo.maxPrice.toString(),
                             style:
                                 TextStyle(color: secondaryColor, fontSize: 16),
                           )),
