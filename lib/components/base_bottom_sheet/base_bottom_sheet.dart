@@ -13,9 +13,11 @@ class BaseBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: Duration(seconds: 1),
       height: modalHeight,
-      padding: const EdgeInsets.only(left: 30, right: 30, top: 50),
+      curve: Curves.bounceOut,
+      padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
       decoration: BoxDecoration(
         color: colorWhite,
         borderRadius: const BorderRadius.only(

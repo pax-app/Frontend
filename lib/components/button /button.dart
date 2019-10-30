@@ -10,8 +10,8 @@ class Button extends StatelessWidget {
   Button({
     @required this.buttonText,
     @required this.tapHandler,
-    @required this.type,
-    @required this.isSmall,
+    this.type,
+    this.isSmall = false,
   });
 
   @override
