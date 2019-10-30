@@ -6,7 +6,7 @@ import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/screens/provider_profile_screen/provider_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:Pax/models/Provider.dart';
 
 loadProvider(int id, ctx) {
   //function to go from the provier's card to the profile's profile
@@ -31,34 +31,11 @@ Future<List<Provider>> fetchPost() async {
   return listaFinal;
 }
 
-class Provider {
-  final String name;
-  final String description;
-  final String urlPhoto;
-  final double review;
-  final int id;
-  final int minPrice;
-  final int maxPrice;
 
-  Provider({this.name, this.description, this.urlPhoto, this.review, this.id, this.maxPrice, this.minPrice});
-
-  factory Provider.fromJson(Map<String, dynamic> json) {
-    return Provider(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      urlPhoto: json['urlPhoto'],
-      review: json['review'].toDouble(),
-      minPrice: json['minPrice'],
-      maxPrice: json['maxPrice']
-    );
-  }
-}
 
 class CategoryProvidersScreen extends StatelessWidget {
-  final Future<Provider> category;
 
-  CategoryProvidersScreen({Key key, this.category}) : super(key: key);
+  CategoryProvidersScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,23 +44,23 @@ class CategoryProvidersScreen extends StatelessWidget {
       future: fetchPost(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<Provider> categories = snapshot.data;
+          List<Provider> providers = snapshot.data;
           return BaseScreen(
              "72870-010",
             "Categoria teste",
                 new Column(
-                children: categories
+                children: providers
                 .map(
                   (item) => Container(
                     child: ProviderCard(
-                      providerId: item.id,
-                      name: item.name,
-                      rating: item.review,
-                      description: item.description,
+                      providerId: item.providerId,
+                      name: item.providerName,
+                      rating: item.reviewService,
+                      description: item.bio,
                       minPrice: item.minPrice,
                       maxPrice: item.maxPrice,
-                      avatarUrl: item.urlPhoto,
-                      onTap: () => (loadProvider(item.id, context)),
+                      avatarUrl: item.providerPhoto,
+                      onTap: () => (loadProvider(item.providerId, context)),
                     )                ,
                   )
                   ,
