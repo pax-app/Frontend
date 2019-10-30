@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
           getDrawer(),
         ),
         BaseScreen(
-          "Minhas Conversas",
+          "",
           "Minhas Conversas",
           MyConversations(),
           getDrawer(),
