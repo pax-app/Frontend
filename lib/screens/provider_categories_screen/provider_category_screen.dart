@@ -58,7 +58,7 @@ class ProviderCategoryScreen extends StatelessWidget {
                 .map(
                   (item) => Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                      child: SimpleTile(item.name)),
+                      child: SimpleTile(item.name, null)),
                 )
                 .toList(),
           );

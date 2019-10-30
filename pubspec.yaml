@@ -33,7 +33,7 @@ dependencies:
   firebase_analytics: ^5.0.2
   cloud_firestore: ^0.12.9+4
   intl: 0.15.7
-  http: ^0.12.0
+  # http: ^0.12.0
 
 dev_dependencies:
   flutter_test:
