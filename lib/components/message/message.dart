@@ -1,3 +1,4 @@
+import 'package:Pax/components/chat/image_bubble.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -63,11 +64,7 @@ class Message extends StatelessWidget {
                       message,
                       style: TextStyle(color: isMe ? colorWhite : primaryColor),
                     ),
-                  if (image != null)
-                    Image.network(
-                      image,
-                      height: 150,
-                    ),
+                  if (image != null) ImageBubble(image: image),
                   Text(
                     hour,
                     style: TextStyle(
