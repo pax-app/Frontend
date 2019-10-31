@@ -64,7 +64,7 @@ class Message extends StatelessWidget {
                       message,
                       style: TextStyle(color: isMe ? colorWhite : primaryColor),
                     ),
-                  if (image != null) ImageBubble(image: image),
+                  if (image != null) ImageBubble(image: image, isMe: isMe),
                   Text(
                     hour,
                     style: TextStyle(
