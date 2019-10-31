@@ -31,7 +31,6 @@ class _ChatScreenState extends State<ChatScreen> {
   bool isProvider = false;
   var addresses;
   bool isAddressesLoading = true;
-  File _image;
 
   @override
   Widget build(BuildContext context) {
@@ -112,37 +111,26 @@ class _ChatScreenState extends State<ChatScreen> {
     showModalBottomSheet(
       context: context,
       builder: (context) => ChatBottomSheet(
-        cameraHandler: () => _getCamera(context),
-        galleryHandler: () => _getGallery(context),
+        cameraHandler: () => _getImage(context, ImageSource.camera),
+        galleryHandler: () => _getImage(context, ImageSource.gallery),
         addressHandler: () => _getAddress(context),
       ),
     );
   }
 
-  Future _getCamera(BuildContext context) async {
+  Future _getImage(BuildContext context, ImageSource source) async {
     Navigator.of(context).pop();
-
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    setState(() {
-      _image = image;
-    });
+    File image = await ImagePicker.pickImage(source: source);
 
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
-        .child('chats/${Path.basename(_image.path)}');
-    StorageUploadTask uploadTask = storageReference.putFile(_image);
+        .child('chats/${Path.basename(image.path)}');
+    StorageUploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.onComplete;
-
-    print('Upou');
 
     storageReference.getDownloadURL().then((fileURL) {
       _sendMessage(fileURL, true);
     });
-  }
-
-  void _getGallery(BuildContext context) async {
-    Navigator.of(context).pop();
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
   }
 
   void _getAddress(BuildContext context) async {
