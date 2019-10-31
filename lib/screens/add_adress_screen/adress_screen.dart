@@ -15,16 +15,30 @@ class AdressScreen extends StatefulWidget {
 class _AdressScreenState extends State<AdressScreen> {
   String userCep;
   _AdressScreenState({this.userCep});
-
-  TextEditingController _cep = TextEditingController(text: 'aaaaaaaaaa');
+  Future<String> gatinhoSalsicha() async {
+    return await getCepData("72025650");
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
       future: getCepData("72025650"),
       builder: (context, snapshot) {
+        TextEditingController _cep = TextEditingController(text: snapshot.data);
         if (snapshot.hasData) {
-          return Text(snapshot.data);
+          return TextInput(
+            'Logradouro',
+            'Insira uma descrição sobre você',
+            true,
+            (String value) {
+              return value.contains('@') ? 'Do not use the @ char.' : null;
+            },
+            TextInputType.text,
+            1,
+            focus: true,
+            controller: _cep,
+            enabled: true,
+          );
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
@@ -34,24 +48,6 @@ class _AdressScreenState extends State<AdressScreen> {
       },
     );
   }
-  // return Container(
-  //     child: Column(
-  //   children: <Widget>[
-  //     TextInput(
-  //       'Logradouro',
-  //       'Insira uma descrição sobre você',
-  //       true,
-  //       (String value) {
-  //         return value.contains('@') ? 'Do not use the @ char.' : null;
-  //       },
-  //       TextInputType.text,
-  //       1,
-  //       focus: true,
-  //       controller: _cep,
-  //     ),
-  //     Text(localidade)
-  //   ],
-  // ));
 
   Future<String> getCepData(String cep) async {
     var CEP = via_cep();
