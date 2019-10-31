@@ -1,4 +1,4 @@
-import 'package:Pax/components/base_bottom_sheet/BaseBottomSheet.dart';
+import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart' as frs;
 import 'package:Pax/components/button%20/button.dart';
