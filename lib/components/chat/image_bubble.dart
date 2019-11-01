@@ -16,6 +16,7 @@ class ImageBubble extends StatelessWidget {
         borderRadius: new BorderRadius.circular(9.0),
         child: Image.network(
           image,
+          filterQuality: FilterQuality.low,
           fit: BoxFit.cover,
           width: 150,
           height: 200,

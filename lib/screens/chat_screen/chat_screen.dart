@@ -96,12 +96,12 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _sendMessage(String text, bool isImage) {
+  void _sendMessage(String value, bool isImage) {
     String date_time_sent =
         DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
 
     _firestore.collection(widget.chat_id).document(date_time_sent).setData({
-      isImage ? 'path_image' : 'text_message': text,
+      isImage ? 'path_image' : 'text_message': value,
       'sender': isProvider ? 'P' : 'U',
       'date_time_sent': date_time_sent
     });
@@ -111,16 +111,16 @@ class _ChatScreenState extends State<ChatScreen> {
     showModalBottomSheet(
       context: context,
       builder: (context) => ChatBottomSheet(
-        cameraHandler: () => _getImage(context, ImageSource.camera),
-        galleryHandler: () => _getImage(context, ImageSource.gallery),
+        cameraHandler: () => _storeImage(context, ImageSource.camera),
+        galleryHandler: () => _storeImage(context, ImageSource.gallery),
         addressHandler: () => _getAddress(context),
       ),
     );
   }
 
-  Future _getImage(BuildContext context, ImageSource source) async {
+  Future _storeImage(BuildContext context, ImageSource source) async {
     Navigator.of(context).pop();
-    File image = await ImagePicker.pickImage(source: source);
+    File image = await ImagePicker.pickImage(source: source, imageQuality: 42);
 
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
