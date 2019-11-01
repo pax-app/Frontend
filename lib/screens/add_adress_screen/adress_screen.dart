@@ -1,5 +1,4 @@
 import 'package:Pax/components/text_input/text_input.dart';
-import 'package:Pax/screens/add_adress_screen/cep_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:via_cep/via_cep.dart';
 import 'package:Pax/models/Address.dart';
@@ -14,7 +13,7 @@ class AdressScreen extends StatefulWidget {
 }
 
 class _AdressScreenState extends State<AdressScreen> {
-  String userCep;
+  int userCep;
   _AdressScreenState({this.userCep});
 
   Future<Address> getCepData(int cep) async {
@@ -35,7 +34,7 @@ class _AdressScreenState extends State<AdressScreen> {
         state: uf,
         number: 0,
         complement: '',
-        cep: cep_n,
+        cep: int.parse(cep_n),
         reference_point: '');
 
     return resultado;
@@ -44,10 +43,10 @@ class _AdressScreenState extends State<AdressScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Address>(
-      future: getCepData(72025650),
+      future: getCepData(userCep),
       builder: (context, snapshot) {
         TextEditingController _cep =
-            TextEditingController(text: snapshot?.data?.cep);
+            TextEditingController(text: snapshot?.data?.cep.toString());
         TextEditingController _city =
             TextEditingController(text: snapshot?.data?.city);
         TextEditingController _street =
