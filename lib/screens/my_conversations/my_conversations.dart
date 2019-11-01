@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/chat_tile/chat_tile.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +15,8 @@ class MyConversations extends StatefulWidget {
 }
 
 class _MyConversationsState extends State<MyConversations> {
-  bool deletionMode = true;
+  bool deletionMode = false;
+  HashMap<String, bool> chatsToDelete = new HashMap();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class _MyConversationsState extends State<MyConversations> {
       actions: deletionMode
           ? [
               IconButton(
-                onPressed: () {},
+                onPressed: _deleteAllSelectedChats,
                 icon: const Icon(Icons.delete_outline),
                 color: Colors.red,
               ),
@@ -49,6 +52,8 @@ class _MyConversationsState extends State<MyConversations> {
                   message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
                   username: 'Rorgérin Júrnio',
                   longPressHandler: _toggleDeleteMode,
+                  isIndeletionMode: deletionMode,
+                  toggleChatToDelete: _toggleChatToDelete,
                 );
               },
             );
@@ -59,10 +64,27 @@ class _MyConversationsState extends State<MyConversations> {
     );
   }
 
+  void _deleteAllSelectedChats() {
+    print('Deletando todos...');
+  }
+
   void _toggleDeleteMode() {
     setState(() {
       deletionMode = !deletionMode;
     });
+  }
+
+  void _toggleChatToDelete(String chat_id) {
+    if (chatsToDelete[chat_id] != null)
+      chatsToDelete[chat_id] = true;
+    else if (chatsToDelete[chat_id] != null)
+      chatsToDelete[chat_id] = !chatsToDelete[chat_id];
+
+    // setState(() {
+    //   chatsToDelete[chat_id] = !chatsToDelete[chat_id];
+    // });
+
+    print(chatsToDelete);
   }
 
   Future<dynamic> _getUserChats() async {

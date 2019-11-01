@@ -7,14 +7,16 @@ class ChatTile extends StatelessWidget {
   final String username;
   final String message;
   final Function longPressHandler;
-  final Function addToDeletion;
+  final Function toggleChatToDelete;
+  final bool isIndeletionMode;
 
   ChatTile({
     @required this.chat_id,
     @required this.username,
     @required this.message,
     @required this.longPressHandler,
-    @required this.addToDeletion,
+    @required this.isIndeletionMode,
+    @required this.toggleChatToDelete,
   });
 
   @override
@@ -28,61 +30,51 @@ class ChatTile extends StatelessWidget {
         color: Theme.of(context).cardTheme.color,
         child: InkWell(
           onLongPress: longPressHandler,
-          onTap: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (_) => ChatScreen(
-                  chat_id: chat_id,
-                  person_name: username,
-                ),
-              ),
-            );
-          },
+          onTap: isIndeletionMode
+              ? () => toggleChatToDelete(chat_id)
+              : () => _pushChatScreen(context),
           borderRadius: BorderRadius.circular(8),
-          child: Stack(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.close,
-                    size: 16,
+          child: Center(
+            child: ListTile(
+              leading: Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(
+                    color: Theme.of(context).accentColor,
+                    width: 2.0,
                   ),
-                  onPressed: () {},
+                  color: Colors.lightGreen,
                 ),
               ),
-              Center(
-                child: ListTile(
-                  leading: Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(
-                        color: Theme.of(context).accentColor,
-                        width: 2.0,
-                      ),
-                      color: Colors.lightGreen,
-                    ),
-                  ),
-                  title: Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      this.username,
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                  ),
-                  subtitle: Text(
-                    this.message.length >= 31
-                        ? '${this.message.substring(0, 31)}...'
-                        : this.message,
-                    maxLines: 1,
-                  ),
+              title: Container(
+                margin: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  this.username,
+                  style: Theme.of(context).textTheme.title,
                 ),
               ),
-            ],
+              subtitle: Text(
+                this.message.length >= 31
+                    ? '${this.message.substring(0, 31)}...'
+                    : this.message,
+                maxLines: 1,
+              ),
+            ),
           ),
+        ),
+      ),
+    );
+  }
+
+  void _pushChatScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (_) => ChatScreen(
+          chat_id: chat_id,
+          person_name: username,
         ),
       ),
     );
