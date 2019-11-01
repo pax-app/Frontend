@@ -3,41 +3,34 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-class MyConversations extends StatefulWidget {
-  @override
-  _MyConversationsState createState() => _MyConversationsState();
-}
-
-class _MyConversationsState extends State<MyConversations> {
-  var chats = [];
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    _getUserChats();
-  }
-
+class MyConversations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _getUserChats();
     return Container(
       height: MediaQuery.of(context).size.height - 150,
-      child: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: chats.length,
+      child: FutureBuilder(
+        future: _getUserChats(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 return ChatTile(
-                  chat_id: chats[index]["chat_id"].toString(),
+                  chat_id: snapshot.data[index]["chat_id"].toString(),
                   message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
                   username: 'Rorgérin Júrnio',
                 );
               },
-            ),
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 
-  _getUserChats() async {
+  Future<dynamic> _getUserChats() async {
     var params = {"user_id": "1"};
 
     Uri uri = Uri.parse("https://pax-chat.herokuapp.com/chats");
@@ -46,9 +39,11 @@ class _MyConversationsState extends State<MyConversations> {
     var response = await http.get(newURI);
     var jsonData = json.decode(response.body);
 
-    setState(() {
-      chats = jsonData;
-      isLoading = false;
-    });
+    final List<dynamic> chats = [];
+    for (var item in jsonData) {
+      chats.add(item);
+    }
+
+    return chats;
   }
 }
