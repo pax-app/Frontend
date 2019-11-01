@@ -1,6 +1,6 @@
 class Address {
   int address_id;
-  int cep;
+  String cep;
   String street;
   String neighborhood;
   String city;

@@ -21,7 +21,9 @@ class ChatAddressList extends StatelessWidget {
 
         return Column(
           children: <Widget>[
-            Divider(height: 1, thickness: 1.2),
+            Divider(
+              height: 1,
+            ),
             Material(
               child: InkWell(
                 onTap:

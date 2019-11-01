@@ -2,6 +2,7 @@ import 'package:Pax/components/text_input/text_input.dart';
 import 'package:Pax/screens/add_adress_screen/cep_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:via_cep/via_cep.dart';
+import 'package:Pax/models/Address.dart';
 
 class AdressScreen extends StatefulWidget {
   final String userCep;
@@ -15,45 +16,171 @@ class AdressScreen extends StatefulWidget {
 class _AdressScreenState extends State<AdressScreen> {
   String userCep;
   _AdressScreenState({this.userCep});
-  Future<String> gatinhoSalsicha() async {
-    return await getCepData("72025650");
+
+  Future<Address> getCepData(int cep) async {
+    var CEP = via_cep();
+
+    var result = await CEP.searchCEP('$cep', 'json', '');
+    String cep_n = CEP.getCEP();
+    String localidade = CEP.getLocalidade();
+    String logradouro = CEP.getLogradouro();
+    String bairro = CEP.getBairro();
+    String uf = CEP.getUF();
+
+    var resultado = Address(
+        address_id: 0,
+        city: localidade,
+        street: logradouro,
+        neighborhood: bairro,
+        state: uf,
+        number: 0,
+        complement: '',
+        cep: cep_n,
+        reference_point: '');
+
+    return resultado;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String>(
-      future: getCepData("72025650"),
+    return FutureBuilder<Address>(
+      future: getCepData(72025650),
       builder: (context, snapshot) {
-        TextEditingController _cep = TextEditingController(text: snapshot.data);
-        if (snapshot.hasData) {
-          return TextInput(
-            'Logradouro',
-            'Insira uma descrição sobre você',
-            true,
-            (String value) {
-              return value.contains('@') ? 'Do not use the @ char.' : null;
-            },
-            TextInputType.text,
-            1,
-            focus: true,
-            controller: _cep,
-            enabled: true,
+        TextEditingController _cep =
+            TextEditingController(text: snapshot?.data?.cep);
+        TextEditingController _city =
+            TextEditingController(text: snapshot?.data?.city);
+        TextEditingController _street =
+            TextEditingController(text: snapshot?.data?.street);
+        TextEditingController _neighborhood =
+            TextEditingController(text: snapshot?.data?.neighborhood);
+        TextEditingController _state =
+            TextEditingController(text: snapshot?.data?.state);
+        TextEditingController _number =
+            TextEditingController(text: snapshot?.data?.number.toString());
+        TextEditingController _complement =
+            TextEditingController(text: snapshot?.data?.complement);
+        TextEditingController _reference_point =
+            TextEditingController(text: snapshot?.data?.reference_point);
+
+        if (snapshot.data == null) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasData) {
+          return Column(
+            children: <Widget>[
+              TextInput(
+                'CEP',
+                'Insira seu cep',
+                true,
+                (String value) {
+                  return value.contains('@') ? 'Do not use the @ char.' : null;
+                },
+                TextInputType.text,
+                1,
+                focus: true,
+                controller: _cep,
+                enabled: true,
+              ),
+              TextInput(
+                'Cidade',
+                'Insira sua cidade',
+                true,
+                (String value) {
+                  return value.contains('@') ? 'Do not use the @ char.' : null;
+                },
+                TextInputType.text,
+                1,
+                focus: true,
+                controller: _city,
+                enabled: true,
+              ),
+              TextInput(
+                'Rua',
+                'Insira sua rua',
+                true,
+                (String value) {
+                  return value.contains('@') ? 'Do not use the @ char.' : null;
+                },
+                TextInputType.text,
+                1,
+                focus: true,
+                controller: _street,
+                enabled: true,
+              ),
+              TextInput(
+                'Bairro',
+                'Insira seu bairro',
+                true,
+                (String value) {
+                  return value.contains('@') ? 'Do not use the @ char.' : null;
+                },
+                TextInputType.text,
+                1,
+                focus: true,
+                controller: _neighborhood,
+                enabled: true,
+              ),
+              TextInput(
+                'Estado',
+                'Insira seu estado',
+                true,
+                (String value) {
+                  return value.contains('@') ? 'Do not use the @ char.' : null;
+                },
+                TextInputType.text,
+                1,
+                focus: true,
+                controller: _state,
+                enabled: true,
+              ),
+              TextInput(
+                'Número',
+                'Insira o número da residência',
+                true,
+                (String value) {
+                  return value.contains('@') ? 'Do not use the @ char.' : null;
+                },
+                TextInputType.text,
+                1,
+                focus: true,
+                controller: _number,
+                enabled: true,
+              ),
+              TextInput(
+                'Complemento',
+                'Adicione um complemento',
+                true,
+                (String value) {
+                  return value.contains('@') ? 'Do not use the @ char.' : null;
+                },
+                TextInputType.text,
+                1,
+                focus: true,
+                controller: _complement,
+                enabled: true,
+              ),
+              TextInput(
+                'Ponto de referência',
+                'Ajude a te encontrar com mais facilidade',
+                true,
+                (String value) {
+                  return value.contains('@') ? 'Do not use the @ char.' : null;
+                },
+                TextInputType.text,
+                1,
+                focus: true,
+                controller: _reference_point,
+                enabled: true,
+              ),
+            ],
           );
         } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
+          return CircularProgressIndicator();
         }
 
         // By default, show a loading spinner.
         return CircularProgressIndicator();
       },
     );
-  }
-
-  Future<String> getCepData(String cep) async {
-    var CEP = via_cep();
-
-    var result = await CEP.searchCEP('$cep', 'json', '');
-    String resultado = CEP.getLocalidade();
-    return resultado;
   }
 }
