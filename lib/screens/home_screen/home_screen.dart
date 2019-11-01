@@ -50,11 +50,8 @@ class HomeScreen extends StatelessWidget {
           Text("Meus cartoes"),
           getDrawer(),
         ),
-        BaseScreen(
-          "Minhas Conversas",
-          "Minhas Conversas",
-          MyConversations(),
-          getDrawer(),
+        MyConversations(
+          drawer: getDrawer(),
         ),
         //roviderPanel(this._pageController),
         BaseScreen(

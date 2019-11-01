@@ -1,12 +1,38 @@
+import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/chat_tile/chat_tile.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-class MyConversations extends StatelessWidget {
+class MyConversations extends StatefulWidget {
+  final Widget drawer;
+
+  const MyConversations({this.drawer});
+  @override
+  _MyConversationsState createState() => _MyConversationsState();
+}
+
+class _MyConversationsState extends State<MyConversations> {
+  bool deletionMode = false;
+
   @override
   Widget build(BuildContext context) {
-    _getUserChats();
+    return BaseScreen(
+      "",
+      "Minhas Conversas",
+      _getMyConversations(),
+      widget.drawer,
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.delete_outline),
+          color: Colors.red,
+        ),
+      ],
+    );
+  }
+
+  Widget _getMyConversations() {
     return Container(
       height: MediaQuery.of(context).size.height - 150,
       child: FutureBuilder(
