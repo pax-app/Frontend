@@ -16,7 +16,7 @@ class ChatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 115,
       margin: EdgeInsets.symmetric(vertical: 6),
       width: MediaQuery.of(context).size.width,
       child: Card(
@@ -35,26 +35,48 @@ class ChatTile extends StatelessWidget {
             );
           },
           borderRadius: BorderRadius.circular(8),
-          child: Center(
-            child: ListTile(
-              leading: Icon(
-                Icons.account_circle,
-                size: 50,
-              ),
-              title: Container(
-                margin: EdgeInsets.only(bottom: 8),
-                child: Text(
-                  this.username,
-                  style: Theme.of(context).textTheme.title,
+          child: Stack(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    size: 16,
+                  ),
+                  onPressed: () {},
                 ),
               ),
-              subtitle: Text(
-                this.message.length >= 31
-                    ? '${this.message.substring(0, 31)}...'
-                    : this.message,
-                maxLines: 1,
+              Center(
+                child: ListTile(
+                  leading: Container(
+                    width: 56,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      border: Border.all(
+                        color: Theme.of(context).accentColor,
+                        width: 2.0,
+                      ),
+                      color: Colors.lightGreen,
+                    ),
+                  ),
+                  title: Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      this.username,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                  ),
+                  subtitle: Text(
+                    this.message.length >= 31
+                        ? '${this.message.substring(0, 31)}...'
+                        : this.message,
+                    maxLines: 1,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
