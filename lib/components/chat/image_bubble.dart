@@ -1,4 +1,3 @@
-import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class ImageBubble extends StatelessWidget {
@@ -10,23 +9,32 @@ class ImageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.only(bottom: 10, top: 5),
       height: 200,
       width: 150,
-      child: Center(
+      child: ClipRRect(
+        borderRadius: new BorderRadius.circular(9.0),
         child: Image.network(
           image,
+          fit: BoxFit.cover,
+          width: 150,
+          height: 200,
           loadingBuilder: (context, child, loadingProgress) {
             if (loadingProgress == null) return child;
-            return Container(
-              width: 50,
-              height: 50,
-              child: CircularProgressIndicator(
-                backgroundColor:
-                    isMe ? colorWhite : Theme.of(context).accentColor,
-                value: loadingProgress.expectedTotalBytes != null
-                    ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes
-                    : null,
+            return Center(
+              child: Container(
+                width: 50,
+                height: 50,
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.transparent,
+                  valueColor: isMe
+                      ? new AlwaysStoppedAnimation<Color>(Colors.white)
+                      : new AlwaysStoppedAnimation<Color>(Colors.green),
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          loadingProgress.expectedTotalBytes
+                      : null,
+                ),
               ),
             );
           },
