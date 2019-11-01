@@ -19,7 +19,7 @@ class BaseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: WhiteAppBar(appBarTitle, context, actions),
+      appBar: WhiteAppBar(appBarTitle, context, actions: actions),
       drawer: drawer,
       body: SingleChildScrollView(
         child: Column(

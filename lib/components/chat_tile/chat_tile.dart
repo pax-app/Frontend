@@ -6,11 +6,15 @@ class ChatTile extends StatelessWidget {
   final String chat_id;
   final String username;
   final String message;
+  final Function longPressHandler;
+  final Function addToDeletion;
 
   ChatTile({
     @required this.chat_id,
     @required this.username,
     @required this.message,
+    @required this.longPressHandler,
+    @required this.addToDeletion,
   });
 
   @override
@@ -23,6 +27,7 @@ class ChatTile extends StatelessWidget {
         elevation: Theme.of(context).cardTheme.elevation,
         color: Theme.of(context).cardTheme.color,
         child: InkWell(
+          onLongPress: longPressHandler,
           onTap: () {
             Navigator.push(
               context,

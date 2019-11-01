@@ -13,7 +13,7 @@ class MyConversations extends StatefulWidget {
 }
 
 class _MyConversationsState extends State<MyConversations> {
-  bool deletionMode = false;
+  bool deletionMode = true;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +22,15 @@ class _MyConversationsState extends State<MyConversations> {
       "Minhas Conversas",
       _getMyConversations(),
       widget.drawer,
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.delete_outline),
-          color: Colors.red,
-        ),
-      ],
+      actions: deletionMode
+          ? [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.delete_outline),
+                color: Colors.red,
+              ),
+            ]
+          : null,
     );
   }
 
@@ -46,6 +48,7 @@ class _MyConversationsState extends State<MyConversations> {
                   chat_id: snapshot.data[index]["chat_id"].toString(),
                   message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
                   username: 'Rorgérin Júrnio',
+                  longPressHandler: _toggleDeleteMode,
                 );
               },
             );
@@ -54,6 +57,12 @@ class _MyConversationsState extends State<MyConversations> {
         },
       ),
     );
+  }
+
+  void _toggleDeleteMode() {
+    setState(() {
+      deletionMode = !deletionMode;
+    });
   }
 
   Future<dynamic> _getUserChats() async {
