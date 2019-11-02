@@ -15,7 +15,6 @@ class PerfilScreen extends StatelessWidget {
         score: 5,
       );
       avaliations.add(a);
-      debugPrint(avaliations.length.toString());
     }
   }
   @override

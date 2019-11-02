@@ -84,7 +84,6 @@ class _MyConversationsState extends State<MyConversations> {
     //   chatsToDelete[chat_id] = !chatsToDelete[chat_id];
     // });
 
-    print(chatsToDelete);
   }
 
   Future<dynamic> _getUserChats() async {

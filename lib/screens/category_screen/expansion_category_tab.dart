@@ -57,7 +57,6 @@ class _ExpansionCategoryState extends State<ExpansionCategory> {
                     setState(() {
                       BlocProvider.of<ProviderBloc>(context)
                           .addCategory(category);
-                      debugPrint(category.toString());
                     });
                   },
                 ),

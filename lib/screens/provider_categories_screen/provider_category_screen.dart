@@ -9,12 +9,9 @@ import 'package:http/http.dart' as http;
 
 Future<List<Category>> fetchPost(id) async {
   final url = 'http://192.168.0.84:5002/category/${id}/provider';
-  print(url);
   final response = await http
       .get(url, headers: {HttpHeaders.contentTypeHeader: 'application/json'});
-  print(response.body);
   var responseJson = json.decode(response.body);
-  print(response);
   responseJson = responseJson["data"];
   responseJson = responseJson["categories"];
 
