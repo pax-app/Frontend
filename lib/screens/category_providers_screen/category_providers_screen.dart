@@ -46,7 +46,7 @@ class CategoryProvidersScreen extends StatelessWidget {
         if (snapshot.hasData) {
           List<Provider> providers = snapshot.data;
           return BaseScreen(
-             "72870-010",
+             "",
             "Categoria teste",
                 new Column(
                 children: providers
@@ -71,11 +71,11 @@ class CategoryProvidersScreen extends StatelessWidget {
           );
         } else if (snapshot.hasError) {
           //Display error if can't get data from API
-          return BaseScreen("72870-010","Erro:",Text("${snapshot.error}"),null);
+          return BaseScreen("","Erro:",Text("${snapshot.error}"),null);
         }
 
         // By default, show a loading spinner.
-        return BaseScreen("72870-010","Carregando",CircularProgressIndicator(),null);
+        return BaseScreen("","Carregando",CircularProgressIndicator(),null);
 
       },
     );
