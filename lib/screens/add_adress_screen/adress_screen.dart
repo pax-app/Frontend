@@ -188,6 +188,15 @@ class _AdressScreenState extends State<AdressScreen> {
               SizedBox(
                 height: 10.0,
               ),
+              Button(
+                buttonText: 'Vamos lá',
+                type: 'default',
+                tapHandler: () async {},
+                isSmall: false,
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
             ],
           );
         } else if (snapshot.hasError) {
