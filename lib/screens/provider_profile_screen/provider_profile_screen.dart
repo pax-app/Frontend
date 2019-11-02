@@ -35,7 +35,7 @@ class ProviderProfileScreen extends StatelessWidget {
           Provider providerInfo = snapshot.data;
               return Scaffold(
       appBar: WhiteAppBar(
-        "72870-010",
+        "",
         context,
         actions: <Widget>[
           FlatButton(
@@ -85,8 +85,7 @@ class ProviderProfileScreen extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             providerInfo.providerName,
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.title,
                           ),
                           SizedBox(
                             height: 10,
@@ -162,11 +161,11 @@ class ProviderProfileScreen extends StatelessWidget {
     );
        
         } else if (snapshot.hasError) {
-          return BaseScreen("72870-010","Erro:",Text("${snapshot.error}"),null);
+          return BaseScreen("","Erro:",Text("${snapshot.error}"),null);
         }
 
         // By default, show a loading spinner.
-        return BaseScreen("72870-010","Carregando",CircularProgressIndicator(),null);
+        return BaseScreen("","Carregando",CircularProgressIndicator(),null);
       },
     );
   }

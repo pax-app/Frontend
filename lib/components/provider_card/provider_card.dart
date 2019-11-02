@@ -75,9 +75,7 @@ class ProviderCard extends StatelessWidget {
                               children: <Widget>[
                                 Text(
                                   this.name,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                  style: Theme.of(context).textTheme.title
                                 ),
                                 SmoothStarRating(
                                     allowHalfRating: false,
