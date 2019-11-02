@@ -121,7 +121,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Future _storeImage(BuildContext context, ImageSource source) async {
     Navigator.of(context).pop();
     File image = await ImagePicker.pickImage(source: source, imageQuality: 42);
-
+    
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
         .child('chats/${Path.basename(image.path)}');
