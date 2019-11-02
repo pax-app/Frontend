@@ -1,14 +1,13 @@
-import 'package:Pax/components/avaliation_card/avaliation_card.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/drawer/drawer_provider.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/info_tab.dart';
 import 'package:Pax/screens/config_screen/config_screen.dart';
 import 'package:Pax/screens/perfil_screen/perfil_screen.dart';
-import 'package:Pax/screens/chat_screen/chat_screen.dart';
 import 'package:Pax/screens/my_conversations/my_conversations.dart';
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
+import 'package:Pax/screens/general_categories_screen/services_general_categories.dart';
 
 class HomeScreen extends StatelessWidget {
   final _pageController = PageController();
@@ -27,9 +26,9 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         BaseScreen(
-          "Home",
-          "Home",
-          Text("home"),
+          "Opções de Serviço", //serviço Category deve estar rodando
+          "",
+          ServiceGeneralCategory(),
           getDrawer(),
         ),
         BaseScreen(
@@ -45,7 +44,6 @@ class HomeScreen extends StatelessWidget {
           getDrawer(),
           padding: false,
         ),
-
         BaseScreen(
           "Meus cartoes",
           "Meus cartoes",
@@ -53,7 +51,7 @@ class HomeScreen extends StatelessWidget {
           getDrawer(),
         ),
         BaseScreen(
-          "",
+          "Minhas Conversas",
           "Minhas Conversas",
           MyConversations(),
           getDrawer(),
@@ -77,6 +75,7 @@ class HomeScreen extends StatelessWidget {
           ConfigScreen(),
           getDrawer(),
         ),
+        ProviderPanel(this._pageController),
       ],
     );
   }
