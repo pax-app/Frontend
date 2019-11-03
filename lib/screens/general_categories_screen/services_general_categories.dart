@@ -56,31 +56,34 @@ class ServiceGeneralCategory extends StatelessWidget {
           'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
       'Reformas': 'Encontre a pessoa certa para realizar suas reformas',
     };
-    return FutureBuilder<List<Category>>(
-      future: fetchPost(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          List<Category> categories = snapshot.data;
-          return Column(
-            children: categories
-                .map(
-                  (item) => Container(
-                    child: GeneralCategoriesPanelCard(
-                        item.name,
-                        descriptionPaths['${item.name}'],
-                        imagesPaths['${item.name}'],
-                        item.id),
-                  ),
-                )
-                .toList(),
-          );
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
-        }
 
-        // By default, show a loading spinner.
-        return CircularProgressIndicator();
-      },
+    return Container(
+      height: MediaQuery.of(context).size.height - 82,
+      child: FutureBuilder<List<Category>>(
+        future: fetchPost(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Category> categories = snapshot.data;
+            return ListView.builder(
+              itemCount: categories.length,
+              itemBuilder: (context, index) {
+                var item = categories[index];
+                return GeneralCategoriesPanelCard(
+                  item.name,
+                  descriptionPaths['${item.name}'],
+                  imagesPaths['${item.name}'],
+                  item.id,
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+
+          // By default, show a loading spinner.
+          return CircularProgressIndicator();
+        },
+      ),
     );
   }
 }

@@ -29,13 +29,15 @@ class GeneralCategoriesPanelCard extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BaseScreen(
-                                  this.title,
-                                  this.title,
-                                  ProviderCategoryScreen(this.id),
-                                  null)));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BaseScreen(
+                              this.title,
+                              this.title,
+                              ProviderCategoryScreen(this.id),
+                              null),
+                        ),
+                      );
                     },
                     child: Container(
                       padding: EdgeInsets.all(15),
@@ -62,15 +64,16 @@ class GeneralCategoriesPanelCard extends StatelessWidget {
                           SizedBox(
                             height: 5,
                           ),
-                          Row(children: <Widget>[
-                            SizedBox(
-                              width: 10,
-                            ),
-                            GeneralCategoriesPanelImg(this.img),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Container(
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 10,
+                              ),
+                              GeneralCategoriesPanelImg(this.img),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Container(
                                 padding: const EdgeInsets.all(16.0),
                                 width: 172,
                                 child: Column(
@@ -98,8 +101,10 @@ class GeneralCategoriesPanelCard extends StatelessWidget {
                                       ),
                                     ),
                                   ],
-                                ))
-                          ]),
+                                ),
+                              )
+                            ],
+                          ),
                         ],
                       ),
                     ),
