@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<Category>> fetchPost() async {
-  final response = await http.get('http://192.168.0.84:5002/category/general',
+  final response = await http.get('http://192.168.1.12:5002/category/general',
       headers: {HttpHeaders.contentTypeHeader: 'application/json'});
   var responseJson = json.decode(response.body);
   responseJson = responseJson["data"];
@@ -51,10 +51,10 @@ class ServiceGeneralCategory extends StatelessWidget {
     const Map<String, String> descriptionPaths = {
       'Serviços Domésticos': 'Encontre a pessoa certa para cuidar do seu lar',
       'Design e Tecnologia':
-          'Encontre um especialista para seu projetos de design e tecnologia',
+          'Fale os melhores na área de TI e Design e tire sua idea do papel',
       'Assistência Técnica':
-          'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
-      'Reformas': 'Encontre a pessoa certa para realizar suas reformas',
+          'Encontre o melhor em consertar aparelhos eletrônicos',
+      'Reformas': 'Precisa de reformas? Fale com nossos profissionais',
     };
 
     return Container(
@@ -68,11 +68,16 @@ class ServiceGeneralCategory extends StatelessWidget {
               itemCount: categories.length,
               itemBuilder: (context, index) {
                 var item = categories[index];
-                return GeneralCategoriesPanelCard(
-                  item.name,
-                  descriptionPaths['${item.name}'],
-                  imagesPaths['${item.name}'],
-                  item.id,
+                return Padding(
+                  padding: index == 0
+                      ? const EdgeInsets.only(top: 16)
+                      : const EdgeInsets.only(top: 0),
+                  child: GeneralCategoriesPanelCard(
+                    item.name,
+                    descriptionPaths['${item.name}'],
+                    imagesPaths['${item.name}'],
+                    item.id,
+                  ),
                 );
               },
             );
