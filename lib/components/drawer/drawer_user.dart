@@ -5,13 +5,11 @@ import 'package:Pax/components/drawer/drawer_tile.dart';
 
 class DrawerUser extends StatelessWidget {
   final PageController _pageController;
-  LoggedUser loggedUser = LoggedUser();
-  bool isProvider;
+  final LoggedUser loggedUser = LoggedUser();
   DrawerUser(this._pageController);
 
   @override
   Widget build(BuildContext context) {
-    isProvider = loggedUser.isProvider;
     return Drawer(
       child: Stack(
         children: <Widget>[
@@ -46,8 +44,10 @@ class DrawerUser extends StatelessWidget {
                     4,
                   ),
                   DrawerTile(
-                    this.isProvider ? Icons.swap_horiz : Icons.attach_money,
-                    this.isProvider
+                    this.loggedUser.isProvider
+                        ? Icons.swap_horiz
+                        : Icons.attach_money,
+                    this.loggedUser.isProvider
                         ? "Ir para Prestador"
                         : "Virar Prestador de Serviço",
                     _pageController,

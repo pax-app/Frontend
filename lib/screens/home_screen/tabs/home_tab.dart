@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const Map<String, String> imagesPaths = {
-      'Assistência Técnica': 'assets/categories-img/gear.png',
-      'Reformas ': 'assets/categories-img/paint.png',
-      'Serviços Domésticos': 'assets/categories-img/clean.png',
-      'Design e Tecnologia': 'assets/categories-img/code.png',
-    };
+    //const Map<String, String> imagesPaths = {
+    //  'Assistência Técnica': 'assets/categories-img/gear.png',
+    //  'Reformas ': 'assets/categories-img/paint.png',
+    //  'Serviços Domésticos': 'assets/categories-img/clean.png',
+    //  'Design e Tecnologia': 'assets/categories-img/code.png',
+    //};
     return Stack(
       children: <Widget>[
         CustomScrollView(

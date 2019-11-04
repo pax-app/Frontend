@@ -8,9 +8,6 @@ class GeneralCategoriesPanelCard extends StatelessWidget {
   final String description;
   final String img;
   final int id;
-
-  bool isProvider = false;
-
   GeneralCategoriesPanelCard(this.title, this.description, this.img, this.id);
 
   @override

@@ -14,6 +14,7 @@ class _MyConversationsState extends State<MyConversations> {
 
   @override
   void initState() {
+    super.initState();
     _getUserChats();
   }
 
@@ -28,7 +29,7 @@ class _MyConversationsState extends State<MyConversations> {
               itemCount: chats.length,
               itemBuilder: (context, index) {
                 return ChatTile(
-                  chat_id: chats[index]["chat_id"].toString(),
+                  chatId: chats[index]["chat_id"].toString(),
                   message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
                   username: 'Rorgérin Júrnio',
                 );

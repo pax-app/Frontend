@@ -6,7 +6,7 @@ import 'package:Pax/components/drawer/drawer_tile.dart';
 class DrawerProvider extends StatelessWidget {
   final PageController _pageController;
   DrawerProvider(this._pageController);
-  LoggedUser loggedUser = LoggedUser();
+  final LoggedUser loggedUser = LoggedUser();
   @override
   Widget build(BuildContext context) {
     return Drawer(

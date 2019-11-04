@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChatTile extends StatelessWidget {
-  final String chat_id;
+  final String chatId;
   final String username;
   final String message;
 
   ChatTile({
-    @required this.chat_id,
+    @required this.chatId,
     @required this.username,
     @required this.message,
   });
@@ -28,8 +28,8 @@ class ChatTile extends StatelessWidget {
               context,
               CupertinoPageRoute(
                 builder: (_) => ChatScreen(
-                  chat_id: chat_id,
-                  person_name: username,
+                  chatId: chatId,
+                  personName: username,
                 ),
               ),
             );

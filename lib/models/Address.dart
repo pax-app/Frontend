@@ -1,5 +1,5 @@
 class Address {
-  int address_id;
+  int addressId;
   int cep;
   String street;
   String neighborhood;
@@ -7,10 +7,10 @@ class Address {
   String state;
   int number;
   String complement;
-  String reference_point;
+  String referencePoint;
 
   Address({
-    this.address_id,
+    this.addressId,
     this.cep,
     this.street,
     this.neighborhood,
@@ -18,11 +18,11 @@ class Address {
     this.state,
     this.number,
     this.complement,
-    this.reference_point,
+    this.referencePoint,
   });
 
   Address.fromJson(Map<String, dynamic> json) {
-    address_id = json['address_id'];
+    addressId = json['address_id'];
     cep = json['cep'];
     street = json['street'];
     neighborhood = json['neighborhood'];
@@ -30,12 +30,12 @@ class Address {
     state = json['state'];
     number = json['number'];
     complement = json['complement'];
-    reference_point = json['reference_point'];
+    referencePoint = json['reference_point'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['address_id'] = this.address_id;
+    data['address_id'] = this.addressId;
     data['cep'] = this.cep;
     data['street'] = this.street;
     data['neighborhood'] = this.neighborhood;
@@ -43,7 +43,7 @@ class Address {
     data['state'] = this.state;
     data['number'] = this.number;
     data['complement'] = this.complement;
-    data['reference_point'] = this.reference_point;
+    data['reference_point'] = this.referencePoint;
     return data;
   }
 }

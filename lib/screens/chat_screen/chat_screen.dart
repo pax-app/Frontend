@@ -5,16 +5,15 @@ import 'package:Pax/screens/chat_screen/chat_address_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_bottom_sheet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreen extends StatefulWidget {
-  final String chat_id;
-  final String person_name;
+  final String chatId;
+  final String personName;
 
   ChatScreen({
-    @required this.chat_id,
-    @required this.person_name,
+    @required this.chatId,
+    @required this.personName,
   });
 
   @override
@@ -30,8 +29,8 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final chatAppBar = ChatAppBar(
-      provider_name: "Rogério Júnior",
-      provider_qualification: "Assistência Técnica: Notebook",
+      providerName: "Rogério Júnior",
+      providerQualification: "Assistência Técnica: Notebook",
     );
 
     final mediaQuery = MediaQuery.of(context);
@@ -56,7 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Expanded(
                 child: StreamBuilder(
                   stream: _firestore
-                      .collection(widget.chat_id)
+                      .collection(widget.chatId)
                       .orderBy('date_time_sent', descending: true)
                       .snapshots(),
                   builder: _update,
@@ -92,13 +91,13 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _sendMessage(String text) {
-    String date_time_sent =
+    String dateTimeSent =
         DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
 
-    _firestore.collection(widget.chat_id).document(date_time_sent).setData({
+    _firestore.collection(widget.chatId).document(dateTimeSent).setData({
       'text_message': text,
       'sender': isProvider ? 'P' : 'U',
-      'date_time_sent': date_time_sent
+      'date_time_sent': dateTimeSent
     });
   }
 
@@ -115,19 +114,19 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _getCamera(BuildContext context) async {
     Navigator.of(context).pop();
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    //var image = await ImagePicker.pickImage(source: ImageSource.camera);
   }
 
   void _getGallery(BuildContext context) async {
     Navigator.of(context).pop();
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    //var image = await ImagePicker.pickImage(source: ImageSource.gallery);
   }
 
   void _getAddress(BuildContext context) async {
     Navigator.of(context).pop();
     showModalBottomSheet(
       context: context,
-      builder: (context) => ChatAddressBottomSheet(user_id: 1),
+      builder: (context) => ChatAddressBottomSheet(userId: 1),
     );
   }
 }

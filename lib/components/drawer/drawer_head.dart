@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 final _loginBloc = LoginBloc();
 
 class DrawerHead extends StatelessWidget {
-  String img, name;
-  double qntStars;
-  PageController controller;
+  final String img, name;
+  final double qntStars;
+  final PageController controller;
 
   DrawerHead(this.img, this.name, this.qntStars, this.controller);
 

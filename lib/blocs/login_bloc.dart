@@ -5,7 +5,6 @@ import 'package:Pax/blocs/signup_bloc.dart';
 import 'package:Pax/services/api.dart';
 import 'package:Pax/services/loggedUser.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LoginBloc extends BlocBase {

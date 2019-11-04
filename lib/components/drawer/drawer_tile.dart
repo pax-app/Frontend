@@ -6,7 +6,7 @@ class DrawerTile extends StatelessWidget {
   final String text;
   final PageController controller;
   final int page;
-  LoggedUser _loggedUser = LoggedUser();
+  final LoggedUser _loggedUser = LoggedUser();
 
   DrawerTile(this.icon, this.text, this.controller, this.page);
 

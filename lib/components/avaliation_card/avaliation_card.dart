@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:Pax/components/stars_avaliation/stars_avaliation.dart';
 import 'package:Pax/models/avaliation.dart';
 import 'package:flutter/material.dart';

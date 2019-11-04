@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/text_input/text_input_bloc.dart';
@@ -174,9 +173,9 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
             children: <Widget>[
               InkWell(
                 onTap: () async {
-                  File _image;
-                  var image =
-                      await ImagePicker.pickImage(source: ImageSource.camera);
+                  //File _image;
+                  //var image =
+                  //    await ImagePicker.pickImage(source: ImageSource.camera);
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(

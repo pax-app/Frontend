@@ -52,7 +52,7 @@ class ChatAddressList extends StatelessWidget {
     );
   }
 
-  void _selectAddress(int address_id) {
-    print(address_id);
+  void _selectAddress(int addressId) {
+    print(addressId);
   }
 }

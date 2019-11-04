@@ -1,5 +1,4 @@
 import 'package:Pax/models/user.dart';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:async/async.dart';
 
