@@ -16,7 +16,7 @@ class MyConversations extends StatefulWidget {
 
 class _MyConversationsState extends State<MyConversations> {
   bool deletionMode = false;
-  HashMap<String, bool> chatsToDelete = new HashMap();
+  HashMap<String, bool> _chatsToDelete = new HashMap();
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +51,12 @@ class _MyConversationsState extends State<MyConversations> {
                   chat_id: snapshot.data[index]["chat_id"].toString(),
                   message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
                   username: 'Rorgérin Júrnio',
-                  longPressHandler: _toggleDeleteMode,
                   isIndeletionMode: deletionMode,
-                  toggleChatToDelete: _toggleChatToDelete,
+                  isChatSelected: _chatsToDelete[index] == true
+                      ? _chatsToDelete[index]
+                      : false,
+                  longPressHandler: _toggleDeleteMode,
+                  updateChatsToBeDeleted: _updateChatsToBeDeleted,
                 );
               },
             );
@@ -74,16 +77,17 @@ class _MyConversationsState extends State<MyConversations> {
     });
   }
 
-  void _toggleChatToDelete(String chat_id) {
-    if (chatsToDelete[chat_id] != null)
-      chatsToDelete[chat_id] = true;
-    else if (chatsToDelete[chat_id] != null)
-      chatsToDelete[chat_id] = !chatsToDelete[chat_id];
-
-    // setState(() {
-    //   chatsToDelete[chat_id] = !chatsToDelete[chat_id];
-    // });
-
+  void _updateChatsToBeDeleted(String chat_id) {
+    if (_chatsToDelete[chat_id] == null) {
+      setState(() {
+        _chatsToDelete[chat_id] = true;
+      });
+    } else if (_chatsToDelete[chat_id] != null) {
+      setState(() {
+        _chatsToDelete[chat_id] = !_chatsToDelete[chat_id];
+      });
+    }
+    print(_chatsToDelete[chat_id]);
   }
 
   Future<dynamic> _getUserChats() async {

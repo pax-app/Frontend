@@ -6,17 +6,20 @@ class ChatTile extends StatelessWidget {
   final String chat_id;
   final String username;
   final String message;
-  final Function longPressHandler;
-  final Function toggleChatToDelete;
   final bool isIndeletionMode;
+  final bool isChatSelected;
+
+  final Function longPressHandler;
+  final Function updateChatsToBeDeleted;
 
   ChatTile({
     @required this.chat_id,
     @required this.username,
     @required this.message,
-    @required this.longPressHandler,
     @required this.isIndeletionMode,
-    @required this.toggleChatToDelete,
+    @required this.isChatSelected,
+    @required this.longPressHandler,
+    @required this.updateChatsToBeDeleted,
   });
 
   @override
@@ -27,11 +30,11 @@ class ChatTile extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: Card(
         elevation: Theme.of(context).cardTheme.elevation,
-        color: Theme.of(context).cardTheme.color,
+        color: isChatSelected ? Colors.red : Theme.of(context).cardTheme.color,
         child: InkWell(
           onLongPress: longPressHandler,
           onTap: isIndeletionMode
-              ? () => toggleChatToDelete(chat_id)
+              ? () => updateChatsToBeDeleted(chat_id)
               : () => _pushChatScreen(context),
           borderRadius: BorderRadius.circular(8),
           child: Center(
