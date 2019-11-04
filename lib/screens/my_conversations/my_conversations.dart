@@ -12,19 +12,9 @@ class _MyConversationsState extends State<MyConversations> {
   var chats = [];
   bool isLoading = true;
 
-  _getUserChats() async {
-    var params = {"user_id": "1"};
-
-    Uri uri = Uri.parse("https://pax-chat.herokuapp.com/chats");
-    final newURI = uri.replace(queryParameters: params);
-
-    var response = await http.get(newURI);
-    var jsonData = json.decode(response.body);
-
-    setState(() {
-      chats = jsonData;
-      isLoading = false;
-    });
+  @override
+  void initState() {
+    _getUserChats();
   }
 
   @override
@@ -45,5 +35,20 @@ class _MyConversationsState extends State<MyConversations> {
               },
             ),
     );
+  }
+
+  _getUserChats() async {
+    var params = {"user_id": "1"};
+
+    Uri uri = Uri.parse("https://pax-chat.herokuapp.com/chats");
+    final newURI = uri.replace(queryParameters: params);
+
+    var response = await http.get(newURI);
+    var jsonData = json.decode(response.body);
+
+    setState(() {
+      chats = jsonData;
+      isLoading = false;
+    });
   }
 }

@@ -7,6 +7,7 @@ import 'package:Pax/screens/my_conversations/my_conversations.dart';
 import 'package:Pax/services/loggedUser.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/drawer/drawer_user.dart';
+import 'package:Pax/screens/general_categories_screen/services_general_categories.dart';
 
 class HomeScreen extends StatelessWidget {
   final _pageController = PageController();
@@ -25,9 +26,9 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         BaseScreen(
-          "Home",
-          "Home",
-          Text("home"),
+          "Opções de Serviço", //serviço Category deve estar rodando
+          "",
+          ServiceGeneralCategory(),
           getDrawer(),
         ),
         BaseScreen(
@@ -43,7 +44,6 @@ class HomeScreen extends StatelessWidget {
           getDrawer(),
           padding: false,
         ),
-
         BaseScreen(
           "Meus cartoes",
           "Meus cartoes",
@@ -75,6 +75,7 @@ class HomeScreen extends StatelessWidget {
           ConfigScreen(),
           getDrawer(),
         ),
+        ProviderPanel(this._pageController),
       ],
     );
   }

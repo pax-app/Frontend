@@ -1,4 +1,4 @@
-import 'package:Pax/components/base_bottom_sheet/BaseBottomSheet.dart';
+import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart' as frs;
@@ -26,12 +26,12 @@ class _ProviderBottomSheetState extends State<ProviderBottomSheet> {
       sheetBody: Column(children: <Widget>[
         Text("Faixa de preço para seus serviços",
             style: Theme.of(context).textTheme.title),
-        SizedBox(height: 10),
+        SizedBox(height: 12),
         Text(
           "Esse valor não precisa ser regra, você ainda pode negociar com seu cliente",
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 15),
         Container(
           padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
           child: Column(
@@ -72,7 +72,7 @@ class _ProviderBottomSheetState extends State<ProviderBottomSheet> {
               ),
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 25),
         Button(
           buttonText: 'PRONTO',
           type: 'default',
