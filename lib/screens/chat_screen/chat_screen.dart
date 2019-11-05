@@ -100,13 +100,16 @@ class _ChatScreenState extends State<ChatScreen> {
     String date_time_sent =
         DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
 
-    _firestore
+    var chat_ref = _firestore
         .collection(widget.chat_id.toString())
-        .document(date_time_sent)
-        .setData({
-      isImage ? 'path_image' : 'text_message': value,
-      'sender': isProvider ? 'P' : 'U',
-      'date_time_sent': date_time_sent
+        .document(date_time_sent);
+
+    _firestore.runTransaction((transaction) async {
+      await transaction.set(chat_ref, {
+        isImage ? 'path_image' : 'text_message': value,
+        'sender': isProvider ? 'P' : 'U',
+        'date_time_sent': date_time_sent
+      });
     });
   }
 

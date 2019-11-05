@@ -83,6 +83,7 @@ class _MyConversationsState extends State<MyConversations> {
     setState(() {
       isDeleting = true;
     });
+
     for (int chat in _chatsToDelete) {
       print(chat);
       await http.delete(
@@ -91,6 +92,7 @@ class _MyConversationsState extends State<MyConversations> {
         _chatsToDelete.remove(chat);
       });
     }
+
     setState(() {
       isDeleting = false;
     });
