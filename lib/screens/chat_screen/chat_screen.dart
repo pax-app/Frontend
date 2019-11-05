@@ -97,8 +97,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _sendMessage(String value, bool isImage) {
-    String date_time_sent =
-        DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
+    var date_time_sent = DateTime.now().millisecondsSinceEpoch.toString();
 
     var chat_ref = _firestore
         .collection(widget.chat_id.toString())
