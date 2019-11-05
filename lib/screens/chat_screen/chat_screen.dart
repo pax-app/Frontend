@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:path/path.dart' as Path;
 
 class ChatScreen extends StatefulWidget {
-  final String chat_id;
+  final int chat_id;
   final String person_name;
 
   ChatScreen({
@@ -61,7 +61,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Expanded(
                 child: StreamBuilder(
                   stream: _firestore
-                      .collection(widget.chat_id)
+                      .collection(widget.chat_id.toString())
                       .orderBy('date_time_sent', descending: true)
                       .snapshots(),
                   builder: _update,
@@ -100,7 +100,10 @@ class _ChatScreenState extends State<ChatScreen> {
     String date_time_sent =
         DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now());
 
-    _firestore.collection(widget.chat_id).document(date_time_sent).setData({
+    _firestore
+        .collection(widget.chat_id.toString())
+        .document(date_time_sent)
+        .setData({
       isImage ? 'path_image' : 'text_message': value,
       'sender': isProvider ? 'P' : 'U',
       'date_time_sent': date_time_sent
@@ -121,7 +124,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Future _storeImage(BuildContext context, ImageSource source) async {
     Navigator.of(context).pop();
     File image = await ImagePicker.pickImage(source: source, imageQuality: 42);
-    
+
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
         .child('chats/${Path.basename(image.path)}');
