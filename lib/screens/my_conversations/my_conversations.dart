@@ -15,8 +15,8 @@ class MyConversations extends StatefulWidget {
 }
 
 class _MyConversationsState extends State<MyConversations> {
-  bool deletionMode = false;
-  HashMap<String, bool> _chatsToDelete = new HashMap();
+  bool _deletionMode = false;
+  List<int> _chatsToDelete = [];
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class _MyConversationsState extends State<MyConversations> {
       "Minhas Conversas",
       _getMyConversations(),
       widget.drawer,
-      actions: deletionMode
+      actions: _deletionMode
           ? [
               IconButton(
                 onPressed: _deleteAllSelectedChats,
@@ -47,15 +47,15 @@ class _MyConversationsState extends State<MyConversations> {
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
+                int chat_id = snapshot.data[index]["chat_id"];
                 return ChatTile(
-                  chat_id: snapshot.data[index]["chat_id"].toString(),
+                  chat_id: chat_id,
                   message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
                   username: 'Rorgérin Júrnio',
-                  isIndeletionMode: deletionMode,
-                  isChatSelected: _chatsToDelete[index] == true
-                      ? _chatsToDelete[index]
-                      : false,
-                  longPressHandler: _toggleDeleteMode,
+                  isInDeletionMode: _deletionMode,
+                  isChatSelected:
+                      _chatsToDelete.contains(chat_id) ? true : false,
+                  longPressHandler: _startDeletionMode,
                   updateChatsToBeDeleted: _updateChatsToBeDeleted,
                 );
               },
@@ -71,23 +71,30 @@ class _MyConversationsState extends State<MyConversations> {
     print('Deletando todos...');
   }
 
-  void _toggleDeleteMode() {
-    setState(() {
-      deletionMode = !deletionMode;
-    });
+  void _startDeletionMode(int chat_id) {
+    if (_deletionMode == false) {
+      setState(() {
+        _deletionMode = true;
+      });
+      _updateChatsToBeDeleted(chat_id);
+    }
   }
 
-  void _updateChatsToBeDeleted(String chat_id) {
-    if (_chatsToDelete[chat_id] == null) {
+  void _updateChatsToBeDeleted(int chat_id) {
+    if (_chatsToDelete.contains(chat_id) == false) {
       setState(() {
-        _chatsToDelete[chat_id] = true;
+        _chatsToDelete.add(chat_id);
       });
-    } else if (_chatsToDelete[chat_id] != null) {
+    } else {
       setState(() {
-        _chatsToDelete[chat_id] = !_chatsToDelete[chat_id];
+        _chatsToDelete.remove(chat_id);
       });
     }
-    print(_chatsToDelete[chat_id]);
+    if (_chatsToDelete.isEmpty) {
+      setState(() {
+        _deletionMode = false;
+      });
+    }
   }
 
   Future<dynamic> _getUserChats() async {
