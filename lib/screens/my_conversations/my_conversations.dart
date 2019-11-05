@@ -28,7 +28,7 @@ class _MyConversationsState extends State<MyConversations> {
       actions: _deletionMode
           ? [
               FlatButton(
-                onPressed: () {},
+                onPressed: _deleteAllSelectedChats,
                 textColor: Colors.black,
                 child: Text(
                   "DELETAR",
@@ -73,8 +73,15 @@ class _MyConversationsState extends State<MyConversations> {
     );
   }
 
-  void _deleteAllSelectedChats() {
-    print('Deletando todos...');
+  void _deleteAllSelectedChats() async {
+    for (int chat in _chatsToDelete) {
+      print(chat);
+      await http.delete(
+          'https://pax-chat.herokuapp.com/chats?chat_id=${chat.toString()}');
+      setState(() {
+        _chatsToDelete.remove(chat);
+      });
+    }
   }
 
   void _startDeletionMode(int chat_id) {
@@ -104,12 +111,8 @@ class _MyConversationsState extends State<MyConversations> {
   }
 
   Future<dynamic> _getUserChats() async {
-    var params = {"user_id": "1"};
-
-    Uri uri = Uri.parse("https://pax-chat.herokuapp.com/chats");
-    final newURI = uri.replace(queryParameters: params);
-
-    var response = await http.get(newURI);
+    var response =
+        await http.get('https://pax-chat.herokuapp.com/chats?user_id=1');
     var jsonData = json.decode(response.body);
 
     final List<dynamic> chats = [];

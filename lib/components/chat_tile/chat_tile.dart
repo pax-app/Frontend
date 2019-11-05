@@ -26,7 +26,7 @@ class ChatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     print(isChatSelected);
     return Container(
-      height: 120,
+      height: 115,
       margin: EdgeInsets.symmetric(vertical: 6),
       width: MediaQuery.of(context).size.width,
       child: Card(
