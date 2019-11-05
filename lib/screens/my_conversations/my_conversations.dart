@@ -27,11 +27,17 @@ class _MyConversationsState extends State<MyConversations> {
       widget.drawer,
       actions: _deletionMode
           ? [
-              IconButton(
-                onPressed: _deleteAllSelectedChats,
-                icon: const Icon(Icons.delete_outline),
-                color: Colors.red,
-              ),
+              FlatButton(
+                onPressed: () {},
+                textColor: Colors.black,
+                child: Text(
+                  "DELETAR",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red,
+                  ),
+                ),
+              )
             ]
           : null,
     );

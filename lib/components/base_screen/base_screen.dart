@@ -5,7 +5,7 @@ class BaseScreen extends StatelessWidget {
   final String pageTitle, appBarTitle;
   final Widget body, drawer;
   final bool padding;
-  final List<IconButton> actions;
+  final List<Widget> actions;
 
   BaseScreen(
     this.appBarTitle,
