@@ -17,6 +17,7 @@ class MyConversations extends StatefulWidget {
 class _MyConversationsState extends State<MyConversations> {
   bool _deletionMode = false;
   List<int> _chatsToDelete = [];
+  bool isDeleting = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +28,22 @@ class _MyConversationsState extends State<MyConversations> {
       widget.drawer,
       actions: _deletionMode
           ? [
-              FlatButton(
-                onPressed: _deleteAllSelectedChats,
-                textColor: Colors.black,
-                child: Text(
-                  "DELETAR",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
-                  ),
-                ),
-              )
+              !isDeleting
+                  ? FlatButton(
+                      onPressed: _deleteAllSelectedChats,
+                      textColor: Colors.black,
+                      child: Text(
+                        "DELETAR",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
+                    )
+                  : Container(
+                      padding: const EdgeInsets.all(9),
+                      child: CircularProgressIndicator(),
+                    ),
             ]
           : null,
     );
@@ -74,6 +80,9 @@ class _MyConversationsState extends State<MyConversations> {
   }
 
   void _deleteAllSelectedChats() async {
+    setState(() {
+      isDeleting = true;
+    });
     for (int chat in _chatsToDelete) {
       print(chat);
       await http.delete(
@@ -82,6 +91,9 @@ class _MyConversationsState extends State<MyConversations> {
         _chatsToDelete.remove(chat);
       });
     }
+    setState(() {
+      isDeleting = false;
+    });
   }
 
   void _startDeletionMode(int chat_id) {
