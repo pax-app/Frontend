@@ -26,12 +26,12 @@ class ChatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     print(isChatSelected);
     return Container(
-      height: 115,
+      height: 120,
       margin: EdgeInsets.symmetric(vertical: 6),
       width: MediaQuery.of(context).size.width,
       child: Card(
         elevation: Theme.of(context).cardTheme.elevation,
-        color: isChatSelected ? Colors.red : Theme.of(context).cardTheme.color,
+        color: Theme.of(context).cardTheme.color,
         child: InkWell(
           onLongPress: isInDeletionMode == false
               ? () => longPressHandler(chat_id)
@@ -42,17 +42,36 @@ class ChatTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           child: Center(
             child: ListTile(
-              leading: Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(
-                    color: Theme.of(context).accentColor,
-                    width: 2.0,
+              leading: Stack(
+                alignment: Alignment.bottomRight,
+                children: <Widget>[
+                  Container(
+                    width: 56,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      border: Border.all(
+                        color: Theme.of(context).accentColor,
+                        width: 2.0,
+                      ),
+                      color: Colors.lightGreen,
+                    ),
                   ),
-                  color: Colors.lightGreen,
-                ),
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 220),
+                    width: isChatSelected ? 28 : 20,
+                    height: isChatSelected ? 28 : 20,
+                    decoration: BoxDecoration(
+                      color: isChatSelected ? Colors.red : Colors.transparent,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Icon(
+                      Icons.check,
+                      color: isChatSelected ? Colors.white : Colors.transparent,
+                      size: 18,
+                    ),
+                  ),
+                ],
               ),
               title: Container(
                 margin: EdgeInsets.only(bottom: 10),
