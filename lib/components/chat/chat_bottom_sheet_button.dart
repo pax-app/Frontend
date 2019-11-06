@@ -25,7 +25,7 @@ class ChatBottomSheetButton extends StatelessWidget {
           child: Icon(
             icon,
             color: colorWhite,
-            size: 25,
+            size: 30,
           ),
         ),
         SizedBox(height: 10),

@@ -28,7 +28,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
 
-  bool isProvider = false;
+  bool isProvider = true;
   var addresses;
   bool isAddressesLoading = true;
 

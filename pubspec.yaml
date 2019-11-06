@@ -40,15 +40,15 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: '^0.7.0'
+  flutter_launcher_icons: "^0.7.0"
 
 flutter_icons:
   ios: true
   android: true
-  image_path_ios: 'assets/logo/icon.png'
-  image_path_android: 'assets/logo/icon.png'
-  adaptive_icon_background: 'assets/logo/icon.png'
-  adaptive_icon_foreground: 'assets/logo/icon.png'
+  image_path_ios: "assets/logo/icon.png"
+  image_path_android: "assets/logo/icon.png"
+  adaptive_icon_background: "assets/logo/icon.png"
+  adaptive_icon_foreground: "assets/logo/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -62,7 +62,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/logo/sidebar_logo.png
+    - assets/logo/
     - assets/illustrations/
     - assets/categories-img/
   #  - images/a_dot_burr.jpeg
