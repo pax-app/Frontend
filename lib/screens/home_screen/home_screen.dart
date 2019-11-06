@@ -43,6 +43,7 @@ class HomeScreen extends StatelessWidget {
           PerfilScreen(),
           getDrawer(),
           padding: false,
+          white_bg: true,
         ),
         BaseScreen(
           "Meus cartoes",
