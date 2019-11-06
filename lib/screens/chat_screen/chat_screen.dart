@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
+import 'package:Pax/screens/chat_screen/chat_pax_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/chat/start_chat.dart';
 import 'package:Pax/components/chat/chat_app_bar.dart';
@@ -119,16 +120,10 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _pushPaxModal(BuildContext context) {
-    print('eae');
     showModalBottomSheet<dynamic>(
       isScrollControlled: true,
       context: context,
-      builder: (context) {
-        return BaseBottomSheet(
-          modalHeight: MediaQuery.of(context).size.height - 100,
-          sheetBody: Text('oioioioi'),
-        );
-      },
+      builder: (context) => ChatPaxBottomSheet(),
     );
   }
 

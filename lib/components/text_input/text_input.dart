@@ -6,11 +6,19 @@ class TextInput extends StatelessWidget {
   final Function validator;
   final TextInputType inputType;
   final int lines;
-  final bool focus; 
+  final bool focus;
   final TextEditingController controller;
 
-  TextInput(this.textLabel, this.placeholder, this.small, this.validator,
-      this.inputType, this.lines, {this.focus = false, this.controller});
+  TextInput(
+    this.textLabel,
+    this.placeholder,
+    this.small,
+    this.validator,
+    this.inputType,
+    this.lines, {
+    this.focus = false,
+    this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
