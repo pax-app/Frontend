@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
         BaseScreen(
           "Cartões",
           "Meus Cartões",
-          AddCard(),
+          SelectionCard(),
           getDrawer(),
         ),
         MyConversations(
