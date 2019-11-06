@@ -13,7 +13,7 @@ class ChatInput extends StatelessWidget {
 
   void _sendMessageHandler() {
     if (_messageController.text.isEmpty) return;
-    sendAction(_messageController.text);
+    sendAction(_messageController.text, false);
     _messageController.clear();
   }
 

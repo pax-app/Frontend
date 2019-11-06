@@ -1,8 +1,10 @@
+import 'package:Pax/components/chat/image_bubble.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class Message extends StatelessWidget {
   final String message;
+  final String image;
   final String hour;
   final bool isMe;
 
@@ -10,6 +12,7 @@ class Message extends StatelessWidget {
     @required this.message,
     @required this.hour,
     @required this.isMe,
+    @required this.image,
   });
 
   @override
@@ -56,10 +59,12 @@ class Message extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  Text(
-                    message,
-                    style: TextStyle(color: isMe ? colorWhite : primaryColor),
-                  ),
+                  if (message != null)
+                    Text(
+                      message,
+                      style: TextStyle(color: isMe ? colorWhite : primaryColor),
+                    ),
+                  if (image != null) ImageBubble(image: image, isMe: isMe),
                   Text(
                     hour,
                     style: TextStyle(

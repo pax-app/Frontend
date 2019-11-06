@@ -19,6 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  smooth_star_rating: 1.0.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -32,20 +33,22 @@ dependencies:
   firebase_core: ^0.4.0+9
   firebase_analytics: ^5.0.2
   cloud_firestore: ^0.12.9+4
+  firebase_storage: ^3.0.3
   intl: 0.15.7
+  shared_preferences: ^0.5.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.7.0"
+  flutter_launcher_icons: '^0.7.0'
 
 flutter_icons:
   ios: true
   android: true
-  image_path_ios: "assets/logo/icon.png"
-  image_path_android: "assets/logo/icon.png"
-  adaptive_icon_background: "assets/logo/icon.png"
-  adaptive_icon_foreground: "assets/logo/icon.png"
+  image_path_ios: 'assets/logo/icon.png'
+  image_path_android: 'assets/logo/icon.png'
+  adaptive_icon_background: 'assets/logo/icon.png'
+  adaptive_icon_foreground: 'assets/logo/icon.png'
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

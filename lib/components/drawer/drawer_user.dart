@@ -9,7 +9,6 @@ class DrawerUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(this.isProvider);
     return Drawer(
       child: Stack(
         children: <Widget>[

@@ -46,7 +46,6 @@ class ProviderBloc implements BlocBase {
       categories.add(category);
     }
     _categoriesControlle.sink.add(categories);
-    debugPrint(categories.toString());
   }
 
   void newProvider(Provider p) async {

@@ -31,7 +31,6 @@ class CategoryBloc implements BlocBase {
       categories = List<Category>();
       categories.add(Category(id: 85, name: "Foi"));
     }
-    debugPrint(categories.toString());
     _categoryController.sink.add(categories);
   }
 
