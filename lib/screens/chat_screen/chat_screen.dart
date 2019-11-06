@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:Pax/components/chat/start_chat.dart';
+import 'package:flutter/material.dart';
 
 import 'package:Pax/components/chat/chat_app_bar.dart';
 import 'package:Pax/components/chat/chat_input.dart';
@@ -7,9 +9,8 @@ import 'package:Pax/screens/chat_screen/chat_address_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_bottom_sheet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:path/path.dart' as Path;
 
 class ChatScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
 
-  bool isProvider = false;
+  bool isProvider = true;
   var addresses;
   bool isAddressesLoading = true;
 
@@ -81,14 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget _update(context, snapshot) {
     if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
 
-    if (snapshot.data.documents.length <= 0) {
-      return Center(
-        child: Text(
-          'Inicie a conversa :)',
-          style: Theme.of(context).textTheme.title,
-        ),
-      );
-    }
+    if (snapshot.data.documents.length <= 0) return StartChat();
 
     return ChatList(
       snapshot: snapshot.data.documents,
@@ -124,13 +118,12 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future _storeImage(BuildContext context, ImageSource source) async {
-    Navigator.of(context).pop();
-    File image = await ImagePicker.pickImage(source: source, imageQuality: 42);
-
+    File image = await ImagePicker.pickImage(source: source, imageQuality: 36);
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
         .child('chats/${Path.basename(image.path)}');
     StorageUploadTask uploadTask = storageReference.putFile(image);
+    Navigator.of(context).pop();
     await uploadTask.onComplete;
 
     storageReference.getDownloadURL().then((fileURL) {
