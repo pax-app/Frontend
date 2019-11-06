@@ -10,9 +10,7 @@ Future<List<Category>> fetchPost(id) async {
   final url = 'http://172.18.0.1:5002/category/$id/provider';
   final response = await http
       .get(url, headers: {HttpHeaders.contentTypeHeader: 'application/json'});
-  print(response.body);
   var responseJson = json.decode(response.body);
-  print(response);
   responseJson = responseJson["data"];
   responseJson = responseJson["categories"];
 

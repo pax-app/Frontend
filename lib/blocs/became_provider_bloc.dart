@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:Pax/models/Provider.dart';
 import 'package:Pax/models/ProviderCategory.dart';
 import 'package:Pax/services/api.dart';
 import 'package:Pax/services/loggedUser.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 

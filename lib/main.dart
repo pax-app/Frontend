@@ -3,6 +3,7 @@ import 'package:Pax/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/screens/login_screen/login_screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
+// import 'package:Pax/screens/home_screen/home_screen.dart';
 
 void main() => runApp(PaxApp());
 

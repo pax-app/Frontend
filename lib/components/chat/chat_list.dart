@@ -17,8 +17,8 @@ class ChatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String prevDate =
-        formatDate.format(DateTime.parse(snapshot[0]['date_time_sent']));
+    String prevDate = formatDate.format(DateTime.fromMillisecondsSinceEpoch(
+        int.parse(snapshot[0]['date_time_sent'])));
 
     bool dateHasChanged = false;
 
@@ -27,8 +27,9 @@ class ChatList extends StatelessWidget {
       itemCount: snapshot.length,
       itemBuilder: (context, index) {
         String messageSender = snapshot[index]['sender'];
-        String currentDate = formatDate
-            .format(DateTime.parse(snapshot[index]['date_time_sent']));
+        String currentDate = formatDate.format(
+            DateTime.fromMillisecondsSinceEpoch(
+                int.parse(snapshot[index]['date_time_sent'])));
 
         if (currentDate != prevDate) dateHasChanged = true;
 
@@ -39,8 +40,9 @@ class ChatList extends StatelessWidget {
               isMe: isProvider && messageSender == 'P' ||
                   !isProvider && messageSender == 'U',
               message: snapshot[index]['text_message'],
-              hour: formatHour
-                  .format(DateTime.parse(snapshot[index]['date_time_sent'])),
+              image: snapshot[index]['path_image'],
+              hour: formatHour.format(DateTime.fromMillisecondsSinceEpoch(
+                  int.parse(snapshot[index]['date_time_sent']))),
             ),
             if (dateHasChanged) DateBubble(date: prevDate),
           ],

@@ -6,43 +6,75 @@ class ChatTile extends StatelessWidget {
   final String chatId;
   final String username;
   final String message;
+  final bool isInDeletionMode;
+  final bool isChatSelected;
+
+  final Function longPressHandler;
+  final Function updateChatsToBeDeleted;
 
   ChatTile({
     @required this.chatId,
     @required this.username,
     @required this.message,
+    @required this.isInDeletionMode,
+    @required this.isChatSelected,
+    @required this.longPressHandler,
+    @required this.updateChatsToBeDeleted,
   });
 
   @override
   Widget build(BuildContext context) {
+    print(isChatSelected);
     return Container(
-      height: 100,
+      height: 115,
       margin: EdgeInsets.symmetric(vertical: 6),
       width: MediaQuery.of(context).size.width,
       child: Card(
         elevation: Theme.of(context).cardTheme.elevation,
         color: Theme.of(context).cardTheme.color,
         child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (_) => ChatScreen(
-                  chatId: chatId,
-                  personName: username,
-                ),
-              ),
-            );
-          },
+          onLongPress: isInDeletionMode == false
+              ? () => longPressHandler(chatId)
+              : () => updateChatsToBeDeleted(chatId),
+          onTap: isInDeletionMode
+              ? () => updateChatsToBeDeleted(chatId)
+              : () => _pushChatScreen(context),
           borderRadius: BorderRadius.circular(8),
           child: Center(
             child: ListTile(
-              leading: Icon(
-                Icons.account_circle,
-                size: 50,
+              leading: Stack(
+                alignment: Alignment.bottomRight,
+                children: <Widget>[
+                  Container(
+                    width: 56,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      border: Border.all(
+                        color: Theme.of(context).accentColor,
+                        width: 2.0,
+                      ),
+                      color: Colors.lightGreen,
+                    ),
+                  ),
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 220),
+                    width: isChatSelected ? 28 : 20,
+                    height: isChatSelected ? 28 : 20,
+                    decoration: BoxDecoration(
+                      color: isChatSelected ? Colors.red : Colors.transparent,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Icon(
+                      Icons.check,
+                      color: isChatSelected ? Colors.white : Colors.transparent,
+                      size: 18,
+                    ),
+                  ),
+                ],
               ),
               title: Container(
-                margin: EdgeInsets.only(bottom: 8),
+                margin: EdgeInsets.only(bottom: 10),
                 child: Text(
                   this.username,
                   style: Theme.of(context).textTheme.title,
@@ -56,6 +88,18 @@ class ChatTile extends StatelessWidget {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  void _pushChatScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (_) => ChatScreen(
+          chatId: int.parse(chatId),
+          personName: username,
         ),
       ),
     );

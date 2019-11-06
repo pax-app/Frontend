@@ -3,7 +3,6 @@ import 'package:Pax/models/Provider.dart';
 import 'package:Pax/models/ProviderCategory.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:Pax/models/category.dart';
 
 class ProviderBloc implements BlocBase {
   Provider provider;

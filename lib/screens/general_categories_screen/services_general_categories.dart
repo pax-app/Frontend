@@ -51,36 +51,44 @@ class ServiceGeneralCategory extends StatelessWidget {
     const Map<String, String> descriptionPaths = {
       'Serviços Domésticos': 'Encontre a pessoa certa para cuidar do seu lar',
       'Design e Tecnologia':
-          'Encontre um especialista para seu projetos de design e tecnologia',
+          'Fale os melhores na área de TI e Design e tire sua idea do papel',
       'Assistência Técnica':
-          'Encontre a pessoa certa para consertar seus aparelhos eletrônicos',
-      'Reformas': 'Encontre a pessoa certa para realizar suas reformas',
+          'Encontre o melhor em consertar aparelhos eletrônicos',
+      'Reformas': 'Precisa de reformas? Fale com nossos profissionais',
     };
-    return FutureBuilder<List<Category>>(
-      future: fetchPost(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          List<Category> categories = snapshot.data;
-          return Column(
-            children: categories
-                .map(
-                  (item) => Container(
-                    child: GeneralCategoriesPanelCard(
-                        item.name,
-                        descriptionPaths['${item.name}'],
-                        imagesPaths['${item.name}'],
-                        item.id),
-                  ),
-                )
-                .toList(),
-          );
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
-        }
 
-        // By default, show a loading spinner.
-        return CircularProgressIndicator();
-      },
+    return Container(
+      height: MediaQuery.of(context).size.height - 82,
+      child: FutureBuilder<List<Category>>(
+        future: fetchPost(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Category> categories = snapshot.data;
+            return ListView.builder(
+              itemCount: categories.length,
+              itemBuilder: (context, index) {
+                var item = categories[index];
+                return Padding(
+                  padding: index == 0
+                      ? const EdgeInsets.only(top: 16)
+                      : const EdgeInsets.only(top: 0),
+                  child: GeneralCategoriesPanelCard(
+                    item.name,
+                    descriptionPaths['${item.name}'],
+                    imagesPaths['${item.name}'],
+                    item.id,
+                  ),
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+
+          // By default, show a loading spinner.
+          return CircularProgressIndicator();
+        },
+      ),
     );
   }
 }
