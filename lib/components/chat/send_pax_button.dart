@@ -10,33 +10,13 @@ class SendPaxButton extends StatefulWidget {
 }
 
 class _SendPaxButtonState extends State<SendPaxButton> {
-  double _blur_radius = 1.5;
-  Offset _offset = new Offset(0, 1.4);
-
-  void _updateShadow() {
-    if (_blur_radius == 1.5) {
-      setState(() {
-        _blur_radius = 6;
-        _offset = new Offset(0, 6);
-      });
-    } else {
-      setState(() {
-        _blur_radius = 1.5;
-        _offset = new Offset(0, 1.4);
-      });
-    }
-
-    widget.onPressHandler();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        AnimatedContainer(
-          duration: Duration(milliseconds: 200),
+        Container(
           width: 70,
           height: 70,
           decoration: BoxDecoration(
@@ -44,18 +24,16 @@ class _SendPaxButtonState extends State<SendPaxButton> {
             borderRadius: BorderRadius.circular(50),
             boxShadow: [
               BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, .25),
-                offset: _offset,
-                blurRadius: _blur_radius,
+                color: Color.fromRGBO(0, 0, 0, .26),
+                offset: new Offset(0, 1.6),
+                blurRadius: 1.5,
               )
             ],
           ),
           child: Material(
             child: InkWell(
               borderRadius: BorderRadius.circular(50),
-              // onTap: _updateShadow,
-              // onTapCancel: _updateShadow,
-              onTap: _updateShadow,
+              onTap: widget.onPressHandler,
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Image.asset(
