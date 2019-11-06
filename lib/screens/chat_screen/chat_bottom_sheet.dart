@@ -1,4 +1,5 @@
 import 'package:Pax/components/chat/chat_bottom_sheet_button.dart';
+import 'package:Pax/components/chat/send_pax_button.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -6,12 +7,13 @@ class ChatBottomSheet extends StatelessWidget {
   final Function cameraHandler;
   final Function galleryHandler;
   final Function addressHandler;
+  final bool isProvider;
 
   const ChatBottomSheet({
-    Key key,
     this.cameraHandler,
     this.galleryHandler,
     this.addressHandler,
+    this.isProvider,
   });
 
   @override
@@ -30,11 +32,13 @@ class ChatBottomSheet extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          ChatBottomSheetButton(
-            text: 'Endereço',
-            icon: Icons.location_on,
-            onPressedHandler: addressHandler,
-          ),
+          isProvider == true
+              ? SendPaxButton()
+              : ChatBottomSheetButton(
+                  text: 'Endereço',
+                  icon: Icons.location_on,
+                  onPressedHandler: addressHandler,
+                ),
           ChatBottomSheetButton(
             text: 'Câmera',
             icon: Icons.camera,

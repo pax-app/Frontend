@@ -9,7 +9,6 @@ import 'package:Pax/screens/chat_screen/chat_address_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_bottom_sheet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 
@@ -29,7 +28,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
 
-  bool isProvider = true;
+  bool isProvider = false;
   var addresses;
   bool isAddressesLoading = true;
 
@@ -110,6 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
     showModalBottomSheet(
       context: context,
       builder: (context) => ChatBottomSheet(
+        isProvider: isProvider,
         cameraHandler: () => _storeImage(context, ImageSource.camera),
         galleryHandler: () => _storeImage(context, ImageSource.gallery),
         addressHandler: () => _getAddress(context),
