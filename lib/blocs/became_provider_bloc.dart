@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:Pax/models/Provider.dart';
+import 'package:Pax/models/ProviderCategory.dart';
 import 'package:Pax/services/api.dart';
 import 'package:Pax/services/loggedUser.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -42,11 +45,14 @@ class BecameProviderBloc implements BlocBase {
     getUserData();
   }
 
-  Future<int> turnIntoProvider(double minPrice, double maxPrice) async {
+  Future<int> turnIntoProvider(
+      double minPrice, double maxPrice, List<ProviderCategory> list) async {
     final bio = _bioController.value;
     final id = _id;
     final urlRgPhoto = "";
     final number = _rgController.value;
+    final categories = jsonEncode(list);
+
     Map<String, String> body = {
       'minimum_price': minPrice.toStringAsFixed(2),
       'maximum_price': maxPrice.toStringAsFixed(2),
@@ -54,7 +60,7 @@ class BecameProviderBloc implements BlocBase {
       'url_rg_photo': urlRgPhoto,
       'number': number,
       'user_id': id,
-      'categories': ""
+      'categories': categories
     };
 
     Map<String, String> header = {
@@ -63,6 +69,7 @@ class BecameProviderBloc implements BlocBase {
     };
     var jsonBody = json.encode(body);
     final response = await _api.post(
+      Services.USER,
       Routes.PROVIDER_REGISTRATION,
       headers: header,
       body: jsonBody,

@@ -92,6 +92,7 @@ class SignUpBloc extends BlocBase {
 
     var jsonBody = json.encode(body);
     final response = await _api.post(
+      Services.USER,
       Routes.REGISTER_ROUTE,
       headers: header,
       body: jsonBody,

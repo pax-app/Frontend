@@ -7,6 +7,16 @@ class Routes {
   static const String REGISTER_ROUTE = "/auth/registration";
   static const String PROVIDER_REGISTRATION = "/provider_registration";
   static const String AUTH_STATUS = "/auth/status";
+  static const String GENERAL_CATEGORY = "/category/general";
+  static const String PROVIDER_CATEGORY = "/category/provider";
+}
+
+class Services {
+  static const String CHAT = ":3001";
+  static const String USER = ":5001";
+  static const String CATEGORY = ":5002";
+  static const String REVIEW = ":5004";
+  static const String REPORT = ":5005";
 }
 
 class Api {
@@ -18,19 +28,21 @@ class Api {
     return _instance;
   }
 
-  final String url = "http://172.18.0.1:5001";
+  final String baseUrl = "http://172.18.0.1";
 
-  Future<dynamic> get(String route, {Map headers}) {
+  Future<dynamic> get(String service, String route, {Map headers}) {
     return http
-        .get(url + route, headers: headers)
+        .get(baseUrl + service + route, headers: headers)
         .then((http.Response response) {
       return response;
     });
   }
 
-  Future<dynamic> post(String path, {Map headers, body, encoding}) {
+  Future<dynamic> post(String service, String route,
+      {Map headers, body, encoding}) {
     return http
-        .post(url + path, body: body, headers: headers, encoding: encoding)
+        .post(baseUrl + service + route,
+            body: body, headers: headers, encoding: encoding)
         .then((http.Response response) {
       return response;
     });

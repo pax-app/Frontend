@@ -3,10 +3,12 @@ import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/text_input/text_input_bloc.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/finish_provider_tab.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/provider_bottom_sheet.dart';
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import "package:Pax/blocs/became_provider_bloc.dart";
+import "package:Pax/blocs/provider_bloc.dart";
 
 final _becameProviderBloc = BecameProviderBloc();
 
@@ -207,8 +209,8 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
           type: 'default',
           tapHandler: activeteButton()
               ? () {
-                  _becameProviderBloc.turnIntoProvider(
-                      _lowerValue, _upperValue);
+                  _becameProviderBloc.turnIntoProvider(_lowerValue, _upperValue,
+                      BlocProvider.of<ProviderBloc>(context).categories);
                   Navigator.of(context).push(
                     CupertinoPageRoute(
                       builder: (context) => BaseScreen(

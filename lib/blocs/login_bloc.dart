@@ -5,6 +5,7 @@ import 'package:Pax/blocs/signup_bloc.dart';
 import 'package:Pax/services/api.dart';
 import 'package:Pax/services/loggedUser.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LoginBloc extends BlocBase {
@@ -33,7 +34,8 @@ class LoginBloc extends BlocBase {
       'Authorization': 'Token $token'
     };
 
-    final response = await _api.get(Routes.AUTH_STATUS, headers: header);
+    final response =
+        await _api.get(Services.USER, Routes.AUTH_STATUS, headers: header);
     if (response.statusCode == 200)
       return true;
     else {
@@ -50,6 +52,7 @@ class LoginBloc extends BlocBase {
 
     var jsonBody = json.encode(body);
     final response = await _api.post(
+      Services.USER,
       Routes.LOGIN_ROUTE,
       headers: header,
       body: jsonBody,
@@ -68,7 +71,8 @@ class LoginBloc extends BlocBase {
       'Authorization': 'Token $token'
     };
 
-    final response = await _api.get(Routes.LOGOUT_ROUTE, headers: header);
+    final response =
+        await _api.get(Services.USER, Routes.LOGOUT_ROUTE, headers: header);
     if (response.statusCode == 200 ||
         response.statusCode == 401 ||
         response.statusCode == 404) {
