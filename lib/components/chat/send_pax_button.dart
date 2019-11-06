@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SendPaxButton extends StatefulWidget {
+  final Function onPressHandler;
+
+  const SendPaxButton({this.onPressHandler});
+
   @override
   _SendPaxButtonState createState() => _SendPaxButtonState();
 }
@@ -10,7 +14,6 @@ class _SendPaxButtonState extends State<SendPaxButton> {
   Offset _offset = new Offset(0, 1.4);
 
   void _updateShadow() {
-    print('oi');
     if (_blur_radius == 1.5) {
       setState(() {
         _blur_radius = 6;
@@ -22,6 +25,8 @@ class _SendPaxButtonState extends State<SendPaxButton> {
         _offset = new Offset(0, 1.4);
       });
     }
+
+    widget.onPressHandler();
   }
 
   @override

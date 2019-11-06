@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:Pax/components/chat/start_chat.dart';
+import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:flutter/material.dart';
-
+import 'package:Pax/components/chat/start_chat.dart';
 import 'package:Pax/components/chat/chat_app_bar.dart';
 import 'package:Pax/components/chat/chat_input.dart';
 import 'package:Pax/components/chat/chat_list.dart';
@@ -113,7 +113,22 @@ class _ChatScreenState extends State<ChatScreen> {
         cameraHandler: () => _storeImage(context, ImageSource.camera),
         galleryHandler: () => _storeImage(context, ImageSource.gallery),
         addressHandler: () => _getAddress(context),
+        paxHandler: () => _pushPaxModal(context),
       ),
+    );
+  }
+
+  void _pushPaxModal(BuildContext context) {
+    print('eae');
+    showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return BaseBottomSheet(
+          modalHeight: MediaQuery.of(context).size.height - 100,
+          sheetBody: Text('oioioioi'),
+        );
+      },
     );
   }
 

@@ -7,12 +7,14 @@ class ChatBottomSheet extends StatelessWidget {
   final Function cameraHandler;
   final Function galleryHandler;
   final Function addressHandler;
+  final Function paxHandler;
   final bool isProvider;
 
   const ChatBottomSheet({
     this.cameraHandler,
     this.galleryHandler,
     this.addressHandler,
+    this.paxHandler,
     this.isProvider,
   });
 
@@ -33,7 +35,7 @@ class ChatBottomSheet extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           isProvider == true
-              ? SendPaxButton()
+              ? SendPaxButton(onPressHandler: paxHandler)
               : ChatBottomSheetButton(
                   text: 'Endereço',
                   icon: Icons.location_on,
