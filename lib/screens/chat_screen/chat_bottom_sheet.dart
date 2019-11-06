@@ -1,3 +1,4 @@
+import 'package:Pax/components/chat/chat_bottom_sheet_button.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -29,68 +30,20 @@ class ChatBottomSheet extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              RaisedButton(
-                padding: const EdgeInsets.all(20),
-                shape: const CircleBorder(),
-                onPressed: addressHandler,
-                child: Icon(
-                  Icons.location_on,
-                  color: colorWhite,
-                  size: 25,
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Endereço',
-                style: Theme.of(context).textTheme.subtitle,
-              )
-            ],
+          ChatBottomSheetButton(
+            text: 'Endereço',
+            icon: Icons.location_on,
+            onPressedHandler: addressHandler,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              RaisedButton(
-                padding: const EdgeInsets.all(20),
-                onPressed: cameraHandler,
-                shape: const CircleBorder(),
-                child: Icon(
-                  Icons.camera,
-                  color: colorWhite,
-                  size: 25,
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Câmera',
-                style: Theme.of(context).textTheme.subtitle,
-              ),
-            ],
+          ChatBottomSheetButton(
+            text: 'Câmera',
+            icon: Icons.camera,
+            onPressedHandler: cameraHandler,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              RaisedButton(
-                padding: const EdgeInsets.all(20),
-                onPressed: galleryHandler,
-                shape: const CircleBorder(),
-                child: Icon(
-                  Icons.photo_library,
-                  color: colorWhite,
-                  size: 25,
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Galeria',
-                style: Theme.of(context).textTheme.subtitle,
-              ),
-            ],
+          ChatBottomSheetButton(
+            text: 'Galeria',
+            icon: Icons.photo_library,
+            onPressedHandler: galleryHandler,
           ),
         ],
       ),

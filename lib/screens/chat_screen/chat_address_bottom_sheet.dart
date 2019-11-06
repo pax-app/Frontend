@@ -35,7 +35,7 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
 
     return BaseBottomSheet(
       modalHeight: isInCepModal
-          ? 290 + MediaQuery.of(context).viewInsets.bottom
+          ? 300 + MediaQuery.of(context).viewInsets.bottom
           : _currentSheetHeight,
       sheetBody: Column(
         children: <Widget>[
