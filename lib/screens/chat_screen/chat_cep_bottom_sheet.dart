@@ -1,10 +1,22 @@
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 import 'package:Pax/screens/add_adress_screen/adress_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ChatCepBottomSheet extends StatelessWidget {
-  TextEditingController _cepController = TextEditingController();
+class ChatCepBottomSheet extends StatefulWidget {
+  @override
+  _ChatCepBottomSheetState createState() => _ChatCepBottomSheetState();
+}
+
+class _ChatCepBottomSheetState extends State<ChatCepBottomSheet> {
+  final TextEditingController _cepController = TextEditingController();
+
+  void _pushAddressScreen(BuildContext context) {
+    Navigator.of(context).push(
+      CupertinoPageRoute(builder: (context) => AdressScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +41,7 @@ class ChatCepBottomSheet extends StatelessWidget {
           SizedBox(height: 32),
           Button(
             buttonText: 'Buscar',
-            tapHandler: () {
-              print(_cepController.text);
-            },
+            tapHandler: () => _pushAddressScreen(context),
           )
         ],
       ),
