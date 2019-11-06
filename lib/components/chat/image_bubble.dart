@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class DetailScreen extends StatelessWidget {
+class ImageFullScreen extends StatelessWidget {
   final String path;
 
-  const DetailScreen({this.path});
+  const ImageFullScreen({this.path});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +21,7 @@ class DetailScreen extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
+      backgroundColor: Colors.black,
     );
   }
 }
@@ -68,7 +69,7 @@ class ImageBubble extends StatelessWidget {
           ),
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return DetailScreen(
+              return ImageFullScreen(
                 path: image,
               );
             }));
