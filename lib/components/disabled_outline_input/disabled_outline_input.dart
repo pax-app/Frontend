@@ -26,8 +26,8 @@ class _DisabledOutlineInputState extends State<DisabledOutlineInput> {
         labelStyle: TextStyle(color: Theme.of(context).primaryColor),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context).accentColor,
-            width: 1.2,
+            color: Theme.of(context).primaryColor,
+            width: 1,
           ),
         ),
       ),

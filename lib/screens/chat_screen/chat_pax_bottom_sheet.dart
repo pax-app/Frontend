@@ -18,72 +18,85 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).viewInsets.bottom);
     return BaseBottomSheet(
-      modalHeight: MediaQuery.of(context).size.height - 100,
-      sheetBody: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * .1,
-            ),
-            child: Text(
-              'Preencha o que falta para enviar o seu PAX',
-              style: Theme.of(context).textTheme.title.copyWith(height: 1.3),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(height: 30),
-          TextInput(
-            'Nome',
-            'Nome do serviço a ser prestado...',
-            false,
-            null,
-            TextInputType.text,
-            1,
-            controller: _nameController,
-          ),
-          SizedBox(height: 3),
-          TextInput(
-            'Descrição',
-            'Descreva o que irá fazer...',
-            false,
-            null,
-            TextInputType.text,
-            1,
-            controller: _descriptionController,
-          ),
-          SizedBox(height: 7),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.2),
-            child: DisabledOutlineInput(
-              labelText: 'Endereço',
-              textController: _addressController,
-            ),
-          ),
-          SizedBox(height: 7),
-          Row(
-            children: <Widget>[
-              Container(
-                width: 150,
-                child: TextInput(
-                  'Preço',
-                  'Total a pagar',
-                  true,
-                  null,
-                  TextInputType.text,
-                  1,
-                  controller: _priceController,
-                ),
+      // o inset do keyboard funfa só uma vez
+      modalHeight: _nameController.text.isNotEmpty &&
+              _descriptionController.text.isNotEmpty &&
+              _priceController.text.isEmpty
+          ? MediaQuery.of(context).viewInsets.bottom + 540
+          : 540,
+      sheetBody: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * .1,
               ),
-            ],
-          ),
-          SizedBox(height: 25),
-          Button(
-            buttonText: 'Enviar',
-            tapHandler: () {},
-          )
-        ],
+              child: Text(
+                'Preencha o que falta para enviar o seu PAX',
+                style: Theme.of(context).textTheme.title.copyWith(height: 1.3),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(height: 30),
+            TextInput(
+              'Nome',
+              'Nome do serviço a ser prestado...',
+              false,
+              null,
+              TextInputType.text,
+              1,
+              controller: _nameController,
+            ),
+            SizedBox(height: 3),
+            TextInput(
+              'Descrição',
+              'Descreva o que irá fazer...',
+              false,
+              null,
+              TextInputType.text,
+              1,
+              controller: _descriptionController,
+            ),
+            SizedBox(height: 7),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.2),
+              child: DisabledOutlineInput(
+                labelText: 'Endereço',
+                textController: _addressController,
+              ),
+            ),
+            SizedBox(height: 7),
+            Row(
+              children: <Widget>[
+                Container(
+                  width: 150,
+                  child: TextInput(
+                    'Preço',
+                    'Total a pagar',
+                    true,
+                    null,
+                    TextInputType.text,
+                    1,
+                    controller: _priceController,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 25),
+            Button(
+              buttonText: 'Enviar',
+              tapHandler: _nameController.text.isNotEmpty &&
+                      _descriptionController.text.isNotEmpty &&
+                      _addressController.text.isNotEmpty &&
+                      _priceController.text.isNotEmpty
+                  ? () {}
+                  : null,
+            )
+          ],
+        ),
       ),
     );
   }

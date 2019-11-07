@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class BaseBottomSheet extends StatelessWidget {
   final double modalHeight;
   final Widget sheetBody;
-  static const baseRadius = const Radius.circular(40);
+  static const baseRadius = const Radius.circular(60);
 
   BaseBottomSheet({
     this.modalHeight = 320.0,
