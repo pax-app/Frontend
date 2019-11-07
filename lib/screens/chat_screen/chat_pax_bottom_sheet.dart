@@ -1,7 +1,10 @@
+import 'dart:io';
+import 'dart:convert';
 import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/disabled_outline_input/disabled_outline_input.dart';
 import 'package:Pax/components/text_input/text_input.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -146,23 +149,28 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   }
 
   Future _createPax() async {
-    var body = {
-      "date": pickedDate,
+    var pax = {
+      "date": pickedDate.toString(),
       "description": _descriptionController.text,
-      "name": _nameController.text,
-      "price": _priceController.text,
-      "user_id": "1",
-      "provider_id": "1",
-      "chat_id": "17",
-      "address_id": "8"
+      "name": _descriptionController.text,
+      "price": double.parse(_priceController.text),
+      "user_id": 1,
+      "provider_id": 1,
+      "chat_id": 17,
+      "address_id": 8,
     };
 
+    var body = json.encode(pax);
+
     var response = await http.post(
-      'http://192.168.1.5:5003/upCreate_pax',
+      'http://192.168.1.12:5003/pax/upCreate_pax',
+      headers: {"Content-Type": "application/json"},
       body: body,
     );
 
-    print('Response status: ${response.statusCode}');
+    // var response =
+    //     await http.get('http://192.168.1.12:5003/pax/consult_pax?chat_id=17');
+
     print('Response body: ${response.body}');
   }
 
