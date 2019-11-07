@@ -2,11 +2,22 @@ import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/disabled_outline_input/disabled_outline_input.dart';
 import 'package:Pax/components/text_input/text_input.dart';
+import 'package:http/http.dart' as http;
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ChatPaxBottomSheet extends StatefulWidget {
+  final int chatId;
+  final int providerId;
+  final int userId;
+
+  ChatPaxBottomSheet({
+    this.chatId,
+    this.providerId,
+    this.userId,
+  });
+
   @override
   _ChatPaxBottomSheetState createState() => _ChatPaxBottomSheetState();
 }
@@ -21,6 +32,8 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   DateTime initialDate = DateTime(2019, 01, 01);
   String pickedDate;
   final formatDate = DateFormat("dd MMMM yyyy", "pt-BR");
+
+  int addressId;
 
   @override
   Widget build(BuildContext context) {
@@ -123,13 +136,34 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
                       _descriptionController.text.isNotEmpty &&
                       _addressController.text.isNotEmpty &&
                       _priceController.text.isNotEmpty
-                  ? () {}
+                  ? _createPax
                   : null,
             )
           ],
         ),
       ),
     );
+  }
+
+  Future _createPax() async {
+    var body = {
+      "date": pickedDate,
+      "description": _descriptionController.text,
+      "name": _nameController.text,
+      "price": _priceController.text,
+      "user_id": "1",
+      "provider_id": "1",
+      "chat_id": "17",
+      "address_id": "8"
+    };
+
+    var response = await http.post(
+      'http://192.168.1.5:5003/upCreate_pax',
+      body: body,
+    );
+
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
   }
 
   void _presentDatePicker() {
@@ -143,6 +177,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       setState(() {
         String formattedDate = DateFormat("yyyy-MM-dd").format(date);
         pickedDate = formattedDate;
+        initialDate = date;
         print(pickedDate);
       });
     });

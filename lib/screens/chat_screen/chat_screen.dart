@@ -124,7 +124,11 @@ class _ChatScreenState extends State<ChatScreen> {
     showModalBottomSheet<dynamic>(
       isScrollControlled: true,
       context: context,
-      builder: (context) => ChatPaxBottomSheet(),
+      builder: (context) => ChatPaxBottomSheet(
+        chatId: widget.chat_id,
+        providerId: 1,
+        userId: 1,
+      ),
     );
   }
 
