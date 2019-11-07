@@ -18,7 +18,8 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       text: 'Endereço do usuário bla bla bla 123 123 123 123 3331313 ');
   final _priceController = TextEditingController();
 
-  DateTime selectedDate = DateTime(2019, 01, 01);
+  DateTime initialDate = DateTime(2019, 01, 01);
+  String pickedDate;
   final formatDate = DateFormat("dd MMMM yyyy", "pt-BR");
 
   @override
@@ -106,9 +107,9 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
                     splashColor: secondaryColorDimmed,
                     onPressed: _presentDatePicker,
                     child: Text(
-                      selectedDate == DateTime(2019, 01, 01)
+                      initialDate == DateTime(2019, 01, 01)
                           ? 'ESCOLHA A DATA'
-                          : formatDate.format(selectedDate),
+                          : formatDate.format(initialDate),
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                   ),
@@ -137,10 +138,12 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       initialDate: DateTime.now(),
       firstDate: DateTime(2019, DateTime.now().month),
       lastDate: DateTime(2025),
-    ).then((pickedDate) {
-      if (pickedDate == null) return;
+    ).then((date) {
+      if (date == null) return;
       setState(() {
-        selectedDate = pickedDate;
+        String formattedDate = DateFormat("yyyy-MM-dd").format(date);
+        pickedDate = formattedDate;
+        print(pickedDate);
       });
     });
   }
