@@ -2,7 +2,9 @@ import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/disabled_outline_input/disabled_outline_input.dart';
 import 'package:Pax/components/text_input/text_input.dart';
+import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ChatPaxBottomSheet extends StatefulWidget {
   @override
@@ -15,6 +17,9 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   final _addressController = TextEditingController(
       text: 'Endereço do usuário bla bla bla 123 123 123 123 3331313 ');
   final _priceController = TextEditingController();
+
+  DateTime selectedDate = DateTime(2019, 01, 01);
+  final formatDate = DateFormat("dd MMMM yyyy", "pt-BR");
 
   @override
   Widget build(BuildContext context) {
@@ -70,17 +75,42 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
             ),
             SizedBox(height: 7),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                  width: 150,
+                  width: 142,
                   child: TextInput(
                     'Preço',
                     'Total a pagar',
                     true,
                     null,
-                    TextInputType.text,
+                    TextInputType.number,
                     1,
                     controller: _priceController,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 4),
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: FlatButton(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 20,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    splashColor: secondaryColorDimmed,
+                    onPressed: _presentDatePicker,
+                    child: Text(
+                      selectedDate == DateTime(2019, 01, 01)
+                          ? 'ESCOLHA A DATA'
+                          : formatDate.format(selectedDate),
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
                   ),
                 ),
               ],
@@ -99,5 +129,19 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
         ),
       ),
     );
+  }
+
+  void _presentDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2019, DateTime.now().month),
+      lastDate: DateTime(2025),
+    ).then((pickedDate) {
+      if (pickedDate == null) return;
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    });
   }
 }
