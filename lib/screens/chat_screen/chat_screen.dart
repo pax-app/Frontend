@@ -120,6 +120,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _pushPaxModal(BuildContext context) {
+    Navigator.of(context).pop();
     showModalBottomSheet<dynamic>(
       isScrollControlled: true,
       context: context,

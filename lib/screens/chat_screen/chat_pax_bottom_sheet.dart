@@ -1,5 +1,6 @@
 import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/components/disabled_outline_input/disabled_outline_input.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,8 @@ class ChatPaxBottomSheet extends StatefulWidget {
 class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final _addressController = TextEditingController(
+      text: 'Endereço do usuário bla bla bla 123 123 123 123 3331313 ');
   final _priceController = TextEditingController();
 
   @override
@@ -40,6 +43,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
             1,
             controller: _nameController,
           ),
+          SizedBox(height: 3),
           TextInput(
             'Descrição',
             'Descreva o que irá fazer...',
@@ -49,15 +53,15 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
             1,
             controller: _descriptionController,
           ),
-          TextInput(
-            'Endereço',
-            '',
-            false,
-            null,
-            TextInputType.text,
-            2,
-            controller: _nameController,
+          SizedBox(height: 7),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.2),
+            child: DisabledOutlineInput(
+              labelText: 'Endereço',
+              textController: _addressController,
+            ),
           ),
+          SizedBox(height: 7),
           Row(
             children: <Widget>[
               Container(
@@ -74,7 +78,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
               ),
             ],
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 25),
           Button(
             buttonText: 'Enviar',
             tapHandler: () {},
