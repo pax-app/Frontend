@@ -6,12 +6,14 @@ class Button extends StatelessWidget {
   final String buttonText;
   final String type;
   final bool isSmall;
+  final bool isLoading;
 
   Button({
     @required this.buttonText,
     @required this.tapHandler,
     this.type,
     this.isSmall = false,
+    this.isLoading = false,
   });
 
   @override
@@ -35,23 +37,23 @@ class Button extends StatelessWidget {
           highlightedBorderColor: secondaryColorDimmed,
           splashColor: secondaryColorDimmed,
           child: Text(
-            buttonText.toUpperCase(),
+            isLoading ? 'Carregando...' : buttonText.toUpperCase(),
             style: Theme.of(context).textTheme.title.copyWith(
                   color: Theme.of(context).accentColor,
                 ),
           ),
-          onPressed: tapHandler,
+          onPressed: isLoading ? null : tapHandler,
         );
         break;
       case 'danger':
         return OutlineButton(
           child: Text(
-            buttonText.toUpperCase(),
+            isLoading ? 'Carregando...' : buttonText.toUpperCase(),
             style: Theme.of(context).textTheme.title.copyWith(
                   color: Theme.of(context).errorColor,
                 ),
           ),
-          onPressed: tapHandler,
+          onPressed: isLoading ? null : tapHandler,
           borderSide: BorderSide(color: Theme.of(context).errorColor),
           highlightedBorderColor: errorColorLight,
           splashColor: errorColorLight,
@@ -62,9 +64,9 @@ class Button extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
           child: RaisedButton(
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            onPressed: tapHandler,
+            onPressed: isLoading ? null : tapHandler,
             child: Text(
-              buttonText.toUpperCase(),
+              isLoading ? 'Carregando...' : buttonText.toUpperCase(),
               style: Theme.of(context).textTheme.title.copyWith(
                     color: colorWhite,
                   ),

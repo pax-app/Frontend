@@ -36,6 +36,8 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   String pickedDate;
   final formatDate = DateFormat("dd MMMM yyyy", "pt-BR");
 
+  bool isPaxLoading = false;
+
   int addressId;
 
   @override
@@ -134,6 +136,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
             ),
             SizedBox(height: 25),
             Button(
+              isLoading: isPaxLoading,
               buttonText: 'Enviar',
               tapHandler: _nameController.text.isNotEmpty &&
                       _descriptionController.text.isNotEmpty &&
@@ -149,14 +152,18 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   }
 
   Future _createPax() async {
+    setState(() {
+      isPaxLoading = true;
+    });
+
     var pax = {
       "date": pickedDate.toString(),
       "description": _descriptionController.text,
-      "name": _descriptionController.text,
+      "name": _nameController.text,
       "price": double.parse(_priceController.text),
       "user_id": 1,
       "provider_id": 1,
-      "chat_id": 17,
+      "chat_id": widget.chatId,
       "address_id": 8,
     };
 
@@ -167,6 +174,10 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       headers: {"Content-Type": "application/json"},
       body: body,
     );
+
+    setState(() {
+      isPaxLoading = false;
+    });
 
     // var response =
     //     await http.get('http://192.168.1.12:5003/pax/consult_pax?chat_id=17');
