@@ -44,12 +44,9 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   Widget build(BuildContext context) {
     print(MediaQuery.of(context).viewInsets.bottom);
     return BaseBottomSheet(
-      // o inset do keyboard funfa só uma vez
-      modalHeight: _nameController.text.isNotEmpty &&
-              _descriptionController.text.isNotEmpty &&
-              _priceController.text.isEmpty
-          ? MediaQuery.of(context).viewInsets.bottom + 540
-          : 540,
+      curveAnimation: Curves.linear,
+      duration: Duration(milliseconds: 200),
+      modalHeight: MediaQuery.of(context).viewInsets.bottom + 540,
       sheetBody: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
