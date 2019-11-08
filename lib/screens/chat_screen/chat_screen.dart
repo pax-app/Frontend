@@ -101,6 +101,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _firestore.runTransaction((transaction) async {
       await transaction.set(chat_ref, {
         isPax ? 'pax_title' : (isImage ? 'path_image' : 'text_message'): value,
+        isPax ? 'refused' : null: false,
         'sender': isProvider ? 'P' : 'U',
         'date_time_sent': date_time_sent
       });
@@ -140,8 +141,26 @@ class _ChatScreenState extends State<ChatScreen> {
       context: context,
       builder: (context) => ChatPaxDetail(
         chatId: widget.chatId,
+        refusePax: _refusePax,
+        acceptPax: () {},
       ),
     );
+  }
+
+  void _refusePax() async {
+    var lastPax = await _firestore
+        .collection(widget.chatId.toString())
+        .where('refused', isEqualTo: false)
+        .getDocuments()
+        .then((snapshot) {
+      return snapshot.documents[snapshot.documents.length - 1].data;
+    });
+
+    print(lastPax);
+    _firestore
+        .collection(widget.chatId.toString())
+        .document(lastPax['date_time_sent'])
+        .updateData({'refused': true});
   }
 
   Future _storeImage(BuildContext context, ImageSource source) async {

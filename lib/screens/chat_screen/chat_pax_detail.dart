@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 
 class ChatPaxDetail extends StatelessWidget {
   final int chatId;
-
-  const ChatPaxDetail({this.chatId});
+  final Function refusePax;
+  final Function acceptPax;
+  const ChatPaxDetail({
+    this.chatId,
+    this.refusePax,
+    this.acceptPax,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +72,7 @@ class ChatPaxDetail extends StatelessWidget {
             children: <Widget>[
               Button(
                 buttonText: 'Rejeitar',
-                tapHandler: () {},
+                tapHandler: refusePax,
                 isSmall: true,
                 type: 'danger',
               ),
