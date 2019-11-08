@@ -148,6 +148,8 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _refusePax() async {
+    Navigator.of(context).pop();
+
     var lastPax = await _firestore
         .collection(widget.chatId.toString())
         .where('refused', isEqualTo: false)
@@ -156,7 +158,6 @@ class _ChatScreenState extends State<ChatScreen> {
       return snapshot.documents[snapshot.documents.length - 1].data;
     });
 
-    print(lastPax);
     _firestore
         .collection(widget.chatId.toString())
         .document(lastPax['date_time_sent'])

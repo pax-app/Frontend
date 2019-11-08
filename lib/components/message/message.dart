@@ -8,6 +8,7 @@ class Message extends StatelessWidget {
   final String image;
   final String hour;
   final String paxTitle;
+  final bool refused;
   final bool isMe;
   final Function showPaxDetails;
 
@@ -17,6 +18,7 @@ class Message extends StatelessWidget {
     @required this.isMe,
     @required this.image,
     @required this.paxTitle,
+    @required this.refused,
     @required this.showPaxDetails,
   });
 
@@ -31,8 +33,11 @@ class Message extends StatelessWidget {
         children: <Widget>[
           Flexible(
             child: GestureDetector(
-              onTap: paxTitle != null ? () => showPaxDetails(context) : () {},
-              child: Container(
+              onTap: paxTitle != null && !refused
+                  ? () => showPaxDetails(context)
+                  : () {},
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 500),
                 padding: const EdgeInsets.only(
                   top: 14,
                   left: 15,
@@ -50,14 +55,19 @@ class Message extends StatelessWidget {
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                     colors: [
-                      isMe ? secondaryColorLight : Colors.white,
-                      isMe ? secondaryColor : Color(0xfff3f3f3),
+                      refused == true
+                          ? Colors.red
+                          : isMe ? secondaryColorLight : Colors.white,
+                      refused == true
+                          ? Colors.red
+                          : isMe ? secondaryColor : Color(0xfff3f3f3),
                     ],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color:
-                          isMe ? secondaryColor : Color.fromRGBO(0, 0, 0, .3),
+                      color: refused == true
+                          ? Colors.black54
+                          : isMe ? secondaryColor : Color.fromRGBO(0, 0, 0, .3),
                       offset: Offset(0, 2),
                       blurRadius: 3.2,
                     )
@@ -74,7 +84,8 @@ class Message extends StatelessWidget {
                             TextStyle(color: isMe ? colorWhite : primaryColor),
                       ),
                     if (image != null) ImageBubble(image: image, isMe: isMe),
-                    if (paxTitle != null) PaxBubble(paxTitle: paxTitle),
+                    if (paxTitle != null)
+                      PaxBubble(paxTitle: paxTitle, refused: refused),
                     Text(
                       hour,
                       style: TextStyle(

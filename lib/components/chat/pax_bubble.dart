@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 
 class PaxBubble extends StatelessWidget {
   final String paxTitle;
+  final bool refused;
 
   PaxBubble({
     @required this.paxTitle,
+    @required this.refused,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 800),
       height: 70,
       width: 220,
       child: Column(
@@ -20,7 +23,7 @@ class PaxBubble extends StatelessWidget {
             style: Theme.of(context).textTheme.title,
           ),
           Text(
-            'Clique para visualizar...',
+            refused ? 'Pax recusado' : 'Clique para visualizar...',
             style: Theme.of(context).textTheme.subtitle,
           )
         ],
