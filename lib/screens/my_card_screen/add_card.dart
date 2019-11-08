@@ -13,7 +13,7 @@ class _AddCardState extends State<AddCard> {
   TextEditingController _addCard = TextEditingController();
   TextEditingController _addCVV = TextEditingController();
   TextEditingController _addName = TextEditingController();
-  TextEditingController _addExpiration = TextEditingController();
+  var _addExpiration = MaskedTextController(mask: '00/00');
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,9 +24,9 @@ class _AddCardState extends State<AddCard> {
           expiryDate: '08/27',
           cardHolderName: 'Fepas Lindi Patrick Gato'.toUpperCase(),
           cvvCode: '123',
-          showBackView: false, //back view
-          cardbgColor: Colors.purple,
-          height: 165.0,
+          showBackView: true, //back view
+          cardbgColor: Colors.green,
+          height: 175.0,
           textStyle:
               TextStyle(fontFamily: 'OCR-A', fontSize: 18, color: Colors.white),
           width: MediaQuery.of(context).size.width,
@@ -76,7 +76,7 @@ class _AddCardState extends State<AddCard> {
                       focus: true,
                       controller: _addExpiration,
                     ),
-                    width: MediaQuery.of(context).size.width * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.498,
                   ),
                   // SizedBox(
                   //   width: MediaQuery.of(context).size.width * 0.1,
