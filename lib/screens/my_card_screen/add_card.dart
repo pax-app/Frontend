@@ -10,9 +10,7 @@ class AddCard extends StatefulWidget {
 }
 
 class _AddCardState extends State<AddCard> {
-  // TextEditingController _addCard = TextEditingController();
-  // TextEditingController _addCVV = TextEditingController();
-  TextEditingController _addName = TextEditingController();
+  TextEditingController _addName = TextEditingController(text: ' ');
   var _addExpiration = MaskedTextController(mask: '00/00');
   var _addCVV = MaskedTextController(mask: '000');
   var _addCard = MaskedTextController(mask: '0000 0000 0000 0000');
@@ -34,10 +32,10 @@ class _AddCardState extends State<AddCard> {
         child: Column(
       children: <Widget>[
         CreditCardWidget(
-          cardNumber: '4002 8922 9258 3457',
-          expiryDate: '08/27',
-          cardHolderName: 'Fepas Lindi Patrick Gato'.toUpperCase(),
-          cvvCode: '123',
+          cardNumber: this._addCard.text,
+          expiryDate: this._addExpiration.text,
+          cardHolderName: this._addName.text.toUpperCase(),
+          cvvCode: this._addCVV.text,
           showBackView: this._focus.hasFocus,
           cardbgColor: Colors.green,
           height: 175.0,
