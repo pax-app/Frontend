@@ -100,7 +100,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                  width: 142,
+                  width: MediaQuery.of(context).size.width / 2.5,
                   child: TextInput(
                     'Preço',
                     'Total a pagar',
@@ -112,16 +112,14 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
                   ),
                 ),
                 Container(
+                  height: 59,
+                  width: MediaQuery.of(context).size.width / 2.5,
                   margin: EdgeInsets.only(right: 4),
                   decoration: BoxDecoration(
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: FlatButton(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 20,
-                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -172,7 +170,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
 
     var body = json.encode(pax);
 
-    var response = await http.post(
+    await http.post(
       'http://192.168.1.12:5003/pax/upCreate_pax',
       headers: {"Content-Type": "application/json"},
       body: body,
