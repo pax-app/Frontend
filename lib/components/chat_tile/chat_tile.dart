@@ -98,8 +98,8 @@ class ChatTile extends StatelessWidget {
       context,
       CupertinoPageRoute(
         builder: (_) => ChatScreen(
-          chat_id: chat_id,
-          person_name: username,
+          chatId: chat_id,
+          personName: username,
         ),
       ),
     );

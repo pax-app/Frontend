@@ -63,7 +63,7 @@ class Button extends StatelessWidget {
         return Material(
           borderRadius: BorderRadius.circular(30),
           child: RaisedButton(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            // padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             onPressed: isLoading ? null : tapHandler,
             child: Text(
               isLoading ? 'Carregando...' : buttonText.toUpperCase(),

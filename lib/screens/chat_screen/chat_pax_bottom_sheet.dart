@@ -195,7 +195,6 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
         String formattedDate = DateFormat("yyyy-MM-dd").format(date);
         pickedDate = formattedDate;
         initialDate = date;
-        print(pickedDate);
       });
     });
   }

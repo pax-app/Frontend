@@ -14,12 +14,12 @@ import 'package:path/path.dart' as Path;
 import 'dart:io';
 
 class ChatScreen extends StatefulWidget {
-  final int chat_id;
-  final String person_name;
+  final int chatId;
+  final String personName;
 
   ChatScreen({
-    @required this.chat_id,
-    @required this.person_name,
+    @required this.chatId,
+    @required this.personName,
   });
 
   @override
@@ -29,8 +29,8 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
 
-  bool isProvider = true;
   var addresses;
+  bool isProvider = true;
   bool isAddressesLoading = true;
 
   @override
@@ -62,7 +62,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Expanded(
                 child: StreamBuilder(
                   stream: _firestore
-                      .collection(widget.chat_id.toString())
+                      .collection(widget.chatId.toString())
                       .orderBy('date_time_sent', descending: true)
                       .snapshots(),
                   builder: _update,
@@ -95,7 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
     var date_time_sent = DateTime.now().millisecondsSinceEpoch.toString();
 
     var chat_ref = _firestore
-        .collection(widget.chat_id.toString())
+        .collection(widget.chatId.toString())
         .document(date_time_sent);
 
     _firestore.runTransaction((transaction) async {
@@ -126,7 +126,7 @@ class _ChatScreenState extends State<ChatScreen> {
       isScrollControlled: true,
       context: context,
       builder: (context) => ChatPaxBottomSheet(
-        chatId: widget.chat_id,
+        chatId: widget.chatId,
         providerId: 1,
         userId: 1,
         sendPaxFirebase: _sendMessage,
@@ -138,7 +138,9 @@ class _ChatScreenState extends State<ChatScreen> {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (context) => ChatPaxDetail(),
+      builder: (context) => ChatPaxDetail(
+        chatId: widget.chatId,
+      ),
     );
   }
 
