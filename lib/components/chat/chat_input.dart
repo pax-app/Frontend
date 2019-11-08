@@ -19,7 +19,7 @@ class _ChatInputState extends State<ChatInput> {
 
   void _sendMessageHandler() {
     if (_messageController.text.isEmpty) return;
-    widget.sendAction(_messageController.text, false);
+    widget.sendAction(_messageController.text, false, false);
     _messageController.clear();
   }
 

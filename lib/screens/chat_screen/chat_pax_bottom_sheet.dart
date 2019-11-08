@@ -4,6 +4,7 @@ import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/disabled_outline_input/disabled_outline_input.dart';
 import 'package:Pax/components/text_input/text_input.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:Pax/theme/colors.dart';
@@ -11,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ChatPaxBottomSheet extends StatefulWidget {
+  final Function sendPaxFirebase;
+
   final int chatId;
   final int providerId;
   final int userId;
@@ -19,6 +22,7 @@ class ChatPaxBottomSheet extends StatefulWidget {
     this.chatId,
     this.providerId,
     this.userId,
+    this.sendPaxFirebase,
   });
 
   @override
@@ -26,6 +30,8 @@ class ChatPaxBottomSheet extends StatefulWidget {
 }
 
 class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
+  final Firestore _firestore = Firestore.instance;
+
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _addressController = TextEditingController(
@@ -176,10 +182,11 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       isPaxLoading = false;
     });
 
+    widget.sendPaxFirebase(_nameController.text, false, true);
     // var response =
     //     await http.get('http://192.168.1.12:5003/pax/consult_pax?chat_id=17');
 
-    print('Response body: ${response.body}');
+    Navigator.of(context).pop();
   }
 
   void _presentDatePicker() {

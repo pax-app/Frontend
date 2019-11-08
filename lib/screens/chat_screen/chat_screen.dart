@@ -90,7 +90,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _sendMessage(String value, bool isImage) {
+  void _sendMessage(String value, bool isImage, bool isPax) {
     var date_time_sent = DateTime.now().millisecondsSinceEpoch.toString();
 
     var chat_ref = _firestore
@@ -99,7 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _firestore.runTransaction((transaction) async {
       await transaction.set(chat_ref, {
-        isImage ? 'path_image' : 'text_message': value,
+        isPax ? 'pax_title' : (isImage ? 'path_image' : 'text_message'): value,
         'sender': isProvider ? 'P' : 'U',
         'date_time_sent': date_time_sent
       });
@@ -128,6 +128,7 @@ class _ChatScreenState extends State<ChatScreen> {
         chatId: widget.chat_id,
         providerId: 1,
         userId: 1,
+        sendPaxFirebase: _sendMessage,
       ),
     );
   }
@@ -142,7 +143,7 @@ class _ChatScreenState extends State<ChatScreen> {
     await uploadTask.onComplete;
 
     storageReference.getDownloadURL().then((fileURL) {
-      _sendMessage(fileURL, true);
+      _sendMessage(fileURL, true, false);
     });
   }
 
