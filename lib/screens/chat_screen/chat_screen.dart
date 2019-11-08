@@ -1,6 +1,5 @@
-import 'dart:io';
-import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_pax_bottom_sheet.dart';
+import 'package:Pax/screens/chat_screen/chat_pax_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/chat/start_chat.dart';
 import 'package:Pax/components/chat/chat_app_bar.dart';
@@ -12,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
+import 'dart:io';
 
 class ChatScreen extends StatefulWidget {
   final int chat_id;
@@ -87,6 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return ChatList(
       snapshot: snapshot.data.documents,
       isProvider: isProvider,
+      showPaxDetails: _showPaxDetails,
     );
   }
 
@@ -130,6 +131,14 @@ class _ChatScreenState extends State<ChatScreen> {
         userId: 1,
         sendPaxFirebase: _sendMessage,
       ),
+    );
+  }
+
+  void _showPaxDetails(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => ChatPaxDetail(),
     );
   }
 

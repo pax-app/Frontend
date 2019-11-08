@@ -10,9 +10,12 @@ class ChatList extends StatelessWidget {
   final snapshot;
   final bool isProvider;
 
+  final Function showPaxDetails;
+
   ChatList({
     @required this.snapshot,
     @required this.isProvider,
+    @required this.showPaxDetails,
   });
 
   @override
@@ -42,6 +45,7 @@ class ChatList extends StatelessWidget {
               message: snapshot[index]['text_message'],
               image: snapshot[index]['path_image'],
               paxTitle: snapshot[index]['pax_title'],
+              showPaxDetails: showPaxDetails,
               hour: formatHour.format(DateTime.fromMillisecondsSinceEpoch(
                   int.parse(snapshot[index]['date_time_sent']))),
             ),

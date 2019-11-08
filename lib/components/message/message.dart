@@ -9,6 +9,7 @@ class Message extends StatelessWidget {
   final String hour;
   final String paxTitle;
   final bool isMe;
+  final Function showPaxDetails;
 
   Message({
     @required this.message,
@@ -16,6 +17,7 @@ class Message extends StatelessWidget {
     @required this.isMe,
     @required this.image,
     @required this.paxTitle,
+    @required this.showPaxDetails,
   });
 
   @override
@@ -28,57 +30,62 @@ class Message extends StatelessWidget {
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: <Widget>[
           Flexible(
-            child: Container(
-              padding: const EdgeInsets.only(
-                top: 14,
-                left: 15,
-                right: 15,
-                bottom: 7,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(15),
-                  topLeft: Radius.circular(15),
-                  bottomLeft: Radius.circular(isMe ? 15 : 0),
-                  bottomRight: Radius.circular(isMe ? 0 : 15),
+            child: GestureDetector(
+              onTap: paxTitle != null ? () => showPaxDetails(context) : () {},
+              child: Container(
+                padding: const EdgeInsets.only(
+                  top: 14,
+                  left: 15,
+                  right: 15,
+                  bottom: 7,
                 ),
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    isMe ? secondaryColorLight : Colors.white,
-                    isMe ? secondaryColor : Color(0xfff3f3f3),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(15),
+                    topLeft: Radius.circular(15),
+                    bottomLeft: Radius.circular(isMe ? 15 : 0),
+                    bottomRight: Radius.circular(isMe ? 0 : 15),
+                  ),
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      isMe ? secondaryColorLight : Colors.white,
+                      isMe ? secondaryColor : Color(0xfff3f3f3),
+                    ],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          isMe ? secondaryColor : Color.fromRGBO(0, 0, 0, .3),
+                      offset: Offset(0, 2),
+                      blurRadius: 3.2,
+                    )
                   ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: isMe ? secondaryColor : Color.fromRGBO(0, 0, 0, .3),
-                    offset: Offset(0, 2),
-                    blurRadius: 3.2,
-                  )
-                ],
-              ),
-              margin: EdgeInsets.symmetric(vertical: 3),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  if (message != null)
+                margin: EdgeInsets.symmetric(vertical: 3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    if (message != null)
+                      Text(
+                        message,
+                        style:
+                            TextStyle(color: isMe ? colorWhite : primaryColor),
+                      ),
+                    if (image != null) ImageBubble(image: image, isMe: isMe),
+                    if (paxTitle != null) PaxBubble(paxTitle: paxTitle),
                     Text(
-                      message,
-                      style: TextStyle(color: isMe ? colorWhite : primaryColor),
+                      hour,
+                      style: TextStyle(
+                        color: isMe
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).accentColor,
+                        fontSize: 11,
+                      ),
                     ),
-                  if (image != null) ImageBubble(image: image, isMe: isMe),
-                  if (paxTitle != null) PaxBubble(paxTitle: paxTitle),
-                  Text(
-                    hour,
-                    style: TextStyle(
-                      color: isMe
-                          ? Theme.of(context).primaryColor
-                          : Theme.of(context).accentColor,
-                      fontSize: 11,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

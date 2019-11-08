@@ -1,10 +1,8 @@
-import 'dart:io';
 import 'dart:convert';
 import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/disabled_outline_input/disabled_outline_input.dart';
 import 'package:Pax/components/text_input/text_input.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:Pax/theme/colors.dart';
@@ -30,8 +28,6 @@ class ChatPaxBottomSheet extends StatefulWidget {
 }
 
 class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
-  final Firestore _firestore = Firestore.instance;
-
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _addressController = TextEditingController(
