@@ -41,6 +41,7 @@ class ChatList extends StatelessWidget {
                   !isProvider && messageSender == 'U',
               message: snapshot[index]['text_message'],
               image: snapshot[index]['path_image'],
+              paxTitle: snapshot[index]['pax_title'],
               hour: formatHour.format(DateTime.fromMillisecondsSinceEpoch(
                   int.parse(snapshot[index]['date_time_sent']))),
             ),
