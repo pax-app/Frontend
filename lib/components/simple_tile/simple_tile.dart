@@ -28,7 +28,9 @@ class SimpleTile extends StatelessWidget {
             color: Theme.of(context).primaryColorLight,
           ),
           leading: SizedBox(
-            child: Image.asset(this.img),
+            child: Image(
+              image: AssetImage(this.img),
+            ),
             width: 40.0,
             height: 100.0,
           ),

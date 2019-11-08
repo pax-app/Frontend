@@ -10,10 +10,24 @@ class AddCard extends StatefulWidget {
 }
 
 class _AddCardState extends State<AddCard> {
-  TextEditingController _addCard = TextEditingController();
-  TextEditingController _addCVV = TextEditingController();
+  // TextEditingController _addCard = TextEditingController();
+  // TextEditingController _addCVV = TextEditingController();
   TextEditingController _addName = TextEditingController();
   var _addExpiration = MaskedTextController(mask: '00/00');
+  var _addCVV = MaskedTextController(mask: '000');
+  var _addCard = MaskedTextController(mask: '0000 0000 0000 0000');
+  FocusNode _focus = new FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focus.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    debugPrint("Focus: " + _focus.hasFocus.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +38,7 @@ class _AddCardState extends State<AddCard> {
           expiryDate: '08/27',
           cardHolderName: 'Fepas Lindi Patrick Gato'.toUpperCase(),
           cvvCode: '123',
-          showBackView: true, //back view
+          showBackView: this._focus.hasFocus,
           cardbgColor: Colors.green,
           height: 175.0,
           textStyle:
@@ -71,9 +85,9 @@ class _AddCardState extends State<AddCard> {
                             ? 'Do not use the @ char.'
                             : null;
                       },
-                      TextInputType.text,
+                      TextInputType.number,
                       1,
-                      focus: true,
+                      focus: false,
                       controller: _addExpiration,
                     ),
                     width: MediaQuery.of(context).size.width * 0.498,
@@ -91,10 +105,11 @@ class _AddCardState extends State<AddCard> {
                             ? 'Do not use the @ char.'
                             : null;
                       },
-                      TextInputType.text,
+                      TextInputType.number,
                       1,
                       focus: true,
                       controller: _addCVV,
+                      focusNd: _focus,
                     ),
                     width: MediaQuery.of(context).size.width * 0.39,
                   )

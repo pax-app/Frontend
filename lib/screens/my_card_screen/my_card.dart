@@ -16,17 +16,21 @@ class MyCard extends StatelessWidget {
 class SelectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const Map<String, String> imagePaths = {
-      'Master': 'assets/cards_flag/master.png',
-      'Visa': 'assets/cards_flag/visa.png'
-    };
     return Container(
         child: Column(
       children: <Widget>[
-        SimpleTile('584764837635', () {},
-            img: imagePaths[cardImageSelector('584764837635')]),
+        SimpleTile(
+          '5847 XXXX XXXX 1112',
+          () {},
+          img: cardImageSelector('584764837635'),
+        ),
+        SimpleTile(
+          '4847 XXXX XXXX 3333',
+          () {},
+          img: cardImageSelector('484764837635'),
+        ),
         SizedBox(
-          height: MediaQuery.of(context).size.height - 300,
+          height: MediaQuery.of(context).size.height * 0.39,
         ),
         Button(
           buttonText: 'Adicionar Cartão',
@@ -57,9 +61,10 @@ String cardImageSelector(String cardId) {
 
   switch (id) {
     case '4':
-      return 'Master';
+      return 'assets/logo/master.jpg';
     case '5':
-      return 'Visa';
+      return 'assets/logo/visa.jpg';
     default:
+      return null;
   }
 }
