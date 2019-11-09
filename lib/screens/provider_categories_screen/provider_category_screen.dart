@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Pax/components/simple_tile/simple_tile.dart';
+import 'package:Pax/services/api.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 Future<List<Category>> fetchPost(id) async {
-  final url = 'http://172.18.0.1:5002/category/$id/provider';
-  final response = await http
-      .get(url, headers: {HttpHeaders.contentTypeHeader: 'application/json'});
+  final api = Api();
+  final response = await api.get(
+      Services.CATEGORY, Routes.CATEGORY_PROVIDERS(id),
+      headers: {HttpHeaders.contentTypeHeader: 'application/json'});
   var responseJson = json.decode(response.body);
   responseJson = responseJson["data"];
   responseJson = responseJson["categories"];

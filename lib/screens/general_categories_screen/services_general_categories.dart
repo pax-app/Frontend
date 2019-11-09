@@ -3,11 +3,12 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:Pax/components/general_categories_panel/general_categories_panel_card.dart';
+import 'package:Pax/services/api.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 Future<List<Category>> fetchPost() async {
-  final response = await http.get('http://172.18.0.1:5002/category/general',
+  final api = Api();
+  final response = await api.get(Services.CATEGORY, Routes.GENERAL_CATEGORY,
       headers: {HttpHeaders.contentTypeHeader: 'application/json'});
   var responseJson = json.decode(response.body);
   responseJson = responseJson["data"];

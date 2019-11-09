@@ -9,6 +9,9 @@ class Routes {
   static const String AUTH_STATUS = "/auth/status";
   static const String GENERAL_CATEGORY = "/category/general";
   static const String PROVIDER_CATEGORY = "/category/provider";
+  static String CATEGORY_PROVIDERS(id) {
+    return "category/$id/provider";
+  }
 }
 
 class Services {
