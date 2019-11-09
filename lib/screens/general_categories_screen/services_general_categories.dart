@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:convert';
 
 import 'package:Pax/components/general_categories_panel/general_categories_panel_card.dart';
@@ -7,13 +6,13 @@ import 'package:Pax/services/api.dart';
 import 'package:flutter/material.dart';
 
 Future<List<Category>> fetchPost() async {
-  final api = Api();
-  final response = await api.get(Services.CATEGORY, Routes.GENERAL_CATEGORY,
-      headers: {HttpHeaders.contentTypeHeader: 'application/json'});
+  Map<String, String> header = {'content-type': 'application/json'};
+  final _api = Api();
+  final response = await _api.get(Services.CATEGORY, Routes.GENERAL_CATEGORY,
+      headers: header);
   var responseJson = json.decode(response.body);
   responseJson = responseJson["data"];
   responseJson = responseJson["categories"];
-
   final List<Category> listaFinal = [];
 
   for (var item in responseJson) {
@@ -57,7 +56,6 @@ class ServiceGeneralCategory extends StatelessWidget {
           'Encontre o melhor em consertar aparelhos eletrônicos',
       'Reformas': 'Precisa de reformas? Fale com nossos profissionais',
     };
-
     return Container(
       height: MediaQuery.of(context).size.height - 82,
       child: FutureBuilder<List<Category>>(
