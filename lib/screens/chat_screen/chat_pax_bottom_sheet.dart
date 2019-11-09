@@ -15,7 +15,6 @@ class ChatPaxBottomSheet extends StatefulWidget {
   final int chatId;
   final int providerId;
   final int userId;
-
   ChatPaxBottomSheet({
     this.chatId,
     this.providerId,
@@ -39,137 +38,140 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   final formatDate = DateFormat("dd MMMM yyyy", "pt-BR");
 
   bool isPaxLoading = false;
+  bool isFormReady = false;
 
-  int addressId;
+  @override
+  void initState() {
+    super.initState();
+
+    _getPaxIfExists().then((data) {
+      if (data['exists'] == 'true') _updateInputs(data['pax']);
+      setState(() {
+        isFormReady = true;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).viewInsets.bottom);
     return BaseBottomSheet(
       curveAnimation: Curves.linear,
       duration: Duration(milliseconds: 200),
-      modalHeight: MediaQuery.of(context).viewInsets.bottom + 540,
-      sheetBody: FutureBuilder(
-        future: _getPaxIfExists(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData == false)
-            return Center(child: CircularProgressIndicator());
-
-          if (snapshot.data['exists'] == true) {
-            var pax = snapshot.data['pax'];
-            _updateInputs(pax);
-          }
-
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * .1,
-                  ),
-                  child: Text(
-                    'Preencha o que falta para enviar o seu PAX',
-                    style:
-                        Theme.of(context).textTheme.title.copyWith(height: 1.3),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                SizedBox(height: 30),
-                TextInput(
-                  'Nome',
-                  'Nome do serviço a ser prestado...',
-                  false,
-                  null,
-                  TextInputType.text,
-                  1,
-                  controller: _nameController,
-                ),
-                SizedBox(height: 3),
-                TextInput(
-                  'Descrição',
-                  'Descreva o que irá fazer...',
-                  false,
-                  null,
-                  TextInputType.text,
-                  1,
-                  controller: _descriptionController,
-                ),
-                SizedBox(height: 7),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.2),
-                  child: DisabledOutlineInput(
-                    labelText: 'Endereço',
-                    textController: _addressController,
-                  ),
-                ),
-                SizedBox(height: 7),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width / 2.5,
-                      child: TextInput(
-                        'Preço',
-                        'Total a pagar',
-                        true,
-                        null,
-                        TextInputType.number,
-                        1,
-                        controller: _priceController,
-                      ),
+      modalHeight:
+          isFormReady ? MediaQuery.of(context).viewInsets.bottom + 540 : 150,
+      sheetBody: isFormReady
+          ? SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * .1,
                     ),
-                    Container(
-                      height: 59,
-                      width: MediaQuery.of(context).size.width / 2.5,
-                      margin: EdgeInsets.only(right: 4),
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(4),
+                    child: Text(
+                      'Preencha o que falta para enviar o seu PAX',
+                      style: Theme.of(context)
+                          .textTheme
+                          .title
+                          .copyWith(height: 1.3),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  TextInput(
+                    'Nome',
+                    'Nome do serviço a ser prestado...',
+                    false,
+                    null,
+                    TextInputType.text,
+                    1,
+                    controller: _nameController,
+                  ),
+                  SizedBox(height: 3),
+                  TextInput(
+                    'Descrição',
+                    'Descreva o que irá fazer...',
+                    false,
+                    null,
+                    TextInputType.text,
+                    1,
+                    controller: _descriptionController,
+                  ),
+                  SizedBox(height: 7),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.2),
+                    child: DisabledOutlineInput(
+                      labelText: 'Endereço',
+                      textController: _addressController,
+                    ),
+                  ),
+                  SizedBox(height: 7),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2.5,
+                        child: TextInput(
+                          'Preço',
+                          'Total a pagar',
+                          true,
+                          null,
+                          TextInputType.number,
+                          1,
+                          controller: _priceController,
+                        ),
                       ),
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
+                      Container(
+                        height: 59,
+                        width: MediaQuery.of(context).size.width / 2.5,
+                        margin: EdgeInsets.only(right: 4),
+                        decoration: BoxDecoration(
+                          border: Border.all(),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        splashColor: secondaryColorDimmed,
-                        onPressed: _presentDatePicker,
-                        child: Text(
-                          objectDate == DateTime(2019, 01, 01)
-                              ? 'ESCOLHA A DATA'
-                              : formatDate.format(objectDate),
-                          style:
-                              TextStyle(color: Theme.of(context).primaryColor),
+                        child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          splashColor: secondaryColorDimmed,
+                          onPressed: _presentDatePicker,
+                          child: Text(
+                            objectDate == DateTime(2019, 01, 01)
+                                ? 'ESCOLHA A DATA'
+                                : formatDate.format(objectDate),
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 25),
-                Button(
-                  isLoading: isPaxLoading,
-                  buttonText: 'Enviar',
-                  tapHandler: _nameController.text.isNotEmpty &&
-                          _descriptionController.text.isNotEmpty &&
-                          _addressController.text.isNotEmpty &&
-                          _priceController.text.isNotEmpty
-                      ? _createPax
-                      : null,
-                )
-              ],
-            ),
-          );
-        },
-      ),
+                    ],
+                  ),
+                  SizedBox(height: 25),
+                  Button(
+                    isLoading: isPaxLoading,
+                    buttonText: 'Enviar',
+                    tapHandler: _nameController.text.isNotEmpty &&
+                            _descriptionController.text.isNotEmpty &&
+                            _addressController.text.isNotEmpty &&
+                            _priceController.text.isNotEmpty
+                        ? _createPax
+                        : null,
+                  )
+                ],
+              ),
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 
-  Future _createPax() async {
+  void _createPax() async {
     setState(() {
       isPaxLoading = true;
     });
 
     var pax = {
-      "date": formattedDate.toString(),
+      "date": formattedDate,
       "description": _descriptionController.text,
       "name": _nameController.text,
       "price": double.parse(_priceController.text),
@@ -196,12 +198,12 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     Navigator.of(context).pop();
   }
 
-  Future _getPaxIfExists() async {
-    var response = await http
+  Future<dynamic> _getPaxIfExists() async {
+    var req = await http
         .get('http://192.168.1.12:5003/pax/consult_pax/${widget.chatId}');
 
-    var pax = json.decode(response.body);
-    return pax;
+    var res = json.decode(req.body);
+    return res;
   }
 
   void _updateInputs(var pax) {
@@ -222,9 +224,9 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       lastDate: DateTime(2025),
     ).then((date) {
       if (date == null) return;
+      String format = DateFormat("yyyy-MM-dd").format(date);
       setState(() {
-        String formattedDate = DateFormat("yyyy-MM-dd").format(date);
-        formattedDate = formattedDate;
+        formattedDate = format;
         objectDate = date;
       });
     });
