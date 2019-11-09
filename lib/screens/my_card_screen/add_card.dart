@@ -1,8 +1,12 @@
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/text_input/text_input.dart';
+import 'package:Pax/screens/home_screen/home_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+
+import 'my_card.dart';
 
 class AddCard extends StatefulWidget {
   @override
@@ -10,9 +14,11 @@ class AddCard extends StatefulWidget {
 }
 
 class _AddCardState extends State<AddCard> {
-  TextEditingController _addName = TextEditingController(text: ' ');
+  TextEditingController _addName = TextEditingController();
   var _addExpiration = MaskedTextController(mask: '00/00');
-  var _addCVV = MaskedTextController(mask: '000');
+  var _addCVV = MaskedTextController(
+    mask: '000',
+  );
   var _addCard = MaskedTextController(mask: '0000 0000 0000 0000');
   FocusNode _focus = new FocusNode();
 
@@ -26,6 +32,44 @@ class _AddCardState extends State<AddCard> {
     debugPrint("Focus: " + _focus.hasFocus.toString());
   }
 
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+            title: new Text(
+                "Parabéns! O cartão ${this._addCard.text} foi adicionado com sucesso!"),
+            content: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: Column(
+                children: <Widget>[
+                  Icon(
+                    Icons.check_circle,
+                    size: 100.0,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  // usually buttons at the bottom of the dialog
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.08,
+                  ),
+                  Button(
+                    buttonText: 'OK',
+                    type: 'default',
+                    tapHandler: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                    isSmall: false,
+                  ),
+                ],
+              ),
+            ));
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,13 +78,18 @@ class _AddCardState extends State<AddCard> {
         CreditCardWidget(
           cardNumber: this._addCard.text,
           expiryDate: this._addExpiration.text,
-          cardHolderName: this._addName.text.toUpperCase(),
+          cardHolderName: this._addName.text.isEmpty
+              ? 'NOME DO TITULAR'
+              : this._addName.text.toUpperCase(),
           cvvCode: this._addCVV.text,
           showBackView: this._focus.hasFocus,
-          cardbgColor: Colors.green,
+          cardbgColor: Color(0xff78AA43),
           height: 175.0,
-          textStyle:
-              TextStyle(fontFamily: 'OCR-A', fontSize: 18, color: Colors.white),
+          textStyle: TextStyle(
+              fontFamily: 'OCR-A',
+              fontSize: 18,
+              color: Color(0xff4f4f4f),
+              fontWeight: FontWeight.bold),
           width: MediaQuery.of(context).size.width,
           animationDuration: Duration(milliseconds: 1000),
         ),
@@ -128,17 +177,7 @@ class _AddCardState extends State<AddCard> {
                   _addName.text.length == 0
               ? null
               : () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BaseScreen(
-                        "Cartões",
-                        "Cartão ${_addCard.text} Cadastrado com Sucesso",
-                        null,
-                        null,
-                      ),
-                    ),
-                  );
+                  _showDialog();
                 },
           isSmall: false,
         ),
