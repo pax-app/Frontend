@@ -31,7 +31,7 @@ class SignUpScreen extends StatelessWidget {
   void doSignUp(BuildContext ctx) async {
     var logged = await _signupBloc.signUp();
     if (logged == 201)
-      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
         return HomeScreen();
       }));
     else if (logged == 500 || logged == 503) //Erro ao conectar ao DB

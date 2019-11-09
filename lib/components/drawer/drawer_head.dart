@@ -14,7 +14,7 @@ class DrawerHead extends StatelessWidget {
   void doLogout(BuildContext ctx) async {
     var loggedOut = await _loginBloc.logOut();
     if (loggedOut)
-      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
         return LoginScreen();
       }));
   }

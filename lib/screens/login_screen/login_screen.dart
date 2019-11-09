@@ -48,7 +48,8 @@ class LoginScreen extends StatelessWidget {
     logged = login ? logged : await _loginBloc.checkIfUserIsLogged();
 
     if (logged)
-      Navigator.of(ctx).push(CupertinoPageRoute(builder: (_) => HomeScreen()));
+      Navigator.of(ctx)
+          .pushReplacement(CupertinoPageRoute(builder: (_) => HomeScreen()));
     else if (login && loginResponse.statusCode == 404)
       _showDialog(ctx, 'Usuario não encontrado.');
     else if (login && loginResponse.statusCode == 500)
