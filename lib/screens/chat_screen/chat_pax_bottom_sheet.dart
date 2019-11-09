@@ -34,8 +34,8 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       text: 'Endereço do usuário bla bla bla 123 123 123 123 3331313 ');
   final _priceController = TextEditingController();
 
-  DateTime initialDate = DateTime(2019, 01, 01);
-  String pickedDate;
+  DateTime objectDate = DateTime(2019, 01, 01);
+  String formattedDate;
   final formatDate = DateFormat("dd MMMM yyyy", "pt-BR");
 
   bool isPaxLoading = false;
@@ -49,101 +49,116 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       curveAnimation: Curves.linear,
       duration: Duration(milliseconds: 200),
       modalHeight: MediaQuery.of(context).viewInsets.bottom + 540,
-      sheetBody: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * .1,
-              ),
-              child: Text(
-                'Preencha o que falta para enviar o seu PAX',
-                style: Theme.of(context).textTheme.title.copyWith(height: 1.3),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            SizedBox(height: 30),
-            TextInput(
-              'Nome',
-              'Nome do serviço a ser prestado...',
-              false,
-              null,
-              TextInputType.text,
-              1,
-              controller: _nameController,
-            ),
-            SizedBox(height: 3),
-            TextInput(
-              'Descrição',
-              'Descreva o que irá fazer...',
-              false,
-              null,
-              TextInputType.text,
-              1,
-              controller: _descriptionController,
-            ),
-            SizedBox(height: 7),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.2),
-              child: DisabledOutlineInput(
-                labelText: 'Endereço',
-                textController: _addressController,
-              ),
-            ),
-            SizedBox(height: 7),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      sheetBody: FutureBuilder(
+        future: _getPaxIfExists(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData == false)
+            return Center(child: CircularProgressIndicator());
+
+          if (snapshot.data['exists'] == true) {
+            var pax = snapshot.data['pax'];
+            _updateInputs(pax);
+          }
+
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width / 2.5,
-                  child: TextInput(
-                    'Preço',
-                    'Total a pagar',
-                    true,
-                    null,
-                    TextInputType.number,
-                    1,
-                    controller: _priceController,
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * .1,
+                  ),
+                  child: Text(
+                    'Preencha o que falta para enviar o seu PAX',
+                    style:
+                        Theme.of(context).textTheme.title.copyWith(height: 1.3),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                Container(
-                  height: 59,
-                  width: MediaQuery.of(context).size.width / 2.5,
-                  margin: EdgeInsets.only(right: 4),
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    splashColor: secondaryColorDimmed,
-                    onPressed: _presentDatePicker,
-                    child: Text(
-                      initialDate == DateTime(2019, 01, 01)
-                          ? 'ESCOLHA A DATA'
-                          : formatDate.format(initialDate),
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
+                SizedBox(height: 30),
+                TextInput(
+                  'Nome',
+                  'Nome do serviço a ser prestado...',
+                  false,
+                  null,
+                  TextInputType.text,
+                  1,
+                  controller: _nameController,
+                ),
+                SizedBox(height: 3),
+                TextInput(
+                  'Descrição',
+                  'Descreva o que irá fazer...',
+                  false,
+                  null,
+                  TextInputType.text,
+                  1,
+                  controller: _descriptionController,
+                ),
+                SizedBox(height: 7),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.2),
+                  child: DisabledOutlineInput(
+                    labelText: 'Endereço',
+                    textController: _addressController,
                   ),
                 ),
+                SizedBox(height: 7),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      child: TextInput(
+                        'Preço',
+                        'Total a pagar',
+                        true,
+                        null,
+                        TextInputType.number,
+                        1,
+                        controller: _priceController,
+                      ),
+                    ),
+                    Container(
+                      height: 59,
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      margin: EdgeInsets.only(right: 4),
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        splashColor: secondaryColorDimmed,
+                        onPressed: _presentDatePicker,
+                        child: Text(
+                          objectDate == DateTime(2019, 01, 01)
+                              ? 'ESCOLHA A DATA'
+                              : formatDate.format(objectDate),
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 25),
+                Button(
+                  isLoading: isPaxLoading,
+                  buttonText: 'Enviar',
+                  tapHandler: _nameController.text.isNotEmpty &&
+                          _descriptionController.text.isNotEmpty &&
+                          _addressController.text.isNotEmpty &&
+                          _priceController.text.isNotEmpty
+                      ? _createPax
+                      : null,
+                )
               ],
             ),
-            SizedBox(height: 25),
-            Button(
-              isLoading: isPaxLoading,
-              buttonText: 'Enviar',
-              tapHandler: _nameController.text.isNotEmpty &&
-                      _descriptionController.text.isNotEmpty &&
-                      _addressController.text.isNotEmpty &&
-                      _priceController.text.isNotEmpty
-                  ? _createPax
-                  : null,
-            )
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -154,7 +169,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     });
 
     var pax = {
-      "date": pickedDate.toString(),
+      "date": formattedDate.toString(),
       "description": _descriptionController.text,
       "name": _nameController.text,
       "price": double.parse(_priceController.text),
@@ -167,7 +182,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     var body = json.encode(pax);
 
     await http.post(
-      'http://192.168.1.12:5003/pax/upCreate_pax',
+      'http://192.168.1.12:5003/pax/upCreate',
       headers: {"Content-Type": "application/json"},
       body: body,
     );
@@ -177,10 +192,26 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     });
 
     widget.sendPaxFirebase(_nameController.text, false, true);
-    // var response =
-    //     await http.get('http://192.168.1.12:5003/pax/consult_pax?chat_id=17');
 
     Navigator.of(context).pop();
+  }
+
+  Future _getPaxIfExists() async {
+    var response = await http
+        .get('http://192.168.1.12:5003/pax/consult_pax/${widget.chatId}');
+
+    var pax = json.decode(response.body);
+    return pax;
+  }
+
+  void _updateInputs(var pax) {
+    _nameController.text = pax['name'];
+    _descriptionController.text = pax['description'];
+    _priceController.text = pax['price'].toString();
+    // setState(() {
+    // objectDate = pax['date'];
+    // formattedDate = DateFormat('yyyy-MM-dd').format(pax['date']);
+    // });
   }
 
   void _presentDatePicker() {
@@ -193,8 +224,8 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       if (date == null) return;
       setState(() {
         String formattedDate = DateFormat("yyyy-MM-dd").format(date);
-        pickedDate = formattedDate;
-        initialDate = date;
+        formattedDate = formattedDate;
+        objectDate = date;
       });
     });
   }
