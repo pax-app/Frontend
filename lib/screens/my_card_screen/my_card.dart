@@ -61,9 +61,9 @@ String cardImageSelector(String cardId) {
 
   switch (id) {
     case '4':
-      return 'assets/logo/master.jpg';
+      return 'assets/logo/master.png';
     case '5':
-      return 'assets/logo/visa.jpg';
+      return 'assets/logo/visa.png';
     default:
       return null;
   }
