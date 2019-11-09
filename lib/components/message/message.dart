@@ -66,7 +66,7 @@ class Message extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: paxStatus == 'refused'
-                          ? Colors.black54
+                          ? Colors.redAccent
                           : isMe ? secondaryColor : Color.fromRGBO(0, 0, 0, .3),
                       offset: Offset(0, 2),
                       blurRadius: 3.2,
