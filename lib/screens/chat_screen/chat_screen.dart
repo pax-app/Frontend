@@ -30,7 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
 
   var addresses;
-  bool isProvider = true;
+  bool isProvider = false;
   bool isAddressesLoading = true;
 
   @override
@@ -200,7 +200,10 @@ class _ChatScreenState extends State<ChatScreen> {
     Navigator.of(context).pop();
     showModalBottomSheet(
       context: context,
-      builder: (context) => ChatAddressBottomSheet(user_id: 1),
+      builder: (context) => ChatAddressBottomSheet(
+        userId: 1,
+        chatId: widget.chatId,
+      ),
     );
   }
 }

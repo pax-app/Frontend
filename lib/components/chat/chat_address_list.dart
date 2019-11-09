@@ -1,15 +1,19 @@
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 class ChatAddressList extends StatelessWidget {
-  final int addressLength;
-  final addresses;
   final Function navigateToCepModal;
+  final int addressLength;
+  final int chatId;
+  final addresses;
 
   const ChatAddressList({
     this.addressLength,
     this.addresses,
     this.navigateToCepModal,
+    this.chatId,
   });
 
   @override
@@ -24,8 +28,9 @@ class ChatAddressList extends StatelessWidget {
             Divider(height: 1, thickness: 1.2),
             Material(
               child: InkWell(
-                onTap:
-                    isLast ? navigateToCepModal : () => _selectAddress(index),
+                onTap: isLast
+                    ? navigateToCepModal
+                    : () => _selectAddress(addresses[index].address_id),
                 child: Container(
                   width: 400,
                   padding: const EdgeInsets.symmetric(
@@ -52,7 +57,11 @@ class ChatAddressList extends StatelessWidget {
     );
   }
 
-  void _selectAddress(int address_id) {
-    print(address_id);
+  void _selectAddress(int addressId) async {
+    print(chatId);
+    print(addressId);
+    var response = await http.patch(
+        'http://192.168.0.42:3001/chat_address_update/${chatId.toString()}/${addressId.toString()}');
+    // var jsonData = json.decode(response.body);
   }
 }

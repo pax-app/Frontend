@@ -8,9 +8,13 @@ import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class ChatAddressBottomSheet extends StatefulWidget {
-  final user_id;
+  final int chatId;
+  final int userId;
 
-  ChatAddressBottomSheet({@required this.user_id});
+  ChatAddressBottomSheet({
+    @required this.userId,
+    @required this.chatId,
+  });
 
   @override
   _ChatAddressBottomSheetState createState() => _ChatAddressBottomSheetState();
@@ -60,6 +64,7 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
                     : ChatAddressList(
                         addressLength: _addressLength,
                         addresses: addresses,
+                        chatId: widget.chatId,
                         navigateToCepModal: _navigateToCepModal,
                       ),
           ),
@@ -75,7 +80,9 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
   }
 
   void _getUserAddresses() async {
-    var params = {'user_id': '${widget.user_id.toString()}'};
+    var params = {
+      'user_id': '${widget.userId.toString()}',
+    };
     Uri uri = Uri.parse("https://pax-user.herokuapp.com/get_addresses");
     final newURI = uri.replace(queryParameters: params);
 
