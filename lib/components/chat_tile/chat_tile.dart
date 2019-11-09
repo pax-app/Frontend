@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChatTile extends StatelessWidget {
-  final String chatId;
+  final int chat_id;
   final String username;
   final String message;
   final bool isInDeletionMode;
@@ -13,7 +13,7 @@ class ChatTile extends StatelessWidget {
   final Function updateChatsToBeDeleted;
 
   ChatTile({
-    @required this.chatId,
+    @required this.chat_id,
     @required this.username,
     @required this.message,
     @required this.isInDeletionMode,
@@ -34,10 +34,10 @@ class ChatTile extends StatelessWidget {
         color: Theme.of(context).cardTheme.color,
         child: InkWell(
           onLongPress: isInDeletionMode == false
-              ? () => longPressHandler(chatId)
-              : () => updateChatsToBeDeleted(chatId),
+              ? () => longPressHandler(chat_id)
+              : () => updateChatsToBeDeleted(chat_id),
           onTap: isInDeletionMode
-              ? () => updateChatsToBeDeleted(chatId)
+              ? () => updateChatsToBeDeleted(chat_id)
               : () => _pushChatScreen(context),
           borderRadius: BorderRadius.circular(8),
           child: Center(
@@ -98,8 +98,8 @@ class ChatTile extends StatelessWidget {
       context,
       CupertinoPageRoute(
         builder: (_) => ChatScreen(
-          chatId: int.parse(chatId),
-          personName: username,
+          chat_id: chat_id,
+          person_name: username,
         ),
       ),
     );

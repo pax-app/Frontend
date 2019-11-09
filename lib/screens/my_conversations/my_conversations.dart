@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/chat_tile/chat_tile.dart';
 import 'package:http/http.dart' as http;
@@ -18,11 +20,6 @@ class _MyConversationsState extends State<MyConversations> {
   bool isDeleting = false;
 
   @override
-  void initState() {
-    super.initState();
-    _getUserChats();
-  }
-
   Widget build(BuildContext context) {
     return BaseScreen(
       "",
@@ -62,14 +59,14 @@ class _MyConversationsState extends State<MyConversations> {
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
-                int chatId = snapshot.data[index]["chat_id"];
+                int chat_id = snapshot.data[index]["chat_id"];
                 return ChatTile(
-                  chatId: chatId.toString(),
+                  chat_id: chat_id,
                   message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
                   username: 'Rorgérin Júrnio',
                   isInDeletionMode: _deletionMode,
                   isChatSelected:
-                      _chatsToDelete.contains(chatId) ? true : false,
+                      _chatsToDelete.contains(chat_id) ? true : false,
                   longPressHandler: _startDeletionMode,
                   updateChatsToBeDeleted: _updateChatsToBeDeleted,
                 );
@@ -101,23 +98,23 @@ class _MyConversationsState extends State<MyConversations> {
     });
   }
 
-  void _startDeletionMode(int chatId) {
+  void _startDeletionMode(int chat_id) {
     if (_deletionMode == false) {
       setState(() {
         _deletionMode = true;
       });
-      _updateChatsToBeDeleted(chatId);
+      _updateChatsToBeDeleted(chat_id);
     }
   }
 
-  void _updateChatsToBeDeleted(int chatId) {
-    if (_chatsToDelete.contains(chatId) == false) {
+  void _updateChatsToBeDeleted(int chat_id) {
+    if (_chatsToDelete.contains(chat_id) == false) {
       setState(() {
-        _chatsToDelete.add(chatId);
+        _chatsToDelete.add(chat_id);
       });
     } else {
       setState(() {
-        _chatsToDelete.remove(chatId);
+        _chatsToDelete.remove(chat_id);
       });
     }
     if (_chatsToDelete.isEmpty) {

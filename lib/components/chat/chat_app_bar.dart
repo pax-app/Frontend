@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ChatAppBar extends StatelessWidget with PreferredSizeWidget {
-  final String providerName;
-  final String providerQualification;
+  final String provider_name;
+  final String provider_qualification;
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   ChatAppBar({
-    @required this.providerName,
-    @required this.providerQualification,
+    @required this.provider_name,
+    @required this.provider_qualification,
   });
 
   @override
@@ -35,12 +35,12 @@ class ChatAppBar extends StatelessWidget with PreferredSizeWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                providerName,
+                provider_name,
                 style: Theme.of(context).textTheme.title,
               ),
               SizedBox(height: 2),
               Text(
-                providerQualification,
+                provider_qualification,
                 style: Theme.of(context).textTheme.body1,
               )
             ],

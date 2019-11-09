@@ -74,12 +74,12 @@ class ProviderPanel extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       ChatTile(
-                        chatId: null,
+                        chat_id: null,
                         username: 'Roger',
                         message: 'Fala mané!',
                       ),
                       ChatTile(
-                        chatId: null,
+                        chat_id: null,
                         username: 'Dutra',
                         message: 'Mexam na Planilha do ZenHub!',
                       ),

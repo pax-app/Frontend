@@ -9,15 +9,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart' as Path;
 
 class ChatScreen extends StatefulWidget {
-  final int chatId;
-  final String personName;
+  final int chat_id;
+  final String person_name;
 
   ChatScreen({
-    @required this.chatId,
-    @required this.personName,
+    @required this.chat_id,
+    @required this.person_name,
   });
 
   @override
@@ -34,8 +35,8 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final chatAppBar = ChatAppBar(
-      providerName: "Rogério Júnior",
-      providerQualification: "Assistência Técnica: Notebook",
+      provider_name: "Rogério Júnior",
+      provider_qualification: "Assistência Técnica: Notebook",
     );
 
     final mediaQuery = MediaQuery.of(context);
@@ -60,7 +61,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Expanded(
                 child: StreamBuilder(
                   stream: _firestore
-                      .collection(widget.chatId.toString())
+                      .collection(widget.chat_id.toString())
                       .orderBy('date_time_sent', descending: true)
                       .snapshots(),
                   builder: _update,
@@ -96,16 +97,17 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _sendMessage(String value, bool isImage) {
-    var dateTimeSent = DateTime.now().millisecondsSinceEpoch.toString();
+    var date_time_sent = DateTime.now().millisecondsSinceEpoch.toString();
 
-    var chatRef =
-        _firestore.collection(widget.chatId.toString()).document(dateTimeSent);
+    var chat_ref = _firestore
+        .collection(widget.chat_id.toString())
+        .document(date_time_sent);
 
     _firestore.runTransaction((transaction) async {
-      await transaction.set(chatRef, {
+      await transaction.set(chat_ref, {
         isImage ? 'path_image' : 'text_message': value,
         'sender': isProvider ? 'P' : 'U',
-        'date_time_sent': dateTimeSent
+        'date_time_sent': date_time_sent
       });
     });
   }
@@ -140,7 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
     Navigator.of(context).pop();
     showModalBottomSheet(
       context: context,
-      builder: (context) => ChatAddressBottomSheet(userId: 1),
+      builder: (context) => ChatAddressBottomSheet(user_id: 1),
     );
   }
 }
