@@ -40,7 +40,9 @@ class _AddCardState extends State<AddCard> {
         // return object of type Dialog
         return AlertDialog(
             title: new Text(
-                "Parabéns! O cartão ${this._addCard.text} foi adicionado com sucesso!"),
+              "Parabéns! O cartão \n ${this._addCard.text} \nfoi adicionado com sucesso!",
+              textAlign: TextAlign.center,
+            ),
             content: SizedBox(
               height: MediaQuery.of(context).size.height * 0.3,
               child: Column(
