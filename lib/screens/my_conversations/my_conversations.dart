@@ -85,9 +85,9 @@ class _MyConversationsState extends State<MyConversations> {
     });
     List<int> newChats = [];
     for (int chat in _chatsToDelete) {
-      print(chat);
       await http.delete(
           'https://pax-chat.herokuapp.com/chats?chat_id=${chat.toString()}');
+
       newChats.add(chat);
     }
 

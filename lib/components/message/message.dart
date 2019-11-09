@@ -8,7 +8,7 @@ class Message extends StatelessWidget {
   final String image;
   final String hour;
   final String paxTitle;
-  final bool refused;
+  final String paxStatus;
   final bool isMe;
   final Function showPaxDetails;
 
@@ -18,7 +18,7 @@ class Message extends StatelessWidget {
     @required this.isMe,
     @required this.image,
     @required this.paxTitle,
-    @required this.refused,
+    @required this.paxStatus,
     @required this.showPaxDetails,
   });
 
@@ -33,7 +33,7 @@ class Message extends StatelessWidget {
         children: <Widget>[
           Flexible(
             child: GestureDetector(
-              onTap: paxTitle != null && !refused
+              onTap: paxTitle != null && paxStatus != 'refused'
                   ? () => showPaxDetails(context)
                   : () {},
               child: AnimatedContainer(
@@ -55,17 +55,17 @@ class Message extends StatelessWidget {
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                     colors: [
-                      refused == true
+                      paxStatus == 'refused'
                           ? Colors.red
                           : isMe ? secondaryColorLight : Colors.white,
-                      refused == true
+                      paxStatus == 'refused'
                           ? Colors.red
                           : isMe ? secondaryColor : Color(0xfff3f3f3),
                     ],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: refused == true
+                      color: paxStatus == 'refused'
                           ? Colors.black54
                           : isMe ? secondaryColor : Color.fromRGBO(0, 0, 0, .3),
                       offset: Offset(0, 2),
@@ -85,7 +85,7 @@ class Message extends StatelessWidget {
                       ),
                     if (image != null) ImageBubble(image: image, isMe: isMe),
                     if (paxTitle != null)
-                      PaxBubble(paxTitle: paxTitle, refused: refused),
+                      PaxBubble(paxTitle: paxTitle, paxStatus: paxStatus),
                     Text(
                       hour,
                       style: TextStyle(
