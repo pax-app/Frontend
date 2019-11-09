@@ -50,6 +50,9 @@ class SelectionCard extends StatelessWidget {
           },
           isSmall: false,
         ),
+        SizedBox(
+          height: 10.0,
+        )
       ],
     ));
   }

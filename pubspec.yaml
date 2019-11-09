@@ -90,9 +90,8 @@ flutter:
         - asset: assets/fonts/Montserrat-Medium.ttf
           weight: 700
 
-    - family: OCR-A
+    - family: CardFont
       fonts:
-        - asset: assets/fonts/OCR-A.ttf
-          style: normal
+        - asset: assets/fonts/CardFont.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
