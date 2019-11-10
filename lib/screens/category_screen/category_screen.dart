@@ -109,7 +109,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Column(
                     children: <Widget>[
                       StreamBuilder(
-                        initialData: List<Category>(),
+                        initialData: List<ProviderCategory>(),
                         stream: BlocProvider.of<CategoryBloc>(context)
                             .outCategories,
                         builder: (context, snapshot) {
