@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class DisabledOutlineInput extends StatefulWidget {
   final TextEditingController textController;
   final String labelText;
+  final int lines;
 
   DisabledOutlineInput({
     @required this.textController,
     @required this.labelText,
+    this.lines = 2,
   });
 
   @override
@@ -19,7 +21,7 @@ class _DisabledOutlineInputState extends State<DisabledOutlineInput> {
     return TextField(
       enabled: false,
       style: TextStyle(color: Colors.black),
-      maxLines: 2,
+      maxLines: widget.lines,
       controller: widget.textController,
       decoration: new InputDecoration(
         labelText: widget.labelText,

@@ -51,7 +51,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       curveAnimation: Curves.linear,
       duration: Duration(milliseconds: 200),
       modalHeight:
-          isFormReady ? MediaQuery.of(context).viewInsets.bottom + 540 : 150,
+          isFormReady ? MediaQuery.of(context).viewInsets.bottom + 580 : 150,
       sheetBody: isFormReady
           ? SingleChildScrollView(
               child: Column(
@@ -95,6 +95,9 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
                     padding: const EdgeInsets.symmetric(horizontal: 4.2),
                     child: DisabledOutlineInput(
                       labelText: 'Endereço',
+                      lines: _addressController.text.length > 60
+                          ? 3
+                          : _addressController.text.length > 70 ? 4 : 2,
                       textController: _addressController,
                     ),
                   ),
@@ -195,7 +198,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     var body = json.encode(pax);
 
     await http.post(
-      'http://192.168.0.42:5003/pax/upCreate',
+      'https://pax-pax.herokuapp.com/pax/upCreate',
       headers: {"Content-Type": "application/json"},
       body: body,
     );
@@ -211,15 +214,15 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
 
   Future<dynamic> _getPaxIfExists() async {
     var res = await http
-        .get('http://192.168.0.42:5003/pax/consult_pax/${widget.chatId}');
+        .get('https://pax-pax.herokuapp.com/pax/consult_pax/${widget.chatId}');
 
     var paxJson = json.decode(res.body);
     return paxJson;
   }
 
   Future<int> _getAddressIdFromChat() async {
-    var res = await http
-        .get('https://pax-chattemp.herokuapp.com/chat/${widget.chatId}');
+    var res =
+        await http.get('https://pax-chat.herokuapp.com/chat/${widget.chatId}');
     var chatJson = json.decode(res.body);
 
     return chatJson['user_address'];
@@ -227,7 +230,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
 
   Future<dynamic> _getUserAddress(int address_id) async {
     var res = await http
-        .get('http://pax-user.herokuapp.com/get_address/${address_id}');
+        .get('https://pax-user.herokuapp.com/get_address/${address_id}?a=33');
 
     var addressJson = json.decode(res.body);
 
@@ -245,9 +248,8 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   }
 
   void _updateAddressInput(var address) {
-    print(address);
     _addressController.text =
-        '${address['street']} Número ${address['number'].toString()}, ${address['neighborhood']} - ${address['complement']} - ${address['reference_point']} - CEP: ${address['cep'].toString()}';
+        '${address['street']} Número ${address['number'].toString()}, ${address['complement'] != null ? address['complement'] + ', ' : ''} ${address['neighborhood']} - CEP: ${address['cep'].toString()}${address['reference_point'] != null ? '\nPonto de referência: ' + address['complement'] : ''}';
   }
 
   void _presentDatePicker() {

@@ -65,7 +65,7 @@ class ChatAddressList extends StatelessWidget {
 
   void _selectAddress(int addressId, BuildContext context) async {
     var response = await http.patch(
-        'https://pax-chattemp.herokuapp.com/chat_address_update/${chatId.toString()}/${addressId.toString()}');
+        'https://pax-chat.herokuapp.com/chat_address_update/${chatId.toString()}/${addressId.toString()}');
     var jsonData = json.decode(response.body);
 
     if (jsonData['status'] == 'updated') {
