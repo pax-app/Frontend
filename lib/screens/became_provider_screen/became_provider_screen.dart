@@ -21,7 +21,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
   double _lowerValue = 20.0;
   double _upperValue = 80.0;
   bool isTouch = false;
-  var _photo;
+  var _photo, _rgPhoto;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,8 +45,8 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                         ),
                       )
                     : Container(
-                        height: 140,
-                        width: 120,
+                        height: 130,
+                        width: 130,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Theme.of(context).accentColor,
@@ -175,9 +175,11 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
             children: <Widget>[
               InkWell(
                 onTap: () async {
-                  //File _image;
-                  //var image =
-                  //    await ImagePicker.pickImage(source: ImageSource.camera);
+                  var image =
+                      await ImagePicker.pickImage(source: ImageSource.camera);
+                  setState(() {
+                    _rgPhoto = image;
+                  });
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
@@ -191,11 +193,13 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                   child: Row(
                     children: <Widget>[
                       new Icon(
-                        Icons.cloud_upload,
+                        _rgPhoto == null ? Icons.cloud_upload : Icons.check,
                         color: Theme.of(context).primaryColorLight,
                       ),
                       const SizedBox(width: 8.0),
-                      new Text('SELFIE COM O RG'),
+                      _rgPhoto == null
+                          ? new Text('SELFIE COM O RG')
+                          : new Text('ESCOLHER OUTRA'),
                     ],
                   ),
                 ),
@@ -209,8 +213,11 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
           type: 'default',
           tapHandler: activeteButton()
               ? () {
-                  _becameProviderBloc.turnIntoProvider(_lowerValue, _upperValue,
-                      BlocProvider.of<ProviderBloc>(context).categories);
+                  _becameProviderBloc.turnIntoProvider(
+                      _lowerValue,
+                      _upperValue,
+                      BlocProvider.of<ProviderBloc>(context).categories,
+                      _photo);
                   Navigator.of(context).push(
                     CupertinoPageRoute(
                       builder: (context) => BaseScreen(

@@ -1,11 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:Pax/models/ProviderCategory.dart';
 import 'package:Pax/services/api.dart';
 import 'package:Pax/services/loggedUser.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/widgets.dart' as prefix0;
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
+import 'package:path/path.dart' as Path;
 
 class BecameProviderBloc implements BlocBase {
   static final validateNotEmpty =
@@ -43,19 +47,33 @@ class BecameProviderBloc implements BlocBase {
     getUserData();
   }
 
-  Future<int> turnIntoProvider(
-      double minPrice, double maxPrice, List<ProviderCategory> list) async {
+  Future<int> turnIntoProvider(double minPrice, double maxPrice,
+      List<ProviderCategory> list, File image) async {
     final bio = _bioController.value;
     final id = _id;
-    final urlRgPhoto = "";
+    var urlRgPhoto = "";
+    var urlAvatar = "";
     final number = _rgController.value;
     final categories = jsonEncode(list);
+    if (image != null) {
+      StorageReference storageReference = FirebaseStorage.instance
+          .ref()
+          .child('chats/${Path.basename(image.path)}');
+      StorageUploadTask uploadTask = storageReference.putFile(image);
+      await uploadTask.onComplete;
 
+      storageReference.getDownloadURL().then((fileURL) {
+        urlAvatar = fileURL;
+      });
+    }
+
+    prefix0.debugPrint(urlAvatar);
     Map<String, String> body = {
       'minimum_price': minPrice.toStringAsFixed(2),
       'maximum_price': maxPrice.toStringAsFixed(2),
       'bio': bio,
       'url_rg_photo': urlRgPhoto,
+      'url_avatar': urlAvatar,
       'number': number,
       'user_id': id,
       'categories': categories
