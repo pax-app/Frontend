@@ -43,7 +43,6 @@ class CategoryBloc implements BlocBase {
   }
 
   void _search(String search) async {
-    debugPrint("lenght: ${apiCategories.length}");
     if (search != null) {
       categories = apiCategories
           .where((category) =>

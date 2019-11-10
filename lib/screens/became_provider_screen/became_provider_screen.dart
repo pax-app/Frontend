@@ -217,8 +217,9 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                       _lowerValue,
                       _upperValue,
                       BlocProvider.of<ProviderBloc>(context).categories,
-                      _photo);
-                  Navigator.of(context).push(
+                      _photo,
+                      _rgPhoto);
+                  Navigator.of(context).pushReplacement(
                     CupertinoPageRoute(
                       builder: (context) => BaseScreen(
                         "",

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:Pax/models/ProviderCategory.dart';
 import 'package:Pax/services/api.dart';
 import 'package:Pax/services/loggedUser.dart';
@@ -48,7 +47,7 @@ class BecameProviderBloc implements BlocBase {
   }
 
   Future<int> turnIntoProvider(double minPrice, double maxPrice,
-      List<ProviderCategory> list, File image) async {
+      List<ProviderCategory> list, var image, var rgImage) async {
     final bio = _bioController.value;
     final id = _id;
     var urlRgPhoto = "";
@@ -58,7 +57,7 @@ class BecameProviderBloc implements BlocBase {
     if (image != null) {
       StorageReference storageReference = FirebaseStorage.instance
           .ref()
-          .child('chats/${Path.basename(image.path)}');
+          .child('users/$_id/${Path.basename(image.path)}');
       StorageUploadTask uploadTask = storageReference.putFile(image);
       await uploadTask.onComplete;
 
@@ -66,8 +65,18 @@ class BecameProviderBloc implements BlocBase {
         urlAvatar = fileURL;
       });
     }
+    if (rgImage != null) {
+      StorageReference storageReference = FirebaseStorage.instance
+          .ref()
+          .child('providers/$_id/${Path.basename(image.path)}');
+      StorageUploadTask uploadTask = storageReference.putFile(image);
+      await uploadTask.onComplete;
 
-    prefix0.debugPrint(urlAvatar);
+      storageReference.getDownloadURL().then((fileURL) {
+        urlRgPhoto = fileURL;
+      });
+    }
+
     Map<String, String> body = {
       'minimum_price': minPrice.toStringAsFixed(2),
       'maximum_price': maxPrice.toStringAsFixed(2),
