@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 class ChatAddressList extends StatelessWidget {
+  final Function sendMessage;
+
   final Function navigateToCepModal;
   final int addressLength;
   final int chatId;
   final addresses;
 
-  const ChatAddressList({
+  ChatAddressList({
     this.addressLength,
     this.addresses,
     this.navigateToCepModal,
     this.chatId,
+    this.sendMessage,
   });
 
   @override
@@ -30,7 +33,8 @@ class ChatAddressList extends StatelessWidget {
               child: InkWell(
                 onTap: isLast
                     ? navigateToCepModal
-                    : () => _selectAddress(addresses[index].address_id),
+                    : () =>
+                        _selectAddress(addresses[index].address_id, context),
                 child: Container(
                   width: 400,
                   padding: const EdgeInsets.symmetric(
@@ -57,11 +61,21 @@ class ChatAddressList extends StatelessWidget {
     );
   }
 
-  void _selectAddress(int addressId) async {
+  void _selectAddress(int addressId, BuildContext context) async {
     print(chatId);
     print(addressId);
     var response = await http.patch(
         'http://192.168.0.42:3001/chat_address_update/${chatId.toString()}/${addressId.toString()}');
-    // var jsonData = json.decode(response.body);
+    var jsonData = json.decode(response.body);
+
+    if (jsonData['status'] == 'updated') {
+      sendMessage(
+        'Endereço enviado para o prestador de serviço',
+        false,
+        false,
+      );
+    }
+
+    print(jsonData['status']);
   }
 }
