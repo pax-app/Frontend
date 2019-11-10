@@ -24,7 +24,6 @@ class ChatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(isChatSelected);
     return Container(
       height: 115,
       margin: EdgeInsets.symmetric(vertical: 6),

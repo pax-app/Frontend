@@ -1,8 +1,8 @@
-import 'dart:convert';
-import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
-import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/disabled_outline_input/disabled_outline_input.dart';
+import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:Pax/components/text_input/text_input.dart';
+import 'package:Pax/components/button%20/button.dart';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:Pax/theme/colors.dart';
@@ -29,8 +29,7 @@ class ChatPaxBottomSheet extends StatefulWidget {
 class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
-  final _addressController = TextEditingController(
-      text: 'Endereço do usuário bla bla bla 123 123 123 123 3331313 ');
+  final _addressController = TextEditingController();
   final _priceController = TextEditingController();
 
   DateTime objectDate = DateTime(2019, 01, 01);
@@ -43,13 +42,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   @override
   void initState() {
     super.initState();
-
-    _getPaxIfExists().then((data) {
-      if (data['exists'] == 'true') _updateInputs(data['pax']);
-      setState(() {
-        isFormReady = true;
-      });
-    });
+    setPax();
   }
 
   @override
@@ -165,6 +158,21 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     );
   }
 
+  void setPax() async {
+    var address_id;
+    var pax = await _getPaxIfExists();
+
+    if (pax['exists'] == 'true') {
+      _updatePaxInputs(pax['pax']);
+      address_id = pax['pax']['address_id'];
+    } else
+      address_id = await _getAddressIdFromChat();
+
+    setState(() {
+      isFormReady = true;
+    });
+  }
+
   void _createPax() async {
     setState(() {
       isPaxLoading = true;
@@ -184,7 +192,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     var body = json.encode(pax);
 
     await http.post(
-      'http://192.168.1.12:5003/pax/upCreate',
+      'http://192.168.0.42:5003/pax/upCreate',
       headers: {"Content-Type": "application/json"},
       body: body,
     );
@@ -199,14 +207,22 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   }
 
   Future<dynamic> _getPaxIfExists() async {
-    var req = await http
-        .get('http://192.168.1.12:5003/pax/consult_pax/${widget.chatId}');
+    var res = await http
+        .get('http://192.168.0.42:5003/pax/consult_pax/${widget.chatId}');
 
-    var res = json.decode(req.body);
-    return res;
+    var paxJson = json.decode(res.body);
+    return paxJson;
   }
 
-  void _updateInputs(var pax) {
+  Future<int> _getAddressIdFromChat() async {
+    var res = await http
+        .get('https://pax-chattemp.herokuapp.com/chat/${widget.chatId}');
+    var chatJson = json.decode(res.body);
+
+    return chatJson['user_address'];
+  }
+
+  void _updatePaxInputs(var pax) {
     _nameController.text = pax['name'];
     _descriptionController.text = pax['description'];
     _priceController.text = pax['price'].toString();

@@ -198,7 +198,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
       Category c = new Category(id: i, name: "Category");
       lista.add(c);
     }
-    //debugPrint(lista.toString());
     return lista;
   }
 
