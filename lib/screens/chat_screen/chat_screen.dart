@@ -28,10 +28,13 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
-
   var addresses;
+
   bool isProvider = false;
   bool isAddressesLoading = true;
+  bool showSnackBars = true;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
         mediaQuery.padding.top;
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: chatAppBar,
       body: SingleChildScrollView(
         child: Container(
@@ -72,6 +76,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 sendAction: _sendMessage,
                 openBottomSheet: () => _showBottomSheet(context),
               ),
+              // showSnackBars == true ? SnackBarPage() : Container()
             ],
           ),
         ),
@@ -201,8 +206,10 @@ class _ChatScreenState extends State<ChatScreen> {
     showModalBottomSheet(
       context: context,
       builder: (context) => ChatAddressBottomSheet(
+        scaffoldKey: _scaffoldKey,
         userId: 1,
         chatId: widget.chatId,
+        sendMessage: _sendMessage,
       ),
     );
   }

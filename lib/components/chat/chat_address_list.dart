@@ -10,6 +10,7 @@ class ChatAddressList extends StatelessWidget {
   final int addressLength;
   final int chatId;
   final addresses;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   ChatAddressList({
     this.addressLength,
@@ -17,6 +18,7 @@ class ChatAddressList extends StatelessWidget {
     this.navigateToCepModal,
     this.chatId,
     this.sendMessage,
+    this.scaffoldKey,
   });
 
   @override
@@ -70,12 +72,22 @@ class ChatAddressList extends StatelessWidget {
 
     if (jsonData['status'] == 'updated') {
       sendMessage(
-        'Endereço enviado para o prestador de serviço',
+        'Endereço enviado!',
         false,
         false,
       );
+    } else {
+      scaffoldKey.currentState.showSnackBar(
+        new SnackBar(
+          content: new Text(
+            'Este endereço já foi enviado!',
+            textAlign: TextAlign.center,
+          ),
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
 
-    print(jsonData['status']);
+    Navigator.of(context).pop();
   }
 }

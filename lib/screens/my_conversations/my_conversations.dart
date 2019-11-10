@@ -125,7 +125,7 @@ class _MyConversationsState extends State<MyConversations> {
 
   Future<dynamic> _getUserChats() async {
     var response =
-        await http.get('https://pax-chat.herokuapp.com/chats?user_id=1');
+        await http.get('https://pax-chat.herokuapp.com/chats/user/1');
     var jsonData = json.decode(response.body);
 
     final List<dynamic> chats = [];

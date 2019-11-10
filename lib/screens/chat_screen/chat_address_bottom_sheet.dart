@@ -8,12 +8,16 @@ import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class ChatAddressBottomSheet extends StatefulWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  final Function sendMessage;
   final int chatId;
   final int userId;
 
   ChatAddressBottomSheet({
     @required this.userId,
     @required this.chatId,
+    @required this.sendMessage,
+    @required this.scaffoldKey,
   });
 
   @override
@@ -62,10 +66,12 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
                 : isInCepModal == true
                     ? ChatCepBottomSheet()
                     : ChatAddressList(
+                        sendMessage: widget.sendMessage,
                         addressLength: _addressLength,
                         addresses: addresses,
                         chatId: widget.chatId,
                         navigateToCepModal: _navigateToCepModal,
+                        scaffoldKey: widget.scaffoldKey,
                       ),
           ),
         ],
