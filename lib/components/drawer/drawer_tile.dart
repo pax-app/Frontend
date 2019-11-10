@@ -7,8 +7,10 @@ class DrawerTile extends StatelessWidget {
   final PageController controller;
   final int page;
   final LoggedUser _loggedUser = LoggedUser();
+  final bool toggleLoggedUser;
 
-  DrawerTile(this.icon, this.text, this.controller, this.page);
+  DrawerTile(this.icon, this.text, this.controller, this.page,
+      [this.toggleLoggedUser]) {}
 
   Color colorOfSidebarItem(BuildContext context) {
     return controller.page.round() == page
@@ -16,7 +18,7 @@ class DrawerTile extends StatelessWidget {
         : Colors.white;
   }
 
-  void _toggleProviderMode() async {
+  void _toggleProviderMode() {
     _loggedUser.isInProviderDrawer = !_loggedUser.isInProviderDrawer;
   }
 
@@ -31,7 +33,7 @@ class DrawerTile extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
               controller.jumpToPage(page);
-              if (_loggedUser.isProvider && page == 5) {
+              if (this.toggleLoggedUser) {
                 _toggleProviderMode();
               }
             },

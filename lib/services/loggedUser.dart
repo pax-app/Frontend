@@ -4,7 +4,7 @@ import 'package:async/async.dart';
 
 class LoggedUser extends User {
   String token, userId;
-  bool didLogout = true, isProvider, isInProviderDrawer = false;
+  bool didLogout = true, isProvider = false, isInProviderDrawer = false;
 
   static SharedPreferences _preferences;
   final _initPreferences = AsyncMemoizer<SharedPreferences>();

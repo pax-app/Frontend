@@ -36,7 +36,7 @@ class ChatTile extends StatelessWidget {
           onLongPress: isInDeletionMode == false
               ? () => longPressHandler(chat_id)
               : () => updateChatsToBeDeleted(chat_id),
-          onTap: isInDeletionMode
+          onTap: isInDeletionMode == true
               ? () => updateChatsToBeDeleted(chat_id)
               : () => _pushChatScreen(context),
           borderRadius: BorderRadius.circular(8),

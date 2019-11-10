@@ -1,6 +1,6 @@
 import 'package:Pax/components/app_bar/white_appbar.dart';
 import 'package:Pax/components/chat_tile/chat_tile.dart';
-import 'package:Pax/components/drawer/drawer_user.dart';
+import 'package:Pax/components/drawer/drawer_provider.dart';
 import 'package:Pax/components/provider_panel_card/provider_panel_card.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class ProviderPanel extends StatelessWidget {
     };
 
     return Scaffold(
-      drawer: DrawerUser(this._pageController),
+      drawer: DrawerProvider(this._pageController),
       appBar: WhiteAppBar('Painel do Prestador', context),
       body: Container(
         height: MediaQuery.of(context).size.height,

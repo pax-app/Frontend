@@ -19,30 +19,14 @@ class DrawerUser extends StatelessWidget {
               DrawerHead("", loggedUser.name, 2.5, _pageController),
               Column(
                 children: <Widget>[
-                  DrawerTile(
-                    Icons.person_outline,
-                    "Meu Perfil",
-                    _pageController,
-                    1,
-                  ),
-                  DrawerTile(
-                    Icons.credit_card,
-                    "Meus Cartões",
-                    _pageController,
-                    2,
-                  ),
-                  DrawerTile(
-                    Icons.chat,
-                    "Minhas Conversas",
-                    _pageController,
-                    3,
-                  ),
-                  DrawerTile(
-                    Icons.library_books,
-                    "Historico de Serviços",
-                    _pageController,
-                    4,
-                  ),
+                  DrawerTile(Icons.person_outline, "Meu Perfil",
+                      _pageController, 1, false),
+                  DrawerTile(Icons.credit_card, "Meus Cartões", _pageController,
+                      2, false),
+                  DrawerTile(Icons.chat, "Minhas Conversas", _pageController, 3,
+                      false),
+                  DrawerTile(Icons.library_books, "Historico de Serviços",
+                      _pageController, 4, false),
                   DrawerTile(
                     this.loggedUser.isProvider
                         ? Icons.swap_horiz
@@ -51,14 +35,11 @@ class DrawerUser extends StatelessWidget {
                         ? "Ir para Prestador"
                         : "Virar Prestador de Serviço",
                     _pageController,
-                    5,
+                    this.loggedUser.isProvider ? 7 : 5,
+                    this.loggedUser.isProvider,
                   ),
                   DrawerTile(
-                    Icons.build,
-                    "Configurações",
-                    _pageController,
-                    6,
-                  ),
+                      Icons.build, "Configurações", _pageController, 6, false),
                 ],
               ),
             ],
