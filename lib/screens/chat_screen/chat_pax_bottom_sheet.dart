@@ -15,6 +15,7 @@ class ChatPaxBottomSheet extends StatefulWidget {
   final int chatId;
   final int providerId;
   final int userId;
+
   ChatPaxBottomSheet({
     this.chatId,
     this.providerId,
@@ -38,6 +39,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
 
   bool isPaxLoading = false;
   bool isFormReady = false;
+  bool isPaxStatusNull = false;
 
   @override
   void initState() {
@@ -52,7 +54,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       duration: Duration(milliseconds: 200),
       modalHeight:
           isFormReady ? MediaQuery.of(context).viewInsets.bottom + 580 : 150,
-      sheetBody: isFormReady
+      sheetBody: isFormReady && !isPaxStatusNull
           ? SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,9 +97,9 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
                     padding: const EdgeInsets.symmetric(horizontal: 4.2),
                     child: DisabledOutlineInput(
                       labelText: 'Endereço',
-                      lines: _addressController.text.length > 60
-                          ? 3
-                          : _addressController.text.length > 70 ? 4 : 2,
+                      lines: _addressController.text.length > 90
+                          ? 4
+                          : _addressController.text.length > 70 ? 3 : 2,
                       textController: _addressController,
                     ),
                   ),
@@ -147,17 +149,16 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
                   Button(
                     isLoading: isPaxLoading,
                     buttonText: 'Enviar',
-                    tapHandler: _nameController.text.isNotEmpty &&
-                            _descriptionController.text.isNotEmpty &&
-                            _addressController.text.isNotEmpty &&
-                            _priceController.text.isNotEmpty
-                        ? _createPax
-                        : null,
+                    tapHandler: _isFormFilled() ? _createPax : null,
                   )
                 ],
               ),
             )
-          : Center(child: CircularProgressIndicator()),
+          : Center(
+              child: isPaxStatusNull
+                  ? Text('O usuário ainda não se decidiu')
+                  : CircularProgressIndicator(),
+            ),
     );
   }
 
@@ -166,8 +167,16 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     var pax = await _getPaxIfExists();
 
     if (pax['exists'] == 'true') {
-      _updatePaxInputs(pax['pax']);
+      if (pax['pax']['status'] == '') {
+        setState(() {
+          isPaxStatusNull = true;
+        });
+        return;
+      }
       address_id = pax['pax']['address_id'];
+
+      _updateDateAndDatePicker(pax['pax']['date']);
+      _updatePaxInputs(pax['pax']);
     } else
       address_id = await _getAddressIdFromChat();
 
@@ -194,9 +203,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       "chat_id": widget.chatId,
       "address_id": 8,
     };
-
     var body = json.encode(pax);
-
     await http.post(
       'https://pax-pax.herokuapp.com/pax/upCreate',
       headers: {"Content-Type": "application/json"},
@@ -208,14 +215,12 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     });
 
     widget.sendPaxFirebase(_nameController.text, false, true);
-
     Navigator.of(context).pop();
   }
 
   Future<dynamic> _getPaxIfExists() async {
     var res = await http
         .get('https://pax-pax.herokuapp.com/pax/consult_pax/${widget.chatId}');
-
     var paxJson = json.decode(res.body);
     return paxJson;
   }
@@ -224,16 +229,13 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     var res =
         await http.get('https://pax-chat.herokuapp.com/chat/${widget.chatId}');
     var chatJson = json.decode(res.body);
-
     return chatJson['user_address'];
   }
 
   Future<dynamic> _getUserAddress(int address_id) async {
     var res = await http
         .get('https://pax-user.herokuapp.com/get_address/${address_id}?a=33');
-
     var addressJson = json.decode(res.body);
-
     return addressJson;
   }
 
@@ -241,22 +243,18 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     _nameController.text = pax['name'];
     _descriptionController.text = pax['description'];
     _priceController.text = pax['price'].toString();
-    // setState(() {
-    // objectDate = pax['date'];
-    // formattedDate = DateFormat('yyyy-MM-dd').format(pax['date']);
-    // });
   }
 
   void _updateAddressInput(var address) {
     _addressController.text =
-        '${address['street']} Número ${address['number'].toString()}, ${address['complement'] != null ? address['complement'] + ', ' : ''} ${address['neighborhood']} - CEP: ${address['cep'].toString()}${address['reference_point'] != null ? '\nPonto de referência: ' + address['complement'] : ''}';
+        '${address['street']} Número ${address['number'].toString()}, ${address['complement'] != null ? address['complement'] + ', ' : ''} ${address['neighborhood']} - CEP: ${address['cep'].toString()} ${address['reference_point'] != null ? '\nPonto de referência: ' + address['reference_point'] : ''}';
   }
 
   void _presentDatePicker() {
     showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2019, DateTime.now().month),
+      initialDate: formattedDate == null ? DateTime.now() : objectDate,
+      firstDate: DateTime(2018, DateTime.now().month),
       lastDate: DateTime(2025),
     ).then((date) {
       if (date == null) return;
@@ -266,5 +264,21 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
         objectDate = date;
       });
     });
+  }
+
+  void _updateDateAndDatePicker(var date) {
+    DateTime paxObjectDate = DateFormat('EEE, dd MMM yyyy').parse(date);
+
+    setState(() {
+      objectDate = paxObjectDate;
+      formattedDate = DateFormat("yyyy-MM-dd").format(paxObjectDate);
+    });
+  }
+
+  bool _isFormFilled() {
+    return _nameController.text.isNotEmpty &&
+        _descriptionController.text.isNotEmpty &&
+        _addressController.text.isNotEmpty &&
+        _priceController.text.isNotEmpty;
   }
 }
