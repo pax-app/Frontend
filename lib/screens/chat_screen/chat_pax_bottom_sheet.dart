@@ -168,6 +168,9 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     } else
       address_id = await _getAddressIdFromChat();
 
+    var address = await _getUserAddress(address_id);
+    _updateAddressInput(address);
+
     setState(() {
       isFormReady = true;
     });
@@ -222,6 +225,15 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     return chatJson['user_address'];
   }
 
+  Future<dynamic> _getUserAddress(int address_id) async {
+    var res = await http
+        .get('http://pax-user.herokuapp.com/get_address/${address_id}');
+
+    var addressJson = json.decode(res.body);
+
+    return addressJson;
+  }
+
   void _updatePaxInputs(var pax) {
     _nameController.text = pax['name'];
     _descriptionController.text = pax['description'];
@@ -230,6 +242,12 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     // objectDate = pax['date'];
     // formattedDate = DateFormat('yyyy-MM-dd').format(pax['date']);
     // });
+  }
+
+  void _updateAddressInput(var address) {
+    print(address);
+    _addressController.text =
+        '${address['street']} Número ${address['number'].toString()}, ${address['neighborhood']} - ${address['complement']} - ${address['reference_point']} - CEP: ${address['cep'].toString()}';
   }
 
   void _presentDatePicker() {
