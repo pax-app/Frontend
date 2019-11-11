@@ -40,7 +40,7 @@ class _AddCardState extends State<AddCard> {
         // return object of type Dialog
         return AlertDialog(
             title: new Text(
-              "Parabéns! O cartão \n ${this._addCard.text} \nfoi adicionado com sucesso!",
+              "Seu pedido para cadastrar o cartão \n ${this._addCard.text} \nfoi submetido com sucesso!",
               textAlign: TextAlign.center,
             ),
             content: SizedBox(
