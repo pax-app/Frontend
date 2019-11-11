@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 
 class ChatPaxBottomSheet extends StatefulWidget {
   final Function sendPaxFirebase;
+  final Function isLastPaxPending;
 
   final int chatId;
   final int providerId;
@@ -21,6 +22,7 @@ class ChatPaxBottomSheet extends StatefulWidget {
     this.providerId,
     this.userId,
     this.sendPaxFirebase,
+    this.isLastPaxPending,
   });
 
   @override
@@ -39,7 +41,8 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
 
   bool isPaxLoading = false;
   bool isFormReady = false;
-  bool isPaxStatusNull = false;
+  bool isLastPaxPending = false;
+  bool isAddressMissing = false;
 
   @override
   void initState() {
@@ -54,7 +57,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       duration: Duration(milliseconds: 200),
       modalHeight:
           isFormReady ? MediaQuery.of(context).viewInsets.bottom + 580 : 150,
-      sheetBody: isFormReady && !isPaxStatusNull
+      sheetBody: isFormReady && !isLastPaxPending && !isAddressMissing
           ? SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -155,21 +158,32 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
               ),
             )
           : Center(
-              child: isPaxStatusNull
+              child: isLastPaxPending == true && !isAddressMissing
                   ? Text('O usuário ainda não se decidiu')
-                  : CircularProgressIndicator(),
+                  : isAddressMissing
+                      ? Text('O usuário ainda não enviou o endereço')
+                      : CircularProgressIndicator(),
             ),
     );
   }
 
   void setPax() async {
+    bool isPaxPending = await widget.isLastPaxPending();
+
+    if (isPaxPending == true) {
+      setState(() {
+        isLastPaxPending = true;
+      });
+      return;
+    }
+
     var address_id;
-    var pax = await _getPaxIfExists();
+    var pax = await _getPax();
 
     if (pax['exists'] == 'true') {
       if (pax['pax']['status'] == '') {
         setState(() {
-          isPaxStatusNull = true;
+          isLastPaxPending = true;
         });
         return;
       }
@@ -180,12 +194,13 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     } else
       address_id = await _getAddressIdFromChat();
 
-    var address = await _getUserAddress(address_id);
-    _updateAddressInput(address);
-
-    setState(() {
-      isFormReady = true;
-    });
+    if (isAddressMissing == false) {
+      var address = await _getUserAddress(address_id);
+      _updateAddressInput(address);
+      setState(() {
+        isFormReady = true;
+      });
+    }
   }
 
   void _createPax() async {
@@ -205,7 +220,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     };
     var body = json.encode(pax);
     await http.post(
-      'https://pax-pax.herokuapp.com/pax/upCreate',
+      'http://192.168.1.12:5003/pax/upCreate',
       headers: {"Content-Type": "application/json"},
       body: body,
     );
@@ -218,18 +233,27 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     Navigator.of(context).pop();
   }
 
-  Future<dynamic> _getPaxIfExists() async {
+  Future<dynamic> _getPax() async {
     var res = await http
-        .get('https://pax-pax.herokuapp.com/pax/consult_pax/${widget.chatId}');
+        .get('http://192.168.1.12:5003/pax/consult_pax/${widget.chatId}');
     var paxJson = json.decode(res.body);
     return paxJson;
   }
 
-  Future<int> _getAddressIdFromChat() async {
+  Future<dynamic> _getAddressIdFromChat() async {
     var res =
         await http.get('https://pax-chat.herokuapp.com/chat/${widget.chatId}');
     var chatJson = json.decode(res.body);
-    return chatJson['user_address'];
+
+    print(chatJson);
+
+    var address_id = chatJson['user_address'];
+    if (address_id == null) {
+      setState(() {
+        isAddressMissing = true;
+      });
+    }
+    return address_id;
   }
 
   Future<dynamic> _getUserAddress(int address_id) async {

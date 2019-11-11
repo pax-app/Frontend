@@ -12,6 +12,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
   final int chatId;
@@ -154,6 +155,7 @@ class _ChatScreenState extends State<ChatScreen> {
         providerId: 1,
         userId: 1,
         sendPaxFirebase: _sendMessage,
+        isLastPaxPending: _isLastPaxPending,
       ),
     );
   }
@@ -185,6 +187,18 @@ class _ChatScreenState extends State<ChatScreen> {
         .collection(widget.chatId.toString())
         .document(lastPax['date_time_sent'])
         .updateData({'pax_status': 'refused'});
+  }
+
+  Future<bool> _isLastPaxPending() async {
+    var lastPax = await _firestore
+        .collection(widget.chatId.toString())
+        .where('pax_status')
+        .getDocuments()
+        .then((snapshot) {
+      return snapshot.documents[snapshot.documents.length - 1].data;
+    });
+
+    return lastPax['pax_status'] == 'pending' ? true : false;
   }
 
   Future _storeImage(BuildContext context, ImageSource source) async {
