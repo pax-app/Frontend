@@ -89,7 +89,7 @@ class Message extends StatelessWidget {
                     Text(
                       hour,
                       style: TextStyle(
-                        color: isMe
+                        color: isMe || paxTitle != null
                             ? Theme.of(context).primaryColor
                             : Theme.of(context).accentColor,
                         fontSize: 11,

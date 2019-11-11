@@ -55,7 +55,8 @@ class _ChatPaxDetailState extends State<ChatPaxDetail> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 BaseTitleDescription(
                   title: 'Endereço',
-                  description: pax['address'],
+                  description:
+                      '${address['street']} Número ${address['number'].toString()}, ${address['complement'] != null ? address['complement'] + ', ' : ''} ${address['neighborhood']} - CEP: ${address['cep'].toString()} ${address['reference_point'] != null ? '\nPonto de referência: ' + address['reference_point'] : ''}',
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Row(
@@ -121,13 +122,13 @@ class _ChatPaxDetailState extends State<ChatPaxDetail> {
   }
 
   Future _getAddress() async {
-    // print(pax['address_id']);
-    // var res = await http
-    //     .get('https://pax-user.herokuapp.com/get_address/${pax['address_id']}');
-    // var addressJson = json.decode(res.body);
+    print(pax['address_id']);
+    var res = await http
+        .get('https://pax-user.herokuapp.com/get_address/${pax['address_id']}');
+    var addressJson = json.decode(res.body);
 
-    // setState(() {
-    //   address = addressJson;
-    // });
+    setState(() {
+      address = addressJson;
+    });
   }
 }
