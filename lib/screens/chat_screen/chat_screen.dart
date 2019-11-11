@@ -174,6 +174,7 @@ class _ChatScreenState extends State<ChatScreen> {
         chatId: widget.chatId,
         refusePax: _refusePax,
         acceptPax: () {},
+        isProvider: isProvider,
       ),
     );
   }

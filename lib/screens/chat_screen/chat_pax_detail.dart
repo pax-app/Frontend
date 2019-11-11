@@ -9,11 +9,13 @@ class ChatPaxDetail extends StatefulWidget {
   final int chatId;
   final Function refusePax;
   final Function acceptPax;
+  final bool isProvider;
 
   const ChatPaxDetail({
     this.chatId,
     this.refusePax,
     this.acceptPax,
+    this.isProvider,
   });
 
   @override
@@ -33,7 +35,8 @@ class _ChatPaxDetailState extends State<ChatPaxDetail> {
   @override
   Widget build(BuildContext context) {
     return BaseBottomSheet(
-      modalHeight: MediaQuery.of(context).size.height * .71,
+      modalHeight:
+          MediaQuery.of(context).size.height * (widget.isProvider ? .6 : .71),
       sheetBody: pax != null && address != null
           ? Column(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,22 +88,23 @@ class _ChatPaxDetailState extends State<ChatPaxDetail> {
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Button(
-                      buttonText: 'Rejeitar',
-                      tapHandler: widget.refusePax,
-                      isSmall: true,
-                      type: 'danger',
-                    ),
-                    Button(
-                      buttonText: 'Aceitar',
-                      tapHandler: () {},
-                      isSmall: true,
-                    )
-                  ],
-                )
+                if (!widget.isProvider)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Button(
+                        buttonText: 'Rejeitar',
+                        tapHandler: widget.refusePax,
+                        isSmall: true,
+                        type: 'danger',
+                      ),
+                      Button(
+                        buttonText: 'Aceitar',
+                        tapHandler: () {},
+                        isSmall: true,
+                      )
+                    ],
+                  )
               ],
             )
           : Center(
