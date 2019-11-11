@@ -12,7 +12,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 import 'dart:io';
-import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
   final int chatId;
@@ -31,7 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
   var addresses;
 
-  bool isProvider = false;
+  bool isProvider = true;
   bool isAddressesLoading = true;
   bool showSnackBars = true;
 

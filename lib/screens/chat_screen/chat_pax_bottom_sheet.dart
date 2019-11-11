@@ -181,12 +181,6 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     var pax = await _getPax();
 
     if (pax['exists'] == 'true') {
-      if (pax['pax']['status'] == '') {
-        setState(() {
-          isLastPaxPending = true;
-        });
-        return;
-      }
       address_id = pax['pax']['address_id'];
 
       _updateDateAndDatePicker(pax['pax']['date']);
@@ -220,7 +214,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     };
     var body = json.encode(pax);
     await http.post(
-      'http://192.168.1.12:5003/pax/upCreate',
+      'https://pax-pax.herokuapp.com/pax/upCreate',
       headers: {"Content-Type": "application/json"},
       body: body,
     );
@@ -235,7 +229,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
 
   Future<dynamic> _getPax() async {
     var res = await http
-        .get('http://192.168.1.12:5003/pax/consult_pax/${widget.chatId}');
+        .get('https://pax-pax.herokuapp.com/pax/consult_pax/${widget.chatId}');
     var paxJson = json.decode(res.body);
     return paxJson;
   }
@@ -244,8 +238,6 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
     var res =
         await http.get('https://pax-chat.herokuapp.com/chat/${widget.chatId}');
     var chatJson = json.decode(res.body);
-
-    print(chatJson);
 
     var address_id = chatJson['user_address'];
     if (address_id == null) {
