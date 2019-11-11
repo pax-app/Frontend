@@ -223,7 +223,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       "address_id": 8,
     };
     var body = json.encode(pax);
-    await http.post(
+    var res = await http.post(
       'https://pax-pax.herokuapp.com/pax/upCreate',
       headers: {"Content-Type": "application/json"},
       body: body,
@@ -260,7 +260,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
 
   Future<dynamic> _getUserAddress(int address_id) async {
     var res = await http
-        .get('https://pax-user.herokuapp.com/get_address/${address_id}?a=33');
+        .get('https://pax-user.herokuapp.com/get_address/${address_id}');
     var addressJson = json.decode(res.body);
     return addressJson;
   }
