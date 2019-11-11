@@ -86,8 +86,8 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
   }
 
   void _getUserAddresses() async {
-    var response =
-        await http.get('https://pax-user.herokuapp.com/get_addresses/1');
+    var response = await http.get(
+        'https://pax-user.herokuapp.com/get_addresses/${widget.userId.toString()}');
     var jsonData = json.decode(response.body);
 
     final List<Address> addressesFromJSON = [];
