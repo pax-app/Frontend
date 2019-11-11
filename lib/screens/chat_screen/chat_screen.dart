@@ -12,6 +12,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 import 'dart:io';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
   final int chatId;
@@ -96,8 +99,12 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _sendMessage(String value, bool isImage, bool isPax) {
-    var date_time_sent = DateTime.now().millisecondsSinceEpoch.toString();
+  void _sendMessage(String value, bool isImage, bool isPax) async {
+    var res = await http.get('https://pax-chat.herokuapp.com/hour');
+    var body = json.decode(res.body);
+
+    var date_time_sent = body['time'].toString();
+    print(date_time_sent);
 
     var chat_ref = _firestore
         .collection(widget.chatId.toString())
