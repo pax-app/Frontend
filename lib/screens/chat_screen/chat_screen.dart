@@ -173,7 +173,7 @@ class _ChatScreenState extends State<ChatScreen> {
       builder: (context) => ChatPaxDetail(
         chatId: widget.chatId,
         refusePax: _refusePax,
-        acceptPax: () {},
+        acceptPax: _acceptedPax,
         isProvider: isProvider,
       ),
     );
@@ -194,6 +194,20 @@ class _ChatScreenState extends State<ChatScreen> {
         .collection(widget.chatId.toString())
         .document(lastPax['date_time_sent'])
         .updateData({'pax_status': 'refused'});
+  }
+
+  void _acceptedPax() async {
+    Navigator.of(context).pop();
+
+    var pax = {"chat_id": widget.chatId, "status": 'P'};
+
+    var body = json.encode(pax);
+    var res = await http.patch(
+      'https://pax-pax.herokuapp.com/update_status/',
+      headers: {"Content-Type": "application/json"},
+      body: body,
+    );
+    var jsonData = json.decode(res.body);
   }
 
   Future<bool> _isLastPaxPending() async {
