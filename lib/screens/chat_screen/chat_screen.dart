@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
   var addresses;
 
-  bool isProvider = false;
+  bool isProvider = true;
   bool isAddressesLoading = true;
   bool showSnackBars = true;
 
@@ -104,7 +104,6 @@ class _ChatScreenState extends State<ChatScreen> {
     var body = json.decode(res.body);
 
     var date_time_sent = body['time'].toString();
-    print(date_time_sent);
 
     var chat_ref = _firestore
         .collection(widget.chatId.toString())
@@ -179,16 +178,22 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _refusePax() async {
-    Navigator.of(context).pop();
-
+  Future<dynamic> _findLastPax() async {
     var lastPax = await _firestore
         .collection(widget.chatId.toString())
         .where('pax_status', isEqualTo: 'pending')
         .getDocuments()
         .then((snapshot) {
-      return snapshot.documents[snapshot.documents.length - 1].data;
+      return snapshot.documents.isNotEmpty
+          ? snapshot.documents[snapshot.documents.length - 1].data
+          : [];
     });
+    return lastPax;
+  }
+
+  void _refusePax() async {
+    Navigator.of(context).pop();
+    var lastPax = await _findLastPax();
 
     _firestore
         .collection(widget.chatId.toString())
@@ -211,15 +216,10 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<bool> _isLastPaxPending() async {
-    var lastPax = await _firestore
-        .collection(widget.chatId.toString())
-        .where('pax_status')
-        .getDocuments()
-        .then((snapshot) {
-      return snapshot.documents[snapshot.documents.length - 1].data;
-    });
-
-    return lastPax['pax_status'] == 'pending' ? true : false;
+    var lastPax = await _findLastPax();
+    return lastPax.length > 0 && lastPax['pax_status'] == 'pending'
+        ? true
+        : false;
   }
 
   Future _storeImage(BuildContext context, ImageSource source) async {
