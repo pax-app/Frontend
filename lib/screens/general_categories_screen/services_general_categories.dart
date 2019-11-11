@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<Category>> fetchPost() async {
-  final response = await http.get('http://192.168.1.12:5002/category/general',
+  final response = await http.get(
+      'https://pax-category.herokuapp.com/category/general',
       headers: {HttpHeaders.contentTypeHeader: 'application/json'});
   var responseJson = json.decode(response.body);
   responseJson = responseJson["data"];

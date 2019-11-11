@@ -1,3 +1,4 @@
+import 'package:Pax/components/bottom_warning/bottom_warning.dart';
 import 'package:Pax/components/disabled_outline_input/disabled_outline_input.dart';
 import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:Pax/components/text_input/text_input.dart';
@@ -158,11 +159,20 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
               ),
             )
           : Center(
-              child: isLastPaxPending == true && !isAddressMissing
-                  ? Text('O usuário ainda não se decidiu')
-                  : isAddressMissing
-                      ? Text('O usuário ainda não enviou o endereço')
-                      : CircularProgressIndicator(),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 32),
+                child: isLastPaxPending == true && !isAddressMissing
+                    ? BottomWarning(
+                        text: 'O usuário ainda não se decidiu.',
+                        icon: Icons.error_outline,
+                      )
+                    : isAddressMissing
+                        ? BottomWarning(
+                            text: 'O usuário não enviou o endereço',
+                            icon: Icons.location_off,
+                          )
+                        : CircularProgressIndicator(),
+              ),
             ),
     );
   }
