@@ -12,6 +12,7 @@ import 'dart:convert';
 class ChatPaxBottomSheet extends StatefulWidget {
   final Function sendPaxFirebase;
   final Function isLastPaxPending;
+  final Function isLastPaxAccepted;
 
   final int chatId;
   final int providerId;
@@ -23,6 +24,7 @@ class ChatPaxBottomSheet extends StatefulWidget {
     this.userId,
     this.sendPaxFirebase,
     this.isLastPaxPending,
+    this.isLastPaxAccepted,
   });
 
   @override
@@ -42,6 +44,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
   bool isPaxLoading = false;
   bool isFormReady = false;
   bool isLastPaxPending = false;
+  bool isLastPaxAccepted = false;
   bool isAddressMissing = false;
 
   @override
@@ -57,7 +60,10 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       duration: Duration(milliseconds: 200),
       modalHeight:
           isFormReady ? MediaQuery.of(context).viewInsets.bottom + 580 : 150,
-      sheetBody: isFormReady && !isLastPaxPending && !isAddressMissing
+      sheetBody: isFormReady &&
+              !isLastPaxPending &&
+              !isAddressMissing &&
+              !isLastPaxAccepted
           ? SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,17 +166,22 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
           : Center(
               child: Padding(
                 padding: EdgeInsets.only(bottom: 32),
-                child: isLastPaxPending == true && !isAddressMissing
+                child: isLastPaxPending == true
                     ? BottomWarning(
                         text: 'O usuário ainda não se decidiu.',
                         icon: Icons.error_outline,
                       )
-                    : isAddressMissing
+                    : isLastPaxAccepted == true
                         ? BottomWarning(
-                            text: 'O usuário não enviou o endereço',
-                            icon: Icons.location_off,
+                            text: 'O Pax já foi finalizado',
+                            icon: Icons.error_outline,
                           )
-                        : CircularProgressIndicator(),
+                        : isAddressMissing == true
+                            ? BottomWarning(
+                                text: 'O usuário não enviou o endereço',
+                                icon: Icons.location_off,
+                              )
+                            : CircularProgressIndicator(),
               ),
             ),
     );
@@ -178,10 +189,18 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
 
   void setPax() async {
     bool isPaxPending = await widget.isLastPaxPending();
+    bool isPaxAccepted = await widget.isLastPaxAccepted();
 
     if (isPaxPending == true) {
       setState(() {
         isLastPaxPending = true;
+      });
+      return;
+    }
+
+    if (isPaxAccepted == true) {
+      setState(() {
+        isLastPaxAccepted = true;
       });
       return;
     }

@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
   var addresses;
 
-  bool isProvider = false;
+  bool isProvider = true;
   bool isAddressesLoading = true;
   bool showSnackBars = true;
 
@@ -161,6 +161,7 @@ class _ChatScreenState extends State<ChatScreen> {
         userId: 1,
         sendPaxFirebase: _sendMessage,
         isLastPaxPending: _isLastPaxPending,
+        isLastPaxAccepted: _isLastPaxAccepted,
       ),
     );
   }
@@ -178,10 +179,10 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Future<dynamic> _findLastPax() async {
+  Future<dynamic> _findLastPax(String field) async {
     var lastPax = await _firestore
         .collection(widget.chatId.toString())
-        .where('pax_status', isEqualTo: 'pending')
+        .where('pax_status', isEqualTo: field)
         .getDocuments()
         .then((snapshot) {
       return snapshot.documents.isNotEmpty
@@ -193,7 +194,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _refusePax() async {
     Navigator.of(context).pop();
-    var lastPax = await _findLastPax();
+    var lastPax = await _findLastPax('pending');
 
     _firestore
         .collection(widget.chatId.toString())
@@ -211,15 +212,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
     var body = json.encode(statusChange);
     var res = await http.patch(
-<<<<<<< HEAD
-      'https://pax-pax.herokuapp.com/pax/update_status/',
-=======
       'https://pax-pax.herokuapp.com/pax/update_status',
->>>>>>> e0c4f96b2ffcf1962062c12dbc9be4a1479ad30a
       headers: {"Content-Type": "application/json"},
       body: body,
     );
-    var lastPax = await _findLastPax();
+    var lastPax = await _findLastPax('pending');
     _firestore
         .collection(widget.chatId.toString())
         .document(lastPax['date_time_sent'])
@@ -227,9 +224,19 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<bool> _isLastPaxPending() async {
-    var lastPax = await _findLastPax();
-    print(lastPax.length);
-    return lastPax.length > 0 && lastPax['pax_status'] == 'pending'
+    var lastPaxRefused = await _findLastPax('pending');
+    print(lastPaxRefused.length);
+    return lastPaxRefused.length > 0 &&
+            lastPaxRefused['pax_status'] == 'pending'
+        ? true
+        : false;
+  }
+
+  Future<bool> _isLastPaxAccepted() async {
+    var lastPaxAccepeted = await _findLastPax('accepted');
+    print(lastPaxAccepeted.length);
+    return lastPaxAccepeted.length > 0 &&
+            lastPaxAccepeted['pax_status'] == 'accepted'
         ? true
         : false;
   }
