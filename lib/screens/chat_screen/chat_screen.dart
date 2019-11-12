@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
   var addresses;
 
-  bool isProvider = true;
+  bool isProvider = false;
   bool isAddressesLoading = true;
   bool showSnackBars = true;
 
@@ -204,19 +204,27 @@ class _ChatScreenState extends State<ChatScreen> {
   void _acceptedPax() async {
     Navigator.of(context).pop();
 
-    var pax = {"chat_id": widget.chatId, "status": 'P'};
+    var statusChange = {
+      "chat_id": widget.chatId,
+      "status": 'P',
+    };
 
-    var body = json.encode(pax);
+    var body = json.encode(statusChange);
     var res = await http.patch(
-      'https://pax-pax.herokuapp.com/update_status/',
+      'https://pax-pax.herokuapp.com/pax/update_status/',
       headers: {"Content-Type": "application/json"},
       body: body,
     );
-    var jsonData = json.decode(res.body);
+    var lastPax = await _findLastPax();
+    _firestore
+        .collection(widget.chatId.toString())
+        .document(lastPax['date_time_sent'])
+        .updateData({'pax_status': 'accepted'});
   }
 
   Future<bool> _isLastPaxPending() async {
     var lastPax = await _findLastPax();
+    print(lastPax.length);
     return lastPax.length > 0 && lastPax['pax_status'] == 'pending'
         ? true
         : false;
