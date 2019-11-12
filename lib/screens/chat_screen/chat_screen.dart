@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
   var addresses;
 
-  bool isProvider = true;
+  bool isProvider = false;
   bool isAddressesLoading = true;
   bool showSnackBars = true;
 
@@ -208,7 +208,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     var body = json.encode(pax);
     var res = await http.patch(
-      'https://pax-pax.herokuapp.com/update_status/',
+      'https://pax-pax.herokuapp.com/pax/update_status',
       headers: {"Content-Type": "application/json"},
       body: body,
     );
