@@ -8,10 +8,21 @@ class TextInput extends StatelessWidget {
   final int lines;
   final bool focus;
   final TextEditingController controller;
+  final Function onTap;
+  final FocusNode focusNd;
 
-  TextInput(this.textLabel, this.placeholder, this.small, this.validator,
-      this.inputType, this.lines,
-      {this.focus = false, this.controller});
+  TextInput(
+    this.textLabel,
+    this.placeholder,
+    this.small,
+    this.validator,
+    this.inputType,
+    this.lines, {
+    this.focus = false,
+    this.controller,
+    this.onTap,
+    this.focusNd,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +63,8 @@ class TextInput extends StatelessWidget {
         cursorColor: Theme.of(context).accentColor,
         keyboardType: inputType,
         maxLines: lines,
+        onTap: onTap,
+        focusNode: focusNd,
         style: TextStyle(color: Theme.of(context).primaryColor),
       ),
     );
