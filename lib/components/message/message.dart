@@ -25,7 +25,7 @@ class Message extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 4),
+      margin: const EdgeInsets.only(bottom: 6),
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
         mainAxisAlignment:
@@ -33,7 +33,9 @@ class Message extends StatelessWidget {
         children: <Widget>[
           Flexible(
             child: GestureDetector(
-              onTap: paxTitle != null && paxStatus != 'refused'
+              onTap: paxTitle != null &&
+                      paxStatus != 'refused' &&
+                      paxStatus != 'accepted'
                   ? () => showPaxDetails(context)
                   : () {},
               child: AnimatedContainer(
@@ -57,10 +59,14 @@ class Message extends StatelessWidget {
                     colors: [
                       paxStatus == 'refused'
                           ? Colors.red
-                          : isMe ? secondaryColorLight : Colors.white,
+                          : paxStatus == 'accepted'
+                              ? Colors.green
+                              : isMe ? Colors.green : Colors.white,
                       paxStatus == 'refused'
                           ? Colors.red
-                          : isMe ? secondaryColor : Color(0xfff3f3f3),
+                          : paxStatus == 'accepted'
+                              ? Colors.teal
+                              : isMe ? secondaryColor : Color(0xfff3f3f3),
                     ],
                   ),
                   boxShadow: [
