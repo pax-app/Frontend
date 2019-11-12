@@ -7,6 +7,7 @@ class Button extends StatelessWidget {
   final String type;
   final bool isSmall;
   final bool isLoading;
+  final bool isDisabled;
 
   Button({
     @required this.buttonText,
@@ -14,6 +15,7 @@ class Button extends StatelessWidget {
     this.type,
     this.isSmall = false,
     this.isLoading = false,
+    this.isDisabled,
   });
 
   @override
@@ -65,6 +67,7 @@ class Button extends StatelessWidget {
           child: RaisedButton(
             // padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             onPressed: isLoading ? null : tapHandler,
+            disabledColor: Colors.grey,
             child: Text(
               isLoading ? 'Carregando...' : buttonText.toUpperCase(),
               style: Theme.of(context).textTheme.title.copyWith(

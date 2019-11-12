@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SimpleTile extends StatelessWidget {
-  final String description;
+  final String deion;
+  final String img;
   final Function onTapHandle;
-  SimpleTile(this.description, this.onTapHandle);
+  SimpleTile(this.deion, this.onTapHandle, {this.img});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class SimpleTile extends StatelessWidget {
         onTap: onTapHandle,
         child: ListTile(
           title: Text(
-            description,
+            this.deion,
             style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontSize: Theme.of(context).textTheme.body1.fontSize,
@@ -25,6 +26,13 @@ class SimpleTile extends StatelessWidget {
           trailing: Icon(
             Icons.arrow_forward_ios,
             color: Theme.of(context).primaryColorLight,
+          ),
+          leading: SizedBox(
+            child: Image(
+              image: AssetImage(this.img),
+            ),
+            width: 40.0,
+            height: 100.0,
           ),
         ),
       ),

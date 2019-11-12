@@ -3,7 +3,7 @@ import 'package:Pax/components/text_input/text_input.dart';
 import 'package:flutter/material.dart';
 
 class ChatCepBottomSheet extends StatelessWidget {
-  TextEditingController _cepController = TextEditingController();
+  final TextEditingController _cepController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(

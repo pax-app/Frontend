@@ -5,7 +5,7 @@ import 'package:Pax/models/user.dart';
 import 'package:flutter/material.dart';
 
 class PerfilScreen extends StatelessWidget {
-  List<Avaliation> avaliations = List<Avaliation>();
+  final List<Avaliation> avaliations = List<Avaliation>();
   PerfilScreen() {
     for (var i = 0; i < 5; i++) {
       Avaliation a = Avaliation(

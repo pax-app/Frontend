@@ -1,43 +1,29 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:convert';
 
 import 'package:Pax/components/general_categories_panel/general_categories_panel_card.dart';
+import 'package:Pax/models/GeneralCategory.dart';
+import 'package:Pax/services/api.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-Future<List<Category>> fetchPost() async {
-  final response = await http.get(
-      'https://pax-category.herokuapp.com/category/general',
-      headers: {HttpHeaders.contentTypeHeader: 'application/json'});
+Future<List<GeneralCategory>> fetchPost() async {
+  Map<String, String> header = {'content-type': 'application/json'};
+  final _api = Api();
+  final response = await _api.get(Services.CATEGORY, Routes.GENERAL_CATEGORY,
+      headers: header);
   var responseJson = json.decode(response.body);
   responseJson = responseJson["data"];
   responseJson = responseJson["categories"];
-
-  final List<Category> listaFinal = [];
+  final List<GeneralCategory> listaFinal = [];
 
   for (var item in responseJson) {
-    listaFinal.add(Category.fromJson(item));
+    listaFinal.add(GeneralCategory.fromJson(item));
   }
   return listaFinal;
 }
 
-class Category {
-  final int id;
-  final String name;
-
-  Category({this.id, this.name});
-
-  factory Category.fromJson(Map<String, dynamic> json) {
-    return Category(
-      id: json['id'],
-      name: json['name'],
-    );
-  }
-}
-
 class ServiceGeneralCategory extends StatelessWidget {
-  final Future<Category> category;
+  final Future<GeneralCategory> category;
 
   ServiceGeneralCategory({Key key, this.category}) : super(key: key);
 
@@ -57,14 +43,13 @@ class ServiceGeneralCategory extends StatelessWidget {
           'Encontre o melhor em consertar aparelhos eletrônicos',
       'Reformas': 'Precisa de reformas? Fale com nossos profissionais',
     };
-
     return Container(
       height: MediaQuery.of(context).size.height - 82,
-      child: FutureBuilder<List<Category>>(
+      child: FutureBuilder<List<GeneralCategory>>(
         future: fetchPost(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<Category> categories = snapshot.data;
+            List<GeneralCategory> categories = snapshot.data;
             return ListView.builder(
               itemCount: categories.length,
               itemBuilder: (context, index) {

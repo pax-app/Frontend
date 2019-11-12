@@ -28,14 +28,16 @@ dependencies:
   shimmer: ^1.0.1
   rxdart: ^0.22.2
   http: ^0.12.0+2
+  shared_preferences: ^0.5.3
   flutter_range_slider: ^1.4.0
   image_picker: ^0.6.1+4
   firebase_core: ^0.4.0+9
   firebase_analytics: ^5.0.2
   cloud_firestore: ^0.12.9+4
   firebase_storage: ^3.0.3
+  flutter_masked_text: ^0.8.0
   intl: 0.15.7
-  shared_preferences: ^0.5.3
+  flutter_credit_card: 0.1.0
 
 dev_dependencies:
   flutter_test:
@@ -65,15 +67,15 @@ flutter:
     - assets/logo/
     - assets/illustrations/
     - assets/categories-img/
-  #  - images/a_dot_burr.jpeg
+    - assets/logo.png
   #  - images/a_dot_ham.jpeg
 
+  #  - images/a_dot_burr.jpeg
+  #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -89,5 +91,9 @@ flutter:
           weight: 500
         - asset: assets/fonts/Montserrat-Medium.ttf
           weight: 700
+
+    - family: CardFont
+      fonts:
+        - asset: assets/fonts/CardFont.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

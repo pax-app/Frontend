@@ -1,3 +1,4 @@
+import 'package:Pax/services/loggedUser.dart';
 import 'package:flutter/material.dart';
 
 class DrawerTile extends StatelessWidget {
@@ -5,13 +6,20 @@ class DrawerTile extends StatelessWidget {
   final String text;
   final PageController controller;
   final int page;
+  final LoggedUser _loggedUser = LoggedUser();
+  final bool toggleLoggedUser;
 
-  DrawerTile(this.icon, this.text, this.controller, this.page);
+  DrawerTile(this.icon, this.text, this.controller, this.page,
+      [this.toggleLoggedUser]) {}
 
   Color colorOfSidebarItem(BuildContext context) {
     return controller.page.round() == page
         ? Theme.of(context).accentColor
         : Colors.white;
+  }
+
+  void _toggleProviderMode() {
+    _loggedUser.isInProviderDrawer = !_loggedUser.isInProviderDrawer;
   }
 
   @override
@@ -25,6 +33,9 @@ class DrawerTile extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
               controller.jumpToPage(page);
+              if (this.toggleLoggedUser) {
+                _toggleProviderMode();
+              }
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),

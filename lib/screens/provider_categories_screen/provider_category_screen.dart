@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-import 'dart:convert';
 
 import 'package:Pax/components/simple_tile/simple_tile.dart';
+import 'package:Pax/services/api.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 Future<List<Category>> fetchPost(id) async {
-  final url = 'http://192.168.0.84:5002/category/${id}/provider';
-  final response = await http
-      .get(url, headers: {HttpHeaders.contentTypeHeader: 'application/json'});
+  final api = Api();
+  Map<String, String> header = {'content-type': 'application/json'};
+  final response = await api
+      .get(Services.CATEGORY, Routes.CATEGORY_PROVIDERS(id), headers: header);
   var responseJson = json.decode(response.body);
   responseJson = responseJson["data"];
   responseJson = responseJson["categories"];
