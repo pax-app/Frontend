@@ -63,8 +63,9 @@ class Button extends StatelessWidget {
         return Material(
           borderRadius: BorderRadius.circular(30),
           child: RaisedButton(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            padding: EdgeInsets.symmetric(vertical: 18, horizontal: 10),
             onPressed: tapHandler,
+            disabledColor: Colors.grey,
             child: Text(
               buttonText.toUpperCase(),
               style: Theme.of(context).textTheme.title.copyWith(

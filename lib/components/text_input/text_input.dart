@@ -11,9 +11,18 @@ class TextInput extends StatelessWidget {
   final Function onTap;
   final FocusNode focusNd;
 
-  TextInput(this.textLabel, this.placeholder, this.small, this.validator,
-      this.inputType, this.lines,
-      {this.focus = false, this.controller, this.onTap, this.focusNd});
+  TextInput(
+    this.textLabel,
+    this.placeholder,
+    this.small,
+    this.validator,
+    this.inputType,
+    this.lines, {
+    this.focus = false,
+    this.controller,
+    this.onTap,
+    this.focusNd,
+  });
 
   @override
   Widget build(BuildContext context) {

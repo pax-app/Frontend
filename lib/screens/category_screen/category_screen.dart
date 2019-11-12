@@ -3,6 +3,7 @@ import 'package:Pax/blocs/provider_bloc.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/models/GeneralCategory.dart';
+import 'package:Pax/models/ProviderCategory.dart';
 import 'package:Pax/models/category.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_screen.dart';
 import 'package:Pax/screens/category_screen/expansion_category_tab.dart';
@@ -18,7 +19,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  List<Category> c;
+  List<ProviderCategory> c;
   List<int> selectedList = List();
   String _search = "";
 
@@ -108,7 +109,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Column(
                     children: <Widget>[
                       StreamBuilder(
-                        initialData: List<Category>(),
+                        initialData: List<ProviderCategory>(),
                         stream: BlocProvider.of<CategoryBloc>(context)
                             .outCategories,
                         builder: (context, snapshot) {
@@ -192,17 +193,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return list.toList();
   }
 
-  List<Category> populaLista(int n) {
-    List<Category> lista = [];
+  List<ProviderCategory> populaLista(int n) {
+    List<ProviderCategory> lista = [];
     for (var i = 1; i < n; i++) {
-      Category c = new Category(id: i, name: "Category");
+      ProviderCategory c =
+          new ProviderCategory(id: i, name: "Category", generalId: 1);
       lista.add(c);
     }
-    //debugPrint(lista.toString());
     return lista;
   }
 
-  List<GeneralCategory> p(int n, List<Category> w) {
+  List<GeneralCategory> p(int n, List<ProviderCategory> w) {
     List<GeneralCategory> l = [];
     for (var i = 0; i < n; i++) {
       l.add(GeneralCategory(id: i, name: "GeneralCategory", categories: w));

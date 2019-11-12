@@ -91,7 +91,7 @@ class _EditPerfilTabState extends State<EditPerfilTab> {
           controller: _name,
           focus: true,
         ),
-          SizedBox(
+        SizedBox(
           height: 150.0,
         ),
         Button(
