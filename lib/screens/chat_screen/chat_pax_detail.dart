@@ -25,6 +25,7 @@ class ChatPaxDetail extends StatefulWidget {
 class _ChatPaxDetailState extends State<ChatPaxDetail> {
   var pax;
   var address;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -35,8 +36,8 @@ class _ChatPaxDetailState extends State<ChatPaxDetail> {
   @override
   Widget build(BuildContext context) {
     return BaseBottomSheet(
-      modalHeight:
-          MediaQuery.of(context).size.height * (widget.isProvider ? .6 : .71),
+      modalHeight: MediaQuery.of(context).size.height *
+          (widget.isProvider ? .6 : isLoading ? .2 : .7),
       sheetBody: pax != null && address != null
           ? Column(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,6 +134,7 @@ class _ChatPaxDetailState extends State<ChatPaxDetail> {
 
     setState(() {
       address = addressJson;
+      isLoading = false;
     });
   }
 }
