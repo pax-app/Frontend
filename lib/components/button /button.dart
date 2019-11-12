@@ -6,12 +6,14 @@ class Button extends StatelessWidget {
   final String buttonText;
   final String type;
   final bool isSmall;
+  final bool isDisabled;
 
   Button({
     @required this.buttonText,
     @required this.tapHandler,
     this.type,
     this.isSmall = false,
+    this.isDisabled,
   });
 
   @override

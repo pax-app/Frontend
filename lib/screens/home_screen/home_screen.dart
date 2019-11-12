@@ -2,6 +2,8 @@ import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/drawer/drawer_provider.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/info_tab.dart';
 import 'package:Pax/screens/config_screen/config_screen.dart';
+import 'package:Pax/screens/my_card_screen/add_card.dart';
+import 'package:Pax/screens/my_card_screen/my_card.dart';
 import 'package:Pax/screens/perfil_screen/perfil_screen.dart';
 import 'package:Pax/screens/my_conversations/my_conversations.dart';
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
@@ -45,15 +47,14 @@ class HomeScreen extends StatelessWidget {
           padding: false,
         ),
         BaseScreen(
-          "Meus cartoes",
-          "Meus cartoes",
-          Text("Meus cartoes"),
+          "Cartões",
+          "Meus Cartões",
+          SelectionCard(),
           getDrawer(),
         ),
         MyConversations(
           drawer: getDrawer(),
         ),
-        //roviderPanel(this._pageController),
         BaseScreen(
           "Histórico de Servico",
           "Histórico de Servico",
