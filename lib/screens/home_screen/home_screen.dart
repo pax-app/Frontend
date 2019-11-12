@@ -36,6 +36,7 @@ class HomeScreen extends StatelessWidget {
           PerfilScreen(),
           PaxDrawer(_pageController),
           padding: false,
+          white_bg: true,
         ),
         BaseScreen(
           "Cartões",

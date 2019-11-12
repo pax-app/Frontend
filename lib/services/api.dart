@@ -16,11 +16,11 @@ class Routes {
 }
 
 class Services {
-  static const String CHAT = ":3001";
-  static const String USER = ":5001";
-  static const String CATEGORY = ":5002";
-  static const String REVIEW = ":5004";
-  static const String REPORT = ":5005";
+  static const String CHAT = "chat";
+  static const String USER = "user";
+  static const String CATEGORY = "category";
+  static const String REVIEW = "review";
+  static const String REPORT = "report";
 }
 
 class Api {
@@ -32,7 +32,7 @@ class Api {
     return _instance;
   }
 
-  final String baseUrl = "http://172.18.0.1";
+  final String baseUrl = "https://pax-gateway.herokuapp.com/api/v1/";
 
   Future<dynamic> get(String service, String route, {Map headers}) {
     return http

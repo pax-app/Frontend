@@ -6,6 +6,7 @@ class Button extends StatelessWidget {
   final String buttonText;
   final String type;
   final bool isSmall;
+  final bool isLoading;
   final bool isDisabled;
 
   Button({
@@ -13,6 +14,7 @@ class Button extends StatelessWidget {
     @required this.tapHandler,
     this.type,
     this.isSmall = false,
+    this.isLoading = false,
     this.isDisabled,
   });
 
@@ -37,23 +39,23 @@ class Button extends StatelessWidget {
           highlightedBorderColor: secondaryColorDimmed,
           splashColor: secondaryColorDimmed,
           child: Text(
-            buttonText.toUpperCase(),
+            isLoading ? 'Carregando...' : buttonText.toUpperCase(),
             style: Theme.of(context).textTheme.title.copyWith(
                   color: Theme.of(context).accentColor,
                 ),
           ),
-          onPressed: tapHandler,
+          onPressed: isLoading ? null : tapHandler,
         );
         break;
       case 'danger':
         return OutlineButton(
           child: Text(
-            buttonText.toUpperCase(),
+            isLoading ? 'Carregando...' : buttonText.toUpperCase(),
             style: Theme.of(context).textTheme.title.copyWith(
                   color: Theme.of(context).errorColor,
                 ),
           ),
-          onPressed: tapHandler,
+          onPressed: isLoading ? null : tapHandler,
           borderSide: BorderSide(color: Theme.of(context).errorColor),
           highlightedBorderColor: errorColorLight,
           splashColor: errorColorLight,
@@ -63,11 +65,11 @@ class Button extends StatelessWidget {
         return Material(
           borderRadius: BorderRadius.circular(30),
           child: RaisedButton(
-            padding: EdgeInsets.symmetric(vertical: 18, horizontal: 10),
-            onPressed: tapHandler,
+            // padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            onPressed: isLoading ? null : tapHandler,
             disabledColor: Colors.grey,
             child: Text(
-              buttonText.toUpperCase(),
+              isLoading ? 'Carregando...' : buttonText.toUpperCase(),
               style: Theme.of(context).textTheme.title.copyWith(
                     color: colorWhite,
                   ),

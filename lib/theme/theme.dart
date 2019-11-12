@@ -42,6 +42,7 @@ ThemeData _buildPaxTheme() {
         fontSize: 15,
         fontWeight: FontWeight.bold,
         color: primaryColor,
+        height: 1.2,
       ),
       subtitle: TextStyle(
         fontFamily: 'Montserrat',

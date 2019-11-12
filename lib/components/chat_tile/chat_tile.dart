@@ -24,7 +24,6 @@ class ChatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(isChatSelected);
     return Container(
       height: 115,
       margin: EdgeInsets.symmetric(vertical: 6),
@@ -98,8 +97,8 @@ class ChatTile extends StatelessWidget {
       context,
       CupertinoPageRoute(
         builder: (_) => ChatScreen(
-          chat_id: chat_id,
-          person_name: username,
+          chatId: chat_id,
+          personName: username,
         ),
       ),
     );

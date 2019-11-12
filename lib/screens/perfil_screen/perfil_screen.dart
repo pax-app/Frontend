@@ -17,6 +17,7 @@ class PerfilScreen extends StatelessWidget {
       avaliations.add(a);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -60,6 +61,10 @@ class PerfilScreen extends StatelessWidget {
         ),
         SizedBox(
           height: 50,
+        ),
+        Divider(
+          height: 0,
+          thickness: 1.4,
         ),
         Container(
           color: Colors.grey[200],

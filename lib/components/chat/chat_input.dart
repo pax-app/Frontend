@@ -1,19 +1,25 @@
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-class ChatInput extends StatelessWidget {
+class ChatInput extends StatefulWidget {
   final Function sendAction;
   final Function openBottomSheet;
-  final TextEditingController _messageController = TextEditingController();
 
   ChatInput({
     @required this.sendAction,
     @required this.openBottomSheet,
   });
 
+  @override
+  _ChatInputState createState() => _ChatInputState();
+}
+
+class _ChatInputState extends State<ChatInput> {
+  final TextEditingController _messageController = TextEditingController();
+
   void _sendMessageHandler() {
     if (_messageController.text.isEmpty) return;
-    sendAction(_messageController.text, false);
+    widget.sendAction(_messageController.text, false, false);
     _messageController.clear();
   }
 
@@ -48,7 +54,7 @@ class ChatInput extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: openBottomSheet,
+              onPressed: widget.openBottomSheet,
               icon: Icon(Icons.attach_file),
               color: Theme.of(context).accentColor,
             ),

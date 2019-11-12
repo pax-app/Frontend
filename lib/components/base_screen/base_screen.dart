@@ -6,6 +6,7 @@ class BaseScreen extends StatelessWidget {
   final Widget body, drawer;
   final bool padding;
   final List<Widget> actions;
+  final bool white_bg;
 
   BaseScreen(
     this.appBarTitle,
@@ -14,11 +15,13 @@ class BaseScreen extends StatelessWidget {
     this.drawer, {
     this.padding = true,
     this.actions,
+    this.white_bg,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white_bg == true ? Colors.white : null,
       appBar: WhiteAppBar(appBarTitle, context, actions: actions),
       drawer: drawer,
       body: SingleChildScrollView(
