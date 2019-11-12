@@ -211,7 +211,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
     var body = json.encode(statusChange);
     var res = await http.patch(
+<<<<<<< HEAD
       'https://pax-pax.herokuapp.com/pax/update_status/',
+=======
+      'https://pax-pax.herokuapp.com/pax/update_status',
+>>>>>>> e0c4f96b2ffcf1962062c12dbc9be4a1479ad30a
       headers: {"Content-Type": "application/json"},
       body: body,
     );
