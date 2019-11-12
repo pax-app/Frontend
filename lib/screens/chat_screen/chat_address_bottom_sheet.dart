@@ -8,9 +8,17 @@ import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class ChatAddressBottomSheet extends StatefulWidget {
-  final user_id;
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  final Function sendMessage;
+  final int chatId;
+  final int userId;
 
-  ChatAddressBottomSheet({@required this.user_id});
+  ChatAddressBottomSheet({
+    @required this.userId,
+    @required this.chatId,
+    @required this.sendMessage,
+    @required this.scaffoldKey,
+  });
 
   @override
   _ChatAddressBottomSheetState createState() => _ChatAddressBottomSheetState();
@@ -35,7 +43,7 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
 
     return BaseBottomSheet(
       modalHeight: isInCepModal
-          ? 290 + MediaQuery.of(context).viewInsets.bottom
+          ? 300 + MediaQuery.of(context).viewInsets.bottom
           : _currentSheetHeight,
       sheetBody: Column(
         children: <Widget>[
@@ -58,9 +66,12 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
                 : isInCepModal == true
                     ? ChatCepBottomSheet()
                     : ChatAddressList(
+                        sendMessage: widget.sendMessage,
                         addressLength: _addressLength,
                         addresses: addresses,
+                        chatId: widget.chatId,
                         navigateToCepModal: _navigateToCepModal,
+                        scaffoldKey: widget.scaffoldKey,
                       ),
           ),
         ],
@@ -75,11 +86,8 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
   }
 
   void _getUserAddresses() async {
-    var params = {'user_id': '${widget.user_id.toString()}'};
-    Uri uri = Uri.parse("https://pax-user.herokuapp.com/get_addresses");
-    final newURI = uri.replace(queryParameters: params);
-
-    var response = await http.get(newURI);
+    var response = await http.get(
+        'https://pax-user.herokuapp.com/get_addresses/${widget.userId.toString()}');
     var jsonData = json.decode(response.body);
 
     final List<Address> addressesFromJSON = [];

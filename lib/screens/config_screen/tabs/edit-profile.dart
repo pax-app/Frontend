@@ -52,7 +52,6 @@ class _EditPerfilTabState extends State<EditPerfilTab> {
                     ),
               InkWell(
                 onTap: () async {
-                  debugPrint(_photo.toString());
                   var image =
                       await ImagePicker.pickImage(source: ImageSource.gallery);
                   setState(() {
@@ -92,7 +91,7 @@ class _EditPerfilTabState extends State<EditPerfilTab> {
           controller: _name,
           focus: true,
         ),
-          SizedBox(
+        SizedBox(
           height: 150.0,
         ),
         Button(

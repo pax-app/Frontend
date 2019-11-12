@@ -5,13 +5,24 @@ class BaseScreen extends StatelessWidget {
   final String pageTitle, appBarTitle;
   final Widget body, drawer;
   final bool padding;
-  BaseScreen(this.appBarTitle, this.pageTitle, this.body, this.drawer,
-      {this.padding = true});
+  final List<Widget> actions;
+  final bool white_bg;
+
+  BaseScreen(
+    this.appBarTitle,
+    this.pageTitle,
+    this.body,
+    this.drawer, {
+    this.padding = true,
+    this.actions,
+    this.white_bg,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: WhiteAppBar(appBarTitle, context),
+      backgroundColor: white_bg == true ? Colors.white : null,
+      appBar: WhiteAppBar(appBarTitle, context, actions: actions),
       drawer: drawer,
       body: SingleChildScrollView(
         child: Column(
@@ -20,7 +31,7 @@ class BaseScreen extends StatelessWidget {
             pageTitle == ""
                 ? Container()
                 : Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         bottom: 20, top: 30, left: 20, right: 10),
                     child: Text(
                       pageTitle,

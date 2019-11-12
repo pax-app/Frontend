@@ -1,15 +1,16 @@
-import 'dart:io';
-import 'package:Pax/blocs/provider_bloc.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
-import 'package:Pax/models/Provider.dart';
+import 'package:Pax/components/text_input/text_input_bloc.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/finish_provider_tab.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/provider_bottom_sheet.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Pax/components/text_input/text_input.dart';
 import 'package:image_picker/image_picker.dart';
+import "package:Pax/blocs/became_provider_bloc.dart";
+import "package:Pax/blocs/provider_bloc.dart";
+
+final _becameProviderBloc = BecameProviderBloc();
 
 class BecameProviderScreen extends StatefulWidget {
   @override
@@ -17,13 +18,10 @@ class BecameProviderScreen extends StatefulWidget {
 }
 
 class _BecameProviderScreenState extends State<BecameProviderScreen> {
-  double _lowerValue = 0;
-  double _upperValue = 200.0;
-  File _photo;
-  TextEditingController _bio = TextEditingController();
-  TextEditingController _rg = TextEditingController();
+  double _lowerValue = 20.0;
+  double _upperValue = 80.0;
   bool isTouch = false;
-
+  var _photo, _rgPhoto;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,8 +45,8 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                         ),
                       )
                     : Container(
-                        height: 140,
-                        width: 120,
+                        height: 130,
+                        width: 130,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Theme.of(context).accentColor,
@@ -99,19 +97,26 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    Text(
-                      "Naruto Uzumaki",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontFamily:
-                            Theme.of(context).textTheme.title.fontFamily,
-                        fontSize: Theme.of(context).textTheme.title.fontSize,
-                        fontWeight:
-                            Theme.of(context).textTheme.title.fontWeight,
-                        color: Theme.of(context).textTheme.title.color,
-                      ),
+                    StreamBuilder<Object>(
+                        stream: _becameProviderBloc.name,
+                        builder: (context, snapshot) {
+                          return Text(
+                            snapshot.hasData ? snapshot.data : "",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontFamily:
+                                  Theme.of(context).textTheme.title.fontFamily,
+                              fontSize:
+                                  Theme.of(context).textTheme.title.fontSize,
+                              fontWeight:
+                                  Theme.of(context).textTheme.title.fontWeight,
+                              color: Theme.of(context).textTheme.title.color,
+                            ),
+                          );
+                        }),
+                    SizedBox(
+                      height: 30.0,
                     ),
-                    const SizedBox(height: 30.0),
                     InkWell(
                       onTap: () {
                         _showModalBottomSheet(context);
@@ -144,28 +149,24 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
           ],
         ),
         const SizedBox(height: 10.0),
-        TextInput(
+        TextInputConnected(
           'Bio',
           'Insira uma descrição sobre você',
           true,
-          (String value) {
-            return value.contains('@') ? 'Do not use the @ char.' : null;
-          },
           TextInputType.text,
           3,
           focus: true,
-          controller: _bio,
+          stream: _becameProviderBloc.bio,
+          onChanged: _becameProviderBloc.changeBio,
         ),
-        TextInput(
+        TextInputConnected(
           'RG',
           'RG',
           true,
-          (String value) {
-            return value.contains('@') ? 'Do not use the @ char.' : null;
-          },
-          TextInputType.number,
+          TextInputType.text,
           1,
-          controller: _rg,
+          stream: _becameProviderBloc.rg,
+          onChanged: _becameProviderBloc.changeRg,
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
@@ -174,9 +175,11 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
             children: <Widget>[
               InkWell(
                 onTap: () async {
-                  File _image;
                   var image =
                       await ImagePicker.pickImage(source: ImageSource.camera);
+                  setState(() {
+                    _rgPhoto = image;
+                  });
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
@@ -190,11 +193,13 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
                   child: Row(
                     children: <Widget>[
                       new Icon(
-                        Icons.cloud_upload,
+                        _rgPhoto == null ? Icons.cloud_upload : Icons.check,
                         color: Theme.of(context).primaryColorLight,
                       ),
                       const SizedBox(width: 8.0),
-                      new Text('SELFIE COM O RG'),
+                      _rgPhoto == null
+                          ? new Text('SELFIE COM O RG')
+                          : new Text('ESCOLHER OUTRA'),
                     ],
                   ),
                 ),
@@ -208,18 +213,13 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
           type: 'default',
           tapHandler: activeteButton()
               ? () {
-                  setState(() {
-                    Provider p = Provider(
-                      bio: _bio.text,
-                      maxPrice: _upperValue,
-                      minPrice: _lowerValue,
-                    );
-                    p.name = "true";
-                    BlocProvider.of<ProviderBloc>(context)
-                        .createProvider
-                        .add(p);
-                  });
-                  Navigator.of(context).push(
+                  _becameProviderBloc.turnIntoProvider(
+                      _lowerValue,
+                      _upperValue,
+                      BlocProvider.of<ProviderBloc>(context).categories,
+                      _photo,
+                      _rgPhoto);
+                  Navigator.of(context).pushReplacement(
                     CupertinoPageRoute(
                       builder: (context) => BaseScreen(
                         "",
@@ -239,7 +239,7 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
   }
 
   bool activeteButton() {
-    return _bio.text.isNotEmpty && _rg.text.isNotEmpty && isTouch;
+    return isTouch;
   }
 
   void _updatePriceRange(double newLowerValue, double newUpperValue) {

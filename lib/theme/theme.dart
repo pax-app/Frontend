@@ -42,6 +42,7 @@ ThemeData _buildPaxTheme() {
         fontSize: 15,
         fontWeight: FontWeight.bold,
         color: primaryColor,
+        height: 1.2,
       ),
       subtitle: TextStyle(
         fontFamily: 'Montserrat',
@@ -52,6 +53,13 @@ ThemeData _buildPaxTheme() {
         fontFamily: 'Roboto',
         fontSize: 14,
         color: primaryColor,
+      ),
+      body2: TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 12,
+        color: colorWhite,
+        letterSpacing: 1.2,
+        fontWeight: FontWeight.normal,
       ),
     ),
     appBarTheme: AppBarTheme(

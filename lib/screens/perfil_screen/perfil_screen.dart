@@ -5,7 +5,7 @@ import 'package:Pax/models/user.dart';
 import 'package:flutter/material.dart';
 
 class PerfilScreen extends StatelessWidget {
-  List<Avaliation> avaliations = List<Avaliation>();
+  final List<Avaliation> avaliations = List<Avaliation>();
   PerfilScreen() {
     for (var i = 0; i < 5; i++) {
       Avaliation a = Avaliation(
@@ -15,9 +15,9 @@ class PerfilScreen extends StatelessWidget {
         score: 5,
       );
       avaliations.add(a);
-      debugPrint(avaliations.length.toString());
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -61,6 +61,10 @@ class PerfilScreen extends StatelessWidget {
         ),
         SizedBox(
           height: 50,
+        ),
+        Divider(
+          height: 0,
+          thickness: 1.4,
         ),
         Container(
           color: Colors.grey[200],

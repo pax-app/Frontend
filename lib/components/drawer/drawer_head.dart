@@ -1,12 +1,23 @@
-import 'package:Pax/components/stars_avaliation/stars_avaliation.dart';
+import 'package:Pax/blocs/login_bloc.dart';
+import 'package:Pax/screens/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
+final _loginBloc = LoginBloc();
+
 class DrawerHead extends StatelessWidget {
-  String img, name;
-  double qntStars;
-  PageController controller;
+  final String img, name;
+  final double qntStars;
+  final PageController controller;
 
   DrawerHead(this.img, this.name, this.qntStars, this.controller);
+
+  void doLogout(BuildContext ctx) async {
+    var loggedOut = await _loginBloc.logOut();
+    if (loggedOut)
+      Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+        return LoginScreen();
+      }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +69,17 @@ class DrawerHead extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline,
                     ),
                     SizedBox(height: 6),
-                    StarsAvaliation(qntStars, context)
+                    Padding(
+                      padding: EdgeInsets.only(left: 140, top: 20),
+                      child: InkWell(
+                        onTap: () => doLogout(context),
+                        child: Text(
+                          "Sair",
+                          style:
+                              TextStyle(color: Theme.of(context).buttonColor),
+                        ),
+                      ),
+                    )
                   ],
                 )
               ],
