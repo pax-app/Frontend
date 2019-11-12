@@ -56,13 +56,6 @@ class HomeScreen extends StatelessWidget {
           drawer: getDrawer(),
         ),
         BaseScreen(
-          "Minhas Conversas",
-          "Minhas Conversas",
-          SelectionCard(),
-          getDrawer(),
-        ),
-        //roviderPanel(this._pageController),
-        BaseScreen(
           "Histórico de Servico",
           "Histórico de Servico",
           Text("Histórico de Servico"),

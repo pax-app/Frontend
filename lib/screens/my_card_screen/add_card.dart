@@ -39,35 +39,34 @@ class _AddCardState extends State<AddCard> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-            title: new Text(
-              "Seu pedido para cadastrar o cartão \n ${this._addCard.text} \nfoi submetido com sucesso!",
-              textAlign: TextAlign.center,
+          title: new Text(
+            "Cartão adicionado com sucesso!",
+            textAlign: TextAlign.center,
+          ),
+          content: SizedBox(
+            height: 200,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Icon(
+                  Icons.check_circle,
+                  size: 100.0,
+                  color: Theme.of(context).accentColor,
+                ),
+                SizedBox(height: 6),
+                Button(
+                  buttonText: 'OK',
+                  type: 'default',
+                  tapHandler: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                  isSmall: false,
+                ),
+              ],
             ),
-            content: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.check_circle,
-                    size: 100.0,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  // usually buttons at the bottom of the dialog
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.08,
-                  ),
-                  Button(
-                    buttonText: 'OK',
-                    type: 'default',
-                    tapHandler: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    },
-                    isSmall: false,
-                  ),
-                ],
-              ),
-            ));
+          ),
+        );
       },
     );
   }
