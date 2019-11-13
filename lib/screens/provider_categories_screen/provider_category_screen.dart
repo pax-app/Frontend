@@ -45,7 +45,12 @@ class ProviderCategoryScreen extends StatelessWidget {
         }
 
         // By default, show a loading spinner.
-        return Center(child: CircularProgressIndicator());
+        return SizedBox(
+          height: MediaQuery.of(context).size.height - 220,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
   }
