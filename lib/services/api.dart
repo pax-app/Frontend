@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class Routes {
@@ -8,10 +7,10 @@ class Routes {
   static const String REGISTER_ROUTE = "/auth/registration";
   static const String PROVIDER_REGISTRATION = "/provider_registration";
   static const String AUTH_STATUS = "/auth/status";
-  static const String GENERAL_CATEGORY = "/category/general";
-  static const String PROVIDER_CATEGORY = "/category/provider";
+  static const String GENERAL_CATEGORY = "/general";
+  static const String PROVIDER_CATEGORY = "/provider";
   static String CATEGORY_PROVIDERS(id) {
-    return "/category/provider/$id";
+    return "/provider/$id";
   }
 }
 

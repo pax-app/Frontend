@@ -37,7 +37,7 @@ class _ChatPaxDetailState extends State<ChatPaxDetail> {
   Widget build(BuildContext context) {
     return BaseBottomSheet(
       modalHeight: MediaQuery.of(context).size.height *
-          (widget.isProvider ? .6 : isLoading ? .2 : .7),
+          (widget.isProvider && !isLoading ? .6 : isLoading ? .25 : .7),
       sheetBody: pax != null && address != null
           ? Column(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
