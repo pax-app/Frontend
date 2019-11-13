@@ -72,7 +72,7 @@ class _AddCardState extends State<AddCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: true,
-      appBar: WhiteAppBar('Adicinar cartão', context),
+      appBar: WhiteAppBar('Adicionar Cartão', context),
       body: Container(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: SingleChildScrollView(
