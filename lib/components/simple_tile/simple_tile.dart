@@ -27,13 +27,15 @@ class SimpleTile extends StatelessWidget {
             Icons.arrow_forward_ios,
             color: Theme.of(context).primaryColorLight,
           ),
-          leading: SizedBox(
-            child: Image(
-              image: AssetImage(this.img),
-            ),
-            width: 40.0,
-            height: 100.0,
-          ),
+          leading: img != null
+              ? SizedBox(
+                  child: Image(
+                    image: AssetImage(this.img),
+                  ),
+                  width: 40.0,
+                  height: 100.0,
+                )
+              : null,
         ),
       ),
     );
