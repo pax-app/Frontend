@@ -1,5 +1,6 @@
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/screens/provider_categories_screen/provider_category_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Pax/components/general_categories_panel/general_category_panel_img.dart';
 
@@ -16,19 +17,7 @@ class GeneralCategoriesPanelCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 3),
       child: InkWell(
         borderRadius: BorderRadius.circular(7),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => BaseScreen(
-                this.title,
-                this.title,
-                ProviderCategoryScreen(this.id),
-                null,
-              ),
-            ),
-          );
-        },
+        onTap: () => _pushToProviderCategory(context),
         child: Container(
           height: 150,
           padding: const EdgeInsets.only(left: 20),
@@ -64,6 +53,20 @@ class GeneralCategoriesPanelCard extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  _pushToProviderCategory(BuildContext context) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => BaseScreen(
+          "",
+          this.title,
+          ProviderCategoryScreen(this.id),
+          null,
         ),
       ),
     );

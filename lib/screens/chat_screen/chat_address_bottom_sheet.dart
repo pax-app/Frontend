@@ -89,6 +89,7 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
     var response = await http.get(
         'https://pax-user.herokuapp.com/get_addresses/${widget.userId.toString()}');
     var jsonData = json.decode(response.body);
+    print(jsonData);
 
     final List<Address> addressesFromJSON = [];
 

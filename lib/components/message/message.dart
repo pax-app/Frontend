@@ -38,8 +38,7 @@ class Message extends StatelessWidget {
                       paxStatus != 'accepted'
                   ? () => showPaxDetails(context)
                   : () {},
-              child: AnimatedContainer(
-                duration: Duration(milliseconds: 500),
+              child: Container(
                 padding: const EdgeInsets.only(
                   top: 14,
                   left: 15,
@@ -59,9 +58,9 @@ class Message extends StatelessWidget {
                     colors: [
                       paxStatus == 'refused'
                           ? Colors.red
-                          : paxStatus == 'accepted'
+                          : paxStatus == 'accepted' || isMe
                               ? Colors.green
-                              : isMe ? Colors.green : Colors.white,
+                              : Colors.white,
                       paxStatus == 'refused'
                           ? Colors.red
                           : paxStatus == 'accepted'

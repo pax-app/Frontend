@@ -37,7 +37,7 @@ class _ChatPaxDetailState extends State<ChatPaxDetail> {
   Widget build(BuildContext context) {
     return BaseBottomSheet(
       modalHeight: MediaQuery.of(context).size.height *
-          (widget.isProvider ? .6 : isLoading ? .2 : .7),
+          (widget.isProvider && !isLoading ? .6 : isLoading ? .25 : .7),
       sheetBody: pax != null && address != null
           ? Column(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +127,6 @@ class _ChatPaxDetailState extends State<ChatPaxDetail> {
   }
 
   Future _getAddress() async {
-    print(pax['address_id']);
     var res = await http
         .get('https://pax-user.herokuapp.com/get_address/${pax['address_id']}');
     var addressJson = json.decode(res.body);

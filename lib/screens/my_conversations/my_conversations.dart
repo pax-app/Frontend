@@ -1,6 +1,8 @@
-import 'package:Pax/components/base_dialog/base_dialog.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/chat_tile/chat_tile.dart';
+import 'package:Pax/screens/my_conversations/chats_is_empty.dart';
+import 'package:Pax/screens/my_conversations/confirm_deletion_dialog.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -17,6 +19,7 @@ class _MyConversationsState extends State<MyConversations> {
   bool _deletionMode = false;
   List<int> _chatsToDelete = [];
   bool isDeleting = false;
+  LoggedUser loggedUser = LoggedUser();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +65,7 @@ class _MyConversationsState extends State<MyConversations> {
                 return ChatTile(
                   chat_id: chat_id,
                   message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
-                  username: 'Rorgérin Júrnio',
+                  username: snapshot.data[index]['username'],
                   isInDeletionMode: _deletionMode,
                   isChatSelected:
                       _chatsToDelete.contains(chat_id) ? true : false,
@@ -72,6 +75,7 @@ class _MyConversationsState extends State<MyConversations> {
               },
             );
           }
+          if (snapshot.hasError) return ChatsIsEmpty();
           return Center(child: CircularProgressIndicator());
         },
       ),
@@ -82,47 +86,8 @@ class _MyConversationsState extends State<MyConversations> {
     showDialog(
       context: context,
       builder: (context) {
-        return BaseDialog(
-          height: 210,
-          body: Padding(
-            padding: const EdgeInsets.only(top: 45, left: 20, right: 20),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  'Tem certeza que quer deletar?',
-                  style: Theme.of(context).textTheme.title,
-                ),
-                SizedBox(height: 20),
-                Text('Depois disso não poderá acessar mais estas conversas'),
-                SizedBox(height: 25),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Não'),
-                      textColor: Theme.of(context).primaryColor,
-                    ),
-                    FlatButton(
-                      onPressed: () {
-                        _deleteAllSelectedChats();
-                        Navigator.of(context).pop();
-                      },
-                      textColor: Colors.red,
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.delete_forever),
-                          Text('Sim'),
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
+        return ConfirmDeletionDialog(
+          deleteAllSelectedChats: _deleteAllSelectedChats,
         );
       },
     );
@@ -144,6 +109,7 @@ class _MyConversationsState extends State<MyConversations> {
     setState(() {
       isDeleting = false;
       _chatsToDelete = newChats;
+      _deletionMode = false;
     });
   }
 
@@ -178,11 +144,27 @@ class _MyConversationsState extends State<MyConversations> {
         await http.get('https://pax-chat.herokuapp.com/chats/user/1');
     var jsonData = json.decode(response.body);
 
-    final List<dynamic> chats = [];
-    for (var item in jsonData) {
-      chats.add(item);
-    }
+    final List<Map<String, dynamic>> chats = [];
 
+    for (var item in jsonData) {
+      var user_info = await _getUserInfo(item);
+      chats.add({
+        'chat_id': item['chat_id'],
+        'user_id': item['user_id'],
+        'provider_id': item['provider_id'],
+        'user_address': item['user_address'],
+        'username': user_info['username'],
+      });
+    }
+    // print(chats);
     return chats;
+  }
+
+  Future<dynamic> _getUserInfo(var item) async {
+    var url =
+        'https://pax-user.herokuapp.com/get_user_info/${loggedUser.isProvider == true ? 'user' : 'provider'}/${loggedUser.isProvider ? item['user_id'] : item['provider_id']}';
+    var user_info = await http.get(url);
+
+    return json.decode(user_info.body);
   }
 }

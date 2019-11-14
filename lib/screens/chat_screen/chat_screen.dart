@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
   var addresses;
 
-  bool isProvider = true;
+  bool isProvider = false;
   bool isAddressesLoading = true;
   bool showSnackBars = true;
 
@@ -152,7 +152,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _pushPaxModal(BuildContext context) {
     Navigator.of(context).pop();
-    showModalBottomSheet<dynamic>(
+    showModalBottomSheet(
       isScrollControlled: true,
       context: context,
       builder: (context) => ChatPaxBottomSheet(

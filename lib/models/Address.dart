@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
 class Address {
   int address_id;
   int cep;
@@ -46,4 +50,15 @@ class Address {
     data['reference_point'] = this.reference_point;
     return data;
   }
+}
+
+Future<Address> createAddress(String url, {Map body}) async {
+  return http.post(url, body: body).then((http.Response response) {
+    final statusCode = response.statusCode;
+
+    if (statusCode < 200 || statusCode > 400 || json == null) {
+      throw new Exception("Error while fetching data");
+    }
+    return Address.fromJson(json.decode(response.body));
+  });
 }

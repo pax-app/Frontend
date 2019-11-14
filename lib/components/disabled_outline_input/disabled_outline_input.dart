@@ -18,18 +18,21 @@ class DisabledOutlineInput extends StatefulWidget {
 class _DisabledOutlineInputState extends State<DisabledOutlineInput> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      enabled: false,
-      style: TextStyle(color: Colors.black),
-      maxLines: widget.lines,
-      controller: widget.textController,
-      decoration: new InputDecoration(
-        labelText: widget.labelText,
-        labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-        disabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Theme.of(context).primaryColor,
-            width: 1,
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 5.0),
+      child: TextField(
+        enabled: false,
+        style: TextStyle(color: Colors.black),
+        maxLines: widget.lines,
+        controller: widget.textController,
+        decoration: new InputDecoration(
+          labelText: widget.labelText,
+          labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Theme.of(context).primaryColor,
+              width: 1,
+            ),
           ),
         ),
       ),

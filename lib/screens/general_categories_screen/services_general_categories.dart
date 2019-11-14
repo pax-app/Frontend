@@ -2,30 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:Pax/components/general_categories_panel/general_categories_panel_card.dart';
+import 'package:Pax/components/try_again_error/try_again_error.dart';
 import 'package:Pax/models/GeneralCategory.dart';
 import 'package:Pax/services/api.dart';
 import 'package:flutter/material.dart';
 
-Future<List<GeneralCategory>> fetchPost() async {
-  Map<String, String> header = {'content-type': 'application/json'};
-  final _api = Api();
-  final response = await _api.get(Services.CATEGORY, Routes.GENERAL_CATEGORY,
-      headers: header);
-  var responseJson = json.decode(response.body);
-  responseJson = responseJson["data"];
-  responseJson = responseJson["categories"];
-  final List<GeneralCategory> listaFinal = [];
-
-  for (var item in responseJson) {
-    listaFinal.add(GeneralCategory.fromJson(item));
-  }
-  return listaFinal;
-}
-
 class ServiceGeneralCategory extends StatelessWidget {
   final Future<GeneralCategory> category;
 
-  ServiceGeneralCategory({Key key, this.category}) : super(key: key);
+  ServiceGeneralCategory({this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +28,7 @@ class ServiceGeneralCategory extends StatelessWidget {
           'Encontre o melhor em consertar aparelhos eletrônicos',
       'Reformas': 'Precisa de reformas? Fale com nossos profissionais',
     };
+
     return Container(
       height: MediaQuery.of(context).size.height - 82,
       child: FutureBuilder<List<GeneralCategory>>(
@@ -68,13 +54,29 @@ class ServiceGeneralCategory extends StatelessWidget {
               },
             );
           } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
+            return TryAgainError();
           }
 
           // By default, show a loading spinner.
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         },
       ),
     );
+  }
+
+  Future<List<GeneralCategory>> fetchPost() async {
+    Map<String, String> header = {'content-type': 'application/json'};
+    final _api = Api();
+    final response = await _api.get(Services.CATEGORY, Routes.GENERAL_CATEGORY,
+        headers: header);
+    var responseJson = json.decode(response.body);
+    responseJson = responseJson["data"];
+    responseJson = responseJson["categories"];
+    final List<GeneralCategory> listaFinal = [];
+
+    for (var item in responseJson) {
+      listaFinal.add(GeneralCategory.fromJson(item));
+    }
+    return listaFinal;
   }
 }

@@ -2,25 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:Pax/components/simple_tile/simple_tile.dart';
+import 'package:Pax/components/try_again_error/try_again_error.dart';
 import 'package:Pax/services/api.dart';
 import 'package:flutter/material.dart';
-
-Future<List<Category>> fetchPost(id) async {
-  final api = Api();
-  Map<String, String> header = {'content-type': 'application/json'};
-  final response = await api
-      .get(Services.CATEGORY, Routes.CATEGORY_PROVIDERS(id), headers: header);
-  var responseJson = json.decode(response.body);
-  responseJson = responseJson["data"];
-  responseJson = responseJson["categories"];
-
-  final List<Category> listaFinal = [];
-
-  for (var item in responseJson) {
-    listaFinal.add(Category.fromJson(item));
-  }
-  return listaFinal;
-}
 
 class Category {
   final int id;
@@ -52,19 +36,39 @@ class ProviderCategoryScreen extends StatelessWidget {
           return Column(
             children: categories
                 .map(
-                  (item) => Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                      child: SimpleTile(item.name, null)),
+                  (item) => SimpleTile(item.name, () {}),
                 )
                 .toList(),
           );
         } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
+          return TryAgainError();
         }
 
         // By default, show a loading spinner.
-        return CircularProgressIndicator();
+        return SizedBox(
+          height: MediaQuery.of(context).size.height - 220,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
+  }
+
+  Future<List<Category>> fetchPost(id) async {
+    final api = Api();
+    Map<String, String> header = {'content-type': 'application/json'};
+    final response = await api
+        .get(Services.CATEGORY, Routes.CATEGORY_PROVIDERS(id), headers: header);
+    var responseJson = json.decode(response.body);
+    responseJson = responseJson["data"];
+    responseJson = responseJson["categories"];
+
+    final List<Category> listaFinal = [];
+
+    for (var item in responseJson) {
+      listaFinal.add(Category.fromJson(item));
+    }
+    return listaFinal;
   }
 }
