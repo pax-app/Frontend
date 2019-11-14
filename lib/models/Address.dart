@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Address {
-  String address_id;
-  String cep;
+  int address_id;
+  int cep;
   String street;
   String neighborhood;
   String city;
   String state;
-  String number;
+  int number;
   String complement;
   String reference_point;
 

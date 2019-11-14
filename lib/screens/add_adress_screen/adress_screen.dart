@@ -1,5 +1,4 @@
 import 'package:Pax/components/app_bar/white_appbar.dart';
-import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ import 'package:Pax/models/Address.dart';
 import '../../models/Address.dart';
 
 class AdressScreen extends StatefulWidget {
-  final int userCep;
+  final String userCep;
   const AdressScreen({this.userCep});
 
   @override
@@ -17,28 +16,21 @@ class AdressScreen extends StatefulWidget {
 }
 
 class _AdressScreenState extends State<AdressScreen> {
+  final _city = TextEditingController();
+  final _street = TextEditingController();
+  final _neighborhood = TextEditingController();
+  final _state = TextEditingController();
+  final _number = TextEditingController();
+  final _complement = TextEditingController();
+  final _referencePoint = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: WhiteAppBar('Adicionar Endereço', context),
-      body: FutureBuilder<Address>(
-        future: getCepData(72025650),
+      body: FutureBuilder(
+        future: _getCepData(widget.userCep),
         builder: (context, snapshot) {
-          TextEditingController _city =
-              TextEditingController(text: snapshot?.data?.city);
-          TextEditingController _street =
-              TextEditingController(text: snapshot?.data?.street);
-          TextEditingController _neighborhood =
-              TextEditingController(text: snapshot?.data?.neighborhood);
-          TextEditingController _state =
-              TextEditingController(text: snapshot?.data?.state);
-          TextEditingController _number =
-              TextEditingController(text: snapshot?.data?.number.toString());
-          TextEditingController _complement =
-              TextEditingController(text: snapshot?.data?.complement);
-          TextEditingController _referencePoint =
-              TextEditingController(text: snapshot?.data?.reference_point);
-
           if (snapshot.data == null) {
             return Container(
               height: MediaQuery.of(context).size.height - 250,
@@ -47,6 +39,7 @@ class _AdressScreenState extends State<AdressScreen> {
               ),
             );
           } else if (snapshot.hasData) {
+            _updateTextInputs(snapshot.data);
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -199,27 +192,28 @@ class _AdressScreenState extends State<AdressScreen> {
     );
   }
 
-  Future<Address> getCepData(int cep) async {
+  Future<dynamic> _getCepData(String cep) async {
     var CEP = via_cep();
 
-    var result = await CEP.searchCEP('$cep', 'json', '');
+    await CEP.searchCEP('$cep', 'json', '');
 
-    String localidade = CEP.getLocalidade();
-    String logradouro = CEP.getLogradouro();
-    String bairro = CEP.getBairro();
-    String uf = CEP.getUF();
+    print(CEP.getBody());
+    var automated_address = {
+      'cep': CEP.getCEP(),
+      'street': CEP.getLogradouro(),
+      'neighborhood': CEP.getBairro(),
+      'city': CEP.getLocalidade(),
+      'state': CEP.getUF(),
+    };
 
-    var resultado = Address(
-        address_id: 0,
-        city: localidade,
-        street: logradouro,
-        neighborhood: bairro,
-        state: uf,
-        number: 0,
-        complement: '',
-        cep: widget.userCep,
-        reference_point: '');
+    return automated_address;
+  }
 
-    return resultado;
+  void _updateTextInputs(var data) {
+    print(data);
+    _city.text = data['city'];
+    _street.text = data['street'];
+    _neighborhood.text = data['neighborhood'];
+    _state.text = data['state'];
   }
 }
