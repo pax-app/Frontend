@@ -3,8 +3,11 @@ import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/disabled_outline_input/disabled_outline_input.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 import 'package:Pax/components/try_again_error/try_again_error.dart';
+import 'package:Pax/services/api.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:flutter/material.dart';
 import 'package:via_cep/via_cep.dart';
+import 'dart:convert';
 
 class AdressScreen extends StatefulWidget {
   final String userCep;
@@ -22,6 +25,9 @@ class _AdressScreenState extends State<AdressScreen> {
   final _number = TextEditingController();
   final _complement = TextEditingController();
   final _referencePoint = TextEditingController();
+  Api api = Api();
+  bool isLoading = false;
+  LoggedUser loggedUser = LoggedUser();
 
   @override
   Widget build(BuildContext context) {
@@ -122,10 +128,10 @@ class _AdressScreenState extends State<AdressScreen> {
                         height: 10.0,
                       ),
                       Button(
-                        buttonText: 'Vamos lá',
-                        type: 'default',
-                        tapHandler: () async {},
+                        buttonText: 'Adicionar',
+                        tapHandler: _createAddress,
                         isSmall: false,
+                        isLoading: isLoading,
                       ),
                       SizedBox(
                         height: 10.0,
@@ -146,6 +152,39 @@ class _AdressScreenState extends State<AdressScreen> {
         ),
       ),
     );
+  }
+
+  void _createAddress() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    var address = {
+      'user_id': loggedUser.userId,
+      'cep': int.parse(widget.userCep),
+      'street': _street.text,
+      'neighborhood': _neighborhood.text,
+      'city': _city.text,
+      'state': _state.text,
+      'number': int.parse(_number.text),
+      'complement': _complement.text,
+      'reference_point': _referencePoint.text,
+    };
+
+    Map<String, String> header = {'content-type': 'application/json'};
+    await api.post(
+      Services.USER,
+      Routes.CREATE_ADDRESS,
+      headers: header,
+      body: json.encode(address),
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
 
   Future<dynamic> _getCepData(String cep) async {

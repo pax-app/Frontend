@@ -12,6 +12,8 @@ class Routes {
   static String CATEGORY_PROVIDERS(id) {
     return "/provider/$id";
   }
+
+  static const String CREATE_ADDRESS = '/add_address';
 }
 
 class Services {
