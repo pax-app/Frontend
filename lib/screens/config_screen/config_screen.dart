@@ -1,8 +1,8 @@
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/simple_tile/simple_tile.dart';
-import 'package:Pax/screens/add_adress_screen/adress_screen.dart';
 import 'package:Pax/screens/config_screen/tabs/edit-password.dart';
 import 'package:Pax/screens/config_screen/tabs/edit-profile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ConfigScreen extends StatelessWidget {
@@ -12,7 +12,7 @@ class ConfigScreen extends StatelessWidget {
       children: <Widget>[
         SimpleTile("Editar Perfil", () {
           Navigator.of(context).push(
-            MaterialPageRoute(
+            CupertinoPageRoute(
               builder: (context) => BaseScreen(
                 "",
                 "",
@@ -24,23 +24,11 @@ class ConfigScreen extends StatelessWidget {
         }),
         SimpleTile("Mudar Senha", () {
           Navigator.of(context).push(
-            MaterialPageRoute(
+            CupertinoPageRoute(
               builder: (context) => BaseScreen(
                 "",
                 "Mudar Senha",
                 EditPasswordTab(),
-                null,
-              ),
-            ),
-          );
-        }),
-        SimpleTile("Adicionar Endereço", () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => BaseScreen(
-                "",
-                "Endereço",
-                AdressScreen(),
                 null,
               ),
             ),

@@ -14,7 +14,7 @@ class _ChatCepBottomSheetState extends State<ChatCepBottomSheet> {
 
   void _pushAddressScreen(BuildContext context) {
     Navigator.of(context).push(
-      CupertinoPageRoute(builder: (context) => AdressScreen()),
+      CupertinoPageRoute(builder: (_) => AdressScreen()),
     );
   }
 
