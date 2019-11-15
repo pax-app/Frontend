@@ -43,31 +43,45 @@ class DrawerHead extends StatelessWidget {
                       height: 70,
                       width: 70,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          //image: DecorationImage(),
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          border: Border.all(
-                            color: Theme.of(context).accentColor,
-                            width: 3.0,
-                          )),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                        border: Border.all(
+                          color: Theme.of(context).accentColor,
+                          width: 3.0,
+                        ),
+                        image: new DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            'https://firebasestorage.googleapis.com/v0/b/pax-messenger.appspot.com/o/chats%2Fscaled_13c1b1d5-c962-4e1e-b6df-26d03a9eaf906748638212161831975.jpg?alt=media&token=c52c2519-1b8a-4337-9258-b36db3e3d818',
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(width: 16.0),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                          name,
-                          style: Theme.of(context).textTheme.headline,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 3),
+                          child: Text(
+                            name,
+                            style: Theme.of(context).textTheme.headline,
+                          ),
                         ),
                         // SizedBox(height: 4),
                         getUserStars(qntStars, context),
                         SizedBox(height: 8),
-                        Text('Ver seu Perfil',
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: Text(
+                            'Ver seu Perfil',
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle
-                                .copyWith(color: Colors.grey))
+                                .copyWith(color: Colors.grey),
+                          ),
+                        )
                       ],
                     )
                   ],
