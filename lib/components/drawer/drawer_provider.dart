@@ -29,7 +29,7 @@ class DrawerProvider extends StatelessWidget {
                     Icons.account_balance_wallet,
                     "Minha Carteira",
                     _pageController,
-                    2,
+                    8,
                     false,
                   ),
                   DrawerTile(
