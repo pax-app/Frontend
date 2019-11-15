@@ -156,7 +156,6 @@ class _MyConversationsState extends State<MyConversations> {
         'username': user_info['username'],
       });
     }
-    // print(chats);
     return chats;
   }
 

@@ -10,7 +10,6 @@ class PaxDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(loggedUser.isProvider);
     if (loggedUser.isInProviderDrawer)
       return DrawerProvider(_pageController);
     else

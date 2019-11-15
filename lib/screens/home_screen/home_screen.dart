@@ -23,18 +23,18 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         BaseScreen(
-          "Opções de Serviço", //serviço Category deve estar rodando
-          "",
-          ServiceGeneralCategory(),
-          PaxDrawer(_pageController),
-        ),
-        BaseScreen(
           "Meu Perfil",
           "Meu Perfil",
           PerfilScreen(),
           PaxDrawer(_pageController),
           padding: false,
           white_bg: true,
+        ),
+        BaseScreen(
+          "Opções de Serviço", //serviço Category deve estar rodando
+          "",
+          ServiceGeneralCategory(),
+          PaxDrawer(_pageController),
         ),
         BaseScreen(
           "Cartões",

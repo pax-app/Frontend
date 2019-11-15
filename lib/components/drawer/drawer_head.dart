@@ -7,31 +7,35 @@ class DrawerHead extends StatelessWidget {
 
   DrawerHead(this.img, this.name, this.qntStars, this.controller);
 
+  Color colorOfSidebarItem(BuildContext context) {
+    return controller.page.round() == 0
+        ? Theme.of(context).accentColor
+        : Colors.grey;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
-            height: 56,
-            color: Theme.of(context).primaryColor,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    controller.jumpToPage(0);
-                  },
-                  child: Image.asset(
-                    'assets/logo/sidebar_logo.png',
-                    height: 30,
-                  ),
-                )
-              ],
-            )),
+          height: 56,
+          color: Theme.of(context).primaryColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                'assets/logo/sidebar_logo.png',
+                height: 30,
+              ),
+            ],
+          ),
+        ),
         Material(
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pop();
+              controller.jumpToPage(0);
+            },
             child: SizedBox(
               height: 130,
               child: Container(
@@ -77,11 +81,11 @@ class DrawerHead extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 4),
                           child: Text(
-                            'Ver seu Perfil',
+                            'Ver meu Perfil',
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle
-                                .copyWith(color: Colors.grey),
+                                .copyWith(color: colorOfSidebarItem(context)),
                           ),
                         )
                       ],

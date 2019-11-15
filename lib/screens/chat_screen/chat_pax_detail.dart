@@ -122,7 +122,6 @@ class _ChatPaxDetailState extends State<ChatPaxDetail> {
     setState(() {
       pax = paxJson['pax'];
     });
-    print(paxJson);
     await _getAddress();
   }
 
