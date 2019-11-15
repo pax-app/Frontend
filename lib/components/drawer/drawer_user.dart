@@ -52,7 +52,7 @@ class DrawerUser extends StatelessWidget {
                         ? Icons.swap_horiz
                         : Icons.attach_money,
                     this.loggedUser.isProvider
-                        ? "Ir para Prestador"
+                        ? "Mudar para Prestador"
                         : "Virar Prestador de Serviço",
                     _pageController,
                     this.loggedUser.isProvider ? 7 : 5,
