@@ -61,11 +61,12 @@ class Button extends StatelessWidget {
           splashColor: errorColorLight,
         );
         break;
+
       default:
         return Material(
           borderRadius: BorderRadius.circular(30),
           child: RaisedButton(
-            // padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            color: type == 'warning' ? orangeWarning : null,
             onPressed: isLoading ? null : tapHandler,
             disabledColor: Colors.grey,
             child: Text(

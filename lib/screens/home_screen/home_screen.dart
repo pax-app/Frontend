@@ -2,6 +2,7 @@ import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/drawer/drawer.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/info_tab.dart';
 import 'package:Pax/screens/config_screen/config_screen.dart';
+import 'package:Pax/screens/hired_services/hired_services.dart';
 import 'package:Pax/screens/my_card_screen/selection_card.dart';
 import 'package:Pax/screens/my_wallet_screen/my_wallet_screen.dart';
 import 'package:Pax/screens/perfil_screen/perfil_screen.dart';
@@ -47,9 +48,9 @@ class HomeScreen extends StatelessWidget {
           drawer: PaxDrawer(_pageController),
         ),
         BaseScreen(
-          "Histórico de Servico",
-          "Histórico de Servico",
-          Text("Histórico de Servico"),
+          "Serviços Contratados",
+          "Serviços Contratados",
+          HiredServices(),
           PaxDrawer(_pageController),
         ),
         BaseScreen(
