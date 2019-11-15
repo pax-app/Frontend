@@ -8,7 +8,7 @@ class DrawerHead extends StatelessWidget {
   DrawerHead(this.img, this.name, this.qntStars, this.controller);
 
   Color colorOfSidebarItem(BuildContext context) {
-    return controller.page.round() == 0
+    return controller.page.round() == 1
         ? Theme.of(context).accentColor
         : Colors.grey;
   }
@@ -34,7 +34,7 @@ class DrawerHead extends StatelessWidget {
           child: InkWell(
             onTap: () {
               Navigator.of(context).pop();
-              controller.jumpToPage(0);
+              controller.jumpToPage(1);
             },
             child: SizedBox(
               height: 130,

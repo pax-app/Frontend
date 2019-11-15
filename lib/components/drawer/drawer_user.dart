@@ -23,7 +23,7 @@ class DrawerUser extends StatelessWidget {
                     Icons.person_pin,
                     "Buscar por Serviço",
                     _pageController,
-                    1,
+                    0,
                     false,
                   ),
                   DrawerTile(
