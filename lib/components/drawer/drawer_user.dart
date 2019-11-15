@@ -42,7 +42,7 @@ class DrawerUser extends StatelessWidget {
                   ),
                   DrawerTile(
                     Icons.library_books,
-                    "Historico de Serviços",
+                    "Serviços Contratados",
                     _pageController,
                     4,
                     false,
