@@ -49,11 +49,13 @@ class DrawerHead extends StatelessWidget {
                           color: Theme.of(context).accentColor,
                           width: 3.0,
                         ),
-                        image: new DecorationImage(
+                      ),
+                      child: ClipOval(
+                        child: FadeInImage.assetNetwork(
                           fit: BoxFit.cover,
-                          image: NetworkImage(
-                            'https://firebasestorage.googleapis.com/v0/b/pax-messenger.appspot.com/o/chats%2Fscaled_13c1b1d5-c962-4e1e-b6df-26d03a9eaf906748638212161831975.jpg?alt=media&token=c52c2519-1b8a-4337-9258-b36db3e3d818',
-                          ),
+                          placeholder: 'assets/gifs/spinner.gif',
+                          image:
+                              'https://firebasestorage.googleapis.com/v0/b/pax-messenger.appspot.com/o/chats%2Fscaled_13c1b1d5-c962-4e1e-b6df-26d03a9eaf906748638212161831975.jpg?alt=media&token=c52c2519-1b8a-4337-9258-b36db3e3d818',
                         ),
                       ),
                     ),
