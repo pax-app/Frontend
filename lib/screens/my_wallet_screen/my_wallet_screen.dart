@@ -1,3 +1,4 @@
+import 'package:Pax/components/zebra_tile/zebra_tile.dart';
 import 'package:flutter/material.dart';
 
 class MyWallet extends StatelessWidget {
@@ -63,6 +64,28 @@ class MyWallet extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        SizedBox(height: 12),
+        ZebraTile(
+          paxName: 'Colocar SSD',
+          username: 'Fabiana',
+          date: '20/11/2019',
+          money: 30,
+          darken: false,
+        ),
+        ZebraTile(
+          paxName: 'Colocar SSD',
+          username: 'Fabiana',
+          date: '20/11/2019',
+          money: 30,
+          darken: true,
+        ),
+        ZebraTile(
+          paxName: 'Colocar SSD',
+          username: 'Fabiana',
+          date: '20/11/2019',
+          money: 30,
+          darken: false,
         ),
         SizedBox(height: 20),
       ],
