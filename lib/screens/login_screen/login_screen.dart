@@ -72,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Image(
-                    image: AssetImage('assets/logo.png'),
+                    image: AssetImage('assets/logo/pax-logo.png'),
                     width: 140,
                     height: 140,
                   ),
