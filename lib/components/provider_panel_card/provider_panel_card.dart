@@ -1,4 +1,3 @@
-import 'package:Pax/components/notification_icon/notification_icon.dart';
 import 'package:flutter/material.dart';
 
 class ProviderPanelCard extends StatelessWidget {
@@ -31,11 +30,6 @@ class ProviderPanelCard extends StatelessWidget {
             children: <Widget>[
               Image.asset(img, width: 100),
               Text(this.cardName, style: Theme.of(context).textTheme.title),
-              Positioned(
-                top: -4,
-                left: -6,
-                child: NotificationIcon(3),
-              )
             ],
           ),
         ),

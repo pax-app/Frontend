@@ -1,4 +1,5 @@
 import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/components/red_bubble/red_bubble.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class UserPaxCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.topRight,
       children: <Widget>[
         Card(
           child: Container(
@@ -120,6 +122,10 @@ class UserPaxCard extends StatelessWidget {
               ],
             ),
           ),
+        ),
+        RedBubble(
+          content: 'X',
+          onTapHandler: () {},
         ),
       ],
     );
