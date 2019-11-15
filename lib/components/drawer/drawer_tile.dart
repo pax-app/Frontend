@@ -28,7 +28,7 @@ class DrawerTile extends StatelessWidget {
       color: Colors.transparent,
       child: Column(
         children: <Widget>[
-          Divider(color: const Color.fromRGBO(45, 45, 45, 20), height: 8),
+          Divider(color: const Color.fromRGBO(45, 45, 45, 20), height: 0),
           InkWell(
             onTap: () {
               Navigator.of(context).pop();
@@ -38,7 +38,7 @@ class DrawerTile extends StatelessWidget {
               }
             },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+              padding: const EdgeInsets.all(18),
               child: Row(
                 children: <Widget>[
                   Icon(icon, size: 32.0, color: colorOfSidebarItem(context)),

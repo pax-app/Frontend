@@ -26,7 +26,7 @@ class _AddCardState extends State<AddCard> {
   }
 
   void _onFocusChange() {
-    debugPrint("Focus: " + _focus.hasFocus.toString());
+    // debugPrint("Focus: " + _focus.hasFocus.toString());
   }
 
   void _showDialog() {

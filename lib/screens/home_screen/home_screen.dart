@@ -3,6 +3,7 @@ import 'package:Pax/components/drawer/drawer.dart';
 import 'package:Pax/screens/became_provider_screen/became_provider_tabs/info_tab.dart';
 import 'package:Pax/screens/config_screen/config_screen.dart';
 import 'package:Pax/screens/my_card_screen/selection_card.dart';
+import 'package:Pax/screens/my_wallet_screen/my_wallet_screen.dart';
 import 'package:Pax/screens/perfil_screen/perfil_screen.dart';
 import 'package:Pax/screens/my_conversations/my_conversations.dart';
 import 'package:Pax/screens/provider_panel/provider_panel.dart';
@@ -23,18 +24,18 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         BaseScreen(
-          "Opções de Serviço", //serviço Category deve estar rodando
-          "",
-          ServiceGeneralCategory(),
-          PaxDrawer(_pageController),
-        ),
-        BaseScreen(
           "Meu Perfil",
           "Meu Perfil",
           PerfilScreen(),
           PaxDrawer(_pageController),
           padding: false,
           white_bg: true,
+        ),
+        BaseScreen(
+          "Opções de Serviço", //serviço Category deve estar rodando
+          "",
+          ServiceGeneralCategory(),
+          PaxDrawer(_pageController),
         ),
         BaseScreen(
           "Cartões",
@@ -64,6 +65,12 @@ class HomeScreen extends StatelessWidget {
           PaxDrawer(_pageController),
         ),
         ProviderPanel(this._pageController),
+        BaseScreen(
+          "Minha Carteira",
+          "Seu Saldo",
+          MyWallet(),
+          PaxDrawer(_pageController),
+        ),
       ],
     );
   }

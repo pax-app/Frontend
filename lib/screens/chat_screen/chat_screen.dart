@@ -225,7 +225,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<bool> _isLastPaxPending() async {
     var lastPaxRefused = await _findLastPax('pending');
-    print(lastPaxRefused.length);
     return lastPaxRefused.length > 0 &&
             lastPaxRefused['pax_status'] == 'pending'
         ? true
@@ -234,7 +233,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<bool> _isLastPaxAccepted() async {
     var lastPaxAccepeted = await _findLastPax('accepted');
-    print(lastPaxAccepeted.length);
     return lastPaxAccepeted.length > 0 &&
             lastPaxAccepeted['pax_status'] == 'accepted'
         ? true
