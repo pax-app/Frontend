@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
         ProviderPanel(this._pageController),
         BaseScreen(
           "Minha Carteira",
-          "O quanto você pode receber",
+          "Seu Saldo",
           MyWallet(),
           PaxDrawer(_pageController),
         ),
