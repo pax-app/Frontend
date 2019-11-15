@@ -97,7 +97,7 @@ class SignUpBloc extends BlocBase {
       headers: header,
       body: jsonBody,
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
       saveCurrentLogin(responseJson);
     }

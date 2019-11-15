@@ -10,7 +10,7 @@ class DrawerTile extends StatelessWidget {
   final bool toggleLoggedUser;
 
   DrawerTile(this.icon, this.text, this.controller, this.page,
-      [this.toggleLoggedUser]) {}
+      [this.toggleLoggedUser]);
 
   Color colorOfSidebarItem(BuildContext context) {
     return controller.page.round() == page

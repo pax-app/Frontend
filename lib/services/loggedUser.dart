@@ -24,7 +24,10 @@ class LoggedUser extends User {
     this.token = preferences.getString("LastToken");
     this.email = preferences.getString("LastEmail");
     this.userId = preferences.getString("LastUserID");
-    this.isProvider = preferences.getBool("LastUserIsProvider");
+    this.isProvider = preferences.getBool("LastUserIsProvider") != null
+        ? preferences.getBool("LastUserIsProvider")
+        : false;
+    this.photo = preferences.getString("LastPhoto");
   }
 
   Future setName(name) async {
@@ -45,6 +48,12 @@ class LoggedUser extends User {
     preferences.setString("LastEmail", email);
   }
 
+  Future setPhoto(photo) async {
+    var preferences = await this.preferences;
+    this.photo = photo;
+    preferences.setString("lastPhoto", photo);
+  }
+
   Future setUserId(userId) async {
     var preferences = await this.preferences;
     this.userId = userId;
@@ -53,8 +62,9 @@ class LoggedUser extends User {
 
   Future setIsProvider(bool isProvider) async {
     var preferences = await this.preferences;
-    this.isProvider = isProvider;
-    preferences.setBool("LastUserIsProvider", isProvider);
+    this.isProvider = isProvider != null ? isProvider : false;
+    preferences.setBool(
+        "LastUserIsProvider", isProvider != null ? isProvider : false);
   }
 
   bool isEmpty() {
@@ -82,12 +92,15 @@ class LoggedUser extends User {
     preferences.setString("LastUser", "");
     preferences.setString("LastToken", "");
     preferences.setString("LastEmail", "");
+    preferences.setString("LastEmail", "");
+    preferences.setString("LastPhoto", "");
     preferences.setString("LastUserID", "");
-    preferences.setBool("LastUserIsProvider", null);
+    preferences.setBool("LastUserIsProvider", false);
     this.name = preferences.getString("LastUser");
     this.token = preferences.getString("LastToken");
     this.email = preferences.getString("LastEmail");
     this.userId = preferences.getString("LastUserID");
+    this.photo = preferences.getString("LastPhoto");
     this.isProvider = preferences.getBool("LastUserIsProvider");
     this.didLogout = true;
   }

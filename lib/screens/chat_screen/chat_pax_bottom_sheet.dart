@@ -3,6 +3,7 @@ import 'package:Pax/components/disabled_outline_input/disabled_outline_input.dar
 import 'package:Pax/components/base_bottom_sheet/base_bottom_sheet.dart';
 import 'package:Pax/components/text_input/text_input.dart';
 import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:http/http.dart' as http;
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -235,7 +236,7 @@ class _ChatPaxBottomSheetState extends State<ChatPaxBottomSheet> {
       "description": _descriptionController.text,
       "name": _nameController.text,
       "price": double.parse(_priceController.text),
-      "user_id": 1,
+      "user_id": LoggedUser().userId,
       "provider_id": 1,
       "chat_id": widget.chatId,
       "address_id": 8,

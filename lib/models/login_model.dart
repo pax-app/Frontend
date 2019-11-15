@@ -12,7 +12,7 @@ class LoginModel {
         token = json['auth_token'],
         email = json['email'],
         id = json['id'],
-        isProvider = json['is_provider'];
+        isProvider = json['is_provider'] != null ? json['is_provider'] : false;
 
   Map<String, dynamic> toJson() => {
         'name': userName,

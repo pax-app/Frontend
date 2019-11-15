@@ -140,8 +140,8 @@ class _MyConversationsState extends State<MyConversations> {
   }
 
   Future<dynamic> _getUserChats() async {
-    var response =
-        await http.get('https://pax-chat.herokuapp.com/chats/user/1');
+    var response = await http
+        .get('https://pax-chat.herokuapp.com/chats/user/${loggedUser.userId}');
     var jsonData = json.decode(response.body);
 
     final List<Map<String, dynamic>> chats = [];
@@ -161,7 +161,7 @@ class _MyConversationsState extends State<MyConversations> {
 
   Future<dynamic> _getUserInfo(var item) async {
     var url =
-        'https://pax-user.herokuapp.com/get_user_info/${loggedUser.isProvider == true ? 'user' : 'provider'}/${loggedUser.isProvider ? item['user_id'] : item['provider_id']}';
+        'https://pax-user.herokuapp.com/get_user_info/${loggedUser.isInProviderDrawer == true ? 'user' : 'provider'}/${loggedUser.isProvider ? item['user_id'] : item['provider_id']}';
     var user_info = await http.get(url);
 
     return json.decode(user_info.body);
