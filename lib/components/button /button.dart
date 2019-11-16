@@ -38,23 +38,27 @@ class Button extends StatelessWidget {
           borderSide: BorderSide(color: Theme.of(context).accentColor),
           highlightedBorderColor: secondaryColorDimmed,
           splashColor: secondaryColorDimmed,
-          child: Text(
-            isLoading ? 'Carregando...' : buttonText.toUpperCase(),
-            style: Theme.of(context).textTheme.title.copyWith(
-                  color: Theme.of(context).accentColor,
+          child: isLoading
+              ? getSpinner()
+              : Text(
+                  buttonText.toUpperCase(),
+                  style: Theme.of(context).textTheme.title.copyWith(
+                        color: Theme.of(context).accentColor,
+                      ),
                 ),
-          ),
           onPressed: isLoading ? null : tapHandler,
         );
         break;
       case 'danger':
         return OutlineButton(
-          child: Text(
-            isLoading ? 'Carregando...' : buttonText.toUpperCase(),
-            style: Theme.of(context).textTheme.title.copyWith(
-                  color: Theme.of(context).errorColor,
+          child: isLoading
+              ? getSpinner()
+              : Text(
+                  buttonText.toUpperCase(),
+                  style: Theme.of(context).textTheme.title.copyWith(
+                        color: Theme.of(context).errorColor,
+                      ),
                 ),
-          ),
           onPressed: isLoading ? null : tapHandler,
           borderSide: BorderSide(color: Theme.of(context).errorColor),
           highlightedBorderColor: errorColorLight,
@@ -69,14 +73,27 @@ class Button extends StatelessWidget {
             color: type == 'warning' ? orangeWarning : null,
             onPressed: isLoading ? null : tapHandler,
             disabledColor: Colors.grey,
-            child: Text(
-              isLoading ? 'Carregando...' : buttonText.toUpperCase(),
-              style: Theme.of(context).textTheme.title.copyWith(
-                    color: colorWhite,
+            child: isLoading
+                ? getSpinner()
+                : Text(
+                    buttonText.toUpperCase(),
+                    style: Theme.of(context).textTheme.title.copyWith(
+                          color: colorWhite,
+                        ),
                   ),
-            ),
           ),
         );
     }
+  }
+
+  Widget getSpinner() {
+    return Container(
+      width: 20,
+      height: 20,
+      child: CircularProgressIndicator(
+        backgroundColor: Colors.transparent,
+        valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+      ),
+    );
   }
 }

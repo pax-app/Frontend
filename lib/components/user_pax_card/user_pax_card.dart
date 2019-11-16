@@ -4,7 +4,7 @@ import 'package:Pax/screens/hired_services/pax_detail_dialog.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-class UserPaxCard extends StatelessWidget {
+class UserPaxCard extends StatefulWidget {
   final Function onTapHandler;
   final String statusProvider;
   final String statusUser;
@@ -12,6 +12,22 @@ class UserPaxCard extends StatelessWidget {
   final String providerName;
   final String providerPhoto;
 
+  var pax;
+
+  UserPaxCard({
+    this.pax,
+    this.statusUser,
+    this.statusProvider,
+    this.onTapHandler,
+    this.providerName,
+    this.providerPhoto,
+  });
+
+  @override
+  _UserPaxCardState createState() => _UserPaxCardState();
+}
+
+class _UserPaxCardState extends State<UserPaxCard> {
   final Map<String, Color> getColor = {
     'P': orangeWarning,
     'I': secondaryColor,
@@ -26,15 +42,7 @@ class UserPaxCard extends StatelessWidget {
     'C': 'CANCELADO',
   };
 
-  var pax;
-
-  UserPaxCard(
-      {this.pax,
-      this.statusUser,
-      this.statusProvider,
-      this.onTapHandler,
-      this.providerName,
-      this.providerPhoto});
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +59,7 @@ class UserPaxCard extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 18, horizontal: 2),
                   child: Text(
-                    pax['name'],
+                    widget.pax['name'],
                     style: Theme.of(context).textTheme.title,
                   ),
                 ),
@@ -73,12 +81,12 @@ class UserPaxCard extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(providerName),
+                              Text(widget.providerName),
                               SizedBox(
                                 height: 3,
                               ),
                               Text(
-                                pax['date'],
+                                widget.pax['date'],
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontStyle: FontStyle.italic,
@@ -89,13 +97,16 @@ class UserPaxCard extends StatelessWidget {
                           Container(
                             alignment: Alignment.center,
                             height: 26,
-                            width: 90,
+                            width: widget.pax['status'] == 'F' ||
+                                    widget.pax['status'] == 'C'
+                                ? 98
+                                : 90,
                             decoration: BoxDecoration(
-                              color: getColor[pax['status']],
+                              color: getColor[widget.pax['status']],
                               borderRadius: BorderRadius.circular(3),
                             ),
                             child: Text(
-                              getText[pax['status']],
+                              getText[widget.pax['status']],
                               style:
                                   Theme.of(context).textTheme.subtitle.copyWith(
                                         color: Colors.white,
@@ -129,7 +140,8 @@ class UserPaxCard extends StatelessWidget {
                                 style: Theme.of(context)
                                     .textTheme
                                     .title
-                                    .copyWith(color: getColor[pax['status']]),
+                                    .copyWith(
+                                        color: getColor[widget.pax['status']]),
                               ),
                             ),
                           )
@@ -138,14 +150,14 @@ class UserPaxCard extends StatelessWidget {
                       if (_canShowButton()) SizedBox(height: 30),
                       if (_canShowButton())
                         Button(
-                          tapHandler: () => onTapHandler(
-                            pax['status'] == 'P' ? 'I' : 'F',
-                            pax['chat_id'],
-                          ),
-                          buttonText: pax['status'] == 'P'
+                          isLoading: isLoading,
+                          tapHandler: _updateStatus,
+                          buttonText: widget.pax['status'] == 'P'
                               ? 'CONFIRMAR INÍCIO'
                               : 'FINALIZAR',
-                          type: pax['status'] == 'P' ? 'warning' : 'outline',
+                          type: widget.pax['status'] == 'P'
+                              ? 'warning'
+                              : 'outline',
                         ),
                     ],
                   ),
@@ -154,28 +166,45 @@ class UserPaxCard extends StatelessWidget {
             ),
           ),
         ),
-        RedBubble(
-          content: 'X',
-          onTapHandler: () => onTapHandler(status: 'C', chatId: pax['chat_id']),
-        ),
+        if (widget.pax['status'] != 'C')
+          RedBubble(
+            content: 'X',
+            onTapHandler: () =>
+                widget.onTapHandler(status: 'C', chatId: widget.pax['chat_id']),
+          ),
       ],
     );
+  }
+
+  void _updateStatus() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    await widget.onTapHandler(
+        widget.pax['status'] == 'P' ? 'I' : 'F', widget.pax['chat_id']);
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void _showDetailDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => PaxDetailDialog(
-        pax: pax,
-        providerName: providerName,
-        providerPhoto: providerPhoto,
+        pax: widget.pax,
+        providerName: widget.providerName,
+        providerPhoto: widget.providerPhoto,
       ),
     );
   }
 
   bool _canShowButton() {
-    return onTapHandler != null &&
-        ((pax['status'] == 'P' && statusProvider == 'initiated') ||
-            (pax['status'] == 'I' && statusProvider == 'initiated'));
+    return widget.onTapHandler != null &&
+        ((widget.pax['status'] == 'P' &&
+                widget.statusProvider == 'initiated') ||
+            (widget.pax['status'] == 'I' &&
+                widget.statusProvider == 'initiated'));
   }
 }
