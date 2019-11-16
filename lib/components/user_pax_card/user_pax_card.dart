@@ -3,6 +3,7 @@ import 'package:Pax/components/red_bubble/red_bubble.dart';
 import 'package:Pax/screens/hired_services/pax_detail_dialog.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class UserPaxCard extends StatefulWidget {
   final Function onTapHandler;
@@ -41,6 +42,8 @@ class _UserPaxCardState extends State<UserPaxCard> {
     'F': 'FINALIZADO',
     'C': 'CANCELADO',
   };
+
+  final DateFormat dateFormat = DateFormat("dd/MM/yyyy", "pt-BR");
 
   bool isLoading = false;
 
@@ -86,7 +89,8 @@ class _UserPaxCardState extends State<UserPaxCard> {
                                 height: 3,
                               ),
                               Text(
-                                widget.pax['date'],
+                                dateFormat
+                                    .format(DateTime.parse(widget.pax['date'])),
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontStyle: FontStyle.italic,

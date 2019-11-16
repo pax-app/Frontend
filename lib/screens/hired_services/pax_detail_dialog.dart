@@ -2,10 +2,13 @@ import 'package:Pax/components/base_dialog/base_dialog.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/stars_avaliation/stars_avaliation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class PaxDetailDialog extends StatelessWidget {
   final String providerName;
   final String providerPhoto;
+
+  final DateFormat dateFormat = DateFormat("dd/MM/yyyy", "pt-BR");
 
   var pax;
 
@@ -58,7 +61,7 @@ class PaxDetailDialog extends StatelessWidget {
                     ),
                     SizedBox(height: 4),
                     Text(
-                      pax['date'],
+                      dateFormat.format(DateTime.parse(pax['date'])),
                       style: TextStyle(
                         color: Colors.white,
                         fontStyle: FontStyle.italic,
@@ -109,7 +112,7 @@ class PaxDetailDialog extends StatelessWidget {
                     ),
                     SizedBox(height: 6),
                     Text(
-                      'Substituição de tela do celular Galaxy S6 edge plus e rodar uns testes gerais no celular para verificar o touch screen',
+                      pax['description'],
                       textAlign: TextAlign.justify,
                       style: TextStyle(height: 1.5),
                     ),

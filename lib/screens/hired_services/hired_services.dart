@@ -30,16 +30,7 @@ class _HiredServicesState extends State<HiredServices> {
               itemCount: pax.length,
               itemBuilder: (context, index) {
                 return UserPaxCard(
-                  pax: {
-                    'price': 100.50,
-                    'name': 'Testando o teste em 3, 2, 1',
-                    'date': '21/09/2019',
-                    'description':
-                        'vou testar essas paradas aqui do chat pra ver se tá tudo em ordem morô?',
-                    'status': 'P',
-                    'provider_id': 'Pedro da Silva',
-                    'chat_id': 2,
-                  },
+                  pax: pax[index],
                   providerName: 'Pedro da Silva',
                   providerPhoto:
                       'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
