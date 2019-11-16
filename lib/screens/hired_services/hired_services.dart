@@ -12,6 +12,10 @@ class HiredServices extends StatefulWidget {
 class _HiredServicesState extends State<HiredServices> {
   final Firestore _firestore = Firestore.instance;
 
+  initState() {
+    _getAllUserPax();
+  }
+
   @override
   Widget build(BuildContext context) {
     return UserPaxCard(
@@ -21,11 +25,13 @@ class _HiredServicesState extends State<HiredServices> {
         'date': '21/09/2019',
         'description':
             'vou testar essas paradas aqui do chat pra ver se tá tudo em ordem morô?',
-        'status': 'P',
-        'provider_id': 'Pedro da Silva'
+        'status': 'I',
+        'provider_id': 'Pedro da Silva',
+        'chat_id': 2,
       },
       statusProvider: 'started',
       statusUser: 'pending',
+      onTapHandler: _changeStatusPax,
     );
     // return FutureBuilder(
     //   future: _getAllUserPax(),
@@ -46,6 +52,20 @@ class _HiredServicesState extends State<HiredServices> {
     //     }
     //   },
     // );
+  }
+
+  void _changeStatusPax(String newStatus, int chatId) async {
+    var statusChange = {
+      "chat_id": chatId,
+      "status": newStatus,
+    };
+
+    var body = json.encode(statusChange);
+    var res = await http.patch(
+      'https://pax-pax.herokuapp.com/pax/update_status',
+      headers: {"Content-Type": "application/json"},
+      body: body,
+    );
   }
 
   Future<dynamic> _getAllUserPax() async {
