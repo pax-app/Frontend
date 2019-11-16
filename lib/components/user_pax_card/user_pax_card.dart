@@ -138,18 +138,11 @@ class _UserPaxCardState extends State<UserPaxCard> {
                             'R\$${widget.pax['price']}',
                             style: Theme.of(context).textTheme.title,
                           ),
-                          Material(
-                            child: GestureDetector(
-                              onTap: () => _showDetailDialog(context),
-                              child: Text(
-                                'DETALHES',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .title
-                                    .copyWith(
-                                        color: getColor[widget.pax['status']]),
-                              ),
-                            ),
+                          Text(
+                            'DETALHES',
+                            style: Theme.of(context).textTheme.title.copyWith(
+                                  color: getColor[widget.pax['status']],
+                                ),
                           )
                         ],
                       ),

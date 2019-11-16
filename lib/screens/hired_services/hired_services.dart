@@ -1,3 +1,4 @@
+import 'package:Pax/components/dummies_loaders/dummy_user_pax_card.dart';
 import 'package:Pax/components/user_pax_card/user_pax_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,9 @@ class _HiredServicesState extends State<HiredServices> {
     return Container(
       height: MediaQuery.of(context).size.height * .77,
       child: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? ListView(
+              children: <Widget>[DummyUserPaxCard(), DummyUserPaxCard()],
+            )
           : ListView.builder(
               itemCount: pax.length,
               itemBuilder: (context, index) {
@@ -65,6 +68,7 @@ class _HiredServicesState extends State<HiredServices> {
 
     var res = await http.get(
         'https://pax-pax.herokuapp.com/pax/all_pax/1'); // CHAMAR SINGLETON AQUI  <--
+
     setState(() {
       pax = json.decode(res.body);
       isLoading = false;
