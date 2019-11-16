@@ -78,20 +78,23 @@ class PaxDetailDialog extends StatelessWidget {
                 if (_isFinalized()) SizedBox(height: 18),
                 if (_isFinalized()) _getProviderReview(context),
                 SizedBox(height: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Descrição',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                    SizedBox(height: 6),
-                    Text(
-                      pax['description'],
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(height: 1.5),
-                    ),
-                  ],
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Descrição',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                      SizedBox(height: 6),
+                      Text(
+                        pax['description'],
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(height: 1.5),
+                      ),
+                    ],
+                  ),
                 ),
                 if (_isCancelled()) SizedBox(height: 23),
                 if (_isCancelled())
