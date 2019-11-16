@@ -9,6 +9,7 @@ class UserPaxCard extends StatefulWidget {
   final Function onTapHandler;
   final String statusProvider;
   final String statusUser;
+  final Function refreshAllPax;
 
   final String providerName;
   final String providerPhoto;
@@ -22,6 +23,7 @@ class UserPaxCard extends StatefulWidget {
     this.onTapHandler,
     this.providerName,
     this.providerPhoto,
+    this.refreshAllPax,
   });
 
   @override
@@ -50,9 +52,9 @@ class _UserPaxCardState extends State<UserPaxCard> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: Alignment.topRight,
       children: <Widget>[
         Card(
+          margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 3),
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: _canShowButton() ? 300 : 230,
@@ -133,7 +135,7 @@ class _UserPaxCardState extends State<UserPaxCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            'R\$50,00',
+                            'R\$${widget.pax['price']}',
                             style: Theme.of(context).textTheme.title,
                           ),
                           Material(
@@ -170,11 +172,17 @@ class _UserPaxCardState extends State<UserPaxCard> {
             ),
           ),
         ),
-        if (widget.pax['status'] != 'C')
-          RedBubble(
-            content: 'X',
-            onTapHandler: () =>
-                widget.onTapHandler(status: 'C', chatId: widget.pax['chat_id']),
+        if (widget.pax['status'] != 'C' && widget.pax['status'] != 'F')
+          Positioned(
+            top: 10,
+            right: 0,
+            child: RedBubble(
+              content: 'X',
+              onTapHandler: () => widget.onTapHandler(
+                status: 'C',
+                chatId: widget.pax['chat_id'],
+              ),
+            ),
           ),
       ],
     );
@@ -191,6 +199,8 @@ class _UserPaxCardState extends State<UserPaxCard> {
     setState(() {
       isLoading = false;
     });
+
+    await widget.refreshAllPax();
   }
 
   void _showDetailDialog(BuildContext context) {

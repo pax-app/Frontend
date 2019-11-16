@@ -37,6 +37,7 @@ class _HiredServicesState extends State<HiredServices> {
                   statusProvider: 'initiated',
                   statusUser: 'pending',
                   onTapHandler: _changeStatusPax,
+                  refreshAllPax: _getAllUserPax,
                 );
               },
             ),
