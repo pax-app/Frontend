@@ -13,14 +13,11 @@ class PaxDetailDialog extends StatelessWidget {
   var pax;
 
   PaxDetailDialog({this.pax, this.providerName, this.providerPhoto});
-  bool isCancelled() {
-    return pax['status'] == 'C';
-  }
 
   @override
   Widget build(BuildContext context) {
     return BaseDialog(
-      height: 425,
+      height: _isInitiated() || _isPendent() ? 250 : 405,
       body: Column(
         children: <Widget>[
           Container(
@@ -77,31 +74,9 @@ class PaxDetailDialog extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             child: Column(
               children: <Widget>[
-                if (!isCancelled())
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Qualidade do Serviço',
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                      SizedBox(height: 5),
-                      StarsAvaliation(4.5, context),
-                    ],
-                  ),
-                if (!isCancelled()) SizedBox(height: 18),
-                if (!isCancelled())
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Sobre o prestador',
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                      SizedBox(height: 5),
-                      StarsAvaliation(0, context),
-                    ],
-                  ),
+                if (_isFinalized()) _getQualityReview(context),
+                if (_isFinalized()) SizedBox(height: 18),
+                if (_isFinalized()) _getProviderReview(context),
                 SizedBox(height: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,8 +93,8 @@ class PaxDetailDialog extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (isCancelled()) SizedBox(height: 23),
-                if (isCancelled())
+                if (_isCancelled()) SizedBox(height: 23),
+                if (_isCancelled())
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -129,14 +104,14 @@ class PaxDetailDialog extends StatelessWidget {
                       ),
                       SizedBox(height: 6),
                       Text(
-                        'Serviço cancelado devido a um acidente que sofri no trabalho, ficarei sem poder fazer esforço por uma semana',
+                        pax['canceled_motive'],
                         textAlign: TextAlign.justify,
                         style: TextStyle(height: 1.5),
                       ),
                     ],
                   ),
-                if (!isCancelled()) SizedBox(height: 25),
-                if (!isCancelled())
+                if (!_isCancelled()) SizedBox(height: 35),
+                if (_isFinalized())
                   Button(
                     buttonText: 'Reportar',
                     tapHandler: () {},
@@ -148,5 +123,49 @@ class PaxDetailDialog extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _getQualityReview(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Qualidade do Serviço',
+          style: Theme.of(context).textTheme.title,
+        ),
+        SizedBox(height: 5),
+        StarsAvaliation(4.5, context),
+      ],
+    );
+  }
+
+  Widget _getProviderReview(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Sobre o prestador',
+          style: Theme.of(context).textTheme.title,
+        ),
+        SizedBox(height: 5),
+        StarsAvaliation(0, context),
+      ],
+    );
+  }
+
+  bool _isCancelled() {
+    return pax['status'] == 'C';
+  }
+
+  bool _isFinalized() {
+    return pax['status'] == 'F';
+  }
+
+  bool _isInitiated() {
+    return pax['status'] == 'I';
+  }
+
+  bool _isPendent() {
+    return pax['status'] == 'P';
   }
 }
