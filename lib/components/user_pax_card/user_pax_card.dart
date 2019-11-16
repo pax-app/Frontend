@@ -4,12 +4,32 @@ import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class UserPaxCard extends StatelessWidget {
+  final Function onTapHandler;
   final String statusProvider;
   final String statusUser;
 
+  final Map<String, Color> getColor = {
+    'I': secondaryColor,
+    'P': orangeWarning,
+    'C': errorColor,
+    'F': Colors.teal,
+  };
+
+  final Map<String, String> getText = {
+    'I': 'INICIADO',
+    'P': 'PENDENTE',
+    'C': 'CANCELADO',
+    'F': 'FINALIZADO',
+  };
+
   var pax;
 
-  UserPaxCard({this.pax, this.statusUser, this.statusProvider});
+  UserPaxCard({
+    this.pax,
+    this.statusUser,
+    this.statusProvider,
+    this.onTapHandler,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +39,7 @@ class UserPaxCard extends StatelessWidget {
         Card(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: 300,
+            height: _canShowButton() ? 300 : 230,
             child: Column(
               children: <Widget>[
                 Padding(
@@ -63,14 +83,14 @@ class UserPaxCard extends StatelessWidget {
                           ),
                           Container(
                             alignment: Alignment.center,
-                            height: 30,
+                            height: 26,
                             width: 90,
                             decoration: BoxDecoration(
-                              color: orangeWarning,
+                              color: getColor[pax['status']],
                               borderRadius: BorderRadius.circular(3),
                             ),
                             child: Text(
-                              'PENDENTE',
+                              getText[pax['status']],
                               style:
                                   Theme.of(context).textTheme.subtitle.copyWith(
                                         color: Colors.white,
@@ -104,18 +124,23 @@ class UserPaxCard extends StatelessWidget {
                                 style: Theme.of(context)
                                     .textTheme
                                     .title
-                                    .copyWith(color: orangeWarning),
+                                    .copyWith(color: getColor[pax['status']]),
                               ),
                             ),
                           )
                         ],
                       ),
-                      SizedBox(height: 30),
-                      Button(
-                        tapHandler: () {},
-                        buttonText: 'CONFIRMAR INÍCIO',
-                        type: 'warning',
-                      ),
+                      if (_canShowButton()) SizedBox(height: 30),
+                      if (_canShowButton())
+                        Button(
+                          tapHandler: () => onTapHandler(
+                              status: pax['status'] == 'P' ? 'I' : 'F',
+                              chatId: pax['chat_id']),
+                          buttonText: pax['status'] == 'P'
+                              ? 'CONFIRMAR INÍCIO'
+                              : 'FINALIZAR',
+                          type: pax['status'] == 'P' ? 'warning' : 'outline',
+                        ),
                     ],
                   ),
                 )
@@ -125,9 +150,15 @@ class UserPaxCard extends StatelessWidget {
         ),
         RedBubble(
           content: 'X',
-          onTapHandler: () {},
+          onTapHandler: () => onTapHandler(status: 'C', chatId: pax['chat_id']),
         ),
       ],
     );
+  }
+
+  bool _canShowButton() {
+    return onTapHandler != null &&
+        ((pax['status'] == 'P' && statusProvider == 'started') ||
+            (pax['status'] == 'I' && statusProvider == 'started'));
   }
 }
