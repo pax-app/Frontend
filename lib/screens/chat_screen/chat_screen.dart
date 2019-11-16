@@ -259,7 +259,7 @@ class _ChatScreenState extends State<ChatScreen> {
       context: context,
       builder: (context) => ChatAddressBottomSheet(
         scaffoldKey: _scaffoldKey,
-        userId: 1,
+        userId: 17,
         chatId: widget.chatId,
         sendMessage: _sendMessage,
       ),

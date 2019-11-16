@@ -82,7 +82,6 @@ class _MyConversationsState extends State<MyConversations> {
               DummyChatTile(),
               DummyChatTile(),
               DummyChatTile(),
-              DummyChatTile(),
             ],
           );
         },

@@ -8,12 +8,12 @@ class DummyUserPaxCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 3),
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 270,
+        height: 235,
         child: Column(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 2),
-              child: DummyContent(width: 180, height: 30),
+              child: DummyContent(width: 180, height: 22),
             ),
             Divider(
               height: 0,
@@ -44,8 +44,6 @@ class DummyUserPaxCard extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 18),
-                  DummyContent(width: 280, height: 18),
-                  SizedBox(height: 3),
                   DummyContent(width: 280, height: 18),
                   SizedBox(height: 3),
                   DummyContent(width: 280, height: 18),

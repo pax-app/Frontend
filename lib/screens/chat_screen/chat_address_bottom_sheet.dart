@@ -67,7 +67,7 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
                     ? ChatCepBottomSheet()
                     : ChatAddressList(
                         sendMessage: widget.sendMessage,
-                        addressLength: _addressLength,
+                        addressLength: _addressLength + 1,
                         addresses: addresses,
                         chatId: widget.chatId,
                         navigateToCepModal: _navigateToCepModal,
