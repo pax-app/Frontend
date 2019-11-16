@@ -5,10 +5,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class HiredServices extends StatefulWidget {
-  final int userId;
-
-  const HiredServices({this.userId});
-
   @override
   _HiredServicesState createState() => _HiredServicesState();
 }
@@ -16,52 +12,44 @@ class HiredServices extends StatefulWidget {
 class _HiredServicesState extends State<HiredServices> {
   final Firestore _firestore = Firestore.instance;
   var isLoading = false;
+  var pax = [];
 
   @override
   void initState() {
     super.initState();
-    // _getAllUserPax();
+    _getAllUserPax();
   }
 
   @override
   Widget build(BuildContext context) {
-    return UserPaxCard(
-      pax: {
-        'price': 100.50,
-        'name': 'Testando o teste em 3, 2, 1',
-        'date': '21/09/2019',
-        'description':
-            'vou testar essas paradas aqui do chat pra ver se tá tudo em ordem morô?',
-        'status': 'P',
-        'provider_id': 'Pedro da Silva',
-        'chat_id': 2,
-      },
-      providerName: 'Pedro da Silva',
-      providerPhoto:
-          'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
-      statusProvider: 'initiated',
-      statusUser: 'pending',
-      onTapHandler: _changeStatusPax,
+    return Container(
+      height: MediaQuery.of(context).size.height * .77,
+      child: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: pax.length,
+              itemBuilder: (context, index) {
+                return UserPaxCard(
+                  pax: {
+                    'price': 100.50,
+                    'name': 'Testando o teste em 3, 2, 1',
+                    'date': '21/09/2019',
+                    'description':
+                        'vou testar essas paradas aqui do chat pra ver se tá tudo em ordem morô?',
+                    'status': 'P',
+                    'provider_id': 'Pedro da Silva',
+                    'chat_id': 2,
+                  },
+                  providerName: 'Pedro da Silva',
+                  providerPhoto:
+                      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
+                  statusProvider: 'initiated',
+                  statusUser: 'pending',
+                  onTapHandler: _changeStatusPax,
+                );
+              },
+            ),
     );
-    // return FutureBuilder(
-    //   future: _getAllUserPax(),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasData) {
-    //       return UserPaxCard(
-    //         pax: {
-    //           'price': 100.50,
-    //           'name': 'Testando o teste em 3, 2, 1',
-    //           'date': '2019/09/20',
-    //           'description':
-    //               'vou testar essas paradas aqui do chat pra ver se tá tudo em ordem morô?',
-    //           'status': 'P',
-    //         },
-    //         statusProvider: 'started',
-    //         statusUser: 'pending',
-    //       );
-    //     }
-    //   },
-    // );
   }
 
   void _changeStatusPax(String newStatus, int chatId) async {
@@ -78,26 +66,16 @@ class _HiredServicesState extends State<HiredServices> {
     );
   }
 
-  Future<dynamic> _getAllUserPax(String type) async {
-    final Map<String, String> url = {
-      'P': 'pending',
-      'I': 'initiated',
-      'F': 'finalized',
-      'C': 'canceled',
-    };
+  Future<dynamic> _getAllUserPax() async {
+    setState(() {
+      isLoading = true;
+    });
 
     var res = await http.get(
-        'https://pax-pax.herokuapp.com/pax/${url[type]}/user/${widget.userId}');
-    var allPax = json.decode(res.body);
-
-    // var allPax = await _firestore
-    //     .collection('pax')
-    //     .where('user_id', isEqualTo: 1)
-    //     .getDocuments()
-    //     .then((snapshot) {
-    //   print(snapshot.documents);
-    // });
-
-    return allPax;
+        'https://pax-pax.herokuapp.com/pax/all_pax/1'); // CHAMAR SINGLETON AQUI  <--
+    setState(() {
+      pax = json.decode(res.body);
+      isLoading = false;
+    });
   }
 }
