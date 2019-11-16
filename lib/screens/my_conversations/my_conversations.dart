@@ -1,7 +1,8 @@
+import 'package:Pax/screens/my_conversations/confirm_deletion_dialog.dart';
+import 'package:Pax/components/dummies_loaders/dummy_chat_tile.dart';
+import 'package:Pax/screens/my_conversations/chats_is_empty.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/chat_tile/chat_tile.dart';
-import 'package:Pax/screens/my_conversations/chats_is_empty.dart';
-import 'package:Pax/screens/my_conversations/confirm_deletion_dialog.dart';
 import 'package:Pax/services/loggedUser.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -76,7 +77,14 @@ class _MyConversationsState extends State<MyConversations> {
             );
           }
           if (snapshot.hasError) return ChatsIsEmpty();
-          return Center(child: CircularProgressIndicator());
+          return ListView(
+            children: <Widget>[
+              DummyChatTile(),
+              DummyChatTile(),
+              DummyChatTile(),
+              DummyChatTile(),
+            ],
+          );
         },
       ),
     );
