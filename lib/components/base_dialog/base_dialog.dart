@@ -17,9 +17,6 @@ class BaseDialog extends StatelessWidget {
       ),
       child: Container(
         height: height,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-        ),
         child: body,
       ),
     );

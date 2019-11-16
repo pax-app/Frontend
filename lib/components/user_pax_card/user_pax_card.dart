@@ -1,5 +1,6 @@
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/red_bubble/red_bubble.dart';
+import 'package:Pax/screens/hired_services/pax_detail_dialog.dart';
 import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -8,28 +9,32 @@ class UserPaxCard extends StatelessWidget {
   final String statusProvider;
   final String statusUser;
 
+  final String providerName;
+  final String providerPhoto;
+
   final Map<String, Color> getColor = {
-    'I': secondaryColor,
     'P': orangeWarning,
-    'C': errorColor,
+    'I': secondaryColor,
     'F': Colors.teal,
+    'C': errorColor,
   };
 
   final Map<String, String> getText = {
-    'I': 'INICIADO',
     'P': 'PENDENTE',
-    'C': 'CANCELADO',
+    'I': 'INICIADO',
     'F': 'FINALIZADO',
+    'C': 'CANCELADO',
   };
 
   var pax;
 
-  UserPaxCard({
-    this.pax,
-    this.statusUser,
-    this.statusProvider,
-    this.onTapHandler,
-  });
+  UserPaxCard(
+      {this.pax,
+      this.statusUser,
+      this.statusProvider,
+      this.onTapHandler,
+      this.providerName,
+      this.providerPhoto});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +73,7 @@ class UserPaxCard extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(pax['provider_id']),
+                              Text(providerName),
                               SizedBox(
                                 height: 3,
                               ),
@@ -118,7 +123,7 @@ class UserPaxCard extends StatelessWidget {
                           ),
                           Material(
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () => _showDetailDialog(context),
                               child: Text(
                                 'DETALHES',
                                 style: Theme.of(context)
@@ -154,6 +159,17 @@ class UserPaxCard extends StatelessWidget {
           onTapHandler: () => onTapHandler(status: 'C', chatId: pax['chat_id']),
         ),
       ],
+    );
+  }
+
+  void _showDetailDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => PaxDetailDialog(
+        pax: pax,
+        providerName: providerName,
+        providerPhoto: providerPhoto,
+      ),
     );
   }
 

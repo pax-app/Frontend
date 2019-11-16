@@ -20,7 +20,7 @@ class _HiredServicesState extends State<HiredServices> {
   @override
   void initState() {
     super.initState();
-    _getAllUserPax();
+    // _getAllUserPax();
   }
 
   @override
@@ -36,6 +36,9 @@ class _HiredServicesState extends State<HiredServices> {
         'provider_id': 'Pedro da Silva',
         'chat_id': 2,
       },
+      providerName: 'Pedro da Silva',
+      providerPhoto:
+          'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
       statusProvider: 'initiated',
       statusUser: 'pending',
       onTapHandler: _changeStatusPax,
