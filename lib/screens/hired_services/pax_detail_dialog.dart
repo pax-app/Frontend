@@ -1,4 +1,6 @@
 import 'package:Pax/components/base_dialog/base_dialog.dart';
+import 'package:Pax/components/button%20/button.dart';
+import 'package:Pax/components/stars_avaliation/stars_avaliation.dart';
 import 'package:flutter/material.dart';
 
 class PaxDetailDialog extends StatelessWidget {
@@ -11,11 +13,11 @@ class PaxDetailDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseDialog(
-      height: 400,
+      height: 425,
       body: Column(
         children: <Widget>[
           Container(
-            height: 60,
+            height: 70,
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.only(
@@ -24,11 +26,19 @@ class PaxDetailDialog extends StatelessWidget {
               ),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage: NetworkImage(providerPhoto),
+                Container(
+                  margin: const EdgeInsets.only(left: 30),
+                  width: 43,
+                  height: 43,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(width: 1.3, color: Colors.white),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(providerPhoto),
+                    ),
+                  ),
                 ),
                 SizedBox(width: 10),
                 Column(
@@ -52,6 +62,57 @@ class PaxDetailDialog extends StatelessWidget {
                       ),
                     )
                   ],
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            child: Column(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Qualidade do Serviço',
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    SizedBox(height: 5),
+                    StarsAvaliation(4.5, context),
+                  ],
+                ),
+                SizedBox(height: 18),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Sobre o prestador',
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    SizedBox(height: 5),
+                    StarsAvaliation(0, context),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Descrição',
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    SizedBox(height: 7),
+                    Text(
+                        'Substituição de tela do celular Galaxy S6 edge plus e rodar uns testes gerais no celular para verificar o touch screen',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(height: 1.5)),
+                  ],
+                ),
+                SizedBox(height: 25),
+                Button(
+                  buttonText: 'Reportar',
+                  tapHandler: () {},
+                  type: 'danger',
                 )
               ],
             ),
