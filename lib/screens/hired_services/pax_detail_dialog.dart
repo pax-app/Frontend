@@ -6,9 +6,13 @@ import 'package:flutter/material.dart';
 class PaxDetailDialog extends StatelessWidget {
   final String providerName;
   final String providerPhoto;
+
   var pax;
 
   PaxDetailDialog({this.pax, this.providerName, this.providerPhoto});
+  bool isCancelled() {
+    return pax['status'] == 'C';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,29 +74,31 @@ class PaxDetailDialog extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             child: Column(
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Qualidade do Serviço',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                    SizedBox(height: 5),
-                    StarsAvaliation(4.5, context),
-                  ],
-                ),
-                SizedBox(height: 18),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Sobre o prestador',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                    SizedBox(height: 5),
-                    StarsAvaliation(0, context),
-                  ],
-                ),
+                if (!isCancelled())
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Qualidade do Serviço',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                      SizedBox(height: 5),
+                      StarsAvaliation(4.5, context),
+                    ],
+                  ),
+                if (!isCancelled()) SizedBox(height: 18),
+                if (!isCancelled())
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Sobre o prestador',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                      SizedBox(height: 5),
+                      StarsAvaliation(0, context),
+                    ],
+                  ),
                 SizedBox(height: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,19 +107,38 @@ class PaxDetailDialog extends StatelessWidget {
                       'Descrição',
                       style: Theme.of(context).textTheme.title,
                     ),
-                    SizedBox(height: 7),
+                    SizedBox(height: 6),
                     Text(
-                        'Substituição de tela do celular Galaxy S6 edge plus e rodar uns testes gerais no celular para verificar o touch screen',
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(height: 1.5)),
+                      'Substituição de tela do celular Galaxy S6 edge plus e rodar uns testes gerais no celular para verificar o touch screen',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(height: 1.5),
+                    ),
                   ],
                 ),
-                SizedBox(height: 25),
-                Button(
-                  buttonText: 'Reportar',
-                  tapHandler: () {},
-                  type: 'danger',
-                )
+                if (isCancelled()) SizedBox(height: 23),
+                if (isCancelled())
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Justificativa',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                      SizedBox(height: 6),
+                      Text(
+                        'Serviço cancelado devido a um acidente que sofri no trabalho, ficarei sem poder fazer esforço por uma semana',
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(height: 1.5),
+                      ),
+                    ],
+                  ),
+                if (!isCancelled()) SizedBox(height: 25),
+                if (!isCancelled())
+                  Button(
+                    buttonText: 'Reportar',
+                    tapHandler: () {},
+                    type: 'danger',
+                  )
               ],
             ),
           )
