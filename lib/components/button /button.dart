@@ -39,7 +39,7 @@ class Button extends StatelessWidget {
           highlightedBorderColor: secondaryColorDimmed,
           splashColor: secondaryColorDimmed,
           child: isLoading
-              ? getSpinner()
+              ? getSpinner(Colors.green)
               : Text(
                   buttonText.toUpperCase(),
                   style: Theme.of(context).textTheme.title.copyWith(
@@ -52,7 +52,7 @@ class Button extends StatelessWidget {
       case 'danger':
         return OutlineButton(
           child: isLoading
-              ? getSpinner()
+              ? getSpinner(Colors.red)
               : Text(
                   buttonText.toUpperCase(),
                   style: Theme.of(context).textTheme.title.copyWith(
@@ -74,7 +74,7 @@ class Button extends StatelessWidget {
             onPressed: isLoading ? null : tapHandler,
             disabledColor: Colors.grey,
             child: isLoading
-                ? getSpinner()
+                ? getSpinner(Colors.white)
                 : Text(
                     buttonText.toUpperCase(),
                     style: Theme.of(context).textTheme.title.copyWith(
@@ -86,13 +86,13 @@ class Button extends StatelessWidget {
     }
   }
 
-  Widget getSpinner() {
+  Widget getSpinner(Color color) {
     return Container(
       width: 20,
       height: 20,
       child: CircularProgressIndicator(
         backgroundColor: Colors.transparent,
-        valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+        valueColor: new AlwaysStoppedAnimation<Color>(color),
       ),
     );
   }
