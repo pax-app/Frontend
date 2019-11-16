@@ -134,8 +134,9 @@ class UserPaxCard extends StatelessWidget {
                       if (_canShowButton())
                         Button(
                           tapHandler: () => onTapHandler(
-                              status: pax['status'] == 'P' ? 'I' : 'F',
-                              chatId: pax['chat_id']),
+                            pax['status'] == 'P' ? 'I' : 'F',
+                            pax['chat_id'],
+                          ),
                           buttonText: pax['status'] == 'P'
                               ? 'CONFIRMAR INÍCIO'
                               : 'FINALIZAR',
@@ -158,7 +159,7 @@ class UserPaxCard extends StatelessWidget {
 
   bool _canShowButton() {
     return onTapHandler != null &&
-        ((pax['status'] == 'P' && statusProvider == 'started') ||
-            (pax['status'] == 'I' && statusProvider == 'started'));
+        ((pax['status'] == 'P' && statusProvider == 'initiated') ||
+            (pax['status'] == 'I' && statusProvider == 'initiated'));
   }
 }
