@@ -101,7 +101,7 @@ class _ChatPaxDetailState extends State<ChatPaxDetail> {
                       ),
                       Button(
                         buttonText: 'Aceitar',
-                        tapHandler: widget.acceptPax,
+                        tapHandler: widget.acceptPax(paxId: pax['pax_id']),
                         isSmall: true,
                       )
                     ],

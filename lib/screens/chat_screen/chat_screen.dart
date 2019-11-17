@@ -9,6 +9,7 @@ import 'package:Pax/screens/chat_screen/chat_address_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_bottom_sheet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 import 'dart:io';
@@ -17,13 +18,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
-  final int chatId;
   final String personName;
+  final int providerId;
+  final int userId;
+  final int chatId;
 
-  ChatScreen({
-    @required this.chatId,
-    @required this.personName,
-  });
+  ChatScreen(
+      {@required this.chatId,
+      @required this.personName,
+      @required this.userId,
+      @required this.providerId});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -202,7 +206,7 @@ class _ChatScreenState extends State<ChatScreen> {
         .updateData({'pax_status': 'refused'});
   }
 
-  void _acceptedPax() async {
+  void _acceptedPax(int paxId) async {
     Navigator.of(context).pop();
 
     var statusChange = {
@@ -216,11 +220,26 @@ class _ChatScreenState extends State<ChatScreen> {
       headers: {"Content-Type": "application/json"},
       body: body,
     );
+
     var lastPax = await _findLastPax('pending');
     _firestore
         .collection(widget.chatId.toString())
         .document(lastPax['date_time_sent'])
         .updateData({'pax_status': 'accepted'});
+
+    var chatRef = _firestore.collection('pax').document(paxId.toString());
+
+    var document = {
+      'pax_id': paxId,
+      'provider_id': widget.providerId,
+      'provider_status': 'pending',
+      'user_id': widget.userId,
+      'user_status': 'pending',
+    };
+
+    _firestore.runTransaction((transaction) async {
+      await transaction.set(chatRef, document);
+    });
   }
 
   Future<bool> _isLastPaxPending() async {
