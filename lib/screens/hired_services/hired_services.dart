@@ -66,8 +66,7 @@ class _HiredServicesState extends State<HiredServices> {
       isLoading = true;
     });
 
-    var res = await http.get(
-        'https://pax-pax.herokuapp.com/pax/all_pax/1'); // CHAMAR SINGLETON AQUI  <--
+    var res = await http.get('https://pax-pax.herokuapp.com/pax/all_pax/1');
 
     setState(() {
       pax = json.decode(res.body);

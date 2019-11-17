@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:Pax/components/simple_tile/simple_tile.dart';
 import 'package:Pax/components/try_again_error/try_again_error.dart';
+import 'package:Pax/screens/provider_list_screen/provider_list_screen.dart';
 import 'package:Pax/services/api.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Category {
@@ -36,7 +38,9 @@ class ProviderCategoryScreen extends StatelessWidget {
           return Column(
             children: categories
                 .map(
-                  (item) => SimpleTile(item.name, () {}),
+                  (item) => SimpleTile(item.name, () {
+                    _pushProviders(context, item.id);
+                  }),
                 )
                 .toList(),
           );
@@ -44,7 +48,6 @@ class ProviderCategoryScreen extends StatelessWidget {
           return TryAgainError();
         }
 
-        // By default, show a loading spinner.
         return SizedBox(
           height: MediaQuery.of(context).size.height - 220,
           child: Center(
@@ -70,5 +73,14 @@ class ProviderCategoryScreen extends StatelessWidget {
       listaFinal.add(Category.fromJson(item));
     }
     return listaFinal;
+  }
+
+  void _pushProviders(BuildContext context, int id) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => ProviderListScreen(categoryId: id),
+      ),
+    );
   }
 }
