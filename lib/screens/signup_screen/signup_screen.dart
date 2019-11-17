@@ -40,10 +40,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       isLoading = true;
     });
     var logged = await _signupBloc.signUp();
+    setState(() {
+      isLoading = false;
+    });
     if (logged == 200) {
-      setState(() {
-        isLoading = false;
-      });
       Navigator.of(ctx).pushReplacement(
         MaterialPageRoute(
           builder: (_) {
