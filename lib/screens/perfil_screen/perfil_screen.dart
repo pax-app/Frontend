@@ -22,7 +22,6 @@ class PerfilScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loggedUser = LoggedUser();
-    debugPrint("photo: " + loggedUser.photo.toString());
     return ListView(
       physics: NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
