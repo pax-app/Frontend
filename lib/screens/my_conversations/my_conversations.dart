@@ -66,6 +66,8 @@ class _MyConversationsState extends State<MyConversations> {
                 int chat_id = snapshot.data[index]["chat_id"];
                 String name = snapshot.data[index]['username'];
                 return ChatTile(
+                  userId: snapshot.data[index]["user_id"],
+                  providerId: snapshot.data[index]["provider_id"],
                   chat_id: chat_id,
                   message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
                   username:

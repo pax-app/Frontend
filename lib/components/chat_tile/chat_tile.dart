@@ -8,19 +8,22 @@ class ChatTile extends StatelessWidget {
   final String message;
   final bool isInDeletionMode;
   final bool isChatSelected;
+  final int providerId;
+  final int userId;
 
   final Function longPressHandler;
   final Function updateChatsToBeDeleted;
 
-  ChatTile({
-    @required this.chat_id,
-    @required this.username,
-    @required this.message,
-    @required this.isInDeletionMode,
-    @required this.isChatSelected,
-    @required this.longPressHandler,
-    @required this.updateChatsToBeDeleted,
-  });
+  ChatTile(
+      {@required this.chat_id,
+      @required this.username,
+      @required this.message,
+      @required this.isInDeletionMode,
+      @required this.isChatSelected,
+      @required this.longPressHandler,
+      @required this.updateChatsToBeDeleted,
+      @required this.userId,
+      @required this.providerId});
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +102,8 @@ class ChatTile extends StatelessWidget {
         builder: (_) => ChatScreen(
           chatId: chat_id,
           personName: username,
+          userId: userId,
+          providerId: providerId,
         ),
       ),
     );
