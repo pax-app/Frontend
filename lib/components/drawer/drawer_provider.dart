@@ -43,7 +43,7 @@ class DrawerProvider extends StatelessWidget {
                     Icons.swap_horiz,
                     "Mudar para Usuário",
                     _pageController,
-                    1,
+                    0,
                     true,
                   ),
                   DrawerTile(

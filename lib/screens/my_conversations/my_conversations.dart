@@ -17,6 +17,7 @@ class MyConversations extends StatefulWidget {
 }
 
 class _MyConversationsState extends State<MyConversations> {
+  final nameRegex = RegExp(r'(^[\wÀ-Ÿ]+).* ([\wÀ-Ÿ]+$)');
   bool _deletionMode = false;
   List<int> _chatsToDelete = [];
   bool isDeleting = false;
@@ -63,10 +64,12 @@ class _MyConversationsState extends State<MyConversations> {
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 int chat_id = snapshot.data[index]["chat_id"];
+                String name = snapshot.data[index]['username'];
                 return ChatTile(
                   chat_id: chat_id,
                   message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
-                  username: snapshot.data[index]['username'],
+                  username:
+                      "${nameRegex.firstMatch(name).group(1)} ${nameRegex.firstMatch(name).group(2)}",
                   isInDeletionMode: _deletionMode,
                   isChatSelected:
                       _chatsToDelete.contains(chat_id) ? true : false,
@@ -147,8 +150,8 @@ class _MyConversationsState extends State<MyConversations> {
   }
 
   Future<dynamic> _getUserChats() async {
-    var response =
-        await http.get('https://pax-chat.herokuapp.com/chats/user/1');
+    var response = await http
+        .get('https://pax-chat.herokuapp.com/chats/user/${loggedUser.userId}');
     var jsonData = json.decode(response.body);
 
     final List<Map<String, dynamic>> chats = [];

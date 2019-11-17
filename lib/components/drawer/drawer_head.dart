@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DrawerHead extends StatelessWidget {
+  final nameRegex = RegExp(r'(^[\wÀ-Ÿ]+).* ([\wÀ-Ÿ]+$)');
   final String img, name;
   final double qntStars;
   final PageController controller;
@@ -71,7 +72,7 @@ class DrawerHead extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 3),
                           child: Text(
-                            name,
+                            "${nameRegex.firstMatch(name).group(1)} ${nameRegex.firstMatch(name).group(2)}",
                             style: Theme.of(context).textTheme.headline,
                           ),
                         ),
