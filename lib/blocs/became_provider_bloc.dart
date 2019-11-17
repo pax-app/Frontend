@@ -99,8 +99,10 @@ class BecameProviderBloc implements BlocBase {
       body: jsonBody,
     );
     if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
       await loggedUser.setIsProvider(true);
       await loggedUser.setPhoto(urlAvatar);
+      await loggedUser.setProviderId(responseJson["provider_id"]);
     }
     return response.statusCode;
   }
