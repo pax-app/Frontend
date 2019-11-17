@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:async/async.dart';
 
 class LoggedUser extends User {
-  String token, userId;
+  String token, userId, providerId;
   bool didLogout = true, isProvider = false, isInProviderDrawer = false;
 
   static SharedPreferences _preferences;
@@ -28,12 +28,19 @@ class LoggedUser extends User {
         ? preferences.getBool("LastUserIsProvider")
         : false;
     this.photo = preferences.getString("LastPhoto");
+    this.photo = preferences.getString("LastProviderId");
   }
 
   Future setName(name) async {
     var preferences = await this.preferences;
     this.name = name;
     preferences.setString("LastUser", name);
+  }
+
+  Future setProviderId(providerId) async {
+    var preferences = await this.preferences;
+    this.providerId = providerId;
+    preferences.setString("LastProviderId", providerId);
   }
 
   Future setToken(token) async {
@@ -95,12 +102,14 @@ class LoggedUser extends User {
     preferences.setString("LastEmail", "");
     preferences.setString("LastPhoto", "");
     preferences.setString("LastUserID", "");
+    preferences.setString("LastProviderId", "");
     preferences.setBool("LastUserIsProvider", false);
     this.name = preferences.getString("LastUser");
     this.token = preferences.getString("LastToken");
     this.email = preferences.getString("LastEmail");
     this.userId = preferences.getString("LastUserID");
     this.photo = preferences.getString("LastPhoto");
+    this.providerId = preferences.getString("LastProviderId");
     this.isProvider = preferences.getBool("LastUserIsProvider");
     this.didLogout = true;
   }

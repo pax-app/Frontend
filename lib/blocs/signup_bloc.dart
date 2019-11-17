@@ -61,6 +61,7 @@ class SignUpBloc extends BlocBase {
     var userId = "";
     bool isProvider = false;
     var loggedUser = LoggedUser();
+    var providerId = "";
     if (responseJson != null && responseJson.isNotEmpty) {
       var userModel = LoginModel.fromJson(responseJson);
       user = userModel.userName;
@@ -68,12 +69,14 @@ class SignUpBloc extends BlocBase {
       email = userModel.email;
       userId = userModel.id.toString();
       isProvider = userModel.isProvider;
+      providerId = userModel.providerId;
     }
     await loggedUser.setName(user);
     await loggedUser.setEmail(email);
     await loggedUser.setUserId(userId);
     await loggedUser.setIsProvider(isProvider);
     await loggedUser.setToken(token);
+    await loggedUser.setProviderId(providerId);
   }
 
   Future<int> signUp() async {
