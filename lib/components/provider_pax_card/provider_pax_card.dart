@@ -3,6 +3,20 @@ import 'package:Pax/components/red_bubble/red_bubble.dart';
 import 'package:flutter/material.dart';
 
 class ProviderPaxCard extends StatelessWidget {
+  final Function onTapButtonHandler;
+  final Function onCancelHandler;
+  final Function refreshAllPax;
+  final String statusUser;
+  final dynamic pax;
+
+  ProviderPaxCard({
+    @required this.statusUser,
+    @required this.pax,
+    this.onTapButtonHandler,
+    this.onCancelHandler,
+    this.refreshAllPax,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -93,11 +107,12 @@ class ProviderPaxCard extends StatelessWidget {
                           )
                         ],
                       ),
-                      SizedBox(height: 40),
-                      Button(
-                        buttonText: "INICIAR AGORA",
-                        tapHandler: () => {},
-                      )
+                      if (_canShowButton()) SizedBox(height: 40),
+                      if (_canShowButton())
+                        Button(
+                          buttonText: textButton(),
+                          tapHandler: onTapButtonHandler,
+                        )
                     ],
                   ),
                 ),
@@ -105,15 +120,30 @@ class ProviderPaxCard extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(
-          top: 10,
-          right: 0,
-          child: RedBubble(
-            content: 'X',
-            onTapHandler: () => {},
+        if (_canCancel())
+          Positioned(
+            top: 10,
+            right: 0,
+            child: RedBubble(
+              content: 'X',
+              onTapHandler: onCancelHandler,
+            ),
           ),
-        ),
       ],
     );
+  }
+
+  bool _canShowButton() {
+    return onTapButtonHandler != null &&
+        ((pax['status'] == 'P' && statusUser == 'pending') ||
+            (pax['status'] == 'I' && statusUser == 'finalized'));
+  }
+
+  bool _canCancel() {
+    return pax['status'] != 'F' || pax['status'] != 'C' ? true : false;
+  }
+
+  String textButton() {
+    return pax['status'] == 'P' ? "INICIAR AGORA" : "VER JUSTIFICATIVA";
   }
 }
