@@ -79,7 +79,7 @@ class ProviderCategoryScreen extends StatelessWidget {
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (context) => ProviderListScreen(categoryId: id),
+        builder: (context) => ProviderListScreen(providerCategoryId: id),
       ),
     );
   }

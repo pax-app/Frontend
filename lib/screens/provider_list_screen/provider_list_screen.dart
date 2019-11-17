@@ -1,19 +1,17 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:convert';
 import 'package:Pax/components/provider_card/provider_card.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/screens/provider_profile_screen/provider_profile_screen.dart';
-import 'package:Pax/services/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:Pax/models/Provider.dart';
 
 class ProviderListScreen extends StatelessWidget {
-  final categoryId;
-  final _api = Api();
-  ProviderListScreen({this.categoryId});
+  final providerCategoryId;
+
+  ProviderListScreen({this.providerCategoryId});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +19,7 @@ class ProviderListScreen extends StatelessWidget {
       future: fetchPost(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<Provider> providers = snapshot.data;
+          List<dynamic> providers = snapshot.data;
           return BaseScreen(
               "",
               "Categoria teste",
@@ -30,8 +28,8 @@ class ProviderListScreen extends StatelessWidget {
                     .map(
                       (item) => Container(
                         child: ProviderCard(
-                          providerId: item.providerId,
-                          name: item.providerName,
+                          providerId: item['provider_id'],
+                          name: item['name'],
                           rating: item.reviewService,
                           description: item.bio,
                           minPrice: item.minPrice,
@@ -45,11 +43,9 @@ class ProviderListScreen extends StatelessWidget {
               ),
               null);
         } else if (snapshot.hasError) {
-          //Display error if can't get data from API
           return BaseScreen("", "Erro:", Text("${snapshot.error}"), null);
         }
 
-        // By default, show a loading spinner.
         return BaseScreen("", "Carregando", CircularProgressIndicator(), null);
       },
     );
@@ -64,15 +60,17 @@ class ProviderListScreen extends StatelessWidget {
 
   Future<List<Provider>> fetchPost() async {
     final response = await http.get(
-        'http://pax-user.herokuapp.com/provider_by_category/review/$categoryId');
+        'http://pax-user.herokuapp.com/provider_by_category/min_price/$providerCategoryId');
 
     var responseJson = json.decode(response.body);
+    final List<dynamic> listaFinal = [];
+
     print(responseJson);
-    final List<Provider> listaFinal = [];
 
     for (var item in responseJson) {
-      listaFinal.add(Provider.fromJson(item));
+      listaFinal.add(json.decode(item));
     }
+    print(listaFinal);
     return listaFinal;
   }
 }

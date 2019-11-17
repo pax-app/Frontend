@@ -2,6 +2,7 @@ import 'package:Pax/screens/chat_screen/chat_address_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_pax_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_pax_detail.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:Pax/components/chat/chat_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,7 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
   var addresses;
 
-  bool isProvider = false;
+  bool isProvider = LoggedUser().isProvider;
   bool isAddressesLoading = true;
   bool showSnackBars = true;
 

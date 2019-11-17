@@ -11,12 +11,14 @@ class PaxApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting("pt-BR", null);
-    return MainBloc(MaterialApp(
-      title: 'Pax',
-      theme: paxTheme,
-      debugShowCheckedModeBanner: false,
-      //home: HomeScreen(),
-      home: LoginScreen(),
-    ));
+    return MainBloc(
+      MaterialApp(
+        title: 'Pax',
+        theme: paxTheme,
+        debugShowCheckedModeBanner: false,
+        //home: HomeScreen(),
+        home: LoginScreen(),
+      ),
+    );
   }
 }
