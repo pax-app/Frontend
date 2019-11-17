@@ -4,7 +4,7 @@ class LoginModel {
   final String email;
   final int id;
   final bool isProvider;
-  final String providerId;
+  final int providerId;
 
   LoginModel(this.userName, this.token, this.email, this.id, this.isProvider,
       this.providerId);

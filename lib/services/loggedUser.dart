@@ -1,4 +1,5 @@
 import 'package:Pax/models/user.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:async/async.dart';
 
@@ -39,8 +40,8 @@ class LoggedUser extends User {
 
   Future setProviderId(providerId) async {
     var preferences = await this.preferences;
-    this.providerId = providerId;
-    preferences.setString("LastProviderId", providerId);
+    this.providerId = providerId.toString();
+    preferences.setString("LastProviderId", providerId.toString());
   }
 
   Future setToken(token) async {

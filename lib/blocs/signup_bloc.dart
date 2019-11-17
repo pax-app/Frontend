@@ -69,7 +69,7 @@ class SignUpBloc extends BlocBase {
       email = userModel.email;
       userId = userModel.id.toString();
       isProvider = userModel.isProvider;
-      providerId = userModel.providerId;
+      providerId = userModel.providerId.toString();
     }
     await loggedUser.setName(user);
     await loggedUser.setEmail(email);
