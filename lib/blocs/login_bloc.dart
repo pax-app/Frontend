@@ -69,15 +69,10 @@ class LoginBloc extends BlocBase {
       'content-type': 'application/json',
       'Authorization': 'Token $token'
     };
+    var loggedUser = LoggedUser();
+    await loggedUser.clearAuthData();
+    await _api.get(Services.USER, Routes.LOGOUT_ROUTE, headers: header);
 
-    final response =
-        await _api.get(Services.USER, Routes.LOGOUT_ROUTE, headers: header);
-    if (response.statusCode == 200 ||
-        response.statusCode == 401 ||
-        response.statusCode == 404) {
-      var loggedUser = LoggedUser();
-      await loggedUser.clearAuthData();
-    }
     return true;
   }
 
