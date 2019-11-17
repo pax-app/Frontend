@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:Pax/components/base_screen/base_screen.dart';
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/text_input/text_input_bloc.dart';
@@ -22,6 +24,8 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
   double _upperValue = 80.0;
   bool isTouch = false;
   var _photo, _rgPhoto;
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -210,31 +214,40 @@ class _BecameProviderScreenState extends State<BecameProviderScreen> {
         const SizedBox(height: 20.0),
         Button(
           buttonText: 'Finalizar',
-          type: 'default',
-          tapHandler: activeteButton()
-              ? () {
-                  _becameProviderBloc.turnIntoProvider(
-                      _lowerValue,
-                      _upperValue,
-                      BlocProvider.of<ProviderBloc>(context).categories,
-                      _photo,
-                      _rgPhoto);
-                  Navigator.of(context).pushReplacement(
-                    CupertinoPageRoute(
-                      builder: (context) => BaseScreen(
-                        "",
-                        "Agora é só aguardar",
-                        FinishProviderTab(),
-                        null,
-                      ),
-                    ),
-                  );
-                }
-              : null,
-          isSmall: false,
+          tapHandler: activeteButton() ? _createProvider : null,
+          isLoading: isLoading,
         ),
         const SizedBox(height: 10.0),
       ],
+    );
+  }
+
+  void _createProvider() async {
+    setState(() {
+      isLoading = true;
+    });
+    print('before $isLoading');
+
+    await _becameProviderBloc.turnIntoProvider(
+      _lowerValue,
+      _upperValue,
+      BlocProvider.of<ProviderBloc>(context).categories,
+      _photo,
+      _rgPhoto,
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+    Navigator.of(context).pushReplacement(
+      CupertinoPageRoute(
+        builder: (context) => BaseScreen(
+          "",
+          "Agora é só aguardar",
+          FinishProviderTab(),
+          null,
+        ),
+      ),
     );
   }
 

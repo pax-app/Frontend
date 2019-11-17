@@ -37,7 +37,7 @@ class _ProviderPaxScreenState extends State<ProviderPaxScreen> {
           horizontal: 20,
           vertical: 30,
         ),
-        child: ListView.builder(
+        child: ListView(
           children: <Widget>[
             ProviderPaxCard(
               pax: {},
