@@ -22,6 +22,7 @@ class ProviderPaxScreen extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             ProviderPaxCard(),
+            ProviderPaxCard(),
           ],
         ),
       ),
