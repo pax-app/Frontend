@@ -12,7 +12,14 @@ import '../../components/auth/auth_input.dart';
 
 final _loginBloc = LoginBloc();
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool isLoading = false;
+
   Future<void> _showDialog(BuildContext context, String text) {
     return showDialog<void>(
       context: context,
@@ -33,8 +40,9 @@ class LoginScreen extends StatelessWidget {
   }
 
   void recoverPassword(BuildContext ctx) {
-    Navigator.of(ctx)
-        .push(CupertinoPageRoute(builder: (_) => RecoverPassordScreen()));
+    Navigator.of(ctx).push(
+      CupertinoPageRoute(builder: (_) => RecoverPassordScreen()),
+    );
   }
 
   void signUp(BuildContext ctx) {
@@ -42,15 +50,25 @@ class LoginScreen extends StatelessWidget {
   }
 
   void doLogin(BuildContext ctx, bool login) async {
+    setState(() {
+      isLoading = true;
+    });
+
     bool logged;
     Response loginResponse = await _loginBloc.logIn();
     if (login) logged = loginResponse.statusCode == 200;
     logged = login ? logged : await _loginBloc.checkIfUserIsLogged();
 
-    if (logged)
-      Navigator.of(ctx)
-          .pushReplacement(CupertinoPageRoute(builder: (_) => HomeScreen()));
-    else if (login && loginResponse.statusCode == 404)
+    if (logged) {
+      setState(() {
+        isLoading = false;
+      });
+      Navigator.of(ctx).pushReplacement(
+        CupertinoPageRoute(
+          builder: (_) => HomeScreen(),
+        ),
+      );
+    } else if (login && loginResponse.statusCode == 404)
       _showDialog(ctx, 'Usuario não encontrado.');
     else if (login && loginResponse.statusCode == 500)
       _showDialog(ctx, 'Tente novamente mais tarde.');
@@ -60,7 +78,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    doLogin(context, false);
+    // doLogin(context, false);
     return Scaffold(
       backgroundColor: loginBgColor,
       body: SafeArea(
@@ -93,6 +111,7 @@ class LoginScreen extends StatelessWidget {
                     stream: _loginBloc.validInputsStream,
                     builder: (context, snapshot) {
                       return Button(
+                        isLoading: isLoading,
                         buttonText: 'Entrar',
                         tapHandler: snapshot.hasData
                             ? () => this.doLogin(context, true)

@@ -8,7 +8,14 @@ import '../../components/auth/auth_input.dart';
 
 final _signupBloc = SignUpBloc();
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  bool isLoading = false;
+
   Future<void> _showDialog(BuildContext context, String text) {
     return showDialog<void>(
       context: context,
@@ -29,12 +36,22 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void doSignUp(BuildContext ctx) async {
+    setState(() {
+      isLoading = true;
+    });
     var logged = await _signupBloc.signUp();
-    if (logged == 200) /*  */
-      Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
-        return HomeScreen();
-      }));
-    else if (logged == 500 || logged == 503) //Erro ao conectar ao DB
+    if (logged == 200) {
+      setState(() {
+        isLoading = false;
+      });
+      Navigator.of(ctx).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) {
+            return HomeScreen();
+          },
+        ),
+      );
+    } else if (logged == 500 || logged == 503) //Erro ao conectar ao DB
       _showDialog(ctx, "Tente novamente mais tarde.");
     else if (logged == 400) // Email ja cadastrado
       _showDialog(ctx, "Email já cadastrado.");
@@ -147,6 +164,7 @@ class SignUpScreen extends StatelessWidget {
                     stream: _signupBloc.validInputsStream,
                     builder: (context, snapshot) {
                       return Button(
+                        isLoading: isLoading,
                         buttonText: "Criar",
                         tapHandler: snapshot.hasData
                             ? () => this.doSignUp(context)
