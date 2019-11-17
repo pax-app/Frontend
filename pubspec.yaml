@@ -70,6 +70,7 @@ flutter:
     - assets/categories-img/
     - assets/gifs/
     - assets/logo.png
+    - assets/user-img/default.png
   #  - images/a_dot_ham.jpeg
 
   #  - images/a_dot_burr.jpeg

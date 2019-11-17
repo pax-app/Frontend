@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:Pax/components/button%20/button.dart';
 import 'package:Pax/components/text_input/text_input.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -81,7 +82,7 @@ class _EditPerfilTabState extends State<EditPerfilTab> {
         ),
         TextInput(
           'Nome',
-          'Seu nome',
+          LoggedUser().name,
           true,
           (String value) {
             return _name.text.isEmpty ? 'Texto Vazio' : null;

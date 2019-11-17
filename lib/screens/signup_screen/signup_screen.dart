@@ -30,7 +30,7 @@ class SignUpScreen extends StatelessWidget {
 
   void doSignUp(BuildContext ctx) async {
     var logged = await _signupBloc.signUp();
-    if (logged == 201)
+    if (logged == 200) /*  */
       Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
         return HomeScreen();
       }));

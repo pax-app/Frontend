@@ -47,10 +47,9 @@ class ConfigScreen extends StatelessWidget {
         SimpleTile(
           "Sair",
           () async {
-            var loggedOut = await _loginBloc.logOut();
-            if (loggedOut)
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => LoginScreen()));
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => LoginScreen()));
+            await _loginBloc.logOut();
           },
         ),
       ],

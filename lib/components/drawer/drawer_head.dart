@@ -1,3 +1,4 @@
+import 'package:Pax/services/loggedUser.dart';
 import 'package:flutter/material.dart';
 
 class DrawerHead extends StatelessWidget {
@@ -5,6 +6,7 @@ class DrawerHead extends StatelessWidget {
   final String img, name;
   final double qntStars;
   final PageController controller;
+  final loggedUser = LoggedUser();
 
   DrawerHead(this.img, this.name, this.qntStars, this.controller);
 
@@ -16,6 +18,7 @@ class DrawerHead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("loggedUser.photo: " + loggedUser.photo);
     return Column(
       children: <Widget>[
         Container(
@@ -56,12 +59,14 @@ class DrawerHead extends StatelessWidget {
                         ),
                       ),
                       child: ClipOval(
-                        child: FadeInImage.assetNetwork(
-                          fit: BoxFit.cover,
-                          placeholder: 'assets/gifs/spinner.gif',
-                          image:
-                              'https://firebasestorage.googleapis.com/v0/b/pax-messenger.appspot.com/o/chats%2Fscaled_13c1b1d5-c962-4e1e-b6df-26d03a9eaf906748638212161831975.jpg?alt=media&token=c52c2519-1b8a-4337-9258-b36db3e3d818',
-                        ),
+                        child: loggedUser.photo != null &&
+                                loggedUser.photo.isNotEmpty
+                            ? FadeInImage.assetNetwork(
+                                fit: BoxFit.cover,
+                                placeholder: 'assets/gifs/spinner.gif',
+                                image: loggedUser.photo,
+                              )
+                            : Image.asset('assets/user-img/default.png'),
                       ),
                     ),
                     SizedBox(width: 16.0),

@@ -5,7 +5,6 @@ import 'package:Pax/services/api.dart';
 import 'package:Pax/services/loggedUser.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/widgets.dart' as prefix0;
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:path/path.dart' as Path;
@@ -99,7 +98,10 @@ class BecameProviderBloc implements BlocBase {
       headers: header,
       body: jsonBody,
     );
-    if (response.statusCode == 200) await loggedUser.setIsProvider(true);
+    if (response.statusCode == 200) {
+      await loggedUser.setIsProvider(true);
+      await loggedUser.setPhoto(urlAvatar);
+    }
     return response.statusCode;
   }
 

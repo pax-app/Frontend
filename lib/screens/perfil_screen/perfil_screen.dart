@@ -2,6 +2,7 @@ import 'package:Pax/components/avaliation_card/avaliation_card.dart';
 import 'package:Pax/components/stars_avaliation/stars_avaliation.dart';
 import 'package:Pax/models/avaliation.dart';
 import 'package:Pax/models/user.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:flutter/material.dart';
 
 class PerfilScreen extends StatelessWidget {
@@ -20,6 +21,8 @@ class PerfilScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loggedUser = LoggedUser();
+    debugPrint("photo: " + loggedUser.photo.toString());
     return ListView(
       physics: NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
@@ -33,11 +36,15 @@ class PerfilScreen extends StatelessWidget {
                 height: 120,
                 width: 120,
                 decoration: BoxDecoration(
-                  border: Border.all(
-                      color: Theme.of(context).accentColor, width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  color: Theme.of(context).accentColor,
-                ),
+                    border: Border.all(
+                        color: Theme.of(context).accentColor, width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    image: DecorationImage(
+                        image: loggedUser.photo != null &&
+                                loggedUser.photo.isNotEmpty
+                            ? NetworkImage(loggedUser.photo)
+                            : ExactAssetImage('assets/user-img/default.png')),
+                    shape: BoxShape.rectangle),
               ),
               SizedBox(
                 width: 20,
@@ -46,7 +53,7 @@ class PerfilScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Nome",
+                    loggedUser.name,
                     style: Theme.of(context).textTheme.title,
                   ),
                   SizedBox(
