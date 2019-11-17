@@ -1,20 +1,19 @@
+import 'package:Pax/screens/chat_screen/chat_address_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_pax_bottom_sheet.dart';
+import 'package:Pax/screens/chat_screen/chat_bottom_sheet.dart';
 import 'package:Pax/screens/chat_screen/chat_pax_detail.dart';
-import 'package:flutter/material.dart';
-import 'package:Pax/components/chat/start_chat.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:Pax/components/chat/chat_app_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Pax/components/chat/start_chat.dart';
 import 'package:Pax/components/chat/chat_input.dart';
 import 'package:Pax/components/chat/chat_list.dart';
-import 'package:Pax/screens/chat_screen/chat_address_bottom_sheet.dart';
-import 'package:Pax/screens/chat_screen/chat_bottom_sheet.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
-import 'dart:io';
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:io';
 
 class ChatScreen extends StatefulWidget {
   final int chatId;

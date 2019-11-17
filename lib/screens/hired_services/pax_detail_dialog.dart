@@ -17,7 +17,7 @@ class PaxDetailDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseDialog(
-      height: _isInitiated() || _isPendent() ? 250 : 405,
+      height: _isInitiated() || _isPendent() ? 250 : _isCancelled() ? 310 : 405,
       body: Column(
         children: <Widget>[
           Container(
@@ -97,22 +97,7 @@ class PaxDetailDialog extends StatelessWidget {
                   ),
                 ),
                 if (_isCancelled()) SizedBox(height: 23),
-                if (_isCancelled())
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Justificativa',
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                      SizedBox(height: 6),
-                      Text(
-                        pax['canceled_motive'],
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(height: 1.5),
-                      ),
-                    ],
-                  ),
+                if (_isCancelled()) _getJustification(context),
                 if (!_isCancelled()) SizedBox(height: 35),
                 if (_isFinalized())
                   Button(
@@ -153,6 +138,27 @@ class PaxDetailDialog extends StatelessWidget {
         SizedBox(height: 5),
         StarsAvaliation(0, context),
       ],
+    );
+  }
+
+  Widget _getJustification(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Justificativa',
+            style: Theme.of(context).textTheme.title,
+          ),
+          SizedBox(height: 6),
+          Text(
+            pax['canceled_motive'],
+            textAlign: TextAlign.justify,
+            style: TextStyle(height: 1.5),
+          ),
+        ],
+      ),
     );
   }
 
