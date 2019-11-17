@@ -2,6 +2,7 @@ import 'package:Pax/components/app_bar/white_appbar.dart';
 import 'package:Pax/components/chat_tile/chat_tile.dart';
 import 'package:Pax/components/drawer/drawer_provider.dart';
 import 'package:Pax/components/provider_panel_card/provider_panel_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProviderPanel extends StatelessWidget {
@@ -11,9 +12,10 @@ class ProviderPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const Map<String, String> imagesPaths = {
-      'Pendentes': 'assets/illustrations/smudge-green.png',
-      'Cancelados': 'assets/illustrations/smudge-purple.png',
-      'Finalizados': 'assets/illustrations/smudge-blue.png',
+      'Pendentes': 'assets/illustrations/marker-orange.png',
+      'Iniciado': 'assets/illustrations/marker-green.png',
+      'Finalizados': 'assets/illustrations/marker-teal.png',
+      'Cancelados': 'assets/illustrations/marker-red.png',
     };
 
     return Scaffold(
@@ -36,7 +38,7 @@ class ProviderPanel extends StatelessWidget {
                 ),
                 Center(
                   child: Container(
-                    height: 115,
+                    height: 125,
                     width: MediaQuery.of(context).size.width,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
@@ -48,13 +50,18 @@ class ProviderPanel extends StatelessWidget {
                         ),
                         ProviderPanelCard(
                           removeMargin: true,
-                          cardName: 'Cancelados',
-                          img: imagesPaths['Cancelados'],
+                          cardName: 'Iniciado',
+                          img: imagesPaths['Iniciado'],
                         ),
                         ProviderPanelCard(
                           removeMargin: false,
                           cardName: 'Finalizados',
                           img: imagesPaths['Finalizados'],
+                        ),
+                        ProviderPanelCard(
+                          removeMargin: true,
+                          cardName: 'Cancelados',
+                          img: imagesPaths['Cancelados'],
                         ),
                       ],
                     ),
@@ -101,4 +108,19 @@ class ProviderPanel extends StatelessWidget {
       ),
     );
   }
+
+  void _pushToPendingPax(BuildContext context) {
+    // Navigator.push(
+    //   context,
+    //   CupertinoPageRoute(
+    //     builder: (context) =>
+    //   ),
+    // );
+  }
+
+  void _pushToFinalized(BuildContext context) {}
+
+  void _pushToInitiated(BuildContext context) {}
+
+  void _pushToCancelled(BuildContext context) {}
 }
