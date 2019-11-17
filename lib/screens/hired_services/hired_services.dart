@@ -12,7 +12,7 @@ class HiredServices extends StatefulWidget {
 
 class _HiredServicesState extends State<HiredServices> {
   final Firestore _firestore = Firestore.instance;
-  var isLoading = false;
+  var isLoading = true;
   var pax = [];
 
   @override
@@ -62,10 +62,6 @@ class _HiredServicesState extends State<HiredServices> {
   }
 
   Future<dynamic> _getAllUserPax() async {
-    setState(() {
-      isLoading = true;
-    });
-
     var res = await http.get('https://pax-pax.herokuapp.com/pax/all_pax/1');
 
     setState(() {

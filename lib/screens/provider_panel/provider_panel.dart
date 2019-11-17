@@ -2,6 +2,7 @@ import 'package:Pax/components/app_bar/white_appbar.dart';
 import 'package:Pax/components/chat_tile/chat_tile.dart';
 import 'package:Pax/components/drawer/drawer_provider.dart';
 import 'package:Pax/components/provider_panel_card/provider_panel_card.dart';
+import 'package:Pax/screens/provider_pax_screen/provider_pax_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class ProviderPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     const Map<String, String> imagesPaths = {
       'Pendentes': 'assets/illustrations/marker-orange.png',
-      'Iniciado': 'assets/illustrations/marker-green.png',
+      'Iniciados': 'assets/illustrations/marker-green.png',
       'Finalizados': 'assets/illustrations/marker-teal.png',
       'Cancelados': 'assets/illustrations/marker-red.png',
     };
@@ -47,21 +48,29 @@ class ProviderPanel extends StatelessWidget {
                           removeMargin: false,
                           cardName: 'Pendentes',
                           img: imagesPaths['Pendentes'],
+                          onTapHandler: () =>
+                              _pushToPaxScreen(context, 'Pendente'),
                         ),
                         ProviderPanelCard(
                           removeMargin: true,
-                          cardName: 'Iniciado',
-                          img: imagesPaths['Iniciado'],
+                          cardName: 'Iniciados',
+                          img: imagesPaths['Iniciados'],
+                          onTapHandler: () =>
+                              _pushToPaxScreen(context, 'Iniciado'),
                         ),
                         ProviderPanelCard(
                           removeMargin: false,
                           cardName: 'Finalizados',
                           img: imagesPaths['Finalizados'],
+                          onTapHandler: () =>
+                              _pushToPaxScreen(context, 'Finalizado'),
                         ),
                         ProviderPanelCard(
                           removeMargin: true,
                           cardName: 'Cancelados',
                           img: imagesPaths['Cancelados'],
+                          onTapHandler: () =>
+                              _pushToPaxScreen(context, 'Cancelado'),
                         ),
                       ],
                     ),
@@ -109,18 +118,14 @@ class ProviderPanel extends StatelessWidget {
     );
   }
 
-  void _pushToPendingPax(BuildContext context) {
-    // Navigator.push(
-    //   context,
-    //   CupertinoPageRoute(
-    //     builder: (context) =>
-    //   ),
-    // );
+  void _pushToPaxScreen(BuildContext context, String type) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => ProviderPaxScreen(
+          title: 'Meus Serviços ${type}s',
+        ),
+      ),
+    );
   }
-
-  void _pushToFinalized(BuildContext context) {}
-
-  void _pushToInitiated(BuildContext context) {}
-
-  void _pushToCancelled(BuildContext context) {}
 }

@@ -18,7 +18,6 @@ class DrawerHead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("loggedUser.photo: " + loggedUser.photo);
     return Column(
       children: <Widget>[
         Container(

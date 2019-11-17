@@ -89,7 +89,7 @@ class BecameProviderBloc implements BlocBase {
 
     Map<String, String> header = {
       'content-type': 'application/json',
-      'Authorization': 'Token $_token'
+      'Authorization': 'Token ${LoggedUser().token}'
     };
     var jsonBody = json.encode(body);
     final response = await _api.post(
