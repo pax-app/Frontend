@@ -122,15 +122,10 @@ class ProviderPanel extends StatelessWidget {
     Navigator.push(
       context,
       CupertinoPageRoute(
-          builder: (context) => ProviderPaxScreen(
-                title: 'Meus Serviços ${type}s',
-              )),
+        builder: (context) => ProviderPaxScreen(
+          title: 'Meus Serviços ${type}s',
+        ),
+      ),
     );
   }
-
-  void _pushToFinalized(BuildContext context) {}
-
-  void _pushToInitiated(BuildContext context) {}
-
-  void _pushToCanceled(BuildContext context) {}
 }
