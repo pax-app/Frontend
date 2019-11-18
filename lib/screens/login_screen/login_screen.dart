@@ -59,10 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if (login) logged = loginResponse.statusCode == 200;
     logged = login ? logged : await _loginBloc.checkIfUserIsLogged();
 
+    setState(() {
+      isLoading = false;
+    });
+
     if (logged) {
-      setState(() {
-        isLoading = false;
-      });
       Navigator.of(ctx).pushReplacement(
         CupertinoPageRoute(
           builder: (_) => HomeScreen(),
