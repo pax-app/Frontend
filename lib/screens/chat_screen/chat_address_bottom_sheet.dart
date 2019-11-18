@@ -37,9 +37,11 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    int _addressLength = isLoading == true ? 1 : addresses.length;
-    double _currentSheetHeight =
-        (isLoading ? 120 : 58) + 90 * _addressLength.toDouble();
+    // int _addressLength = isLoading == true ? 1 : addresses.length;
+
+    double _currentSheetHeight = (isLoading == true || addresses.length == 0)
+        ? 180
+        : (150 + 90 * addresses.length.toDouble());
 
     return BaseBottomSheet(
       modalHeight: isInCepModal
@@ -67,7 +69,7 @@ class _ChatAddressBottomSheetState extends State<ChatAddressBottomSheet> {
                     ? ChatCepBottomSheet()
                     : ChatAddressList(
                         sendMessage: widget.sendMessage,
-                        addressLength: _addressLength + 1,
+                        addressLength: addresses.length + 1,
                         addresses: addresses,
                         chatId: widget.chatId,
                         navigateToCepModal: _navigateToCepModal,

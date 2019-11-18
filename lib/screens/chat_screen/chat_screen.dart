@@ -39,7 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final Firestore _firestore = Firestore.instance;
   var addresses;
 
-  bool isProvider = LoggedUser().isProvider;
+  bool isProvider = LoggedUser().isInProviderDrawer;
   bool isAddressesLoading = true;
   bool showSnackBars = true;
 
