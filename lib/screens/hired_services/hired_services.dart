@@ -100,6 +100,8 @@ class _HiredServicesState extends State<HiredServices> {
       });
     }
 
+    print(paxjson);
+
     setState(() {
       pax = paxs;
       isLoading = false;

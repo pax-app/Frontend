@@ -31,7 +31,7 @@ class ProviderPaxCard extends StatelessWidget {
                   horizontal: 2,
                 ),
                 child: Text(
-                  "Título",
+                  pax['name'],
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
@@ -57,7 +57,7 @@ class ProviderPaxCard extends StatelessWidget {
                             "Descrição",
                             style: Theme.of(context).textTheme.title,
                           ),
-                          Text("Texto"),
+                          Text(pax['description']),
                         ],
                       ),
                       SizedBox(height: 30),
@@ -68,7 +68,8 @@ class ProviderPaxCard extends StatelessWidget {
                             "Endereço",
                             style: Theme.of(context).textTheme.title,
                           ),
-                          Text("Texto"),
+                          Text(
+                              '${pax['street']} Número ${pax['number']}, ${pax['neighborhood']} - CEP: ${pax['cep']}'),
                         ],
                       ),
                       SizedBox(height: 30),
