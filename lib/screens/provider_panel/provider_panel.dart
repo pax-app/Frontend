@@ -39,77 +39,52 @@ class ProviderPanel extends StatelessWidget {
                 ),
                 Center(
                   child: Container(
-                    height: 125,
+                    height: 270,
                     width: MediaQuery.of(context).size.width,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ProviderPanelCard(
-                          removeMargin: false,
-                          cardName: 'Pendentes',
-                          img: imagesPaths['Pendentes'],
-                          onTapHandler: () =>
-                              _pushToPaxScreen(context, 'Pendente'),
+                        Row(
+                          children: <Widget>[
+                            ProviderPanelCard(
+                              removeMargin: false,
+                              cardName: 'Pendentes',
+                              img: imagesPaths['Pendentes'],
+                              onTapHandler: () =>
+                                  _pushToPaxScreen(context, 'Pendente'),
+                            ),
+                            ProviderPanelCard(
+                              removeMargin: true,
+                              cardName: 'Iniciados',
+                              img: imagesPaths['Iniciados'],
+                              onTapHandler: () =>
+                                  _pushToPaxScreen(context, 'Iniciado'),
+                            ),
+                          ],
                         ),
-                        ProviderPanelCard(
-                          removeMargin: true,
-                          cardName: 'Iniciados',
-                          img: imagesPaths['Iniciados'],
-                          onTapHandler: () =>
-                              _pushToPaxScreen(context, 'Iniciado'),
-                        ),
-                        ProviderPanelCard(
-                          removeMargin: false,
-                          cardName: 'Finalizados',
-                          img: imagesPaths['Finalizados'],
-                          onTapHandler: () =>
-                              _pushToPaxScreen(context, 'Finalizado'),
-                        ),
-                        ProviderPanelCard(
-                          removeMargin: true,
-                          cardName: 'Cancelados',
-                          img: imagesPaths['Cancelados'],
-                          onTapHandler: () =>
-                              _pushToPaxScreen(context, 'Cancelado'),
-                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          children: <Widget>[
+                            ProviderPanelCard(
+                              removeMargin: false,
+                              cardName: 'Finalizados',
+                              img: imagesPaths['Finalizados'],
+                              onTapHandler: () =>
+                                  _pushToPaxScreen(context, 'Finalizado'),
+                            ),
+                            ProviderPanelCard(
+                              removeMargin: true,
+                              cardName: 'Cancelados',
+                              img: imagesPaths['Cancelados'],
+                              onTapHandler: () =>
+                                  _pushToPaxScreen(context, 'Cancelado'),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),
                 ),
-                Divider(height: 60, color: Color.fromRGBO(0, 0, 0, .2)),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, bottom: 15),
-                  child: Text(
-                    'Minhas Mensagens Recentes',
-                    style: Theme.of(context).textTheme.title,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      ChatTile(
-                        chat_id: 1,
-                        username: 'Roger',
-                        message: 'Eu sou muito muito mongol!',
-                        isChatSelected: false,
-                        isInDeletionMode: false,
-                        longPressHandler: (var _) {},
-                        updateChatsToBeDeleted: (var _) {},
-                      ),
-                      ChatTile(
-                        chat_id: 2,
-                        username: 'Dutra',
-                        message: 'Eu peido na farofa!',
-                        isChatSelected: false,
-                        isInDeletionMode: false,
-                        longPressHandler: (var _) {},
-                        updateChatsToBeDeleted: (var _) {},
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),

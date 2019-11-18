@@ -18,7 +18,7 @@ class ProviderPaxScreen extends StatefulWidget {
 }
 
 class _ProviderPaxScreenState extends State<ProviderPaxScreen> {
-  var pax = [];
+  var allPax = [];
   bool isLoading = true;
 
   @override
@@ -42,13 +42,7 @@ class _ProviderPaxScreenState extends State<ProviderPaxScreen> {
         child: ListView(
           children: <Widget>[
             ProviderPaxCard(
-              pax: {},
-              onCancelHandler: _cancelPax,
-              onTapButtonHandler: _initiatePax,
-              statusUser: 'pending',
-            ),
-            ProviderPaxCard(
-              pax: {},
+              pax: allPax[0],
               onCancelHandler: _cancelPax,
               onTapButtonHandler: _initiatePax,
               statusUser: 'pending',
@@ -66,19 +60,15 @@ class _ProviderPaxScreenState extends State<ProviderPaxScreen> {
       "Finalizado": "finalized_pax",
       "Cancelado": "canceled_pax",
     };
-    print(LoggedUser().providerId);
-    print(
-        'https://pax-pax.herokuapp.com/pax/${paxRoute[widget.title]}/provider/${LoggedUser().providerId}');
     var res = await http.get(
         'https://pax-pax.herokuapp.com/pax/${paxRoute[widget.title]}/provider/${LoggedUser().providerId}');
 
-    print(res.body);
+    var allPax = json.decode(res.body)['data']['pax'];
 
     setState(() {
-      pax = json.decode(res.body);
+      allPax = allPax;
       isLoading = false;
     });
-    print(pax);
   }
 
   void _initiatePax() async {}

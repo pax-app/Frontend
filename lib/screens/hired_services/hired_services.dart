@@ -1,5 +1,6 @@
 import 'package:Pax/components/dummies_loaders/dummy_user_pax_card.dart';
 import 'package:Pax/components/user_pax_card/user_pax_card.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -34,11 +35,10 @@ class _HiredServicesState extends State<HiredServices> {
               itemBuilder: (context, index) {
                 return UserPaxCard(
                   pax: pax[index],
-                  providerName: 'Pedro da Silva',
-                  providerPhoto:
-                      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
-                  statusProvider: 'initiated',
-                  statusUser: 'pending',
+                  providerName: pax[index]['username'],
+                  providerPhoto: pax[index]['url_avatar'],
+                  statusProvider: pax[index]['provider_status'],
+                  statusUser: pax[index]['user_status'],
                   onTapHandler: _changeStatusPax,
                   refreshAllPax: _getAllUserPax,
                 );
@@ -47,7 +47,8 @@ class _HiredServicesState extends State<HiredServices> {
     );
   }
 
-  void _changeStatusPax(String newStatus, int chatId) async {
+  void _changeStatusPax(
+      String newStatus, int chatId, int paxId, String type) async {
     var statusChange = {
       "chat_id": chatId,
       "status": newStatus,
@@ -59,14 +60,68 @@ class _HiredServicesState extends State<HiredServices> {
       headers: {"Content-Type": "application/json"},
       body: body,
     );
+
+    _firestore
+        .collection('pax')
+        .document(paxId.toString())
+        .updateData({'user_status': type});
+
+    await _getAllUserPax();
   }
 
   Future<dynamic> _getAllUserPax() async {
-    var res = await http.get('https://pax-pax.herokuapp.com/pax/all_pax/1');
+    var res = await http.get(
+        'https://pax-pax.herokuapp.com/pax/all_pax/${LoggedUser().userId.toString()}');
+
+    final List<Map<String, dynamic>> paxs = [];
+
+    var paxjson = json.decode(res.body);
+
+    for (var item in paxjson) {
+      var user_info = await _getUserInfo(item);
+      var rtStatus = await _getPaxStatus(item['pax_id']);
+
+      paxs.add({
+        'address_id': item['address_id'],
+        'canceled_motive': item['canceled_motive'],
+        'chat_id': item['chat_id'],
+        'date': item['date'],
+        'description': item['description'],
+        'name': item['name'],
+        'pax_id': item['pax_id'],
+        'price': item['price'],
+        'provider_id': item['provider_id'],
+        'status': item['status'],
+        'user_id': item['user_id'],
+        'username': user_info['username'],
+        'url_avatar': user_info['url_avatar'],
+        'user_status': rtStatus['user_status'],
+        'provider_status': rtStatus['provider_status'],
+      });
+    }
 
     setState(() {
-      pax = json.decode(res.body);
+      pax = paxs;
       isLoading = false;
     });
+  }
+
+  Future<dynamic> _getPaxStatus(int pax_id) async {
+    var pax = await _firestore
+        .collection('pax')
+        .where('pax_id', isEqualTo: pax_id.toString())
+        .getDocuments()
+        .then((snapshot) {
+      return snapshot.documents[0].data;
+    });
+    return pax;
+  }
+
+  Future<dynamic> _getUserInfo(var item) async {
+    var url =
+        'https://pax-user.herokuapp.com/get_user_info/provider/${item['provider_id']}';
+    var user_info = await http.get(url);
+
+    return json.decode(user_info.body);
   }
 }

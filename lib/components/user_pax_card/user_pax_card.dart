@@ -126,7 +126,7 @@ class _UserPaxCardState extends State<UserPaxCard> {
                         height: 18,
                       ),
                       Text(
-                        'Montagem de um armário de madeira de 2 metros de altura com 50 parafusos',
+                        widget.pax['description'],
                       ),
                       SizedBox(
                         height: 20,
@@ -175,8 +175,10 @@ class _UserPaxCardState extends State<UserPaxCard> {
             child: RedBubble(
               content: 'X',
               onTapHandler: () => widget.onTapHandler(
-                status: 'C',
-                chatId: widget.pax['chat_id'],
+                'C',
+                widget.pax['chat_id'],
+                widget.pax['pax_id'],
+                'canceled',
               ),
             ),
           ),
@@ -190,7 +192,11 @@ class _UserPaxCardState extends State<UserPaxCard> {
     });
 
     await widget.onTapHandler(
-        widget.pax['status'] == 'P' ? 'I' : 'F', widget.pax['chat_id']);
+      'I',
+      widget.pax['chat_id'],
+      widget.pax['pax_id'],
+      widget.pax['status'] == 'P' ? 'initiated' : 'finalized',
+    );
 
     setState(() {
       isLoading = false;
@@ -211,10 +217,10 @@ class _UserPaxCardState extends State<UserPaxCard> {
   }
 
   bool _canShowButton() {
+    print(widget.pax['status']);
     return widget.onTapHandler != null &&
         ((widget.pax['status'] == 'P' &&
                 widget.statusProvider == 'initiated') ||
-            (widget.pax['status'] == 'I' &&
-                widget.statusProvider == 'initiated'));
+            (widget.pax['status'] == 'I' && widget.statusUser == 'initiated'));
   }
 }

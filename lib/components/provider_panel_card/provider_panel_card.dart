@@ -16,7 +16,7 @@ class ProviderPanelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 170,
+      width: 142,
       margin: EdgeInsets.symmetric(horizontal: removeMargin ? 0 : 25),
       child: Card(
         elevation: CardTheme.of(context).elevation,
