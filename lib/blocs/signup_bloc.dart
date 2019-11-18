@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:Pax/models/reviews.dart';
 import 'package:Pax/services/api.dart';
 import 'package:Pax/services/loggedUser.dart';
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:Pax/models/login_model.dart';
 import 'package:Pax/blocs/singup_validators.dart';
@@ -63,6 +65,8 @@ class SignUpBloc extends BlocBase {
     bool isProvider = false;
     var loggedUser = LoggedUser();
     var providerId = "";
+    CharismaReviews charismaReviews;
+    ServiceReviews serviceReviews;
     if (responseJson != null && responseJson.isNotEmpty) {
       var userModel = LoginModel.fromJson(responseJson);
       user = userModel.userName;
@@ -72,6 +76,17 @@ class SignUpBloc extends BlocBase {
       isProvider = userModel.isProvider;
       providerId = userModel.providerId.toString();
       url_avatar = userModel.url_avatar;
+      var charismaResp =
+          await Api().get(Services.REVIEW, Routes.CHARISMA_REVIEWS(userId));
+      debugPrint("charismaResp.body:\n" + charismaResp.body);
+      charismaReviews =
+          CharismaReviews.fromJson(json.decode(charismaResp.body));
+      if (userModel.isProvider) {
+        var serviceResp =
+            await Api().get(Services.REVIEW, Routes.SERVICE_REVIEWS(userId));
+        debugPrint("serviceResp.body:\n" + serviceResp.body);
+        serviceReviews = ServiceReviews.fromJson(json.decode(serviceResp.body));
+      }
     }
     await loggedUser.setName(user);
     await loggedUser.setEmail(email);
@@ -80,6 +95,7 @@ class SignUpBloc extends BlocBase {
     await loggedUser.setToken(token);
     await loggedUser.setProviderId(providerId);
     await loggedUser.setPhoto(url_avatar);
+    loggedUser.addReviews(charismaReviews, serviceReviews);
   }
 
   Future<int> signUp() async {

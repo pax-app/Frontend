@@ -16,7 +16,8 @@ class DrawerUser extends StatelessWidget {
           Container(color: Theme.of(context).primaryColorLight),
           ListView(
             children: <Widget>[
-              DrawerHead(_pageController),
+              DrawerHead("", loggedUser.name, loggedUser.userReviewAverage,
+                  _pageController),
               Column(
                 children: <Widget>[
                   DrawerTile(

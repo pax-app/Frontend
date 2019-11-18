@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Routes {
@@ -11,6 +12,14 @@ class Routes {
   static const String PROVIDER_CATEGORY = "/provider";
   static String CATEGORY_PROVIDERS(id) {
     return "/provider/$id";
+  }
+
+  static String SERVICE_REVIEWS(id) {
+    return "/service_reviews/average/$id";
+  }
+
+  static String CHARISMA_REVIEWS(id) {
+    return "/charisma_reviews/average/$id";
   }
 
   static const String CREATE_ADDRESS = '/add_address';
@@ -36,6 +45,7 @@ class Api {
   final String baseUrl = "https://pax-gateway.herokuapp.com/api/v1/";
 
   Future<dynamic> get(String service, String route, {Map headers}) {
+    debugPrint("baseUrl + service + route: " + baseUrl + service + route);
     return http
         .get(baseUrl + service + route, headers: headers)
         .then((http.Response response) {
