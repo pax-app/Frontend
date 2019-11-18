@@ -1,5 +1,6 @@
 import 'package:Pax/components/app_bar/white_appbar.dart';
 import 'package:Pax/components/provider_pax_card/provider_pax_card.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -57,7 +58,6 @@ class _ProviderPaxScreenState extends State<ProviderPaxScreen> {
     );
   }
 
-  // pendent_pax  canceled_pax  canceled_pax  finalized_pax
   void _getAllPaxBasedOnType() async {
     final Map<String, String> paxRoute = {
       "Pendente": "pendent_pax",
@@ -67,7 +67,7 @@ class _ProviderPaxScreenState extends State<ProviderPaxScreen> {
     };
 
     var res = await http.get(
-        'https://pax-pax.herokuapp.com/pax/${paxRoute[widget.title]}/provider/${1}');
+        'https://pax-pax.herokuapp.com/pax/${paxRoute[widget.title]}/provider/${LoggedUser().providerId}');
 
     setState(() {
       pax = json.decode(res.body);

@@ -1,47 +1,56 @@
-import 'dart:async';
-import 'dart:convert';
+import 'package:Pax/screens/provider_profile_screen/provider_profile_screen.dart';
 import 'package:Pax/components/provider_card/provider_card.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
-import 'package:Pax/screens/provider_profile_screen/provider_profile_screen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:Pax/models/Provider.dart';
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:async';
 
 class ProviderListScreen extends StatelessWidget {
-  final providerCategoryId;
+  final int providerCategoryId;
+  final String title;
 
-  ProviderListScreen({this.providerCategoryId});
+  ProviderListScreen({
+    this.providerCategoryId,
+    @required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Provider>>(
+    return FutureBuilder(
       future: fetchPost(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<dynamic> providers = snapshot.data;
+          var providers = snapshot.data;
           return BaseScreen(
-              "",
-              "Categoria teste",
-              new Column(
-                children: providers
-                    .map(
-                      (item) => Container(
-                        child: ProviderCard(
-                          providerId: item['provider_id'],
-                          name: item['name'],
-                          rating: item.reviewService,
-                          description: item.bio,
-                          minPrice: item.minPrice,
-                          maxPrice: item.maxPrice,
-                          avatarUrl: item.providerPhoto,
-                          onTap: () => (loadProvider(item.providerId, context)),
-                        ),
-                      ),
-                    )
-                    .toList(),
+            "Escolha um profissional",
+            "Prestadores de ${title}",
+            Container(
+              height: MediaQuery.of(context).size.height * .8,
+              child: ListView.builder(
+                itemCount: providers.length,
+                itemBuilder: (context, index) {
+                  return ProviderCard(
+                    providerId: providers[index]['provider_id'],
+                    name: providers[index]['name'],
+                    rating: double.parse(
+                      providers[index]['reviews_average'].toString(),
+                    ),
+                    description: providers[index]['bio'],
+                    minPrice: providers[index]['minimum_price'],
+                    maxPrice: providers[index]['maximum_price'],
+                    avatarUrl: providers[index]['url_avatar'],
+                    onTap: () => loadProvider(
+                      providers[index]['provider_id'],
+                      context,
+                    ),
+                  );
+                },
               ),
-              null);
+            ),
+            null,
+          );
         } else if (snapshot.hasError) {
           return BaseScreen("", "Erro:", Text("${snapshot.error}"), null);
         }
@@ -58,19 +67,17 @@ class ProviderListScreen extends StatelessWidget {
     );
   }
 
-  Future<List<Provider>> fetchPost() async {
+  Future<dynamic> fetchPost() async {
     final response = await http.get(
-        'http://pax-user.herokuapp.com/provider_by_category/min_price/$providerCategoryId');
-
+        'https://pax-user.herokuapp.com/provider_by_category/review/$providerCategoryId');
     var responseJson = json.decode(response.body);
-    final List<dynamic> listaFinal = [];
 
-    print(responseJson);
+    var listaFinal = [];
 
     for (var item in responseJson) {
-      listaFinal.add(json.decode(item));
+      listaFinal.add(item);
     }
-    print(listaFinal);
+
     return listaFinal;
   }
 }

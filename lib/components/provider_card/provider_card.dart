@@ -12,15 +12,16 @@ class ProviderCard extends StatelessWidget {
   final String avatarUrl;
   final Function onTap;
 
-  ProviderCard(
-      {@required this.providerId,
-      @required this.name,
-      @required this.rating,
-      @required this.description,
-      @required this.minPrice,
-      @required this.maxPrice,
-      @required this.avatarUrl,
-      this.onTap});
+  ProviderCard({
+    @required this.providerId,
+    @required this.name,
+    @required this.rating,
+    @required this.description,
+    @required this.minPrice,
+    @required this.maxPrice,
+    @required this.avatarUrl,
+    this.onTap,
+  });
 
   wrapText(String source) {
     if (source.length > 50) return source.substring(0, 50) + "...";
@@ -57,7 +58,8 @@ class ProviderCard extends StatelessWidget {
                                   image: NetworkImage(this.avatarUrl),
                                   fit: BoxFit.fill),
                               shape: BoxShape.circle,
-                              border: Border.all(color: secondaryColor, width: 3)
+                              border:
+                                  Border.all(color: secondaryColor, width: 3),
                             ),
                           ),
                         )
@@ -73,10 +75,8 @@ class ProviderCard extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(
-                                  this.name,
-                                  style: Theme.of(context).textTheme.title
-                                ),
+                                Text(this.name,
+                                    style: Theme.of(context).textTheme.title),
                                 SmoothStarRating(
                                     allowHalfRating: false,
                                     rating: this.rating,

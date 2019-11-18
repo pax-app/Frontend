@@ -39,7 +39,7 @@ class ProviderCategoryScreen extends StatelessWidget {
             children: categories
                 .map(
                   (item) => SimpleTile(item.name, () {
-                    _pushProviders(context, item.id);
+                    _pushProviders(context, item.id, item.name);
                   }),
                 )
                 .toList(),
@@ -75,11 +75,14 @@ class ProviderCategoryScreen extends StatelessWidget {
     return listaFinal;
   }
 
-  void _pushProviders(BuildContext context, int id) {
+  void _pushProviders(BuildContext context, int id, String name) {
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (context) => ProviderListScreen(providerCategoryId: id),
+        builder: (context) => ProviderListScreen(
+          providerCategoryId: id,
+          title: name,
+        ),
       ),
     );
   }
