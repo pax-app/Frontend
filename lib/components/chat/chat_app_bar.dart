@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class ChatAppBar extends StatelessWidget with PreferredSizeWidget {
   final String providerName;
+  final String avatarUrl;
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   ChatAppBar({
     @required this.providerName,
+    @required this.avatarUrl,
   });
 
   @override
@@ -24,7 +26,12 @@ class ChatAppBar extends StatelessWidget with PreferredSizeWidget {
             height: 45,
             decoration: BoxDecoration(
               color: Colors.green,
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(60),
+              border: Border.all(width: 2, color: Colors.green),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(avatarUrl),
+              ),
             ),
           ),
           SizedBox(width: 8),

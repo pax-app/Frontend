@@ -48,7 +48,8 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final chatAppBar = ChatAppBar(
-      provider_name: widget.personName,
+      providerName: widget.personName,
+      avatarUrl: widget.avatarUrl,
     );
 
     final mediaQuery = MediaQuery.of(context);
