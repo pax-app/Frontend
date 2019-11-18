@@ -108,7 +108,7 @@ class DrawerHead extends StatelessWidget {
 
 Widget getUserStars(double n, BuildContext context) {
   List<Widget> list = new List<Widget>();
-  int qntEl = n.toInt();
+  int qntEl = n != null ? n.toInt() : 0;
   for (int i = 1; i <= 5; i++) {
     if (i <= qntEl)
       list.add(IconTheme(
