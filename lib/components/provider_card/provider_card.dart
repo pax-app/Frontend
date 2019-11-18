@@ -35,35 +35,30 @@ class ProviderCard extends StatelessWidget {
         Expanded(
           child: Container(
             height: 180,
-            margin: EdgeInsets.all(8),
+            margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
             child: Card(
               elevation: CardTheme.of(context).elevation,
               color: CardTheme.of(context).color,
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
               child: InkWell(
                 borderRadius: BorderRadius.circular(7.6),
                 onTap: this.onTap,
                 child: Row(
                   children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          child: Container(
-                            width: 90,
-                            height: 90,
-                            decoration: new BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(this.avatarUrl),
-                                  fit: BoxFit.fill),
-                              shape: BoxShape.circle,
-                              border:
-                                  Border.all(color: secondaryColor, width: 3),
-                            ),
+                    Container(
+                      alignment: Alignment.topCenter,
+                      padding: EdgeInsets.only(left: 16, top: 20, right: 10),
+                      child: Container(
+                        width: 73,
+                        height: 73,
+                        decoration: new BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(this.avatarUrl),
+                            fit: BoxFit.fill,
                           ),
-                        )
-                      ],
+                          shape: BoxShape.circle,
+                          border: Border.all(color: secondaryColor, width: 3),
+                        ),
+                      ),
                     ),
                     Flexible(
                       child: Container(
@@ -75,24 +70,38 @@ class ProviderCard extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(this.name,
-                                    style: Theme.of(context).textTheme.title),
+                                Text(
+                                  this.name,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .title
+                                      .copyWith(
+                                        fontSize: 17,
+                                      ),
+                                ),
                                 SmoothStarRating(
-                                    allowHalfRating: false,
-                                    rating: this.rating,
-                                    size: 20,
-                                    color: secondaryColor,
-                                    borderColor: secondaryColor),
+                                  allowHalfRating: false,
+                                  rating: this.rating,
+                                  size: 25,
+                                  color: secondaryColor,
+                                  borderColor: secondaryColor,
+                                ),
                               ],
                             ),
-                            Text(
-                              this.wrapText(this.description),
-                              style: TextStyle(fontSize: 16),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 15),
+                              child: Text(
+                                this.wrapText(this.description),
+                                style: TextStyle(fontSize: 16),
+                              ),
                             ),
-                            Text("R\$" +
-                                this.minPrice.toString() +
-                                " a R\$" +
-                                this.maxPrice.toString()),
+                            Text(
+                              "R\$ " +
+                                  this.minPrice.toString() +
+                                  " à R\$ " +
+                                  this.maxPrice.toString(),
+                              style: Theme.of(context).textTheme.subtitle,
+                            ),
                           ],
                         ),
                       ),

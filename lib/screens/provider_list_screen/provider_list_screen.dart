@@ -27,7 +27,7 @@ class ProviderListScreen extends StatelessWidget {
             "Escolha um profissional",
             "Prestadores de ${title}",
             Container(
-              height: MediaQuery.of(context).size.height * .8,
+              height: MediaQuery.of(context).size.height * .77,
               child: ListView.builder(
                 itemCount: providers.length,
                 itemBuilder: (context, index) {

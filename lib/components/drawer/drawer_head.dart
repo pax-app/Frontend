@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 
 class DrawerHead extends StatelessWidget {
   final nameRegex = RegExp(r'(^[\wÀ-Ÿ]+).* ([\wÀ-Ÿ]+$)');
-
+  final String img, name;
+  final double qntStars;
   final PageController controller;
   final loggedUser = LoggedUser();
 
-  DrawerHead(this.controller);
+  DrawerHead(this.img, this.name, this.qntStars, this.controller);
 
   Color colorOfSidebarItem(BuildContext context) {
     return controller.page.round() == 1
@@ -17,6 +18,7 @@ class DrawerHead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(loggedUser.name);
     return Column(
       children: <Widget>[
         Container(
@@ -75,12 +77,12 @@ class DrawerHead extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 3),
                           child: Text(
-                            "${nameRegex.firstMatch(loggedUser.name).group(1)} ${nameRegex.firstMatch(loggedUser.name).group(2)}",
+                            "${nameRegex.firstMatch(loggedUser.name.trim()).group(1)} ${nameRegex.firstMatch(LoggedUser().name.trim()).group(2)}",
                             style: Theme.of(context).textTheme.headline,
                           ),
                         ),
                         // SizedBox(height: 4),
-                        getUserStars(2.5, context),
+                        getUserStars(qntStars, context),
                         SizedBox(height: 8),
                         Padding(
                           padding: const EdgeInsets.only(left: 4),
