@@ -59,7 +59,7 @@ class PerfilScreen extends StatelessWidget {
                     height: 10,
                   ),
                   Text("Carisma"),
-                  StarsAvaliation(2, context)
+                  StarsAvaliation(loggedUser.userReviewAverage, context)
                 ],
               )
             ],
