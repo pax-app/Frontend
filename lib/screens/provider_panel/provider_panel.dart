@@ -123,7 +123,7 @@ class ProviderPanel extends StatelessWidget {
       context,
       CupertinoPageRoute(
         builder: (context) => ProviderPaxScreen(
-          title: 'Meus Serviços ${type}s',
+          title: type,
         ),
       ),
     );

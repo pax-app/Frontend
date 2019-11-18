@@ -67,6 +67,7 @@ class _MyConversationsState extends State<MyConversations> {
                 String name = snapshot.data[index]['username'];
                 return ChatTile(
                   userId: snapshot.data[index]["user_id"],
+                  avatarUrl: snapshot.data[index]['url_avatar'],
                   providerId: snapshot.data[index]["provider_id"],
                   chat_id: chat_id,
                   message: 'O serviço vai ficar R\$35,00, posso mandar o Pax?',
@@ -152,14 +153,15 @@ class _MyConversationsState extends State<MyConversations> {
   }
 
   Future<dynamic> _getUserChats() async {
-    var response = await http
-        .get('https://pax-chat.herokuapp.com/chats/user/${loggedUser.userId}');
+    var response = await http.get(
+        'https://pax-chat.herokuapp.com/chats/${loggedUser.isInProviderDrawer ? 'provider' : 'user'}/${loggedUser.isInProviderDrawer ? loggedUser.providerId : loggedUser.userId}');
     var jsonData = json.decode(response.body);
 
     final List<Map<String, dynamic>> chats = [];
 
     for (var item in jsonData) {
       var user_info = await _getUserInfo(item);
+
       chats.add({
         'chat_id': item['chat_id'],
         'user_id': item['user_id'],
@@ -173,8 +175,10 @@ class _MyConversationsState extends State<MyConversations> {
   }
 
   Future<dynamic> _getUserInfo(var item) async {
+    print(item);
     var url =
-        'https://pax-user.herokuapp.com/get_user_info/${loggedUser.isInProviderDrawer == true ? 'user' : 'provider'}/${loggedUser.isProvider ? item['user_id'] : item['provider_id']}';
+        'https://pax-user.herokuapp.com/get_user_info/${loggedUser.isInProviderDrawer == true ? 'user' : 'provider'}/${loggedUser.isInProviderDrawer ? item['user_id'] : item['provider_id']}';
+    print(url);
     var user_info = await http.get(url);
 
     return json.decode(user_info.body);

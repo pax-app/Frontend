@@ -22,7 +22,7 @@ class ProviderPaxCard extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Card(
-          margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 3),
+          margin: const EdgeInsets.symmetric(vertical: 18, horizontal: 3),
           child: Column(
             children: <Widget>[
               Padding(

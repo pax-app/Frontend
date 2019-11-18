@@ -77,7 +77,7 @@ class DrawerHead extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 3),
                           child: Text(
-                            "${nameRegex.firstMatch(loggedUser.name.trim()).group(1)} ${nameRegex.firstMatch(LoggedUser().name.trim()).group(2)}",
+                            "${nameRegex.firstMatch(loggedUser.name).group(1)} ${nameRegex.firstMatch(LoggedUser().name).group(2)}",
                             style: Theme.of(context).textTheme.headline,
                           ),
                         ),

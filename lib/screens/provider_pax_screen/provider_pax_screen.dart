@@ -1,6 +1,7 @@
 import 'package:Pax/components/app_bar/white_appbar.dart';
 import 'package:Pax/components/provider_pax_card/provider_pax_card.dart';
 import 'package:Pax/services/loggedUser.dart';
+import 'package:Pax/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -30,7 +31,7 @@ class _ProviderPaxScreenState extends State<ProviderPaxScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: WhiteAppBar(
-        widget.title,
+        'Meus Serviços ${widget.title}s',
         context,
       ),
       body: Padding(
@@ -65,9 +66,13 @@ class _ProviderPaxScreenState extends State<ProviderPaxScreen> {
       "Finalizado": "finalized_pax",
       "Cancelado": "canceled_pax",
     };
-
+    print(LoggedUser().providerId);
+    print(
+        'https://pax-pax.herokuapp.com/pax/${paxRoute[widget.title]}/provider/${LoggedUser().providerId}');
     var res = await http.get(
         'https://pax-pax.herokuapp.com/pax/${paxRoute[widget.title]}/provider/${LoggedUser().providerId}');
+
+    print(res.body);
 
     setState(() {
       pax = json.decode(res.body);

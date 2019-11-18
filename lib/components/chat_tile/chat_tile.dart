@@ -54,6 +54,7 @@ class ChatTile extends StatelessWidget {
                     width: 56,
                     height: 56,
                     decoration: BoxDecoration(
+                      image: DecorationImage(image: NetworkImage(avatarUrl)),
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(
                         color: Theme.of(context).accentColor,

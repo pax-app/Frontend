@@ -47,6 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.avatarUrl);
     final chatAppBar = ChatAppBar(
       providerName: widget.personName,
       avatarUrl: widget.avatarUrl,
@@ -163,8 +164,8 @@ class _ChatScreenState extends State<ChatScreen> {
       context: context,
       builder: (context) => ChatPaxBottomSheet(
         chatId: widget.chatId,
-        providerId: 1,
-        userId: 1,
+        providerId: widget.providerId,
+        userId: widget.userId,
         sendPaxFirebase: _sendMessage,
         isLastPaxPending: _isLastPaxPending,
         isLastPaxAccepted: _isLastPaxAccepted,
@@ -280,7 +281,7 @@ class _ChatScreenState extends State<ChatScreen> {
       context: context,
       builder: (context) => ChatAddressBottomSheet(
         scaffoldKey: _scaffoldKey,
-        userId: 17,
+        userId: widget.userId,
         chatId: widget.chatId,
         sendMessage: _sendMessage,
       ),
