@@ -166,6 +166,7 @@ class _MyConversationsState extends State<MyConversations> {
         'provider_id': item['provider_id'],
         'user_address': item['user_address'],
         'username': user_info['username'],
+        'url_avatar': user_info['url_avatar'],
       });
     }
     return chats;

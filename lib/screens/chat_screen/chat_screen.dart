@@ -18,15 +18,18 @@ import 'dart:io';
 
 class ChatScreen extends StatefulWidget {
   final String personName;
+  final String avatarUrl;
   final int providerId;
   final int userId;
   final int chatId;
 
-  ChatScreen(
-      {@required this.chatId,
-      @required this.personName,
-      @required this.userId,
-      @required this.providerId});
+  ChatScreen({
+    @required this.chatId,
+    @required this.personName,
+    @required this.userId,
+    @required this.providerId,
+    @required this.avatarUrl,
+  });
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -45,8 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final chatAppBar = ChatAppBar(
-      provider_name: "Rogério Júnior",
-      provider_qualification: "Assistência Técnica: Notebook",
+      provider_name: widget.personName,
     );
 
     final mediaQuery = MediaQuery.of(context);

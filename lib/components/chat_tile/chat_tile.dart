@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class ChatTile extends StatelessWidget {
   final int chat_id;
   final String username;
+  final String avatarUrl;
   final String message;
   final bool isInDeletionMode;
   final bool isChatSelected;
@@ -14,16 +15,18 @@ class ChatTile extends StatelessWidget {
   final Function longPressHandler;
   final Function updateChatsToBeDeleted;
 
-  ChatTile(
-      {@required this.chat_id,
-      @required this.username,
-      @required this.message,
-      @required this.isInDeletionMode,
-      @required this.isChatSelected,
-      @required this.longPressHandler,
-      @required this.updateChatsToBeDeleted,
-      @required this.userId,
-      @required this.providerId});
+  ChatTile({
+    @required this.chat_id,
+    @required this.username,
+    @required this.message,
+    @required this.isInDeletionMode,
+    @required this.isChatSelected,
+    @required this.longPressHandler,
+    @required this.updateChatsToBeDeleted,
+    @required this.userId,
+    @required this.providerId,
+    @required this.avatarUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +103,7 @@ class ChatTile extends StatelessWidget {
       context,
       CupertinoPageRoute(
         builder: (_) => ChatScreen(
+          avatarUrl: avatarUrl,
           chatId: chat_id,
           personName: username,
           userId: userId,

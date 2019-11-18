@@ -1,6 +1,9 @@
+import 'package:Pax/components/dummies_loaders/dummy_provider_card.dart';
+import 'package:Pax/screens/chat_screen/chat_screen.dart';
 import 'package:Pax/screens/provider_profile_screen/provider_profile_screen.dart';
 import 'package:Pax/components/provider_card/provider_card.dart';
 import 'package:Pax/components/base_screen/base_screen.dart';
+import 'package:Pax/services/loggedUser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -18,49 +21,57 @@ class ProviderListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: 'provider_profile',
-      child: FutureBuilder(
-        future: _fetchPost(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            var providers = snapshot.data;
-            return BaseScreen(
-              "Escolha um profissional",
-              "Prestadores de ${title}",
-              Container(
-                height: MediaQuery.of(context).size.height * .77,
-                child: ListView.builder(
-                  itemCount: providers.length,
-                  itemBuilder: (context, index) {
-                    return ProviderCard(
-                      providerId: providers[index]['provider_id'],
-                      name: providers[index]['name'],
-                      rating: double.parse(
-                        providers[index]['reviews_average'].toString(),
-                      ),
-                      description: providers[index]['bio'],
-                      minPrice: providers[index]['minimum_price'],
-                      maxPrice: providers[index]['maximum_price'],
-                      avatarUrl: providers[index]['url_avatar'],
-                      onTap: () => loadProvider(
-                        providers[index],
-                        context,
-                      ),
-                    );
-                  },
-                ),
-              ),
-              null,
-            );
-          } else if (snapshot.hasError) {
-            return BaseScreen("", "Erro:", Text("${snapshot.error}"), null);
-          }
-
+    return FutureBuilder(
+      future: _fetchPost(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          var providers = snapshot.data;
           return BaseScreen(
-              "", "Carregando", CircularProgressIndicator(), null);
-        },
-      ),
+            "Escolha um profissional",
+            "Prestadores de ${title}",
+            Container(
+              height: MediaQuery.of(context).size.height * .77,
+              child: ListView.builder(
+                itemCount: providers.length,
+                itemBuilder: (context, index) {
+                  return ProviderCard(
+                    providerId: providers[index]['provider_id'],
+                    name: providers[index]['name'],
+                    rating: double.parse(
+                      providers[index]['reviews_average'].toString(),
+                    ),
+                    description: providers[index]['bio'],
+                    minPrice: providers[index]['minimum_price'],
+                    maxPrice: providers[index]['maximum_price'],
+                    avatarUrl: providers[index]['url_avatar'],
+                    onTap: () => loadProvider(
+                      providers[index],
+                      context,
+                    ),
+                  );
+                },
+              ),
+            ),
+            null,
+          );
+        }
+
+        return BaseScreen(
+          "Escolha um profissional",
+          "Prestadores de ${title}",
+          Container(
+            height: MediaQuery.of(context).size.height * .77,
+            child: ListView(
+              children: <Widget>[
+                DummyProviderCard(),
+                DummyProviderCard(),
+                DummyProviderCard(),
+              ],
+            ),
+          ),
+          null,
+        );
+      },
     );
   }
 
@@ -79,6 +90,8 @@ class ProviderListScreen extends StatelessWidget {
           name: provider['name'],
           photoUrl: provider['url_avatar'],
           reviewService: double.parse(reviewService.toString()),
+          createChat: () => _createChat(provider['provider_id'],
+              provider['name'], provider['url_avatar'], ctx),
         ),
       ),
     );
@@ -104,5 +117,35 @@ class ProviderListScreen extends StatelessWidget {
     var responseJson = json.decode(response.body);
 
     return responseJson['provider_service_review_average'];
+  }
+
+  void _createChat(int providerId, String providerName, String avatarUrl,
+      BuildContext context) async {
+    var chat = {
+      "user_id": LoggedUser().userId,
+      "provider_id": providerId,
+    };
+
+    var body = json.encode(chat);
+
+    var res = await http.post(
+      'https://pax-chat.herokuapp.com/chats',
+      headers: {"Content-Type": "application/json"},
+      body: body,
+    );
+
+    var chatRes = json.decode(res.body);
+
+    Navigator.of(context).push(
+      CupertinoPageRoute(
+        builder: (_) => ChatScreen(
+          avatarUrl: avatarUrl,
+          chatId: chatRes['chat_id'],
+          personName: providerName,
+          userId: int.parse(LoggedUser().userId),
+          providerId: providerId,
+        ),
+      ),
+    );
   }
 }
