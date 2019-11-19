@@ -154,6 +154,7 @@ class _ProviderProfileScreenState extends State<ProviderProfileScreen> {
                           child: Text(
                             widget.bio,
                             style: TextStyle(fontSize: 15),
+                            textAlign: TextAlign.justify,
                           ),
                         ),
                       ),
